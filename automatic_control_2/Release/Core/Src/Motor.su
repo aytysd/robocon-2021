@@ -1,0 +1,2 @@
+Motor.cpp:54:6:void Motor::drive_motor(int, int, int)	24	static
+Motor.cpp:21:6:void Motor::V_output(double, double, double, double)	96	static
