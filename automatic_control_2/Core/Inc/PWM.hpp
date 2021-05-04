@@ -5,15 +5,14 @@
  *
  *@Author: Ayato Yoshida
  *
- *@Description:
+ *@Description_method:V_output :determine V1, V2, V3, V4 PWM from direction, speed, rotation speed, attitutde angle
  *
- *@Input value:
+ *@Input_( the speed of machine (mm/s) ) in ( double V ) of ( PWM::V_output )
+ *@Input_( direction ( from 0 to 360 ) ) in ( double fai ) of ( PWM::V_output )
+ *@Input_( speed when it rotates ( mm/s ) )_in ( double rotation_speed ) of ( PWM::V_output )
+ *@Input_( which direction the robot directs. Get this value from Gyro sensor ( from 0 to 360 ))_in_( double attitude_angle )_of_( PWM::V_output )
  *
- *@Input where:
- *
- *@Output value:
- *
- *@Output where:
+ *@Output ( the result of PWM, direction, motor number)_to_( each MD )
  *
  *@Attention
  *

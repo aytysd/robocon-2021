@@ -8,7 +8,7 @@
 #include <Calc.hpp>
 #include "main.h"
 
-int Calc::plus_minus(int number)
+int Calc::plus_minus(double number)
 {
 	if( number > 0 )
 	{

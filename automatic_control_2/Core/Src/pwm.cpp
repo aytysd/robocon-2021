@@ -29,6 +29,8 @@ void PWM::V_output(double V, double fai, double rotation_speed, double attitude_
 	double Vx = V * cos(fai/180 * M_PI);
 	double Vy = V * sin(fai/180 * M_PI);
 
+	attitude_angle = attitude_angle/180 * M_PI;
+
 
 
 	double V1 = Vx * cos( attitude_angle + M_PI/4) + Vy * sin( attitude_angle + M_PI/4) + rotation_speed;
@@ -46,10 +48,10 @@ void PWM::V_output(double V, double fai, double rotation_speed, double attitude_
 
 
 
-	motor -> drive_motor(1, calc -> plus_minus(V1), (int)((abs(V1) * 1000 + 17.242) / 23.677));
-	motor -> drive_motor(2, calc -> plus_minus(V2), (int)((abs(V2) * 1000 + 17.242) / 23.677));
-	motor -> drive_motor(3, calc -> plus_minus(V3), (int)((abs(V3) * 1000 + 17.242) / 23.677));
-	motor -> drive_motor(4, calc -> plus_minus(V4), (int)((abs(V4) * 1000 + 17.242) / 23.677));
+	motor -> drive_motor(1, calc -> plus_minus(V1), (int)((abs(V1) + 17.242) / 23.677));
+	motor -> drive_motor(2, calc -> plus_minus(V2), (int)((abs(V2) + 17.242) / 23.677));
+	motor -> drive_motor(3, calc -> plus_minus(V3), (int)((abs(V3) + 17.242) / 23.677));
+	motor -> drive_motor(4, calc -> plus_minus(V4), (int)((abs(V4) + 17.242) / 23.677));
 
 
 	delete calc;
