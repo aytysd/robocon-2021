@@ -12,15 +12,15 @@ int Calc::plus_minus(double number)
 {
 	if( number > 0 )
 	{
-		return 1;
+		return CW;
 	}
 	if( number < 0 )
 	{
-		return 2;
+		return CCW;
 	}
 	if( number == 0 )
 	{
-		return 3;
+		return BRAKE;
 	}
 
 }

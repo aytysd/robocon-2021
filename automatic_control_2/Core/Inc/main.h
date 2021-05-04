@@ -60,7 +60,9 @@ void Error_Handler(void);
 
 /* Private defines -----------------------------------------------------------*/
 /* USER CODE BEGIN Private defines */
-
+#define CW 1
+#define CCW 2
+#define BRAKE 3
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus

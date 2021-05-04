@@ -1,5 +1,5 @@
 /*
- * pwm.hpp
+ * Motor.hpp
  *
  *  Created on: May 3, 2021
  *      Author: Ayato Yoshida
