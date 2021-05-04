@@ -69,8 +69,8 @@ all: main-build
 main-build: automatic_control_2.elf secondary-outputs
 
 # Tool invocations
-automatic_control_2.elf: $(OBJS) $(USER_OBJS) C:\Users\Ayato\ Yoshida\robocon\STM32CubeIDE\workspace_1.5.0\github\automatic_control_2\STM32F446RETX_FLASH.ld
-	arm-none-eabi-g++ -o "automatic_control_2.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\Ayato Yoshida\robocon\STM32CubeIDE\workspace_1.5.0\github\automatic_control_2\STM32F446RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="automatic_control_2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+automatic_control_2.elf: $(OBJS) $(USER_OBJS) C:\Users\Ayato\ Yoshida\robocon\robocon_2021\automatic_control_2\STM32F446RETX_FLASH.ld
+	arm-none-eabi-g++ -o "automatic_control_2.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\Ayato Yoshida\robocon\robocon_2021\automatic_control_2\STM32F446RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="automatic_control_2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

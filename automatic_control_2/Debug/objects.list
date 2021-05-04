@@ -1,7 +1,7 @@
 "Core/Src/Calc.o"
 "Core/Src/Motor.o"
+"Core/Src/PWM.o"
 "Core/Src/main.o"
-"Core/Src/pwm.o"
 "Core/Src/stm32f4xx_hal_msp.o"
 "Core/Src/stm32f4xx_it.o"
 "Core/Src/syscalls.o"

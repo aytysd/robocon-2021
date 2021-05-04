@@ -23,6 +23,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "Motor.hpp"
+#include "PWM.hpp"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/

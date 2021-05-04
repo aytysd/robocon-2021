@@ -12,7 +12,6 @@
 
 class Motor{
 public:
-	void V_output(double V, double fai, double rotation_speed, double attitude_angle);
 	void drive_motor(int motor_number, int direction, int PWM);
 
 	void get_V_output();
