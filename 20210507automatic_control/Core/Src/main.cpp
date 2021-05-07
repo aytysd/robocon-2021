@@ -113,8 +113,15 @@ int main(void)
   MX_I2C1_Init();
   MX_USART3_UART_Init();
   /* USER CODE BEGIN 2 */
-  Function* function = new Function();
   PWM* pwm = new PWM();
+
+/*
+  HAL_TIM_BASE_Start_IT(&htim6);
+  HAL_TIM_Encoder_Start(&htim5, TIM_CHANNEL_ALL);
+  HAL_TIM_Encoder_Start(&htim3, TIM_CHANNEL_ALL);
+  HAL_TIM_Encoder_Start(&htim1, TIM_CHANNEL_ALL);
+
+*/
   /* USER CODE END 2 */
 
   /* Infinite loop */
