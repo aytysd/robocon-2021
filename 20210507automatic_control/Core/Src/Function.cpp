@@ -7,7 +7,7 @@
  *
  *@Purpose_of_this_class:(not activate motor and solenoid valve)
  *
- *@Input(value)in(variable)of(functionname)
+ *@Input(the motor number you want to use)in(motor_number)of(drive_motor)
  *
  *@Output(value)to(where)
  *
