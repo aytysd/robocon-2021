@@ -37,11 +37,11 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING, OCTETS
  16 .debug_macro  00027023  00000000  00000000  0005c728  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_line   00014550  00000000  00000000  0008374b  2**0
+ 17 .debug_line   0001454e  00000000  00000000  0008374b  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_str    000daa15  00000000  00000000  00097c9b  2**0
+ 18 .debug_str    000daa15  00000000  00000000  00097c99  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .comment      00000053  00000000  00000000  001726b0  2**0
+ 19 .comment      00000053  00000000  00000000  001726ae  2**0
                   CONTENTS, READONLY
  20 .debug_frame  00019d60  00000000  00000000  00172704  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
@@ -1365,11 +1365,6 @@ void Function::drive_motor(uint8_t motor_number, uint8_t direction, uint8_t PWM)
  800106c:	733b      	strb	r3, [r7, #12]
  800106e:	787b      	ldrb	r3, [r7, #1]
  8001070:	737b      	strb	r3, [r7, #13]
-		HAL_UART_Transmit(&huart2, (uint8_t*)output, sizeof(output), 100);
-
-	}
-*/
-
 	HAL_UART_Transmit(&huart6, (uint8_t*)motor, sizeof(motor), 100);
  8001072:	f107 010c 	add.w	r1, r7, #12
  8001076:	2364      	movs	r3, #100	; 0x64
