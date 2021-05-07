@@ -13,7 +13,7 @@
  *
  *@Attention_(description)
  *
- *@Usertouch(functionname)&_(variable_name)
+ *@Usertouch(void drive_motor)&_(variable_name)
  *
  */
 #ifndef INC_FUNCTION_HPP_
