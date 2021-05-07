@@ -1,0 +1,2 @@
+Self_Pos.cpp:23:9:uint8_t Self_Pos::get_direction()	16	static
+Self_Pos.cpp:27:6:void Self_Pos::Gyro()	16	static

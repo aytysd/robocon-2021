@@ -1,0 +1,6 @@
+gthr-default.h:229:1:int __gthread_key_delete(__gthread_key_t)	16	static
+Calc.cpp:16:5:int Calc::plus_minus(double)	24	static
+Calc.cpp:33:8:double Calc::get_max(int, int, int, int)	32	static
+Calc.cpp:48:1:void __static_initialization_and_destruction_0(int, int)	16	static
+Calc.cpp:48:1:cpp)	8	static
+Calc.cpp:48:1:cpp)	8	static
