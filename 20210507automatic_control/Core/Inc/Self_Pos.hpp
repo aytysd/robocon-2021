@@ -5,7 +5,7 @@
  *
  *@Author: Ayato Yoshida
  *
- *@Purpose_of_this_class:(description_about_thisclass)
+ *@Purpose_of_this_class:(get self position, direction)
  *
  *@Input(value)in(variable)of(functionname)
  *
