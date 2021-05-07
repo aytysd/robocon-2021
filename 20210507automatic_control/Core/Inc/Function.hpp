@@ -9,7 +9,7 @@
  *
  *@Input(value)in(variable)of(functionname)
  *
- *@Output(value)to(where)
+ *@Output(motor_number, direction, PWM)to(MDC)
  *
  *@Attention_(description)
  *
