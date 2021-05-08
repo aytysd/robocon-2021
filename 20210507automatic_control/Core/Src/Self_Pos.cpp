@@ -130,7 +130,7 @@ void Self_Pos::Gyro::BNO055_Init_I2C(I2C_HandleTypeDef* hi2c_device) {
 	HAL_Delay(50);
 }
 
-void Self_Pos::Gyro::BNO055_update_gravity(I2C_HandleTypeDef* hi2c_device){
+void Self_Pos::Gyro::BNO055_update_gravity_direction(I2C_HandleTypeDef* hi2c_device){
 
 	uint8_t	imu_readings[IMU_NUMBER_OF_BYTES];
 	uint8_t gyro_readings[IMU_NUMBER_OF_BYTES];

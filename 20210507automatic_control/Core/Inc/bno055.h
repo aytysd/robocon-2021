@@ -1,6 +1,6 @@
 #include <stdint.h>
 
-
+#define	IMU_NUMBER_OF_BYTES	18
 
 
 #define START_BYTE							0xAA
