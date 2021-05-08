@@ -147,33 +147,32 @@ void Self_Pos::Gyro::BNO055_update_gravity(I2C_HandleTypeDef* hi2c_device){
 	uint8_t	imu_readings[IMU_NUMBER_OF_BYTES];
 	uint8_t gyro_readings[IMU_NUMBER_OF_BYTES];
 
-	int16_t accel_data[3];
-	float acc_x, acc_y, acc_z;
-	int16_t rotation[3];
+	int16_t accel_data;
+	float acc_z;
+	int16_t rotation;
+	int16_t yaw;
 
 
 	HAL_I2C_Mem_Read(hi2c_device, BNO055_I2C_ADDR_HI<<1, BNO055_ACC_DATA_X_LSB, I2C_MEMADD_SIZE_8BIT, imu_readings, IMU_NUMBER_OF_BYTES,100);
 	HAL_I2C_Mem_Read(hi2c_device, BNO055_I2C_ADDR_HI<<1, BNO055_EUL_HEADING_LSB, I2C_MEMADD_SIZE_8BIT, gyro_readings, IMU_NUMBER_OF_BYTES,100);
 
-	accel_data[0] = (((int16_t)((uint8_t *)(imu_readings))[1] << 8) | ((uint8_t *)(imu_readings))[0]);      // Turn the MSB and LSB into a signed 16-bit value
-	accel_data[1] = (((int16_t)((uint8_t *)(imu_readings))[3] << 8) | ((uint8_t *)(imu_readings))[2]);
-	accel_data[2] = (((int16_t)((uint8_t *)(imu_readings))[5] << 8) | ((uint8_t *)(imu_readings))[4]);
+	accel_data = (((int16_t)((uint8_t *)(imu_readings))[5] << 8) | ((uint8_t *)(imu_readings))[4]);
 
-	acc_x = ((float)(accel_data[0]))/100.0f; //m/s2
-	acc_y = ((float)(accel_data[1]))/100.0f;
-	acc_z = ((float)(accel_data[2]))/100.0f;
+	acc_z = ((float)(accel_data))/100.0f;
 
 
-	rotation[0] = (((int16_t)((uint8_t *)(gyro_readings))[1] << 8) | ((uint8_t *)(gyro_readings))[0]);      // Turn the MSB and LSB into a signed 16-bit value
-	rotation[1] = (((int16_t)((uint8_t *)(gyro_readings))[3] << 8) | ((uint8_t *)(gyro_readings))[2]);
-	rotation[2] = (((int16_t)((uint8_t *)(gyro_readings))[5] << 8) | ((uint8_t *)(gyro_readings))[4]);
+	rotation = (((int16_t)((uint8_t *)(gyro_readings))[1] << 8) | ((uint8_t *)(gyro_readings))[0]);      // Turn the MSB and LSB into a signed 16-bit value
 
-
+	yaw = rotation / 16;
 
 	this -> gravity = acc_z;
+	this -> direction = yaw;
 
-	sprintf(output_2, "%d\r\n",rotation[0]);
+
+/*
+	sprintf(output_2, "%lf\r\n",acc_z);
 	HAL_UART_Transmit(&huart2, (uint8_t*)output_2, sizeof(output_2),100);
+*/
 
 }
 
@@ -181,7 +180,9 @@ float Self_Pos::Gyro::get_gravity(){
 	return this -> gravity;
 }
 
-
+int16_t Self_Pos::Gyro::get_direction(){
+	return this -> direction;
+}
 
 
 

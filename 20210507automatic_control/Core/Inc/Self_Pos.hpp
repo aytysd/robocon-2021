@@ -34,8 +34,10 @@ public:
 		void BNO055_Init_I2C(I2C_HandleTypeDef* hi2c_device);
 		void BNO055_update_gravity(I2C_HandleTypeDef* hi2c_device);
 		float get_gravity(void);
+		int16_t get_direction(void);
 	private:
 		float gravity;
+		int16_t direction;
 
 	};
 private:
