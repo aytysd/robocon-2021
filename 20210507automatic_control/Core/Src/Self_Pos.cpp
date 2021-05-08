@@ -22,6 +22,7 @@
 #include "main.h"
 #include "Self_Pos.hpp"
 #include "bno055.h"
+#include "stdio.h"
 
 uint8_t GPwrMode 	= NormalG;   		// Gyro power mode
 uint8_t Gscale 		= GFS_2000DPS; 	// Gyro full scale
@@ -38,7 +39,7 @@ uint8_t MPwrMode 	= Normal;    		// Select magnetometer power mode
 uint8_t Modr 			= MODR_30Hz;    // Select magnetometer ODR when in BNO055 bypass mode
 
 uint8_t PWRMode 	= Normalpwr;  	// Select BNO055 power mode
-uint8_t OPRMode 	= ACCGYRO;    	// specify operation mode for sensors [ACCONLY|MAGONLY|GYROONLY|ACCMAG|ACCGYRO|MAGGYRO|AMG|NDOF|NDOF_FMC_OFF]
+uint8_t OPRMode 	= IMU;    	// specify operation mode for sensors [ACCONLY|MAGONLY|GYROONLY|ACCMAG|ACCGYRO|MAGGYRO|AMG|NDOF|NDOF_FMC_OFF]
 
 uint8_t status;               // BNO055 data status register
 float aRes, gRes, mRes; 			// scale resolutions per LSB for the sensors
@@ -58,6 +59,8 @@ const char read_calib[2] 	= {REG_READ, BNO055_CALIB_STAT};
 const char reset_sensor[3]	= {REG_WRITE, BNO055_SYS_TRIGGER, 0x01 << 5};
 uint8_t get_readings[1] 	= {BNO055_ACC_DATA_X_LSB};
 
+
+char output_2[256];
 
 uint8_t Self_Pos::get_direction(void){
 	return this -> direction;
@@ -139,12 +142,43 @@ void Self_Pos::Gyro::BNO055_Init_I2C(I2C_HandleTypeDef* hi2c_device) {
 	HAL_Delay(50);
 }
 
-uint8_t Self_Pos::Gyro::GetAccelData(I2C_HandleTypeDef* hi2c_device, uint8_t* str){
-	uint8_t status;
-	status = HAL_I2C_Mem_Read(hi2c_device, BNO055_I2C_ADDR_HI<<1, BNO055_ACC_DATA_X_LSB, I2C_MEMADD_SIZE_8BIT, str, IMU_NUMBER_OF_BYTES,100);
-  //while (HAL_I2C_GetState(hi2c_device) != HAL_I2C_STATE_READY) {}
-	return status;
+void Self_Pos::Gyro::BNO055_update_gravity(I2C_HandleTypeDef* hi2c_device){
 
+	uint8_t	imu_readings[IMU_NUMBER_OF_BYTES];
+	uint8_t gyro_readings[IMU_NUMBER_OF_BYTES];
+
+	int16_t accel_data[3];
+	float acc_x, acc_y, acc_z;
+	int16_t rotation[3];
+
+
+	HAL_I2C_Mem_Read(hi2c_device, BNO055_I2C_ADDR_HI<<1, BNO055_ACC_DATA_X_LSB, I2C_MEMADD_SIZE_8BIT, imu_readings, IMU_NUMBER_OF_BYTES,100);
+	HAL_I2C_Mem_Read(hi2c_device, BNO055_I2C_ADDR_HI<<1, BNO055_EUL_HEADING_LSB, I2C_MEMADD_SIZE_8BIT, gyro_readings, IMU_NUMBER_OF_BYTES,100);
+
+	accel_data[0] = (((int16_t)((uint8_t *)(imu_readings))[1] << 8) | ((uint8_t *)(imu_readings))[0]);      // Turn the MSB and LSB into a signed 16-bit value
+	accel_data[1] = (((int16_t)((uint8_t *)(imu_readings))[3] << 8) | ((uint8_t *)(imu_readings))[2]);
+	accel_data[2] = (((int16_t)((uint8_t *)(imu_readings))[5] << 8) | ((uint8_t *)(imu_readings))[4]);
+
+	acc_x = ((float)(accel_data[0]))/100.0f; //m/s2
+	acc_y = ((float)(accel_data[1]))/100.0f;
+	acc_z = ((float)(accel_data[2]))/100.0f;
+
+
+	rotation[0] = (((int16_t)((uint8_t *)(gyro_readings))[1] << 8) | ((uint8_t *)(gyro_readings))[0]);      // Turn the MSB and LSB into a signed 16-bit value
+	rotation[1] = (((int16_t)((uint8_t *)(gyro_readings))[3] << 8) | ((uint8_t *)(gyro_readings))[2]);
+	rotation[2] = (((int16_t)((uint8_t *)(gyro_readings))[5] << 8) | ((uint8_t *)(gyro_readings))[4]);
+
+
+
+	this -> gravity = acc_z;
+
+	sprintf(output_2, "%d\r\n",rotation[0]);
+	HAL_UART_Transmit(&huart2, (uint8_t*)output_2, sizeof(output_2),100);
+
+}
+
+float Self_Pos::Gyro::get_gravity(){
+	return this -> gravity;
 }
 
 

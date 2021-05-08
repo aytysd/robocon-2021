@@ -32,8 +32,10 @@ public:
 	class Gyro{
 	public:
 		void BNO055_Init_I2C(I2C_HandleTypeDef* hi2c_device);
-		uint8_t GetAccelData(I2C_HandleTypeDef* hi2c_device, uint8_t* str);
+		void BNO055_update_gravity(I2C_HandleTypeDef* hi2c_device);
+		float get_gravity(void);
 	private:
+		float gravity;
 
 	};
 private:
