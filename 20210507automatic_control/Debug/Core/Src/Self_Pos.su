@@ -1,5 +1,6 @@
-Self_Pos.cpp:23:9:uint8_t Self_Pos::get_direction()	16	static
-Self_Pos.cpp:27:6:void Self_Pos::Gyro()	16	static
-Self_Pos.cpp:30:10:uint32_t Self_Pos::encoder_read_5()	16	static
-Self_Pos.cpp:34:10:uint32_t Self_Pos::encoder_read_1()	16	static
-Self_Pos.cpp:38:10:uint32_t Self_Pos::encoder_read_3()	16	static
+Self_Pos.cpp:62:9:uint8_t Self_Pos::get_direction()	16	static
+Self_Pos.cpp:67:10:uint32_t Self_Pos::encoder_read_5()	16	static
+Self_Pos.cpp:71:10:uint32_t Self_Pos::encoder_read_1()	16	static
+Self_Pos.cpp:75:10:uint32_t Self_Pos::encoder_read_3()	16	static
+Self_Pos.cpp:80:6:void Self_Pos::Gyro::BNO055_Init_I2C(I2C_HandleTypeDef*)	64	static
+Self_Pos.cpp:142:9:uint8_t Self_Pos::Gyro::GetAccelData(I2C_HandleTypeDef*, uint8_t*)	48	static

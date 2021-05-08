@@ -19,6 +19,7 @@
 #ifndef INC_SELF_POS_HPP_
 #define INC_SELF_POS_HPP_
 
+#define	IMU_NUMBER_OF_BYTES					18
 
 #include "main.h"
 
@@ -28,7 +29,13 @@ public:
 		this -> direction = 0;
 	}
 	uint8_t get_direction();
-	void Gyro(void);
+	class Gyro{
+	public:
+		void BNO055_Init_I2C(I2C_HandleTypeDef* hi2c_device);
+		uint8_t GetAccelData(I2C_HandleTypeDef* hi2c_device, uint8_t* str);
+	private:
+
+	};
 private:
 	uint8_t direction;
 	uint32_t encoder_read_5(void);

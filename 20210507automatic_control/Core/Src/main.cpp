@@ -18,12 +18,15 @@
   */
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
+
 #include "main.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "Function.hpp"
 #include "PWM.hpp"
+#include "stdio.h"
+#include "Self_Pos.hpp"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -86,7 +89,10 @@ static void MX_USART3_UART_Init(void);
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-
+	uint8_t		imu_readings[IMU_NUMBER_OF_BYTES];
+	int16_t 	accel_data[3];
+	float		acc_x, acc_y, acc_z;
+	char output[10];
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -118,7 +124,8 @@ int main(void)
   MX_USART3_UART_Init();
   /* USER CODE BEGIN 2 */
   PWM* pwm = new PWM();
-
+  Self_Pos::Gyro* gyro = new Self_Pos::Gyro();
+  gyro-> BNO055_Init_I2C(&hi2c1);
 /*
   HAL_TIM_BASE_Start_IT(&htim6);
   HAL_TIM_Encoder_Start(&htim5, TIM_CHANNEL_ALL);
@@ -132,9 +139,23 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  pwm -> V_output(500, 90, 0, 0, false);
-	  HAL_Delay(3000);
-	  pwm -> V_output(0, 0, 0, 0, true);
+	  HAL_Delay(300);
+	  gyro -> GetAccelData(&hi2c1, (uint8_t*)imu_readings);
+	  accel_data[0] = (((int16_t)((uint8_t *)(imu_readings))[1] << 8) | ((uint8_t *)(imu_readings))[0]);      // Turn the MSB and LSB into a signed 16-bit value
+	  accel_data[1] = (((int16_t)((uint8_t *)(imu_readings))[3] << 8) | ((uint8_t *)(imu_readings))[2]);
+	  accel_data[2] = (((int16_t)((uint8_t *)(imu_readings))[5] << 8) | ((uint8_t *)(imu_readings))[4]);
+	  acc_x = ((float)(accel_data[0]))/100.0f; //m/s2
+	  acc_y = ((float)(accel_data[1]))/100.0f;
+	  acc_z = ((float)(accel_data[2]))/100.0f;
+	  sprintf(output, "%lf\r\n",acc_z);
+	  HAL_UART_Transmit(&huart2, (uint8_t*)output, sizeof(output),100);
+//	  printf("X: %.2f Y: %.2f Z: %.2f\r\n", acc_x, acc_y, acc_z);
+
+/*
+	pwm -> V_output(500, 90, 0, 0, false);
+	HAL_Delay(3000);
+	pwm -> V_output(0, 0, 0, 0, true);
+*/
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
