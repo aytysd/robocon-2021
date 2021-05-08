@@ -24,43 +24,9 @@
 #include "bno055.h"
 #include "stdio.h"
 
-uint8_t GPwrMode 	= NormalG;   		// Gyro power mode
-uint8_t Gscale 		= GFS_2000DPS; 	// Gyro full scale
-//uint8_t Godr	 	= GODR_250Hz;  	// Gyro sample rate
-uint8_t Gbw 			= GBW_230Hz;    // Gyro bandwidth
-//
-uint8_t Ascale 		= AFS_16G;      // Accel full scale
-uint8_t APwrMode 	= NormalA;   		// Accel power mode
-uint8_t Abw 			= ABW_250Hz;    // Accel bandwidth, accel sample rate divided by ABW_divx
-//
-//uint8_t Mscale 	= MFS_4Gauss;		// Select magnetometer full-scale resolution
-uint8_t MOpMode 	= EnhancedRegular;    	// Select magnetometer perfomance mode
-uint8_t MPwrMode 	= Normal;    		// Select magnetometer power mode
-uint8_t Modr 			= MODR_30Hz;    // Select magnetometer ODR when in BNO055 bypass mode
-
-uint8_t PWRMode 	= Normalpwr;  	// Select BNO055 power mode
-uint8_t OPRMode 	= IMU;    	// specify operation mode for sensors [ACCONLY|MAGONLY|GYROONLY|ACCMAG|ACCGYRO|MAGGYRO|AMG|NDOF|NDOF_FMC_OFF]
-
-uint8_t status;               // BNO055 data status register
-float aRes, gRes, mRes; 			// scale resolutions per LSB for the sensors
-
-// IMU calibration variables
-uint8_t cal_sys 	= 0;
-uint8_t cal_gyro 	= 0;
-uint8_t cal_acc 	= 0;
-uint8_t cal_mag 	= 0;
-uint8_t cal_imu 	= 0;
-
-const uint8_t num_of_bytes_read = 18;		// Read number of bytes from IMU (24 for ACCGYRO; 38 for NDOF)
-
-const char read_devid[] 	= {START_BYTE, REG_READ, BNO055_CHIP_ID, 0x01};
-//const char read_acc[] 		= {REG_READ, BNO055_ACC_DATA_X_LSB, num_of_bytes_read};
-const char read_calib[2] 	= {REG_READ, BNO055_CALIB_STAT};
-const char reset_sensor[3]	= {REG_WRITE, BNO055_SYS_TRIGGER, 0x01 << 5};
-uint8_t get_readings[1] 	= {BNO055_ACC_DATA_X_LSB};
 
 
-char output_2[256];
+
 
 uint8_t Self_Pos::get_direction(void){
 	return this -> direction;
@@ -81,6 +47,28 @@ uint32_t Self_Pos::encoder_read_3(void)
 }
 
 void Self_Pos::Gyro::BNO055_Init_I2C(I2C_HandleTypeDef* hi2c_device) {
+
+	uint8_t GPwrMode 	= NormalG;   		// Gyro power mode
+	uint8_t Gscale 		= GFS_2000DPS; 	// Gyro full scale
+	//uint8_t Godr	 	= GODR_250Hz;  	// Gyro sample rate
+	uint8_t Gbw 			= GBW_230Hz;    // Gyro bandwidth
+	//
+	uint8_t Ascale 		= AFS_16G;      // Accel full scale
+	uint8_t APwrMode 	= NormalA;   		// Accel power mode
+	uint8_t Abw 			= ABW_250Hz;    // Accel bandwidth, accel sample rate divided by ABW_divx
+	//
+	//uint8_t Mscale 	= MFS_4Gauss;		// Select magnetometer full-scale resolution
+	uint8_t MOpMode 	= EnhancedRegular;    	// Select magnetometer perfomance mode
+	uint8_t MPwrMode 	= Normal;    		// Select magnetometer power mode
+	uint8_t Modr 			= MODR_30Hz;    // Select magnetometer ODR when in BNO055 bypass mode
+
+	uint8_t PWRMode 	= Normalpwr;  	// Select BNO055 power mode
+	uint8_t OPRMode 	= IMU;    	// specify operation mode for sensors [ACCONLY|MAGONLY|GYROONLY|ACCMAG|ACCGYRO|MAGGYRO|AMG|NDOF|NDOF_FMC_OFF]
+
+
+
+
+
 	// Select BNO055 config mode
 	uint8_t opr_config_mode[2] = {BNO055_OPR_MODE, CONFIGMODE};
 	HAL_I2C_Master_Transmit(hi2c_device, BNO055_I2C_ADDR_HI<<1, opr_config_mode, sizeof(opr_config_mode), 10);

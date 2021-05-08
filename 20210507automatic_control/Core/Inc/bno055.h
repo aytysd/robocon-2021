@@ -1,6 +1,8 @@
 #include <stdint.h>
 
 
+
+
 #define START_BYTE							0xAA
 #define RESPONSE_BYTE						0xBB
 #define ERROR_BYTE		  				0xEE

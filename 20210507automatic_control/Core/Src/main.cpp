@@ -119,10 +119,10 @@ int main(void)
   MX_I2C1_Init();
   MX_USART3_UART_Init();
   /* USER CODE BEGIN 2 */
-  PWM* pwm = new PWM();
+/*
   Self_Pos::Gyro* gyro = new Self_Pos::Gyro();
   gyro-> BNO055_Init_I2C(&hi2c1);
-/*
+ *
   HAL_TIM_BASE_Start_IT(&htim6);
   HAL_TIM_Encoder_Start(&htim5, TIM_CHANNEL_ALL);
   HAL_TIM_Encoder_Start(&htim3, TIM_CHANNEL_ALL);
@@ -135,8 +135,6 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  HAL_Delay(400);
-	  gyro -> BNO055_update_gravity(&hi2c1);
 
     /* USER CODE END WHILE */
 
