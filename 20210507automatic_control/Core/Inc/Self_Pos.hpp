@@ -15,7 +15,7 @@
  *@Output(gravity value(usually 9.8))to(float gravity)
  *@Output(direction value(0 to 360))to(int16_t direction)
  *
- *@Attention_(you have to use Gyro::BNO_Init_I2C function in main function before dive into while(1).)
+ *@Attention_(you have to use Gyro::BNO_Init_I2C function in main function before diving into while(1){}.)
  *@Attention_()
  *
  *@Usertouch(Gyro::BNO_Init_I2C)
