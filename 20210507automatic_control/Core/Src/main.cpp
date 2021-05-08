@@ -18,12 +18,15 @@
   */
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
+
 #include "main.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "Function.hpp"
 #include "PWM.hpp"
+#include "stdio.h"
+#include "Self_Pos.hpp"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -86,7 +89,6 @@ static void MX_USART3_UART_Init(void);
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -117,9 +119,10 @@ int main(void)
   MX_I2C1_Init();
   MX_USART3_UART_Init();
   /* USER CODE BEGIN 2 */
-  PWM* pwm = new PWM();
-
 /*
+  Self_Pos::Gyro* gyro = new Self_Pos::Gyro();
+  gyro-> BNO055_Init_I2C(&hi2c1);
+ *
   HAL_TIM_BASE_Start_IT(&htim6);
   HAL_TIM_Encoder_Start(&htim5, TIM_CHANNEL_ALL);
   HAL_TIM_Encoder_Start(&htim3, TIM_CHANNEL_ALL);
@@ -132,9 +135,7 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  pwm -> V_output(500, 90, 0, 0, false);
-	  HAL_Delay(3000);
-	  pwm -> V_output(0, 0, 0, 0, true);
+
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
