@@ -1710,9 +1710,9 @@ static void MX_TIM1_Init(void)
  8001254:	4b1f      	ldr	r3, [pc, #124]	; (80012d4 <_ZL12MX_TIM1_Initv+0xbc>)
  8001256:	2200      	movs	r2, #0
  8001258:	615a      	str	r2, [r3, #20]
-  htim1.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  htim1.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_ENABLE;
  800125a:	4b1e      	ldr	r3, [pc, #120]	; (80012d4 <_ZL12MX_TIM1_Initv+0xbc>)
- 800125c:	2200      	movs	r2, #0
+ 800125c:	2280      	movs	r2, #128	; 0x80
  800125e:	619a      	str	r2, [r3, #24]
   sConfig.EncoderMode = TIM_ENCODERMODE_TI12;
  8001260:	2303      	movs	r3, #3
@@ -1844,9 +1844,9 @@ static void MX_TIM3_Init(void)
  8001312:	4b1f      	ldr	r3, [pc, #124]	; (8001390 <_ZL12MX_TIM3_Initv+0xb4>)
  8001314:	2200      	movs	r2, #0
  8001316:	611a      	str	r2, [r3, #16]
-  htim3.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  htim3.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_ENABLE;
  8001318:	4b1d      	ldr	r3, [pc, #116]	; (8001390 <_ZL12MX_TIM3_Initv+0xb4>)
- 800131a:	2200      	movs	r2, #0
+ 800131a:	2280      	movs	r2, #128	; 0x80
  800131c:	619a      	str	r2, [r3, #24]
   sConfig.EncoderMode = TIM_ENCODERMODE_TI12;
  800131e:	2303      	movs	r3, #3
@@ -1977,9 +1977,9 @@ static void MX_TIM5_Init(void)
  80013ce:	4b1f      	ldr	r3, [pc, #124]	; (800144c <_ZL12MX_TIM5_Initv+0xb4>)
  80013d0:	2200      	movs	r2, #0
  80013d2:	611a      	str	r2, [r3, #16]
-  htim5.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  htim5.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_ENABLE;
  80013d4:	4b1d      	ldr	r3, [pc, #116]	; (800144c <_ZL12MX_TIM5_Initv+0xb4>)
- 80013d6:	2200      	movs	r2, #0
+ 80013d6:	2280      	movs	r2, #128	; 0x80
  80013d8:	619a      	str	r2, [r3, #24]
   sConfig.EncoderMode = TIM_ENCODERMODE_TI12;
  80013da:	2303      	movs	r3, #3

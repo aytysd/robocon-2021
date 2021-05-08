@@ -34,9 +34,7 @@
 class Self_Pos{
 public:
 	Self_Pos(){
-		this -> direction = 0;
 	}
-	uint8_t get_direction();
 	class Gyro{
 	public:
 		void BNO055_Init_I2C(I2C_HandleTypeDef* hi2c_device);
@@ -49,7 +47,6 @@ public:
 
 	};
 private:
-	uint8_t direction;
 	uint32_t encoder_read_5(void);
 	uint32_t encoder_read_3(void);
 	uint32_t encoder_read_1(void);

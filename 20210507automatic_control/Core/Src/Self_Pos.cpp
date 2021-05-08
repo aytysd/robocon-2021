@@ -26,13 +26,6 @@
 
 
 
-
-
-uint8_t Self_Pos::get_direction(void){
-	return this -> direction;
-}
-
-
 uint32_t Self_Pos::encoder_read_5(void)
 {
 	return TIM5 -> CNT;
