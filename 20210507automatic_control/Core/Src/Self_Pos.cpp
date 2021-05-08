@@ -27,4 +27,17 @@ uint8_t Self_Pos::get_direction(void){
 void Self_Pos::Gyro(void){
 
 }
+uint32_t Self_Pos::encoder_read_5(void)
+{
+	return TIM5 -> CNT;
+}
+uint32_t Self_Pos::encoder_read_1(void)
+{
+	return TIM1 -> CNT;
+}
+uint32_t Self_Pos::encoder_read_3(void)
+{
+	return TIM3 -> CNT;
+}
+
 

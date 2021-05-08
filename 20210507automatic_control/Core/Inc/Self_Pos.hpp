@@ -31,6 +31,9 @@ public:
 	void Gyro(void);
 private:
 	uint8_t direction;
+	uint32_t encoder_read_5(void);
+	uint32_t encoder_read_3(void);
+	uint32_t encoder_read_1(void);
 
 };
 
