@@ -17,8 +17,7 @@
  *
  */
 #include "Line.hpp"
-#include "Motor.hpp"
-#include "Calc.hpp"
+
 
 void Line::set(double befX, double befY, double tgX, double tgY)
 {
@@ -43,6 +42,7 @@ double Line::TGdistance(double x, double y)
 {
 	return ((-b*x) + (a*y) + ((b*tg_X) - (a*tg_Y))) / sqrtAABB;
 }
+
 
 
 
