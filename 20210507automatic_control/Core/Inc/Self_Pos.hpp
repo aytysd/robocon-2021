@@ -8,7 +8,7 @@
  *@Purpose_of_this_class:(get self position, direction)
  *
  *@Input(address of hi2c(e.g. &hi2c1))in(I2C_HandleTypeDef* hi2c_device)of(void BNO055_Init_I2C)
- *@Input(address of hi2c(e.g. &hi2c1))in(I2C_HandleTypeDef* hi2c_device)of(BNO055_update_gravity_direction)
+ *@Input(address of hi2c(e.g. &hi2c1))in(I2C_HandleTypeDef* hi2c_device)of(void BNO055_update_gravity_direction)
  *@Input(value)in(variable)of(functionname)
  *@Input(value)in(variable)of(functionname)
  *
