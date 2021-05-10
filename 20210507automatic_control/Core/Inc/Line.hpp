@@ -29,11 +29,16 @@ private:
 	double r;
 	double tg_X;
 	double tg_Y;
+	double devX;
+	double devY;
+	double devTG;
+	double TG_r;
 
 public:
 	void set(double befX, double befY, double tgX, double tgY);
 	double distance(double x, double y);
 	double TGdistance(double x, double y);
+	void MoveLine(double x, double y, double now_r, bool throug);
 };
 
 
