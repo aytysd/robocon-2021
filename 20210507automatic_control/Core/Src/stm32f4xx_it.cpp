@@ -23,6 +23,8 @@
 #include "stm32f4xx_it.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "Self_Pos.hpp"
+#include "Trans_Controller.hpp"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -52,7 +54,7 @@
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
+Self_Pos::Gyro* gyro = new Self_Pos::Gyro();
 /* USER CODE END 0 */
 
 /* External variables --------------------------------------------------------*/
@@ -269,7 +271,7 @@ void TIM6_DAC_IRQHandler(void)
   /* USER CODE END TIM6_DAC_IRQn 0 */
   HAL_TIM_IRQHandler(&htim6);
   /* USER CODE BEGIN TIM6_DAC_IRQn 1 */
-
+  gyro -> BNO055_update_gravity_direction(&hi2c1);
   /* USER CODE END TIM6_DAC_IRQn 1 */
 }
 
