@@ -144,6 +144,8 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+	  Self_Pos::Gyro* gyro = new Self_Pos::Gyro();
+	  int16_t test = gyro -> get_direction();
 
     /* USER CODE END WHILE */
 

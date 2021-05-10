@@ -165,5 +165,6 @@ int16_t Self_Pos::Gyro::get_direction(){
 	return this -> direction;
 }
 
-
+int16_t Self_Pos::Gyro::direction = 0;
+float Self_Pos::Gyro::gravity = 0;
 

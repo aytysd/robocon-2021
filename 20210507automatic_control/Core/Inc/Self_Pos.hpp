@@ -42,8 +42,8 @@ public:
 		float get_gravity(void);
 		int16_t get_direction(void);
 	private:
-		float gravity;
-		int16_t direction;
+		static float gravity;
+		static int16_t direction;
 
 	};
 private:

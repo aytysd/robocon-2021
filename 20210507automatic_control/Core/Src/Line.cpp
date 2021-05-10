@@ -19,6 +19,7 @@
 #include "Line.hpp"
 
 
+/*
 void Line::set(double befX, double befY, double tgX, double tgY)
 {
 	a = tgX - befX;
@@ -44,5 +45,6 @@ double Line::TGdistance(double x, double y)
 }
 
 
+*/
 
 
