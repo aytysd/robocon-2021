@@ -40,6 +40,7 @@ extern "C" {
 extern UART_HandleTypeDef huart6;
 extern UART_HandleTypeDef huart2;
 extern UART_HandleTypeDef huart3;
+extern UART_HandleTypeDef huart4;
 
 extern I2C_HandleTypeDef hi2c1;
 /* USER CODE END ET */
