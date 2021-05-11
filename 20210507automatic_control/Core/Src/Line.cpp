@@ -45,7 +45,8 @@ double Line::TGdistance(double x, double y)
 	return ((-b*x) + (a*y) - (((-b)*tg_X) + (a*tg_Y))) / sqrtAABB;
 }
 
-void Line::MoveLine(double x, double y, double now_r, bool through)
+int Line::MoveLine
+(double befX, double befY, double tgX, double tgY,double x, double y, bool through)
 {
 	devX = this -> distance(x, y);
 	devY = this -> TGdistance(x, y);
@@ -53,6 +54,13 @@ void Line::MoveLine(double x, double y, double now_r, bool through)
 	devTG = sqrt((long double)(devX*devX + devY*devY));
 	TG_r = atan((long double)((y - tg_Y)*(y -tg_Y) / (x - tg_X)*(x - tg_X)));
 	TG_r = (TG_r * 180) / M_PI;
+
+	this -> set(befX, befY, tgX, tgY);
+
+	Self_Pos::Gyro* gyro = new Self_Pos::Gyro();
+	now_r = (double)gyro -> get_direction();
+	delete gyro;
+
 
 	bool arrive = false;
 
@@ -72,7 +80,12 @@ void Line::MoveLine(double x, double y, double now_r, bool through)
 		{
 			arrive = true;
 		}
+		else
+		{
+			arrive = false;
+		}
 	}
+
 
 	devTG *= 0.2;
 	if(devTG > 2000)
@@ -81,9 +94,9 @@ void Line::MoveLine(double x, double y, double now_r, bool through)
 	}
 
 	TG_r = TG_r - now_r;
-	if(TG_r <= 0)
+	if(TG_r < 0)
 	{
-		TG_r = 2*M_PI + TG_r;
+		TG_r = 360 + TG_r;
 	}
 
 	if(arrive == true)
@@ -98,7 +111,8 @@ void Line::MoveLine(double x, double y, double now_r, bool through)
 				TG_r = TG_r -360;
 			}
 
-			pwm -> V_output(100, TG_r, 0, 0, false);
+			pwm -> V_output(100, TG_r, 0, now_r, false);
+			judge = 2;
 
 			delete pwm;
 
@@ -107,7 +121,8 @@ void Line::MoveLine(double x, double y, double now_r, bool through)
 		{
 			PWM* pwm = new PWM();
 
-			pwm -> V_output(devTG, TG_r, 0, 0, true);
+			pwm -> V_output(devTG, TG_r, 0, now_r, true);
+			judge = 1;
 
 			delete pwm;
 		}
@@ -116,10 +131,13 @@ void Line::MoveLine(double x, double y, double now_r, bool through)
 	{
 		PWM* pwm = new PWM();
 
-		pwm -> V_output(devTG, TG_r, 0, 0, false);
+		pwm -> V_output(devTG, TG_r, 0, now_r, false);
+		judge = 0;
 
 		delete pwm;
 	}
+
+	return judge;
 }
 
 
