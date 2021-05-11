@@ -10,6 +10,7 @@
  *@Input(value)in(variable)of(functionname)
  *
  *@Output(motor_number, direction, PWM)to(MDC)
+ *@Output(color(1:Red, 2:Green, 3:Blue),brightness(0~20))to(LED)
  *
  *@Attention_(description)
  *
@@ -25,6 +26,7 @@ class Function{
 public:
 	void drive_motor(uint8_t motor_number, uint8_t direction, uint8_t PWM);
 	void drive_solenoid_valve(int port_number, int ON_OFF);
+	void drive_LED(int color, int brightness);
 };
 
 
