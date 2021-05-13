@@ -29,7 +29,9 @@
 
 
 
-#include "main.h"
+#include <main.h>
+#include "Command.hpp"
+
 
 class Self_Pos{
 public:
@@ -41,9 +43,11 @@ public:
 		void BNO055_update_gravity_direction(I2C_HandleTypeDef* hi2c_device);
 		float get_gravity(void);
 		int16_t get_direction(void);
+		void set_initial_direction(E_robot_name robot);
 	private:
 		static float gravity;
 		static int16_t direction;
+		static int16_t initial_direction;
 
 	};
 private:
@@ -52,6 +56,7 @@ private:
 	uint32_t encoder_read_1(void);
 
 };
+
 
 
 

@@ -16,8 +16,8 @@
  *@Usertouch(functionname)&_(variable_name)
  *
  */
+#include <main.h>
 #include "Trans_Controller.hpp"
-#include "main.h"
 
 void Trans_Controller::identify_start_button(){
 	uint8_t start_button[8] = {128, 32, 0, 64, 64, 64, 64, 32};

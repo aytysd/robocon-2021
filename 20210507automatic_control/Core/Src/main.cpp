@@ -18,10 +18,7 @@
   */
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
-#include "main.h"
-
-/* Private includes ----------------------------------------------------------*/
-/* USER CODE BEGIN Includes */
+#include <main.h>
 #include "Function.hpp"
 #include "PWM.hpp"
 #include "stdio.h"
@@ -144,8 +141,6 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  Self_Pos::Gyro* gyro = new Self_Pos::Gyro();
-	  int16_t test = gyro -> get_direction();
 
     /* USER CODE END WHILE */
 

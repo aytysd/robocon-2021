@@ -21,7 +21,7 @@
 #ifndef INC_TRANS_CONTROLLER_HPP_
 #define INC_TRANS_CONTROLLER_HPP_
 
-#include "main.h"
+#include <main.h>
 
 class Trans_Controller{
 public:

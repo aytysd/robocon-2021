@@ -19,7 +19,7 @@
 
 
 #include <Function.hpp>
-#include "main.h"
+#include <main.h>
 #include "stdio.h"
 
 void Function::drive_motor(uint8_t motor_number, uint8_t direction, uint8_t PWM)

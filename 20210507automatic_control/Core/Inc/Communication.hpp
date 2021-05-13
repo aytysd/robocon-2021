@@ -19,7 +19,7 @@
 #ifndef INC_COMMUNICATION_HPP_
 #define INC_COMMUNICATION_HPP_
 
-#include "main.h"
+#include <main.h>
 
 class Communication{
 public:

@@ -1,7 +1,7 @@
 /*
- * Communication.cpp
+ * Command.hpp
  *
- *  Created on: 9 May 2021
+ *  Created on: 13 May 2021
  *
  *@Author: Ayato Yoshida
  *
@@ -16,8 +16,17 @@
  *@Usertouch(functionname)&_(variable_name)
  *
  */
+#ifndef INC_COMMAND_HPP_
+#define INC_COMMAND_HPP_
 
-#include <main.h>
-#include "Communication.hpp"
+
+enum class E_robot_name{
+
+	A,
+	B,
+	C,
+};
 
 
+
+#endif /* INC_COMMAND_HPP_ */

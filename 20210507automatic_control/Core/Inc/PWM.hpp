@@ -22,7 +22,7 @@
 #ifndef INC_PWM_HPP_
 #define INC_PWM_HPP_
 
-#include "main.h"
+#include <main.h>
 
 class PWM{
 public:

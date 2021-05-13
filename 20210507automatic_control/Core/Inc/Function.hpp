@@ -19,7 +19,7 @@
 #ifndef INC_FUNCTION_HPP_
 #define INC_FUNCTION_HPP_
 
-#include "main.h"
+#include <main.h>
 
 class Function{
 public:
