@@ -19,6 +19,7 @@
 
 
 
+#include <General_command.hpp>
 #include "main.h"
 #include "Self_Pos.hpp"
 #include "bno055.h"
@@ -162,9 +163,33 @@ float Self_Pos::Gyro::get_gravity(){
 }
 
 int16_t Self_Pos::Gyro::get_direction(){
+
+	this -> direction += this -> initial_direction;
+	if( this -> direction > 360 ){
+		this -> direction -= 360;
+	}
+
 	return this -> direction;
 }
 
+
+void Self_Pos::Gyro::set_initial_direction(E_robot_name robot){
+	switch(robot){
+	case E_robot_name::A:
+		this -> initial_direction = 90;
+		break;
+	case E_robot_name::B:
+		this -> initial_direction = 180;
+		break;
+	case E_robot_name::C:
+		this -> initial_direction = 270;
+		break;
+	}
+}
+
+
 int16_t Self_Pos::Gyro::direction = 0;
 float Self_Pos::Gyro::gravity = 0;
+int16_t Self_Pos::Gyro::initial_direction = 0;
+
 

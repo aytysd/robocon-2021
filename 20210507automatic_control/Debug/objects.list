@@ -1,6 +1,8 @@
 "Core/Src/Communication.o"
 "Core/Src/Function.o"
+"Core/Src/Init_Move.o"
 "Core/Src/Jump.o"
+"Core/Src/LED.o"
 "Core/Src/Line.o"
 "Core/Src/PWM.o"
 "Core/Src/Self_Pos.o"
