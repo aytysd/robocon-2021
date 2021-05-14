@@ -20,34 +20,27 @@
 #include "PWM.hpp"
 #include "stdio.h"
 #include <iostream>
+#include "General_command.hpp"
 
 
-double V1 = 0;
-double V2 = 0;
-double V3 = 0;
-double V4 = 0;
 
-double Vx = 0;
-double Vy = 0;
-
-
-void PWM::V_output(double V, double fai, double rotation_speed, double attitude_angle, bool stop)
+void PWM::V_output(double V, double fai, double rotation_speed, double attitude_angle, E_move_status status)
 {
-	if( stop != true ){
+	if( status == E_move_status::MOVE ){
 
 		Function* function = new Function();
 
-		Vx = V * cos(fai/180 * M_PI);
-		Vy = V * sin(fai/180 * M_PI);
+		double Vx = V * cos(fai/180 * M_PI);
+		double Vy = V * sin(fai/180 * M_PI);
 
 		attitude_angle = attitude_angle/180 * M_PI;
 
 
 
-		V1 = Vx * cos( attitude_angle + M_PI/4) + Vy * sin( attitude_angle + M_PI/4) + rotation_speed;
-		V2 = Vx * cos( attitude_angle + M_PI * 3/4) + Vy * sin( attitude_angle + M_PI * 3/4) + rotation_speed;
-		V3 = Vx * cos( attitude_angle + M_PI * 5/4) + Vy * sin( attitude_angle + M_PI * 5/4) + rotation_speed;
-		V4 = Vx * cos( attitude_angle + M_PI * 7/4) + Vy * sin( attitude_angle + M_PI * 7/4) + rotation_speed;
+		double V1 = Vx * cos( attitude_angle + M_PI/4) + Vy * sin( attitude_angle + M_PI/4) + rotation_speed;
+		double V2 = Vx * cos( attitude_angle + M_PI * 3/4) + Vy * sin( attitude_angle + M_PI * 3/4) + rotation_speed;
+		double V3 = Vx * cos( attitude_angle + M_PI * 5/4) + Vy * sin( attitude_angle + M_PI * 5/4) + rotation_speed;
+		double V4 = Vx * cos( attitude_angle + M_PI * 7/4) + Vy * sin( attitude_angle + M_PI * 7/4) + rotation_speed;
 
 		uint8_t V1_pwm = (abs(V1) + 17.242) / 23.677;
 		uint8_t V2_pwm = (abs(V2) + 17.242) / 23.677;
@@ -64,7 +57,7 @@ void PWM::V_output(double V, double fai, double rotation_speed, double attitude_
 		delete function;
 
 	}
-	else{
+	else if( status == E_move_status::STOP ){
 		Function* function = new Function();
 
 		function -> drive_motor(1, 3, 0);
@@ -73,6 +66,18 @@ void PWM::V_output(double V, double fai, double rotation_speed, double attitude_
 		function -> drive_motor(4, 3, 0);
 
 		delete function;
+
+	}
+	else if( status == E_move_status::FREE ){
+		Function* function = new Function();
+
+		function -> drive_motor(1, 0, 0);
+		function -> drive_motor(2, 0, 0);
+		function -> drive_motor(3, 0, 0);
+		function -> drive_motor(4, 0, 0);
+
+		delete function;
+
 
 	}
 }

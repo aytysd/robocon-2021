@@ -111,7 +111,7 @@ int Line::MoveLine
 				TG_r = TG_r -360;
 			}
 
-			pwm -> V_output(100, TG_r, 0, now_r, false);
+			pwm -> V_output(100, TG_r, 0, now_r, E_move_status::MOVE);
 			judge = 2;
 
 			delete pwm;
@@ -121,7 +121,7 @@ int Line::MoveLine
 		{
 			PWM* pwm = new PWM();
 
-			pwm -> V_output(devTG, TG_r, 0, now_r, true);
+			pwm -> V_output(devTG, TG_r, 0, now_r, E_move_status::STOP);
 			judge = 1;
 
 			delete pwm;
@@ -131,7 +131,7 @@ int Line::MoveLine
 	{
 		PWM* pwm = new PWM();
 
-		pwm -> V_output(devTG, TG_r, 0, now_r, false);
+		pwm -> V_output(devTG, TG_r, 0, now_r, E_move_status::MOVE);
 		judge = 0;
 
 		delete pwm;

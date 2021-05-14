@@ -37,7 +37,7 @@ void Function::drive_solenoid_valve( int port_number, int ON_OFF)
 void Function::drive_LED(int color, int brightness)
 {
 	uint8_t LED = (color << 6) | brightness;
-	HAL_UART_Transmit(&huart4, &LED, sizeof(LED), 3000);
+	HAL_UART_Transmit(&huart5, &LED, sizeof(LED), 3000);
 }
 
 
