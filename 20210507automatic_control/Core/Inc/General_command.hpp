@@ -33,5 +33,16 @@ enum class E_move_status{
 	STOP,
 	FREE,
 };
+enum class E_status{
+
+	INIT_MOVE,
+	OPR_MODE,
+	STOP_MODE,
+	JUMP_MODE,
+	FINISH_MODE,
+
+};
+
+
 
 #endif /* INC_GENERAL_COMMAND_HPP_ */

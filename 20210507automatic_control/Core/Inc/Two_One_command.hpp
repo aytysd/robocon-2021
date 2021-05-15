@@ -22,6 +22,12 @@
 
 namespace Two_One{
 
+enum class B{
+
+	ALIGN = 2000,
+	START,
+};
+
 }
 
 

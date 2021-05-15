@@ -52,8 +52,7 @@ public:
 	};
 private:
 	uint32_t encoder_read_5(void);
-	uint32_t encoder_read_3(void);
-	uint32_t encoder_read_1(void);
+	uint32_t encoder_read_2(void);
 
 };
 

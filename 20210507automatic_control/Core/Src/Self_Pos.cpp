@@ -31,13 +31,9 @@ uint32_t Self_Pos::encoder_read_5(void)
 {
 	return TIM5 -> CNT;
 }
-uint32_t Self_Pos::encoder_read_1(void)
+uint32_t Self_Pos::encoder_read_2(void)
 {
-	return TIM1 -> CNT;
-}
-uint32_t Self_Pos::encoder_read_3(void)
-{
-	return TIM3 -> CNT;
+	return TIM2 -> CNT;
 }
 
 void Self_Pos::Gyro::BNO055_Init_I2C(I2C_HandleTypeDef* hi2c_device) {

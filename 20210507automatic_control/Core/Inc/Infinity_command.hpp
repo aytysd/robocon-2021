@@ -21,7 +21,22 @@
 
 namespace Infinity{
 
+enum class E_B_status{
+
+	ALIGN = 4000,
+	STOP,
+	JUMP,
+
+};
+
+enum class E_C_status{
+
+	LINE
+};
+
 }
+
+
 
 
 
