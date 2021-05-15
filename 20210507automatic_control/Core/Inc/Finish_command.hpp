@@ -11,7 +11,7 @@
  *
  *@Output(value)to(where)
  *
- *@Attention_(begins from 5000)
+ *@Attention_(begins from 100)
  *
  *@Usertouch(functionname)&_(variable_name)
  *
@@ -20,6 +20,19 @@
 #define INC_FINISH_COMMAND_HPP_
 
 namespace Finish{
+
+enum class B{
+
+	START = 100,
+	FINISH = 127,
+};
+
+enum class C{
+
+	START = 100,
+	FINISH = 127
+};
+
 
 }
 

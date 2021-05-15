@@ -11,7 +11,7 @@
  *
  *@Output(value)to(where)
  *
- *@Attention_(begins from 4000)
+ *@Attention_(begins from 75)
  *
  *@Usertouch(functionname)&_(variable_name)
  *
@@ -21,17 +21,16 @@
 
 namespace Infinity{
 
-enum class E_B_status{
+enum class B{
 
-	ALIGN = 4000,
-	STOP,
-	JUMP,
-
+	START = 75,
+	FINISH = 99,
 };
 
-enum class E_C_status{
+enum class C{
 
-	LINE
+	START = 75,
+	FINISH = 99,
 };
 
 }

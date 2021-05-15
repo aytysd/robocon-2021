@@ -11,7 +11,7 @@
  *
  *@Output(value)to(where)
  *
- *@Attention_(begins from 3000)
+ *@Attention_(begins from 50)
  *
  *@Usertouch(functionname)&_(variable_name)
  *
@@ -21,6 +21,17 @@
 
 namespace Two_Three{
 
+enum class B{
+
+	START = 50,
+	FINISH = 74,
+};
+
+enum class C{
+
+	START = 50,
+	FINISH = 74
+};
 }
 
 
