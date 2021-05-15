@@ -11,7 +11,7 @@
  *
  *@Output(value)to(where)
  *
- *@Attention_(begins from 1000)
+ *@Attention_(begins from 0)
  *
  *@Usertouch(functionname)&_(variable_name)
  *
@@ -20,6 +20,16 @@
 #define INC_INITIAL_COMMAND_HPP_
 
 namespace Initial{
+
+enum class B{
+	START = 0,
+	FINISH = 24,
+};
+
+enum class C{
+	START = 0,
+	FINISH = 24,
+};
 
 }
 

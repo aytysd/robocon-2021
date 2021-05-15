@@ -11,7 +11,7 @@
  *
  *@Output(value)to(where)
  *
- *@Attention_(begins from 2000)
+ *@Attention_(begins from 25)
  *
  *@Usertouch(functionname)&_(variable_name)
  *
@@ -24,8 +24,15 @@ namespace Two_One{
 
 enum class B{
 
-	ALIGN = 2000,
-	START,
+	START = 25,
+	FINISH = 49,
+
+};
+
+enum class C{
+
+	START = 25,
+	FINISH = 49,
 };
 
 }
