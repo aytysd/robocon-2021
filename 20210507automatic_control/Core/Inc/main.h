@@ -66,6 +66,56 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+#define LIMIT_L_V4_Pin GPIO_PIN_13
+#define LIMIT_L_V4_GPIO_Port GPIOC
+#define LIMIT_L_V4_EXTI_IRQn EXTI15_10_IRQn
+#define SPARE_Pin GPIO_PIN_0
+#define SPARE_GPIO_Port GPIOH
+#define SPARE_EXTI_IRQn EXTI0_IRQn
+#define SPAREH1_Pin GPIO_PIN_1
+#define SPAREH1_GPIO_Port GPIOH
+#define SPAREH1_EXTI_IRQn EXTI1_IRQn
+#define LIMIT_F_V3_Pin GPIO_PIN_2
+#define LIMIT_F_V3_GPIO_Port GPIOC
+#define LIMIT_F_V3_EXTI_IRQn EXTI2_IRQn
+#define LIMIT_L_V3_Pin GPIO_PIN_3
+#define LIMIT_L_V3_GPIO_Port GPIOC
+#define LIMIT_L_V3_EXTI_IRQn EXTI3_IRQn
+#define X_OD_Pin GPIO_PIN_0
+#define X_OD_GPIO_Port GPIOA
+#define X_ODA1_Pin GPIO_PIN_1
+#define X_ODA1_GPIO_Port GPIOA
+#define Y_OD_Pin GPIO_PIN_5
+#define Y_OD_GPIO_Port GPIOA
+#define SOLENOID_RX_Pin GPIO_PIN_5
+#define SOLENOID_RX_GPIO_Port GPIOC
+#define SOLENOID_TX_Pin GPIO_PIN_10
+#define SOLENOID_TX_GPIO_Port GPIOB
+#define MOTOR_TX_Pin GPIO_PIN_6
+#define MOTOR_TX_GPIO_Port GPIOC
+#define MOTOR_RX_Pin GPIO_PIN_7
+#define MOTOR_RX_GPIO_Port GPIOC
+#define SBDBT_TX_Pin GPIO_PIN_9
+#define SBDBT_TX_GPIO_Port GPIOA
+#define SBDBT_RX_Pin GPIO_PIN_10
+#define SBDBT_RX_GPIO_Port GPIOA
+#define SBDBT_TXC10_Pin GPIO_PIN_10
+#define SBDBT_TXC10_GPIO_Port GPIOC
+#define SBDBT_RXC11_Pin GPIO_PIN_11
+#define SBDBT_RXC11_GPIO_Port GPIOC
+#define LED_TX_Pin GPIO_PIN_12
+#define LED_TX_GPIO_Port GPIOC
+#define LED_RX_Pin GPIO_PIN_2
+#define LED_RX_GPIO_Port GPIOD
+#define Y_ODB3_Pin GPIO_PIN_3
+#define Y_ODB3_GPIO_Port GPIOB
+#define LIMIT_F_V2_Pin GPIO_PIN_5
+#define LIMIT_F_V2_GPIO_Port GPIOB
+#define LIMIT_F_V2_EXTI_IRQn EXTI9_5_IRQn
+#define Gyro_SCL_Pin GPIO_PIN_8
+#define Gyro_SCL_GPIO_Port GPIOB
+#define Gyro_SDA_Pin GPIO_PIN_9
+#define Gyro_SDA_GPIO_Port GPIOB
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */
