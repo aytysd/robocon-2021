@@ -25,15 +25,43 @@
 #include "bno055.h"
 #include "stdio.h"
 
+int Self_Pos::encoder5=0;
+int Self_Pos::encoder2=0;
 
 
-uint32_t Self_Pos::encoder_read_5(void)
+
+int Self_Pos::encoder_read_5(void)
 {
-	return TIM5 -> CNT;
+	 uint32_t enc_buff_5 = TIM5->CNT;
+	  TIM5->CNT = 0;
+	  if (enc_buff_5 > 400000000)
+	  {
+		int Envalue5=enc_buff_5-4294967295;
+		this -> encoder5=+Envalue5;
+	    return this -> encoder5;
+	  }
+	  else
+	  {
+		this -> encoder5=+enc_buff_5;
+	    return this -> encoder5;
+	  }
 }
-uint32_t Self_Pos::encoder_read_2(void)
+
+int Self_Pos::encoder_read_2(void)
 {
-	return TIM2 -> CNT;
+	 uint32_t enc_buff_2 = TIM2->CNT;
+	  TIM2->CNT = 0;
+	  if (enc_buff_2 > 400000000)
+	  {
+		int Envalue2=enc_buff_2-4294967295;
+		this -> encoder2=+Envalue2;
+	    return this -> encoder2;
+	  }
+	  else
+	  {
+		this -> encoder2=+enc_buff_2;
+	    return this ->encoder2;
+	  }
 }
 
 void Self_Pos::Gyro::BNO055_Init_I2C(I2C_HandleTypeDef* hi2c_device) {

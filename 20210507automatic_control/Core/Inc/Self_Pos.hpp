@@ -35,7 +35,10 @@
 
 class Self_Pos{
 public:
+	int encoder_read_5(void);
+	int encoder_read_2(void);
 	Self_Pos(){
+
 	}
 	class Gyro{
 	public:
@@ -51,11 +54,14 @@ public:
 
 	};
 private:
-	uint32_t encoder_read_5(void);
-	uint32_t encoder_read_2(void);
+	static int encoder5;
+	static int encoder2;
+
 
 };
 
 
 
 #endif /* INC_SELF_POS_HPP_ */
+
+
