@@ -26,9 +26,12 @@
 class Trans_Controller{
 public:
 	static uint8_t controller_Rxdata[8];
-	static void identify_start_button(void);
-	static void reset_status(void);
-	static bool get_status(void);
+
+	void identify_start_button(void);
+	void identify_stop_button(void);
+
+	void reset_status(void);
+	bool get_status(void);
 private:
 	static bool status;
 };
