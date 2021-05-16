@@ -89,9 +89,14 @@ static void MX_I2C3_Init(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef*UartHandle){
-	HAL_UART_Receive_IT(&huart4, (uint8_t*)Trans_Controller::controller_Rxdata, sizeof(Trans_Controller::controller_Rxdata));
+	if( HAL_UART_Receive_IT(&huart4, (uint8_t*)Trans_Controller::controller_Rxdata, sizeof(Trans_Controller::controller_Rxdata)) != HAL_ERROR ){
 
-	Trans_Controller::identify_start_button();
+		Trans_Controller* trans_controller = new Trans_Controller();
+		trans_controller -> identify_start_button();
+		delete trans_controller;
+
+	}
+
 }
 
 /* USER CODE END 0 */
@@ -142,7 +147,7 @@ int main(void)
   Self_Pos::Gyro* gyro = new Self_Pos::Gyro();
   gyro-> BNO055_Init_I2C(&hi2c1);
   gyro -> set_initial_direction(E_robot_name::C);
-  HAL_UART_Receive_IT(&huart4, (uint8_t*)Communication::Controller::controller_Rxdata, sizeof(Communication::Controller::controller_Rxdata));
+  HAL_UART_Receive_IT(&huart4, (uint8_t*)Trans_Controller::controller_Rxdata, sizeof(Trans_Controller::controller_Rxdata));
   HAL_TIM_BASE_Start_IT(&htim6);
   HAL_TIM_Encoder_Start(&htim5, TIM_CHANNEL_ALL);
   HAL_TIM_Encoder_Start(&htim3, TIM_CHANNEL_ALL);
