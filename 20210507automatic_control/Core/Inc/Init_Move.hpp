@@ -19,19 +19,7 @@
 #ifndef INC_INIT_MOVE_HPP_
 #define INC_INIT_MOVE_HPP_
 
-namespace Init{
 
-enum class B{
-	START,
-	END,
-};
-
-enum class C{
-	START,
-	END,
-};
-
-}
 
 
 
