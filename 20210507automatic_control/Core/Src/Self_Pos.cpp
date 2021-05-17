@@ -24,11 +24,25 @@
 #include "Self_Pos.hpp"
 #include "bno055.h"
 #include "stdio.h"
+#include <math.h>
 
 int Self_Pos::encoder5=0;
 int Self_Pos::encoder2=0;
 
 
+
+int Self_Pos::get_Self_pos(void)
+{
+	double d1=(double)encoder_read_5()/2048*2*55.5*M_PI; //X座標の移動量(mm)
+	double d2=(double)encoder_read_2()/2048*2*55.5*M_PI; //Y座標の移動量（mm）
+
+	double X=d1*cos((double)get_direction())-d2*sin((double)get_direction());
+	double Y=d2*sin((double)get_direction())-d2*cos((double)get_direction());
+
+
+
+
+}
 
 int Self_Pos::encoder_read_5(void)
 {
@@ -45,6 +59,7 @@ int Self_Pos::encoder_read_5(void)
 		this -> encoder5=+enc_buff_5;
 	    return this -> encoder5;
 	  }
+
 }
 
 int Self_Pos::encoder_read_2(void)
