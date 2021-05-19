@@ -93,6 +93,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef*UartHandle){
 
 		Trans_Controller* trans_controller = new Trans_Controller();
 		trans_controller -> identify_start_button();
+		trans_controller -> identify_stop_button();
 		delete trans_controller;
 
 	}
