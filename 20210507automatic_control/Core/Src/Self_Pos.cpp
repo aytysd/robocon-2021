@@ -24,16 +24,59 @@
 #include "Self_Pos.hpp"
 #include "bno055.h"
 #include "stdio.h"
+#include <math.h>
+
+int Self_Pos::encoder5=0;
+int Self_Pos::encoder2=0;
 
 
 
-uint32_t Self_Pos::encoder_read_5(void)
+int Self_Pos::get_Self_pos(void)
 {
-	return TIM5 -> CNT;
+	double d1=(double)encoder_read_5()/2048*2*55.5*M_PI; //X座標の移動量(mm)
+	double d2=(double)encoder_read_2()/2048*2*55.5*M_PI; //Y座標の移動量（mm）
+
+	double X=d1*cos((double)get_direction())-d2*sin((double)get_direction());
+	double Y=d2*sin((double)get_direction())-d2*cos((double)get_direction());
+
+
+
+
 }
-uint32_t Self_Pos::encoder_read_2(void)
+
+int Self_Pos::encoder_read_5(void)
 {
-	return TIM2 -> CNT;
+	 uint32_t enc_buff_5 = TIM5->CNT;
+	  TIM5->CNT = 0;
+	  if (enc_buff_5 > 400000000)
+	  {
+		int Envalue5=enc_buff_5-4294967295;
+		this -> encoder5=+Envalue5;
+	    return this -> encoder5;
+	  }
+	  else
+	  {
+		this -> encoder5=+enc_buff_5;
+	    return this -> encoder5;
+	  }
+
+}
+
+int Self_Pos::encoder_read_2(void)
+{
+	 uint32_t enc_buff_2 = TIM2->CNT;
+	  TIM2->CNT = 0;
+	  if (enc_buff_2 > 400000000)
+	  {
+		int Envalue2=enc_buff_2-4294967295;
+		this -> encoder2=+Envalue2;
+	    return this -> encoder2;
+	  }
+	  else
+	  {
+		this -> encoder2=+enc_buff_2;
+	    return this ->encoder2;
+	  }
 }
 
 void Self_Pos::Gyro::BNO055_Init_I2C(I2C_HandleTypeDef* hi2c_device) {

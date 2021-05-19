@@ -95,6 +95,10 @@ void Error_Handler(void);
 #define MOTOR_TX_GPIO_Port GPIOC
 #define MOTOR_RX_Pin GPIO_PIN_7
 #define MOTOR_RX_GPIO_Port GPIOC
+#define ToF_Pin GPIO_PIN_9
+#define ToF_GPIO_Port GPIOC
+#define ToFA8_Pin GPIO_PIN_8
+#define ToFA8_GPIO_Port GPIOA
 #define SBDBT_TX_Pin GPIO_PIN_9
 #define SBDBT_TX_GPIO_Port GPIOA
 #define SBDBT_RX_Pin GPIO_PIN_10

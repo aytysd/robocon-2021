@@ -56,6 +56,7 @@
 /* USER CODE BEGIN 0 */
 Self_Pos::Gyro* gyro = new Self_Pos::Gyro();
 Trans_Controller* trans_controller = new Trans_Controller();
+
 /* USER CODE END 0 */
 
 /* External variables --------------------------------------------------------*/
@@ -358,6 +359,7 @@ void TIM6_DAC_IRQHandler(void)
   /* USER CODE BEGIN TIM6_DAC_IRQn 1 */
   gyro -> BNO055_update_gravity_direction(&hi2c1);
   trans_controller -> reset_status();
+
   /* USER CODE END TIM6_DAC_IRQn 1 */
 }
 
