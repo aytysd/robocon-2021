@@ -22,6 +22,7 @@
 #define INC_TRANS_CONTROLLER_HPP_
 
 #include "main.h"
+#include "General_command.hpp"
 
 class Trans_Controller{
 public:
@@ -31,9 +32,9 @@ public:
 	void identify_stop_button(void);
 
 	void reset_status(void);
-	bool get_status(void);
+	E_move_status get_status(void);
 private:
-	static bool status;
+	static E_move_status status;
 };
 
 
