@@ -85,6 +85,10 @@ void Error_Handler(void);
 #define X_OD_GPIO_Port GPIOA
 #define X_ODA1_Pin GPIO_PIN_1
 #define X_ODA1_GPIO_Port GPIOA
+#define SBDBT_CONTROLLER_Pin GPIO_PIN_2
+#define SBDBT_CONTROLLER_GPIO_Port GPIOA
+#define SBDBT_CONTROLLERA3_Pin GPIO_PIN_3
+#define SBDBT_CONTROLLERA3_GPIO_Port GPIOA
 #define Y_OD_Pin GPIO_PIN_5
 #define Y_OD_GPIO_Port GPIOA
 #define SOLENOID_RX_Pin GPIO_PIN_5
