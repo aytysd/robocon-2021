@@ -26,24 +26,47 @@
 #include "stdio.h"
 #include <math.h>
 
-int Self_Pos::encoder5=0;
-int Self_Pos::encoder2=0;
-
-
-
-int Self_Pos::get_Self_pos(void)
+double Self_Pos::encoder5=0;//X
+double Self_Pos::encoder2=0;//Y
+double Self_Pos::Self_Pos_X=0;//(mm)
+double Self_Pos::Self_Pos_Y=0;//(mm)
+//----------------------------------------------------------------------
+//Self_Pos* self_pos = new Self_Pos();
+void Self_Pos::set_initial_pos(E_robot_name robot)
 {
-	double d1=(double)encoder_read_5()/2048*2*55.5*M_PI; //X座標の移動量(mm)
-	double d2=(double)encoder_read_2()/2048*2*55.5*M_PI; //Y座標の移動量（mm）
-
-	double X=d1*cos((double)get_direction())-d2*sin((double)get_direction());
-	double Y=d2*sin((double)get_direction())-d2*cos((double)get_direction());
-
-
-
+	switch(robot){
+	case E_robot_name::A:
+		this -> encoder5=(-3000+252.5)/(55.5*2*M_PI)*2048;
+		this -> encoder2=(3000-252.5)/(55.5*2*M_PI)*2048;
+		break;
+	case E_robot_name::B:
+		this -> encoder5=(-3000+252.5)/(55.5*2*M_PI)*2048;
+		this -> encoder2=(-3000+252.5)/(55.5*2*M_PI)*2048;
+		break;
+	case E_robot_name::C:
+		this -> encoder5=(3000-252.5)/(55.5*2*M_PI)*2048;
+		this -> encoder2=(-3000+252.5)/(55.5*2*M_PI)*2048;
+		break;
+	}
 
 }
+//delete self_pos;
+//-------------------------------------
+//Self_Pos* self_pos = new Self_Pos();
+void Self_Pos::get_Self_Pos_A(void)
+{
+	Self_Pos::Gyro* gyro = new Self_Pos::Gyro();
+	
+	double d1=(double)this -> encoder_read_5()/2048*2*55.5*M_PI; //encoder5_moving distance(mm) 55.5=wheel radius 2048=encoder resolution
+	double d2=(double)this -> encoder_read_2()/2048*2*55.5*M_PI; //encoder2_moving distance(mm) 55.5=wheel radius 2048=encoder resolution
 
+	double Self_Pos_X=(-1)*d1*cos((double)gyro -> get_direction()*M_PI/180)-d2*sin((double)gyro -> get_direction()*M_PI/180);//X_coordinate
+	double Self_Pos_Y=(-1)*d2*sin((double)gyro -> get_direction()*M_PI/180)-d2*cos((double)gyro -> get_direction()*M_PI/180);//Y_coordinate
+
+	delete gyro;
+}
+//delete self_pos;
+//---------------------------------------
 int Self_Pos::encoder_read_5(void)
 {
 	 uint32_t enc_buff_5 = TIM5->CNT;
@@ -59,9 +82,8 @@ int Self_Pos::encoder_read_5(void)
 		this -> encoder5=+enc_buff_5;
 	    return this -> encoder5;
 	  }
-
 }
-
+//------------------------------------------------------
 int Self_Pos::encoder_read_2(void)
 {
 	 uint32_t enc_buff_2 = TIM2->CNT;
@@ -78,7 +100,7 @@ int Self_Pos::encoder_read_2(void)
 	    return this ->encoder2;
 	  }
 }
-
+//-------------------------------------------------------------------------
 void Self_Pos::Gyro::BNO055_Init_I2C(I2C_HandleTypeDef* hi2c_device) {
 
 	uint8_t GPwrMode 	= NormalG;   		// Gyro power mode
