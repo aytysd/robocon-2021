@@ -44,7 +44,7 @@ extern UART_HandleTypeDef huart4;
 extern UART_HandleTypeDef huart5;
 extern UART_HandleTypeDef huart1;
 
-
+extern I2C_HandleTypeDef hi2c3;
 extern I2C_HandleTypeDef hi2c1;
 /* USER CODE END ET */
 
