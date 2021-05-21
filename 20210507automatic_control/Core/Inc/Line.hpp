@@ -52,9 +52,8 @@ private:
 	double b;
 	double c;
 	double sqrtAABB;
-	double r;
-	double tg_X;
-	double tg_Y;
+	double now_X;
+	double now_Y;
 	double devX;
 	double devY;
 	double devTG;
@@ -62,14 +61,15 @@ private:
 	double now_r;
 	int judge;
 
+
 	void set(double befX, double befY, double tgX, double tgY);
-	double distance(double x, double y);
-	double TGdistance(double x, double y);
+	double distance(double x, double y, double tgX, double tgY);
+	double TGdistance(double x, double y, double tgX, double tgY);
 
 
 public:
 	int MoveLine
-	(double befX, double befY, double tgX, double tgY,double x, double y, bool throug);
+	(double befX, double befY, double tgX, double tgY, bool throug);
 };
 
 
