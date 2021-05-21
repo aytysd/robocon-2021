@@ -19,7 +19,9 @@
 #ifndef INC_LED_HPP_
 #define INC_LED_HPP_
 
+enum class E_LED_status{
 
+};
 
 
 

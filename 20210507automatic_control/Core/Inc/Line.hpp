@@ -62,11 +62,12 @@ private:
 	double now_r;
 	int judge;
 
-public:
-	Line();
 	void set(double befX, double befY, double tgX, double tgY);
 	double distance(double x, double y);
 	double TGdistance(double x, double y);
+
+
+public:
 	int MoveLine
 	(double befX, double befY, double tgX, double tgY,double x, double y, bool throug);
 };

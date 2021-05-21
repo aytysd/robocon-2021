@@ -36,9 +36,11 @@
 class Self_Pos{
 public:
 	void set_initial_pos(E_robot_name robot);
-	void get_Self_Pos_A(void);
-	int encoder_read_5(void);
-	int encoder_read_2(void);
+	void update_self_pos(void);
+
+	double get_Self_Pos_X(void);
+	double get_Self_Pos_Y(void);
+
 	Self_Pos(){
 	}
 	class Gyro{
@@ -55,6 +57,9 @@ public:
 
 	};
 private:
+	uint32_t encoder_read_5(void);
+	uint32_t encoder_read_2(void);
+
 	static double Self_Pos_X;//(mm)
 	static double Self_Pos_Y;//(mm)
 	static double encoder5;

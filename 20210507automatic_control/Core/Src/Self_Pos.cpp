@@ -32,6 +32,15 @@ double Self_Pos::Self_Pos_X=0;//(mm)
 double Self_Pos::Self_Pos_Y=0;//(mm)
 //----------------------------------------------------------------------
 //Self_Pos* self_pos = new Self_Pos();
+
+double Self_Pos::get_Self_Pos_X(){
+	return this -> Self_Pos_X;
+}
+
+double Self_Pos::get_Self_Pos_Y(){
+	return this -> Self_Pos_Y;
+}
+
 void Self_Pos::set_initial_pos(E_robot_name robot)
 {
 	switch(robot){
@@ -53,21 +62,21 @@ void Self_Pos::set_initial_pos(E_robot_name robot)
 //delete self_pos;
 //-------------------------------------
 //Self_Pos* self_pos = new Self_Pos();
-void Self_Pos::get_Self_Pos_A(void)
+void Self_Pos::update_self_pos(void)
 {
 	Self_Pos::Gyro* gyro = new Self_Pos::Gyro();
 	
 	double d1=(double)this -> encoder_read_5()/2048*2*55.5*M_PI; //encoder5_moving distance(mm) 55.5=wheel radius 2048=encoder resolution
 	double d2=(double)this -> encoder_read_2()/2048*2*55.5*M_PI; //encoder2_moving distance(mm) 55.5=wheel radius 2048=encoder resolution
 
-	double Self_Pos_X=(-1)*d1*cos((double)gyro -> get_direction()*M_PI/180)-d2*sin((double)gyro -> get_direction()*M_PI/180);//X_coordinate
-	double Self_Pos_Y=(-1)*d2*sin((double)gyro -> get_direction()*M_PI/180)-d2*cos((double)gyro -> get_direction()*M_PI/180);//Y_coordinate
+	this -> Self_Pos_X=(-1)*d1*cos((double)gyro -> get_direction()*M_PI/180)-d2*sin((double)gyro -> get_direction()*M_PI/180);//X_coordinate
+	this ->  Self_Pos_Y=(-1)*d2*sin((double)gyro -> get_direction()*M_PI/180)-d2*cos((double)gyro -> get_direction()*M_PI/180);//Y_coordinate
 
 	delete gyro;
 }
 //delete self_pos;
 //---------------------------------------
-int Self_Pos::encoder_read_5(void)
+uint32_t Self_Pos::encoder_read_5(void)
 {
 	 uint32_t enc_buff_5 = TIM5->CNT;
 	  TIM5->CNT = 0;
@@ -84,7 +93,7 @@ int Self_Pos::encoder_read_5(void)
 	  }
 }
 //------------------------------------------------------
-int Self_Pos::encoder_read_2(void)
+uint32_t Self_Pos::encoder_read_2(void)
 {
 	 uint32_t enc_buff_2 = TIM2->CNT;
 	  TIM2->CNT = 0;
