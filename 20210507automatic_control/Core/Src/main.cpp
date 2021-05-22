@@ -28,6 +28,7 @@
 #include "Self_Pos.hpp"
 #include "Communication.hpp"
 #include "Trans_Controller.hpp"
+#include "GPIO.hpp"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -99,6 +100,14 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef*UartHandle){
 		delete trans_controller;
 
 	}
+
+}
+
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+{
+	GPIO* gpio = new GPIO();
+	gpio -> identify(GPIO_Pin);
+	delete gpio;
 
 }
 
@@ -764,14 +773,14 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_PULLDOWN;
   HAL_GPIO_Init(PE_Sensor_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : SPAREA4_Pin Under_SW_V3_Pin Under_SW_V2_Pin LIMIT_L_V4_Pin */
-  GPIO_InitStruct.Pin = SPAREA4_Pin|Under_SW_V3_Pin|Under_SW_V2_Pin|LIMIT_L_V4_Pin;
+  /*Configure GPIO pins : SPAREA4_Pin Under_SW_V3_Pin Under_SW_V2_Pin */
+  GPIO_InitStruct.Pin = SPAREA4_Pin|Under_SW_V3_Pin|Under_SW_V2_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : Under_SW_V1_Pin LIMIT_F_V2_Pin */
-  GPIO_InitStruct.Pin = Under_SW_V1_Pin|LIMIT_F_V2_Pin;
+  /*Configure GPIO pins : LIMIT_L_V4_Pin Under_SW_V1_Pin LIMIT_F_V2_Pin */
+  GPIO_InitStruct.Pin = LIMIT_L_V4_Pin|Under_SW_V1_Pin|LIMIT_F_V2_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
