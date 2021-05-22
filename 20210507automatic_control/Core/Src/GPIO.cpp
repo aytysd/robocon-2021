@@ -76,9 +76,9 @@ void GPIO::identify(uint16_t GPIO_Pin){
 	}
 }
 
-bool GPIO::get_status(E_which which){
+bool GPIO::get_status(E_interrupt interrupt){
 	for(int i = 0; i<15; i++){
-		if( static_cast<int>(which) == i ){
+		if( static_cast<int>(interrupt) == i ){
 
 			bool temp = this -> GPIO::status[i];
 			this -> GPIO::status[i] = false;
