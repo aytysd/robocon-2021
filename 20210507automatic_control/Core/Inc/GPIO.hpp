@@ -5,15 +5,15 @@
  *
  *@Author: Ayato Yoshida
  *
- *@Purpose_of_this_class:(description_about_thisclass)
+ *@Purpose_of_this_class:(identify which interrupt happened)
  *
- *@Input(value)in(variable)of(functionname)
+ *@Input(interrupt label which you want to observe, listed in enum class E_interrupt)in(E_interrupt interrupt)of(bool get_status())
  *
- *@Output(value)to(where)
+ *@Output(true or false)to(get_status())
  *
- *@Attention_(description)
+ *@Attention_(once you get specific status via get_status(), the value of bool status[16] that you get will automatically be changed to false)
  *
- *@Usertouch(functionname)&_(variable_name)
+ *@Usertouch(bool get_status())
  *
  */
 #ifndef INC_GPIO_HPP_
@@ -21,7 +21,7 @@
 
 #include "main.h"
 
-enum class E_which{
+enum class E_interrupt{
 	PE_SENSOR =0,
 	UNDER_SW_V4,
 	LIMIT_F_V3,
@@ -30,12 +30,12 @@ enum class E_which{
 	LIMIT_F_V2,
 	SPARE2,
 	SPARE3,
-	SPARE4,
+	LIMIT_L_V4,
 	SPARE5,
 	SPARE6,
 	UNDER_SW_V3,
 	UNDER_SW_V2,
-	LIMIT_L_V4,
+	USER_BUTTON,
 	UNDER_SW_V1,
 	SPARE7,
 
@@ -45,7 +45,8 @@ enum class E_which{
 class GPIO{
 public:
 	void identify(uint16_t GPIO_Pin);
-	bool get_status(E_which which);
+	bool get_status(E_interrupt interrupt);
+
 private:
 	static bool status[16];
 

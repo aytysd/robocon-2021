@@ -20,6 +20,7 @@
 #include "main.h"
 
 
+/*
 void VL53L1_WrByte(uint16_t Dev, uint16_t index, uint8_t data) {
 
     _I2CBuffer[0] = index>>8;
@@ -31,7 +32,7 @@ void VL53L1_WrByte(uint16_t Dev, uint16_t index, uint8_t data) {
 
 void VL53L1X_StartRanging(uint16_t dev)
 {
-	VL53L1_WrByte(dev, SYSTEM__MODE_START, 0x40);	/* Enable VL53L1X */
+	VL53L1_WrByte(dev, SYSTEM__MODE_START, 0x40);	 Enable VL53L1X
 }
 void VL53L1X_SensorInit(uint16_t dev)
 {
@@ -81,9 +82,9 @@ void VL53L1X_SetTimingBudgetInMs(uint16_t dev, uint16_t TimingBudgetInMs)
 	VL53L1X_GetDistanceMode(dev, &DM);
 	if (DM == 0)
 		return 1;
-	else if (DM == 1) {	/* Short DistanceMode */
+	else if (DM == 1) {	 Short DistanceMode
 		switch (TimingBudgetInMs) {
-		case 15: /* only available in short distance mode */
+		case 15:  only available in short distance mode
 			VL53L1_WrWord(dev, RANGE_CONFIG__TIMEOUT_MACROP_A_HI, 0x01D);
 			VL53L1_WrWord(dev, RANGE_CONFIG__TIMEOUT_MACROP_B_HI, 0x0027);
 			break;
@@ -186,5 +187,6 @@ void VL53L1X_SetROI(uint16_t dev, uint16_t X, uint16_t Y)
 }
 
 
+*/
 
 

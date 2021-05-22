@@ -125,7 +125,7 @@ int main(void)
   /* MCU Configuration--------------------------------------------------------*/
 
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
-  HAL_Init();
+	HAL_Init();
 
   /* USER CODE BEGIN Init */
 
@@ -158,16 +158,18 @@ int main(void)
 
 /*
   Self_Pos::Gyro* gyro = new Self_Pos::Gyro();
+  Self_Pos* self_pos = new Self_Pos();
+  self_pos -> set_initial_direction(E_robot_name::C);
   gyro-> BNO055_Init_I2C(&hi2c1);
   gyro -> set_initial_direction(E_robot_name::C);
   HAL_UART_Receive_IT(&huart4, (uint8_t*)Trans_Controller::controller_Rxdata, sizeof(Trans_Controller::controller_Rxdata));
   HAL_TIM_BASE_Start_IT(&htim6);
   HAL_TIM_Encoder_Start(&htim5, TIM_CHANNEL_ALL);
+  HAL_TIM_Encoder_Start(&htim2, TIM_CHANNEL_ALL);
   HAL_TIM_Encoder_Start(&htim3, TIM_CHANNEL_ALL);
-  HAL_TIM_Encoder_Start(&htim1, TIM_CHANNEL_ALL);
+  HAL_TIM_Encoder_Start(&htim4, TIM_CHANNEL_ALL);
 
 */
-
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -761,8 +763,10 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOB_CLK_ENABLE();
   __HAL_RCC_GPIOD_CLK_ENABLE();
 
-  /*Configure GPIO pins : SPARE_Pin Under_SW_V4_Pin LIMIT_F_V3_Pin LIMIT_L_V3_Pin */
-  GPIO_InitStruct.Pin = SPARE_Pin|Under_SW_V4_Pin|LIMIT_F_V3_Pin|LIMIT_L_V3_Pin;
+  /*Configure GPIO pins : USER_BUTTON_Pin SPARE_Pin Under_SW_V4_Pin LIMIT_F_V3_Pin
+                           LIMIT_L_V3_Pin LIMIT_L_V4_Pin */
+  GPIO_InitStruct.Pin = USER_BUTTON_Pin|SPARE_Pin|Under_SW_V4_Pin|LIMIT_F_V3_Pin
+                          |LIMIT_L_V3_Pin|LIMIT_L_V4_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
@@ -779,8 +783,8 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : LIMIT_L_V4_Pin Under_SW_V1_Pin LIMIT_F_V2_Pin */
-  GPIO_InitStruct.Pin = LIMIT_L_V4_Pin|Under_SW_V1_Pin|LIMIT_F_V2_Pin;
+  /*Configure GPIO pins : Under_SW_V1_Pin LIMIT_F_V2_Pin */
+  GPIO_InitStruct.Pin = Under_SW_V1_Pin|LIMIT_F_V2_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
