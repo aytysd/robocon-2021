@@ -246,13 +246,13 @@ int16_t Self_Pos::Gyro::get_direction(){
 void Self_Pos::Gyro::set_initial_direction(E_robot_name robot){
 	switch(robot){
 	case E_robot_name::A:
-		this -> initial_direction = 90;
+		this -> initial_direction = 0;
 		break;
 	case E_robot_name::B:
-		this -> initial_direction = 180;
+		this -> initial_direction = 90;
 		break;
 	case E_robot_name::C:
-		this -> initial_direction = 270;
+		this -> initial_direction = 180;
 		break;
 	}
 }

@@ -98,6 +98,9 @@ void Error_Handler(void);
 #define SOLENOID_RX_GPIO_Port GPIOC
 #define SOLENOID_TX_Pin GPIO_PIN_10
 #define SOLENOID_TX_GPIO_Port GPIOB
+#define LIMIT_L_V4_Pin GPIO_PIN_13
+#define LIMIT_L_V4_GPIO_Port GPIOB
+#define LIMIT_L_V4_EXTI_IRQn EXTI15_10_IRQn
 #define Under_SW_V1_Pin GPIO_PIN_14
 #define Under_SW_V1_GPIO_Port GPIOB
 #define Under_SW_V1_EXTI_IRQn EXTI15_10_IRQn
@@ -119,9 +122,6 @@ void Error_Handler(void);
 #define Under_SW_V2_Pin GPIO_PIN_12
 #define Under_SW_V2_GPIO_Port GPIOA
 #define Under_SW_V2_EXTI_IRQn EXTI15_10_IRQn
-#define LIMIT_L_V4_Pin GPIO_PIN_13
-#define LIMIT_L_V4_GPIO_Port GPIOA
-#define LIMIT_L_V4_EXTI_IRQn EXTI15_10_IRQn
 #define SBDBT_TXC10_Pin GPIO_PIN_10
 #define SBDBT_TXC10_GPIO_Port GPIOC
 #define SBDBT_RXC11_Pin GPIO_PIN_11
