@@ -1,7 +1,7 @@
 /*
- * Init_Move.hpp
+ * GPIO.hpp
  *
- *  Created on: 14 May 2021
+ *  Created on: May 22, 2021
  *
  *@Author: Ayato Yoshida
  *
@@ -16,16 +16,17 @@
  *@Usertouch(functionname)&_(variable_name)
  *
  */
-#ifndef INC_INIT_MOVE_HPP_
-#define INC_INIT_MOVE_HPP_
+#ifndef INC_GPIO5_9_HPP_
+#define INC_GPIO5_9_HPP_
 
-#include "General_command.hpp"
 
-class Init_Move{
+class GPIO5_9{
 public:
-	void init_move(E_robot_name robot);
+	void identify(void);
+private:
+	static bool status[5] = {false, false, false, false, false};
+
 };
 
 
-
-#endif /* INC_INIT_MOVE_HPP_ */
+#endif /* INC_GPIO5_9_HPP_ */
