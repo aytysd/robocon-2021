@@ -66,15 +66,15 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
-#define LIMIT_L_V4_Pin GPIO_PIN_13
-#define LIMIT_L_V4_GPIO_Port GPIOC
-#define LIMIT_L_V4_EXTI_IRQn EXTI15_10_IRQn
-#define SPARE_Pin GPIO_PIN_0
-#define SPARE_GPIO_Port GPIOH
-#define SPARE_EXTI_IRQn EXTI0_IRQn
-#define SPAREH1_Pin GPIO_PIN_1
-#define SPAREH1_GPIO_Port GPIOH
-#define SPAREH1_EXTI_IRQn EXTI1_IRQn
+#define SPARE_Pin GPIO_PIN_15
+#define SPARE_GPIO_Port GPIOC
+#define SPARE_EXTI_IRQn EXTI15_10_IRQn
+#define PE_Sensor_Pin GPIO_PIN_0
+#define PE_Sensor_GPIO_Port GPIOC
+#define PE_Sensor_EXTI_IRQn EXTI0_IRQn
+#define Under_SW_V4_Pin GPIO_PIN_1
+#define Under_SW_V4_GPIO_Port GPIOC
+#define Under_SW_V4_EXTI_IRQn EXTI1_IRQn
 #define LIMIT_F_V3_Pin GPIO_PIN_2
 #define LIMIT_F_V3_GPIO_Port GPIOC
 #define LIMIT_F_V3_EXTI_IRQn EXTI2_IRQn
@@ -85,12 +85,22 @@ void Error_Handler(void);
 #define X_OD_GPIO_Port GPIOA
 #define X_ODA1_Pin GPIO_PIN_1
 #define X_ODA1_GPIO_Port GPIOA
+#define SBDBT_CONTROLLER_Pin GPIO_PIN_2
+#define SBDBT_CONTROLLER_GPIO_Port GPIOA
+#define SBDBT_CONTROLLERA3_Pin GPIO_PIN_3
+#define SBDBT_CONTROLLERA3_GPIO_Port GPIOA
+#define SPAREA4_Pin GPIO_PIN_4
+#define SPAREA4_GPIO_Port GPIOA
+#define SPAREA4_EXTI_IRQn EXTI4_IRQn
 #define Y_OD_Pin GPIO_PIN_5
 #define Y_OD_GPIO_Port GPIOA
 #define SOLENOID_RX_Pin GPIO_PIN_5
 #define SOLENOID_RX_GPIO_Port GPIOC
 #define SOLENOID_TX_Pin GPIO_PIN_10
 #define SOLENOID_TX_GPIO_Port GPIOB
+#define Under_SW_V1_Pin GPIO_PIN_14
+#define Under_SW_V1_GPIO_Port GPIOB
+#define Under_SW_V1_EXTI_IRQn EXTI15_10_IRQn
 #define MOTOR_TX_Pin GPIO_PIN_6
 #define MOTOR_TX_GPIO_Port GPIOC
 #define MOTOR_RX_Pin GPIO_PIN_7
@@ -103,6 +113,15 @@ void Error_Handler(void);
 #define SBDBT_TX_GPIO_Port GPIOA
 #define SBDBT_RX_Pin GPIO_PIN_10
 #define SBDBT_RX_GPIO_Port GPIOA
+#define Under_SW_V3_Pin GPIO_PIN_11
+#define Under_SW_V3_GPIO_Port GPIOA
+#define Under_SW_V3_EXTI_IRQn EXTI15_10_IRQn
+#define Under_SW_V2_Pin GPIO_PIN_12
+#define Under_SW_V2_GPIO_Port GPIOA
+#define Under_SW_V2_EXTI_IRQn EXTI15_10_IRQn
+#define LIMIT_L_V4_Pin GPIO_PIN_13
+#define LIMIT_L_V4_GPIO_Port GPIOA
+#define LIMIT_L_V4_EXTI_IRQn EXTI15_10_IRQn
 #define SBDBT_TXC10_Pin GPIO_PIN_10
 #define SBDBT_TXC10_GPIO_Port GPIOC
 #define SBDBT_RXC11_Pin GPIO_PIN_11
