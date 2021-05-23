@@ -1,0 +1,2 @@
+GPIO.cpp:22:6:void GPIO::identify(uint16_t)	16	static
+GPIO.cpp:79:6:bool GPIO::get_status(E_interrupt)	24	static

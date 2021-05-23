@@ -66,6 +66,9 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+#define USER_BUTTTON_Pin GPIO_PIN_13
+#define USER_BUTTTON_GPIO_Port GPIOC
+#define USER_BUTTTON_EXTI_IRQn EXTI15_10_IRQn
 #define SPARE_Pin GPIO_PIN_15
 #define SPARE_GPIO_Port GPIOC
 #define SPARE_EXTI_IRQn EXTI15_10_IRQn
@@ -98,9 +101,6 @@ void Error_Handler(void);
 #define SOLENOID_RX_GPIO_Port GPIOC
 #define SOLENOID_TX_Pin GPIO_PIN_10
 #define SOLENOID_TX_GPIO_Port GPIOB
-#define LIMIT_L_V4_Pin GPIO_PIN_13
-#define LIMIT_L_V4_GPIO_Port GPIOB
-#define LIMIT_L_V4_EXTI_IRQn EXTI15_10_IRQn
 #define Under_SW_V1_Pin GPIO_PIN_14
 #define Under_SW_V1_GPIO_Port GPIOB
 #define Under_SW_V1_EXTI_IRQn EXTI15_10_IRQn
@@ -108,6 +108,9 @@ void Error_Handler(void);
 #define MOTOR_TX_GPIO_Port GPIOC
 #define MOTOR_RX_Pin GPIO_PIN_7
 #define MOTOR_RX_GPIO_Port GPIOC
+#define LIMIT_L_V4_Pin GPIO_PIN_8
+#define LIMIT_L_V4_GPIO_Port GPIOC
+#define LIMIT_L_V4_EXTI_IRQn EXTI9_5_IRQn
 #define ToF_Pin GPIO_PIN_9
 #define ToF_GPIO_Port GPIOC
 #define ToFA8_Pin GPIO_PIN_8

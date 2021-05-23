@@ -15,9 +15,9 @@ stm32f4xx_it.cpp:269:6:void EXTI4_IRQHandler()	8	static
 stm32f4xx_it.cpp:283:6:void DMA1_Stream0_IRQHandler()	8	static
 stm32f4xx_it.cpp:297:6:void DMA1_Stream6_IRQHandler()	8	static
 stm32f4xx_it.cpp:311:6:void EXTI9_5_IRQHandler()	8	static
-stm32f4xx_it.cpp:325:6:void USART2_IRQHandler()	8	static
-stm32f4xx_it.cpp:339:6:void EXTI15_10_IRQHandler()	8	static
-stm32f4xx_it.cpp:357:6:void UART4_IRQHandler()	8	static
-stm32f4xx_it.cpp:371:6:void TIM6_DAC_IRQHandler()	8	static
-stm32f4xx_it.cpp:382:1:void __static_initialization_and_destruction_0(int, int)	16	static
-stm32f4xx_it.cpp:382:1:cpp)	8	static
+stm32f4xx_it.cpp:326:6:void USART2_IRQHandler()	8	static
+stm32f4xx_it.cpp:340:6:void EXTI15_10_IRQHandler()	8	static
+stm32f4xx_it.cpp:358:6:void UART4_IRQHandler()	8	static
+stm32f4xx_it.cpp:372:6:void TIM6_DAC_IRQHandler()	8	static
+stm32f4xx_it.cpp:383:1:void __static_initialization_and_destruction_0(int, int)	16	static
+stm32f4xx_it.cpp:383:1:cpp)	8	static

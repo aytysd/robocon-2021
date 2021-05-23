@@ -125,7 +125,7 @@ int main(void)
   /* MCU Configuration--------------------------------------------------------*/
 
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
-	HAL_Init();
+  HAL_Init();
 
   /* USER CODE BEGIN Init */
 
@@ -763,10 +763,10 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOB_CLK_ENABLE();
   __HAL_RCC_GPIOD_CLK_ENABLE();
 
-  /*Configure GPIO pins : USER_BUTTON_Pin SPARE_Pin Under_SW_V4_Pin LIMIT_F_V3_Pin
-                           LIMIT_L_V3_Pin LIMIT_L_V4_Pin */
-  GPIO_InitStruct.Pin = USER_BUTTON_Pin|SPARE_Pin|Under_SW_V4_Pin|LIMIT_F_V3_Pin
-                          |LIMIT_L_V3_Pin|LIMIT_L_V4_Pin;
+  /*Configure GPIO pins : USER_BUTTTON_Pin SPARE_Pin LIMIT_F_V3_Pin LIMIT_L_V3_Pin
+                           LIMIT_L_V4_Pin */
+  GPIO_InitStruct.Pin = USER_BUTTTON_Pin|SPARE_Pin|LIMIT_F_V3_Pin|LIMIT_L_V3_Pin
+                          |LIMIT_L_V4_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
@@ -777,17 +777,35 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_PULLDOWN;
   HAL_GPIO_Init(PE_Sensor_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : SPAREA4_Pin Under_SW_V3_Pin Under_SW_V2_Pin */
-  GPIO_InitStruct.Pin = SPAREA4_Pin|Under_SW_V3_Pin|Under_SW_V2_Pin;
+  /*Configure GPIO pin : Under_SW_V4_Pin */
+  GPIO_InitStruct.Pin = Under_SW_V4_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING_FALLING;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(Under_SW_V4_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : SPAREA4_Pin */
+  GPIO_InitStruct.Pin = SPAREA4_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(SPAREA4_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : Under_SW_V1_Pin */
+  GPIO_InitStruct.Pin = Under_SW_V1_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING_FALLING;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(Under_SW_V1_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : Under_SW_V3_Pin Under_SW_V2_Pin */
+  GPIO_InitStruct.Pin = Under_SW_V3_Pin|Under_SW_V2_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING_FALLING;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : Under_SW_V1_Pin LIMIT_F_V2_Pin */
-  GPIO_InitStruct.Pin = Under_SW_V1_Pin|LIMIT_F_V2_Pin;
+  /*Configure GPIO pin : LIMIT_F_V2_Pin */
+  GPIO_InitStruct.Pin = LIMIT_F_V2_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+  HAL_GPIO_Init(LIMIT_F_V2_GPIO_Port, &GPIO_InitStruct);
 
   /* EXTI interrupt init*/
   HAL_NVIC_SetPriority(EXTI0_IRQn, 0, 0);
