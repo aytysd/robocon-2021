@@ -9,19 +9,14 @@
  *@Purpose_of_this_class:(get the output along the target line)
  *
  *
- *@Input(before target X)in(befX)of(set & MoveLine)
- *@Input(before target Y)in(befY)of(set & MoveLine)
+ *@Input(before target X)in(befX)of(MoveLine)
+ *@Input(before target Y)in(befY)of(MoveLine)
  *@Input(target X)in(tgX)of(set & MoveLine)
  *@Input(target Y)in(tgX)of(set & MoveLine)
- *
- *@Input(now X)in(x)of(distance & TGdistance & MoveLine)
- *@Input(now Y)in(y)of(distance & TGdistamce & MoveLine)
  *
  *@Input(if a robot through the target pint)in(through)of(MoveLine)
  *
  *
- *@Output(the value of the distance between a robot and the target line)to(double distance)
- *@Output(the value of the horizontal distance from the robot to the target pint)to(double TGdisatace)
  *@Output(the result(0~2(0:must move, 1:stopped, 2:through the target point))to(MoveLine)
  *
  *
@@ -37,8 +32,6 @@
  *@Usertouch(MoveLine)&_(befY)
  *@Usertouch(MoveLine)&_(tgX)
  *@Usertouch(MoveLine)&_(tgY)
- *@Usertouch(MoveLine)&_(x)
- *@Usertouch(MoveLine)&_(Y)
  *@Usertouch(MoveLine)&_(through)
  *
  */
