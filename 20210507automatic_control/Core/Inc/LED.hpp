@@ -19,8 +19,21 @@
 #ifndef INC_LED_HPP_
 #define INC_LED_HPP_
 
-enum class E_LED_status{
+enum class E_LED_status
+{
+	Init,
+	Move,
+	Stop,
+	Jump,
+	Turn_the_rope,
+	Connecting,
+	Measurement,
+};
 
+class LED_Mode
+{
+public:
+	void LED_output(E_LED_status status);
 };
 
 
