@@ -23,6 +23,7 @@
 
 #include "main.h"
 #include "General_command.hpp"
+#include "PWM.hpp"
 
 class Trans_Controller{
 public:

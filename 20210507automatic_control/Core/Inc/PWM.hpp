@@ -25,9 +25,24 @@
 #include "main.h"
 #include "General_command.hpp"
 
+enum class E_Quadrant{
+
+	first = 0,
+	second,
+	third,
+	fourth,
+};
+enum class E_move_status{
+	MOVE,
+	STOP,
+	FREE,
+};
+
+
 class PWM{
 public:
 	void V_output(double V, double fai, double rotation_speed, double attitude_angle, E_move_status status);
+	bool rotate(double V, uint16_t target_angle);
 private:
 	uint8_t plus_minus(double number);
 
