@@ -28,11 +28,6 @@ enum class E_robot_name{
 	C,
 };
 
-enum class E_move_status{
-	MOVE,
-	STOP,
-	FREE,
-};
 enum class E_status{
 
 	INIT_MOVE,
