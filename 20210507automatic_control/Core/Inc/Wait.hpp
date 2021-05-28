@@ -20,13 +20,9 @@
 #define SRC_WAIT_HPP_
 
 
-class Wait{
-protected:
-	bool status_1;
-	bool status_2;
-	bool status_3;
+class Super_Wait{
 public:
-	bool wait(bool condition);
+	bool wait();
 
 };
 
