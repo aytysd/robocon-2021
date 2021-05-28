@@ -30,7 +30,9 @@ Core/Src/Init_Move.o: ../Core/Src/Init_Move.cpp ../Core/Inc/Init_Move.hpp \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h \
- ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
+ ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h \
+ ../Core/Inc/Super_Wait.hpp ../Core/Inc/LED.hpp ../Core/Inc/Self_Pos.hpp \
+ ../Core/Inc/GPIO.hpp ../Core/Inc/Controller.hpp ../Core/Inc/PWM.hpp
 
 ../Core/Inc/Init_Move.hpp:
 
@@ -101,3 +103,15 @@ Core/Src/Init_Move.o: ../Core/Src/Init_Move.cpp ../Core/Inc/Init_Move.hpp \
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h:
 
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h:
+
+../Core/Inc/Super_Wait.hpp:
+
+../Core/Inc/LED.hpp:
+
+../Core/Inc/Self_Pos.hpp:
+
+../Core/Inc/GPIO.hpp:
+
+../Core/Inc/Controller.hpp:
+
+../Core/Inc/PWM.hpp:

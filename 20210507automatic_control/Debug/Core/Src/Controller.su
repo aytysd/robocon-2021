@@ -1,0 +1,4 @@
+Controller.cpp:25:6:void Controller::identify_start_button()	32	static
+Controller.cpp:39:6:void Controller::identify_stop_button()	40	static
+Controller.cpp:61:6:void Controller::reset_status()	16	static
+Controller.cpp:65:15:E_move_status Controller::get_status()	16	static

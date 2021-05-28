@@ -1,4 +1,5 @@
-Core/Src/stm32f4xx_it.o: ../Core/Src/stm32f4xx_it.cpp ../Core/Inc/main.h \
+Core/Src/stm32f4xx_it.o: ../Core/Src/stm32f4xx_it.cpp \
+ ../Core/Inc/Controller.hpp ../Core/Inc/main.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h \
  ../Core/Inc/stm32f4xx_hal_conf.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h \
@@ -29,9 +30,11 @@ Core/Src/stm32f4xx_it.o: ../Core/Src/stm32f4xx_it.cpp ../Core/Inc/main.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h \
+ ../Core/Inc/General_command.hpp ../Core/Inc/PWM.hpp ../Core/Inc/main.h \
  ../Core/Inc/stm32f4xx_it.h ../Core/Inc/Self_Pos.hpp \
- ../Core/Inc/General_command.hpp ../Core/Inc/main.h \
- ../Core/Inc/Trans_Controller.hpp ../Core/Inc/General_command.hpp
+ ../Core/Inc/General_command.hpp
+
+../Core/Inc/Controller.hpp:
 
 ../Core/Inc/main.h:
 
@@ -95,14 +98,14 @@ Core/Src/stm32f4xx_it.o: ../Core/Src/stm32f4xx_it.cpp ../Core/Inc/main.h \
 
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h:
 
-../Core/Inc/stm32f4xx_it.h:
-
-../Core/Inc/Self_Pos.hpp:
-
 ../Core/Inc/General_command.hpp:
+
+../Core/Inc/PWM.hpp:
 
 ../Core/Inc/main.h:
 
-../Core/Inc/Trans_Controller.hpp:
+../Core/Inc/stm32f4xx_it.h:
+
+../Core/Inc/Self_Pos.hpp:
 
 ../Core/Inc/General_command.hpp:
