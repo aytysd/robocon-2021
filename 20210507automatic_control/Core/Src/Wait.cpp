@@ -20,15 +20,5 @@
 #include "Wait.hpp"
 #include <iostream>
 
-using namespace std;
 
-bool Wait::wait( bool condition ){
-
-	while( condition == false ){
-
-		cout << "wait young lady, he said" << endl;
-		HAL_Delay(1000);
-
-	}
-}
 

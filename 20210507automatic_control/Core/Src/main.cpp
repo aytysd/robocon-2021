@@ -18,6 +18,7 @@
   */
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
+#include <Controller.hpp>
 #include "main.h"
 
 /* Private includes ----------------------------------------------------------*/
@@ -27,8 +28,8 @@
 #include "stdio.h"
 #include "Self_Pos.hpp"
 #include "Communication.hpp"
-#include "Trans_Controller.hpp"
 #include "GPIO.hpp"
+#include "Init_Move.hpp"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -92,12 +93,12 @@ static void MX_TIM3_Init(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef*UartHandle){
-	if( HAL_UART_Receive_IT(&huart4, (uint8_t*)Trans_Controller::controller_Rxdata, sizeof(Trans_Controller::controller_Rxdata)) != HAL_ERROR ){
+	if( HAL_UART_Receive_IT(&huart4, (uint8_t*)Controller::controller_Rxdata, sizeof(Controller::controller_Rxdata)) != HAL_ERROR ){
 
-		Trans_Controller* trans_controller = new Trans_Controller();
-		trans_controller -> identify_start_button();
-		trans_controller -> identify_stop_button();
-		delete trans_controller;
+		Controller* controller = new Controller();
+		controller -> identify_start_button();
+		controller -> identify_stop_button();
+		delete controller;
 
 	}
 
@@ -120,6 +121,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 int main(void)
 {
   /* USER CODE BEGIN 1 */
+	Init_Move* init_move = new Init_Move();
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -155,21 +157,7 @@ int main(void)
   MX_I2C3_Init();
   MX_TIM3_Init();
   /* USER CODE BEGIN 2 */
-
-/*
-  Self_Pos::Gyro* gyro = new Self_Pos::Gyro();
-  Self_Pos* self_pos = new Self_Pos();
-  self_pos -> set_initial_direction(E_robot_name::C);
-  gyro-> BNO055_Init_I2C(&hi2c1);
-  gyro -> set_initial_direction(E_robot_name::C);
-  HAL_UART_Receive_IT(&huart4, (uint8_t*)Trans_Controller::controller_Rxdata, sizeof(Trans_Controller::controller_Rxdata));
-  HAL_TIM_BASE_Start_IT(&htim6);
-  HAL_TIM_Encoder_Start(&htim5, TIM_CHANNEL_ALL);
-  HAL_TIM_Encoder_Start(&htim2, TIM_CHANNEL_ALL);
-  HAL_TIM_Encoder_Start(&htim3, TIM_CHANNEL_ALL);
-  HAL_TIM_Encoder_Start(&htim4, TIM_CHANNEL_ALL);
-
-*/
+  init_move -> init_move(E_robot_name::A);
   /* USER CODE END 2 */
 
   /* Infinite loop */

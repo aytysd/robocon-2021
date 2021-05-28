@@ -19,12 +19,12 @@
 /* USER CODE END Header */
 
 /* Includes ------------------------------------------------------------------*/
+#include <Controller.hpp>
 #include "main.h"
 #include "stm32f4xx_it.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "Self_Pos.hpp"
-#include "Trans_Controller.hpp"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -55,7 +55,7 @@
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 Self_Pos::Gyro* gyro = new Self_Pos::Gyro();
-Trans_Controller* trans_controller = new Trans_Controller();
+Controller* controller = new Controller();
 
 /* USER CODE END 0 */
 
@@ -377,7 +377,7 @@ void TIM6_DAC_IRQHandler(void)
   HAL_TIM_IRQHandler(&htim6);
   /* USER CODE BEGIN TIM6_DAC_IRQn 1 */
   gyro -> BNO055_update_gravity_direction(&hi2c1);
-  trans_controller -> reset_status();
+  controller -> reset_status();
 
   /* USER CODE END TIM6_DAC_IRQn 1 */
 }

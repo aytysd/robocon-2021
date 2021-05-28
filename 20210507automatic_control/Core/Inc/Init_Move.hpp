@@ -24,6 +24,8 @@
 class Init_Move{
 public:
 	void init_move(E_robot_name robot);
+private:
+	void Initialize(void);
 };
 
 
