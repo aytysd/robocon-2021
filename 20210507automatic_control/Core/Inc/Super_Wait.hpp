@@ -1,7 +1,7 @@
 /*
- * Wait.hpp
+ * Super_Wait.hpp
  *
- *  Created on: 27 May 2021
+ *  Created on: 29 May 2021
  *
  *@Author: Ayato Yoshida
  *
@@ -16,15 +16,14 @@
  *@Usertouch(functionname)&_(variable_name)
  *
  */
-#ifndef SRC_WAIT_HPP_
-#define SRC_WAIT_HPP_
+#ifndef INC_SUPER_WAIT_HPP_
+#define INC_SUPER_WAIT_HPP_
 
 
 class Super_Wait{
 public:
-	bool wait();
-
+	void wait();
 };
 
 
-#endif /* SRC_WAIT_HPP_ */
+#endif /* INC_SUPER_WAIT_HPP_ */

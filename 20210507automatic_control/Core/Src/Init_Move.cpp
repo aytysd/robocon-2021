@@ -20,7 +20,7 @@
 #include "Init_Move.hpp"
 #include "General_command.hpp"
 #include "PWM.hpp"
-#include "Wait.hpp"
+#include "Super_Wait.hpp"
 #include "LED.hpp"
 #include "Self_Pos.hpp"
 #include "GPIO.hpp"
