@@ -85,7 +85,6 @@ void PWM::V_output(double V, double fai, double rotation_speed, double attitude_
 
 bool PWM::rotate(double V, uint16_t target_angle){
 
-	PWM* pwm = new PWM();
 	Self_Pos::Gyro* gyro = new Self_Pos::Gyro();
 
 
@@ -95,19 +94,19 @@ bool PWM::rotate(double V, uint16_t target_angle){
 
 		if( target_angle > gyro -> get_direction() ){
 			if( abs(diff) <= 180 ){
-				pwm -> V_output(0, 0, -V, 0, E_move_status::MOVE);
+				this -> V_output(0, 0, -V, 0, E_move_status::MOVE);
 				while( target_angle != gyro -> get_direction() ){
 
 				}
-				pwm -> V_output(0, 0, 0, 0, E_move_status::STOP);
+				this -> V_output(0, 0, 0, 0, E_move_status::STOP);
 				return true;
 			}else{
-				pwm -> V_output(0, 0, V, 0, E_move_status::MOVE);
+				this -> V_output(0, 0, V, 0, E_move_status::MOVE);
 
 				while( target_angle != gyro -> get_direction() ){
 
 				}
-				pwm -> V_output(0, 0, 0, 0, E_move_status::STOP);
+				this -> V_output(0, 0, 0, 0, E_move_status::STOP);
 				return true;
 
 			}
@@ -115,21 +114,21 @@ bool PWM::rotate(double V, uint16_t target_angle){
 		}else{
 
 			if( abs(diff) <= 180 ){
-				pwm -> V_output(0, 0, V, 0, E_move_status::MOVE);
+				this -> V_output(0, 0, V, 0, E_move_status::MOVE);
 
 				while( target_angle != gyro -> get_direction() ){
 
 				}
-				pwm -> V_output(0, 0, 0, 0, E_move_status::STOP);
+				this -> V_output(0, 0, 0, 0, E_move_status::STOP);
 				return true;
 
 			}else{
-				pwm -> V_output(0, 0, -V, 0, E_move_status::MOVE);
+				this -> V_output(0, 0, -V, 0, E_move_status::MOVE);
 
 				while( target_angle != gyro -> get_direction() ){
 
 				}
-				pwm -> V_output(0, 0, 0, 0, E_move_status::STOP);
+				this -> V_output(0, 0, 0, 0, E_move_status::STOP);
 				return true;
 
 			}
