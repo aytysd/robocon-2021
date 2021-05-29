@@ -25,13 +25,7 @@
 #include "main.h"
 #include "General_command.hpp"
 
-enum class E_Quadrant{
 
-	first = 0,
-	second,
-	third,
-	fourth,
-};
 enum class E_move_status{
 	MOVE,
 	STOP,

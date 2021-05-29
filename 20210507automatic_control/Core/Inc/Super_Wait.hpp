@@ -5,13 +5,9 @@
  *
  *@Author: Ayato Yoshida
  *
- *@Purpose_of_this_class:(description_about_thisclass)
+ *@Purpose_of_this_class:(provide super_class for wait class)
  *
- *@Input(value)in(variable)of(functionname)
- *
- *@Output(value)to(where)
- *
- *@Attention_(description)
+ *@Attention_(please use this after inheriting )
  *
  *@Usertouch(functionname)&_(variable_name)
  *

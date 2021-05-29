@@ -5,15 +5,15 @@
  *
  *@Author: Ayato Yoshida
  *
- *@Purpose_of_this_class:(description_about_thisclass)
+ *@Purpose_of_this_class:(execute initial movement for each robot)
  *
- *@Input(value)in(variable)of(functionname)
+ *@Input(the robot name you want to activate( E_robot_name:: ))in( E_robot_name robot )of( void init_move( E_robot_name robot ))
  *
  *@Output(value)to(where)
  *
  *@Attention_(description)
  *
- *@Usertouch(functionname)&_(variable_name)
+ *@Usertouch( void init_move( E_robot_name robot ) )
  *
  */
 #ifndef INC_INIT_MOVE_HPP_

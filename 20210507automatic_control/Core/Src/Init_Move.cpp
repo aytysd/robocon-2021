@@ -26,6 +26,8 @@
 #include "GPIO.hpp"
 #include "Controller.hpp"
 
+namespace Init_Wait{
+
 class Wait : public Super_Wait{
 public:
 
@@ -33,10 +35,10 @@ public:
 
 		GPIO* gpio = new GPIO();
 
-		while( true != gpio -> get_status( E_interrupt::LIMIT_F_V2 )){
+		while( ( true == gpio -> get_status( E_interrupt::LIMIT_F_V2 ) ) || ( true == gpio -> get_status( E_interrupt::LIMIT_F_V3 ) )){
 
 		}
-		while( true != gpio -> get_status( E_interrupt::LIMIT_F_V3 )){
+		while( ( true == gpio -> get_status( E_interrupt::LIMIT_F_V2 ) ) || ( true == gpio -> get_status( E_interrupt::LIMIT_F_V3 ) )){
 
 		}
 
@@ -49,10 +51,10 @@ public:
 
 		GPIO* gpio = new GPIO();
 
-		while( true != gpio -> get_status( E_interrupt::LIMIT_L_V3 )){
+		while( ( true == gpio -> get_status( E_interrupt::LIMIT_L_V3 ))|| (true == gpio -> get_status( E_interrupt::LIMIT_L_V4 )) ){
 
 		}
-		while( true != gpio -> get_status( E_interrupt::LIMIT_L_V4 )){
+		while( ( true == gpio -> get_status( E_interrupt::LIMIT_L_V3 )) || ( true == gpio -> get_status( E_interrupt::LIMIT_L_V4 ) )){
 
 		}
 
@@ -68,11 +70,13 @@ public:
 	}
 };
 
+}
+
 
 void Init_Move::init_move(E_robot_name robot){
 
 	PWM* pwm = new PWM();
-	Wait* wait = new Wait();
+	Init_Wait::Wait* wait = new Init_Wait::Wait();
 	LED_Mode* led = new LED_Mode();
 
 	led -> LED_output(E_LED_status::Init);
@@ -127,7 +131,7 @@ void Init_Move::Initialize(){
 	  Self_Pos* self_pos = new Self_Pos();
 
 	  self_pos -> set_initial_pos(E_robot_name::A);
-	  gyro-> BNO055_Init_I2C(&hi2c1);
+	  gyro -> BNO055_Init_I2C(&hi2c1);
 	  gyro -> set_initial_direction(E_robot_name::A);
 
 	  HAL_UART_Receive_IT(&huart4, (uint8_t*)Controller::controller_Rxdata, sizeof(Controller::controller_Rxdata));
