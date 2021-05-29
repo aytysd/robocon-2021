@@ -18,7 +18,6 @@
   */
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
-#include <Controller.hpp>
 #include "main.h"
 
 /* Private includes ----------------------------------------------------------*/
@@ -751,19 +750,19 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOB_CLK_ENABLE();
   __HAL_RCC_GPIOD_CLK_ENABLE();
 
-  /*Configure GPIO pins : USER_BUTTTON_Pin SPARE_Pin LIMIT_F_V3_Pin LIMIT_L_V3_Pin
+  /*Configure GPIO pins : PE_Sensor_B_Pin SPARE_Pin LIMIT_F_V3_Pin LIMIT_L_V3_Pin
                            LIMIT_L_V4_Pin */
-  GPIO_InitStruct.Pin = USER_BUTTTON_Pin|SPARE_Pin|LIMIT_F_V3_Pin|LIMIT_L_V3_Pin
+  GPIO_InitStruct.Pin = PE_Sensor_B_Pin|SPARE_Pin|LIMIT_F_V3_Pin|LIMIT_L_V3_Pin
                           |LIMIT_L_V4_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : PE_Sensor_Pin */
-  GPIO_InitStruct.Pin = PE_Sensor_Pin;
+  /*Configure GPIO pin : PE_Sensor_T_Pin */
+  GPIO_InitStruct.Pin = PE_Sensor_T_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
   GPIO_InitStruct.Pull = GPIO_PULLDOWN;
-  HAL_GPIO_Init(PE_Sensor_GPIO_Port, &GPIO_InitStruct);
+  HAL_GPIO_Init(PE_Sensor_T_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pin : Under_SW_V4_Pin */
   GPIO_InitStruct.Pin = Under_SW_V4_Pin;
@@ -771,11 +770,11 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(Under_SW_V4_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : SPAREA4_Pin */
-  GPIO_InitStruct.Pin = SPAREA4_Pin;
+  /*Configure GPIO pin : PE_Sensor_F_Pin */
+  GPIO_InitStruct.Pin = PE_Sensor_F_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(SPAREA4_GPIO_Port, &GPIO_InitStruct);
+  HAL_GPIO_Init(PE_Sensor_F_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pin : Under_SW_V1_Pin */
   GPIO_InitStruct.Pin = Under_SW_V1_Pin;

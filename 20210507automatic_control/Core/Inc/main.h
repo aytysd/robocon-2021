@@ -73,15 +73,15 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
-#define USER_BUTTTON_Pin GPIO_PIN_13
-#define USER_BUTTTON_GPIO_Port GPIOC
-#define USER_BUTTTON_EXTI_IRQn EXTI15_10_IRQn
+#define PE_Sensor_B_Pin GPIO_PIN_13
+#define PE_Sensor_B_GPIO_Port GPIOC
+#define PE_Sensor_B_EXTI_IRQn EXTI15_10_IRQn
 #define SPARE_Pin GPIO_PIN_15
 #define SPARE_GPIO_Port GPIOC
 #define SPARE_EXTI_IRQn EXTI15_10_IRQn
-#define PE_Sensor_Pin GPIO_PIN_0
-#define PE_Sensor_GPIO_Port GPIOC
-#define PE_Sensor_EXTI_IRQn EXTI0_IRQn
+#define PE_Sensor_T_Pin GPIO_PIN_0
+#define PE_Sensor_T_GPIO_Port GPIOC
+#define PE_Sensor_T_EXTI_IRQn EXTI0_IRQn
 #define Under_SW_V4_Pin GPIO_PIN_1
 #define Under_SW_V4_GPIO_Port GPIOC
 #define Under_SW_V4_EXTI_IRQn EXTI1_IRQn
@@ -99,9 +99,9 @@ void Error_Handler(void);
 #define SBDBT_CONTROLLER_GPIO_Port GPIOA
 #define SBDBT_CONTROLLERA3_Pin GPIO_PIN_3
 #define SBDBT_CONTROLLERA3_GPIO_Port GPIOA
-#define SPAREA4_Pin GPIO_PIN_4
-#define SPAREA4_GPIO_Port GPIOA
-#define SPAREA4_EXTI_IRQn EXTI4_IRQn
+#define PE_Sensor_F_Pin GPIO_PIN_4
+#define PE_Sensor_F_GPIO_Port GPIOA
+#define PE_Sensor_F_EXTI_IRQn EXTI4_IRQn
 #define Y_OD_Pin GPIO_PIN_5
 #define Y_OD_GPIO_Port GPIOA
 #define SOLENOID_RX_Pin GPIO_PIN_5
