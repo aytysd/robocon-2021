@@ -40,7 +40,6 @@ void GPIO::identify(uint16_t GPIO_Pin){
 	case GPIO_PIN_5:
 		this -> status[5] = true;
 		break;
-/*
 	case GPIO_PIN_6:
 		this -> status[6] = true;
 		break;
@@ -56,7 +55,6 @@ void GPIO::identify(uint16_t GPIO_Pin){
 	case GPIO_PIN_10:
 		this -> status[10] = true;
 		break;
-*/
 	case GPIO_PIN_11:
 		this -> status[11] = true;
 		break;
@@ -77,7 +75,7 @@ void GPIO::identify(uint16_t GPIO_Pin){
 }
 
 bool GPIO::get_status(E_interrupt interrupt){
-	for(int i = 0; i<15; i++){
+	for(int i = 0; i<16; i++){
 		if( static_cast<int>(interrupt) == i ){
 
 			bool temp = this -> GPIO::status[i];
@@ -86,6 +84,14 @@ bool GPIO::get_status(E_interrupt interrupt){
 		}
 	}
 	return false;
+}
+
+void GPIO::reset_status(){
+	for(int i = 0; i<16; i++){
+
+		GPIO::status[i] = false;
+	}
+
 }
 
 bool GPIO::status[16] = {false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false};

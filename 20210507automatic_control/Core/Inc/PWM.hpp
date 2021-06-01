@@ -26,11 +26,6 @@
 #include "General_command.hpp"
 
 
-enum class E_move_status{
-	MOVE,
-	STOP,
-	FREE,
-};
 
 
 class PWM{

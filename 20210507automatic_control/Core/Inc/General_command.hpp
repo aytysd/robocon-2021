@@ -28,15 +28,15 @@ enum class E_robot_name{
 	C,
 };
 
-enum class E_status{
 
-	INIT_MOVE,
-	OPR_MODE,
-	STOP_MODE,
-	JUMP_MODE,
-	FINISH_MODE,
-
+enum class E_move_status{
+	MOVE,
+	STOP,
+	FREE,
+	JUMPING,
+	LANDING,
 };
+
 
 
 

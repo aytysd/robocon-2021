@@ -49,10 +49,10 @@ void PWM::V_output(double V, double fai, double rotation_speed, double attitude_
 		uint8_t V4_pwm = (abs(V4) + 17.242) / 23.677;
 
 
-		function -> drive_motor(1, this -> plus_minus(V1), V1_pwm);
-		function -> drive_motor(2, this -> plus_minus(V2), V2_pwm);
-		function -> drive_motor(3, this -> plus_minus(V3), V3_pwm);
-		function -> drive_motor(4, this -> plus_minus(V4), V4_pwm);
+		function -> drive_motor(1, this -> plus_minus(V1), V1_pwm, (uint16_t)(abs((double)V1)));
+		function -> drive_motor(2, this -> plus_minus(V2), V2_pwm, (uint16_t)(abs((double)V1)));
+		function -> drive_motor(3, this -> plus_minus(V3), V3_pwm, (uint16_t)(abs((double)V1)));
+		function -> drive_motor(4, this -> plus_minus(V4), V4_pwm, (uint16_t)(abs((double)V1)));
 
 
 		delete function;
@@ -61,10 +61,10 @@ void PWM::V_output(double V, double fai, double rotation_speed, double attitude_
 	else if( status == E_move_status::STOP ){
 		Function* function = new Function();
 
-		function -> drive_motor(1, 3, 0);
-		function -> drive_motor(2, 3, 0);
-		function -> drive_motor(3, 3, 0);
-		function -> drive_motor(4, 3, 0);
+		function -> drive_motor(1, 3, 0, 0);
+		function -> drive_motor(2, 3, 0, 0);
+		function -> drive_motor(3, 3, 0, 0);
+		function -> drive_motor(4, 3, 0, 0);
 
 		delete function;
 
@@ -72,10 +72,10 @@ void PWM::V_output(double V, double fai, double rotation_speed, double attitude_
 	else if( status == E_move_status::FREE ){
 		Function* function = new Function();
 
-		function -> drive_motor(1, 0, 0);
-		function -> drive_motor(2, 0, 0);
-		function -> drive_motor(3, 0, 0);
-		function -> drive_motor(4, 0, 0);
+		function -> drive_motor(1, 0, 0, 0);
+		function -> drive_motor(2, 0, 0, 0);
+		function -> drive_motor(3, 0, 0, 0);
+		function -> drive_motor(4, 0, 0, 0);
 
 		delete function;
 

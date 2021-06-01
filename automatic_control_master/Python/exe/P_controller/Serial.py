@@ -1,6 +1,7 @@
 import serial
 import time
 
+
 SERIALPORT = "/dev/ttyUSB0"
 BAUDRATE = 115200
 
