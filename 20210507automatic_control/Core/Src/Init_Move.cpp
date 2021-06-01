@@ -117,7 +117,7 @@ void Init_Move::init_move(E_robot_name robot){
 		break;
 	}
 
-	this -> Initialize();
+	this -> Initialize(robot);
 
 	delete led;
 	delete pwm;
@@ -125,14 +125,14 @@ void Init_Move::init_move(E_robot_name robot){
 
 }
 
-void Init_Move::Initialize(){
+void Init_Move::Initialize(E_robot_name robot){
 
 	  Self_Pos::Gyro* gyro = new Self_Pos::Gyro();
 	  Self_Pos* self_pos = new Self_Pos();
 
-	  self_pos -> set_initial_pos(E_robot_name::A);
+	  self_pos -> set_initial_pos(robot);
 	  gyro -> BNO055_Init_I2C(&hi2c1);
-	  gyro -> set_initial_direction(E_robot_name::A);
+	  gyro -> set_initial_direction(robot);
 
 	  HAL_UART_Receive_IT(&huart4, (uint8_t*)Controller::controller_Rxdata, sizeof(Controller::controller_Rxdata));
 

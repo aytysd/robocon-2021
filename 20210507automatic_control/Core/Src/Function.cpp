@@ -22,9 +22,11 @@
 #include "main.h"
 #include "stdio.h"
 
-void Function::drive_motor(uint8_t motor_number, uint8_t direction, uint8_t PWM)
+void Function::drive_motor(uint8_t motor_number, uint8_t direction, uint8_t PWM, uint16_t speed)
 {
-	uint8_t motor[2] = {(1<<6) | (motor_number<<2) | direction, PWM};
+	uint8_t speed_p = ( speed & 0b1111111100000000 ) >> 8;
+	uint8_t speed_q = ( speed & 0b0000000011111111 );
+	uint8_t motor[4] = {(1<<6) | (motor_number<<2) | direction, PWM, speed_p, speed_q};
 	HAL_UART_Transmit(&huart6, (uint8_t*)motor, sizeof(motor), 100);
 }
 void Function::drive_solenoid_valve( int port_number, int ON_OFF)

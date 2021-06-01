@@ -24,6 +24,8 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "Self_Pos.hpp"
+#include "Controller.hpp"
+#include "GPIO.hpp"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -56,6 +58,7 @@
 Self_Pos::Gyro* gyro = new Self_Pos::Gyro();
 Controller* controller = new Controller();
 Self_Pos* self_pos = new Self_Pos();
+GPIO* gpio = new GPIO();
 
 /* USER CODE END 0 */
 
@@ -379,7 +382,7 @@ void TIM6_DAC_IRQHandler(void)
   gyro -> BNO055_update_gravity_direction(&hi2c1);
   controller -> reset_status();
   self_pos -> update_self_pos();
-
+  gpio -> reset_status();
 
   /* USER CODE END TIM6_DAC_IRQn 1 */
 }

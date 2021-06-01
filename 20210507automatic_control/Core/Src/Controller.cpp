@@ -51,7 +51,7 @@ void Controller::identify_stop_button(){
 		Function* function = new Function();
 		for(int i = 0; i<8; i++){
 
-			function -> drive_motor(i, 0, 0);
+			function -> drive_motor(i, 0, 0, 0);
 		}
 		Error_Handler();
 	}

@@ -46,6 +46,7 @@ class GPIO{
 public:
 	void identify(uint16_t GPIO_Pin);
 	bool get_status(E_interrupt interrupt);
+	void reset_status();
 
 private:
 	static bool status[16];

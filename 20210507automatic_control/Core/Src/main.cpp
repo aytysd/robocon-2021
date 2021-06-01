@@ -29,6 +29,7 @@
 #include "Communication.hpp"
 #include "GPIO.hpp"
 #include "Init_Move.hpp"
+#include "Controller.hpp"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -120,7 +121,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-	Init_Move* init_move = new Init_Move();
+  Init_Move* init_move = new Init_Move();
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
