@@ -232,7 +232,7 @@ float Self_Pos::Gyro::get_gravity(){
 	return this -> gravity;
 }
 
-int16_t Self_Pos::Gyro::get_direction(){
+uint16_t Self_Pos::Gyro::get_direction(){
 
 	this -> direction += this -> initial_direction;
 	if( this -> direction > 360 ){
@@ -258,8 +258,8 @@ void Self_Pos::Gyro::set_initial_direction(E_robot_name robot){
 }
 
 
-int16_t Self_Pos::Gyro::direction = 0;
+uint16_t Self_Pos::Gyro::direction = 0;
 float Self_Pos::Gyro::gravity = 0;
-int16_t Self_Pos::Gyro::initial_direction = 0;
+uint16_t Self_Pos::Gyro::initial_direction = 0;
 
 

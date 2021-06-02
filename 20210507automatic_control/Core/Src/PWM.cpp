@@ -157,4 +157,25 @@ uint8_t PWM::plus_minus(double number)
 
 }
 
+double PWM::speed_calc(uint16_t target_speed){
+
+	char output[256];
+
+	static int old_pulse_cnt = TIM5 -> CNT;
+	int current_pulse_cnt = TIM5 -> CNT;
+
+	uint16_t current_speed = RADIUS * 2 * M_PI * abs( (int)(current_pulse_cnt - old_pulse_cnt) ) / ( PPR * DT );
+
+	double diff_percent = ( current_speed - target_speed ) / target_speed;
+
+	old_pulse_cnt = current_pulse_cnt;
+
+	sprintf( output, "%lf\r\n", diff_percent );
+	HAL_UART_Transmit(&huart2, (uint8_t*)&diff_percent, sizeof(diff_perent), 100);
+
+
+	return diff_percent;
+}
+
+
 
