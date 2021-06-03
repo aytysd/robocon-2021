@@ -27,7 +27,8 @@
 
 void PWM::V_output(double V, double fai, double rotation_speed, double attitude_angle, E_move_status status)
 {
-	if( status == E_move_status::MOVE ){
+	if( status == E_move_status::MOVE )
+	{
 
 		Function* function = new Function();
 
@@ -49,33 +50,35 @@ void PWM::V_output(double V, double fai, double rotation_speed, double attitude_
 		uint8_t V4_pwm = (abs(V4) + 17.242) / 23.677;
 
 
-		function -> drive_motor(1, this -> plus_minus(V1), V1_pwm, (uint16_t)(abs((double)V1)));
-		function -> drive_motor(2, this -> plus_minus(V2), V2_pwm, (uint16_t)(abs((double)V1)));
-		function -> drive_motor(3, this -> plus_minus(V3), V3_pwm, (uint16_t)(abs((double)V1)));
-		function -> drive_motor(4, this -> plus_minus(V4), V4_pwm, (uint16_t)(abs((double)V1)));
+		function -> drive_motor(1, this -> plus_minus(V1), V1_pwm, (uint16_t)(abs((double)V1)), true);
+		function -> drive_motor(2, this -> plus_minus(V2), V2_pwm, (uint16_t)(abs((double)V2)), true);
+		function -> drive_motor(3, this -> plus_minus(V3), V3_pwm, (uint16_t)(abs((double)V3)), true);
+		function -> drive_motor(4, this -> plus_minus(V4), V4_pwm, (uint16_t)(abs((double)V4)), true);
 
 
 		delete function;
 
 	}
-	else if( status == E_move_status::STOP ){
+	else if( status == E_move_status::STOP )
+	{
 		Function* function = new Function();
 
-		function -> drive_motor(1, 3, 0, 0);
-		function -> drive_motor(2, 3, 0, 0);
-		function -> drive_motor(3, 3, 0, 0);
-		function -> drive_motor(4, 3, 0, 0);
+		function -> drive_motor(1, 3, 0, 0, false);
+		function -> drive_motor(2, 3, 0, 0, false);
+		function -> drive_motor(3, 3, 0, 0, false);
+		function -> drive_motor(4, 3, 0, 0, false);
 
 		delete function;
 
 	}
-	else if( status == E_move_status::FREE ){
+	else if( status == E_move_status::FREE )
+	{
 		Function* function = new Function();
 
-		function -> drive_motor(1, 0, 0, 0);
-		function -> drive_motor(2, 0, 0, 0);
-		function -> drive_motor(3, 0, 0, 0);
-		function -> drive_motor(4, 0, 0, 0);
+		function -> drive_motor(1, 0, 0, 0, false);
+		function -> drive_motor(2, 0, 0, 0, false);
+		function -> drive_motor(3, 0, 0, 0, false);
+		function -> drive_motor(4, 0, 0, 0, false);
 
 		delete function;
 
@@ -83,49 +86,35 @@ void PWM::V_output(double V, double fai, double rotation_speed, double attitude_
 	}
 }
 
-bool PWM::rotate(double V, uint16_t target_angle){
+bool PWM::rotate(double V, uint16_t target_angle)
+{
 
 	Self_Pos::Gyro* gyro = new Self_Pos::Gyro();
 
 
-	if( target_angle != gyro -> get_direction() ){
+	if( target_angle != gyro -> get_direction() )
+	{
 
 		int16_t diff = target_angle - gyro -> get_direction();
 
-		if( target_angle > gyro -> get_direction() ){
-			if( abs(diff) <= 180 ){
+		if( target_angle > gyro -> get_direction() )
+		{
+			if( abs(diff) <= 180 )
+			{
 				this -> V_output(0, 0, -V, 0, E_move_status::MOVE);
-				while( target_angle != gyro -> get_direction() ){
+				while( target_angle != gyro -> get_direction() )
+				{
 
 				}
 				this -> V_output(0, 0, 0, 0, E_move_status::STOP);
 				return true;
-			}else{
-				this -> V_output(0, 0, V, 0, E_move_status::MOVE);
-
-				while( target_angle != gyro -> get_direction() ){
-
-				}
-				this -> V_output(0, 0, 0, 0, E_move_status::STOP);
-				return true;
-
 			}
-
-		}else{
-
-			if( abs(diff) <= 180 ){
+			else
+			{
 				this -> V_output(0, 0, V, 0, E_move_status::MOVE);
 
-				while( target_angle != gyro -> get_direction() ){
-
-				}
-				this -> V_output(0, 0, 0, 0, E_move_status::STOP);
-				return true;
-
-			}else{
-				this -> V_output(0, 0, -V, 0, E_move_status::MOVE);
-
-				while( target_angle != gyro -> get_direction() ){
+				while( target_angle != gyro -> get_direction() )
+				{
 
 				}
 				this -> V_output(0, 0, 0, 0, E_move_status::STOP);
@@ -134,7 +123,38 @@ bool PWM::rotate(double V, uint16_t target_angle){
 			}
 
 		}
-	}else{
+		else
+		{
+
+			if( abs(diff) <= 180 )
+			{
+				this -> V_output(0, 0, V, 0, E_move_status::MOVE);
+
+				while( target_angle != gyro -> get_direction() )
+				{
+
+				}
+				this -> V_output(0, 0, 0, 0, E_move_status::STOP);
+				return true;
+
+			}
+			else
+			{
+				this -> V_output(0, 0, -V, 0, E_move_status::MOVE);
+
+				while( target_angle != gyro -> get_direction() )
+				{
+
+				}
+				this -> V_output(0, 0, 0, 0, E_move_status::STOP);
+				return true;
+
+			}
+
+		}
+	}
+	else
+	{
 		return true;
 	}
 
@@ -157,7 +177,8 @@ uint8_t PWM::plus_minus(double number)
 
 }
 
-double PWM::speed_calc(uint16_t target_speed){
+double PWM::speed_calc(uint16_t target_speed)
+{
 
 	char output[256];
 

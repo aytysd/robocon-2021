@@ -110,7 +110,8 @@ uint32_t Self_Pos::encoder_read_2(void)
 	  }
 }
 //-------------------------------------------------------------------------
-void Self_Pos::Gyro::BNO055_Init_I2C(I2C_HandleTypeDef* hi2c_device) {
+void Self_Pos::Gyro::BNO055_Init_I2C(I2C_HandleTypeDef* hi2c_device)
+{
 
 	uint8_t GPwrMode 	= NormalG;   		// Gyro power mode
 	uint8_t Gscale 		= GFS_2000DPS; 	// Gyro full scale
@@ -194,7 +195,8 @@ void Self_Pos::Gyro::BNO055_Init_I2C(I2C_HandleTypeDef* hi2c_device) {
 	HAL_Delay(50);
 }
 
-void Self_Pos::Gyro::BNO055_update_gravity_direction(I2C_HandleTypeDef* hi2c_device){
+void Self_Pos::Gyro::BNO055_update_gravity_direction(I2C_HandleTypeDef* hi2c_device)
+{
 
 	uint8_t	imu_readings[IMU_NUMBER_OF_BYTES];
 	uint8_t gyro_readings[IMU_NUMBER_OF_BYTES];
@@ -228,11 +230,13 @@ void Self_Pos::Gyro::BNO055_update_gravity_direction(I2C_HandleTypeDef* hi2c_dev
 
 }
 
-float Self_Pos::Gyro::get_gravity(){
+float Self_Pos::Gyro::get_gravity()
+{
 	return this -> gravity;
 }
 
-uint16_t Self_Pos::Gyro::get_direction(){
+uint16_t Self_Pos::Gyro::get_direction()
+{
 
 	this -> direction += this -> initial_direction;
 	if( this -> direction > 360 ){
@@ -243,8 +247,10 @@ uint16_t Self_Pos::Gyro::get_direction(){
 }
 
 
-void Self_Pos::Gyro::set_initial_direction(E_robot_name robot){
-	switch(robot){
+void Self_Pos::Gyro::set_initial_direction(E_robot_name robot)
+{
+	switch(robot)
+	{
 	case E_robot_name::A:
 		this -> initial_direction = 0;
 		break;
