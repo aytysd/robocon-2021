@@ -26,6 +26,7 @@
 #include "Self_Pos.hpp"
 #include "Controller.hpp"
 #include "GPIO.hpp"
+#include "PWM.hpp"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -59,6 +60,7 @@ Self_Pos::Gyro* gyro = new Self_Pos::Gyro();
 Controller* controller = new Controller();
 Self_Pos* self_pos = new Self_Pos();
 GPIO* gpio = new GPIO();
+PWM* pwm = new PWM();
 
 /* USER CODE END 0 */
 
@@ -383,6 +385,8 @@ void TIM6_DAC_IRQHandler(void)
   controller -> reset_status();
   self_pos -> update_self_pos();
   gpio -> reset_status();
+  pwm -> speed_calc(2000);
+
 
   /* USER CODE END TIM6_DAC_IRQn 1 */
 }
