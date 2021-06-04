@@ -21,9 +21,11 @@
 
 #include "General_command.hpp"
 
-class Jump{
+class Jump
+{
 public:
-	void identify();
+	void identify(void);
+	E_move_status get_status(void);
 private:
 	static E_move_status status;
 

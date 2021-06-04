@@ -23,7 +23,7 @@
 
 enum class E_interrupt{
 	PE_SENSOR_T =0,
-	UNDER_SW_V4,
+	SPARE1,//cannot be used
 	LIMIT_F_V3,
 	LIMIT_L_V3,
 	PE_SENSOR_F,
@@ -33,11 +33,11 @@ enum class E_interrupt{
 	LIMIT_L_V4,
 	SPARE5,//cannot be used
 	SPARE6,//cannot be used
-	UNDER_SW_V3,
-	UNDER_SW_V2,
+	SPARE7,//cannot be used
+	SPARE8,//cannot be used
 	PE_SENSOR_B,
-	UNDER_SW_V1,
-	SPARE7,
+	SPARE9,//cannot be used
+	SPARE10,
 
 
 };

@@ -16,7 +16,8 @@
 #define INC_SUPER_WAIT_HPP_
 
 
-class Super_Wait{
+class Super_Wait
+{
 public:
 	void wait();
 };

@@ -30,7 +30,8 @@
 #define RADIUS 53.5
 
 
-class PWM{
+class PWM
+{
 public:
 	void V_output(double V, double fai, double rotation_speed, double attitude_angle, E_move_status status);
 	bool rotate(double V, uint16_t target_angle);
