@@ -26,7 +26,7 @@
 #include "General_command.hpp"
 
 #define PPR 2048
-#define DT 0.5
+#define DT 0.1
 #define RADIUS 53.5
 
 
