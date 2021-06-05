@@ -30,6 +30,8 @@
 #include "GPIO.hpp"
 #include "Init_Move.hpp"
 #include "Controller.hpp"
+#include "LED.hpp"
+#include "Error_Handling.hpp"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -789,6 +791,12 @@ static void MX_GPIO_Init(void)
 void Error_Handler(void)
 {
   /* USER CODE BEGIN Error_Handler_Debug */
+
+	LED* led = new LED();
+	Error_Handling* error_handling = new Error_Handling();
+
+	error_handling -> Emergency_stop();
+
   /* User can add his own implementation to report the HAL error return state */
   __disable_irq();
   while (1)
