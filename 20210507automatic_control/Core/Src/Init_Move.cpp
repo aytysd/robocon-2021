@@ -17,6 +17,7 @@
  *
  */
 
+#include <Error_Handling.hpp>
 #include "Init_Move.hpp"
 #include "General_command.hpp"
 #include "PWM.hpp"
@@ -25,46 +26,104 @@
 #include "Self_Pos.hpp"
 #include "GPIO.hpp"
 #include "Controller.hpp"
+#include "main.h"
+#include "stdio.h"
 
-namespace Init_Wait{
+namespace Init_Wait
+{
 
-class Wait : public Super_Wait{
+class Wait : public Super_Wait
+{
 public:
 
-	bool wait_F(){
+	bool wait_F()
+	{
 
 		GPIO* gpio = new GPIO();
+		Error_Handling* error_handling = new Error_Handling();
 
-		while( ( true == gpio -> get_status( E_interrupt::LIMIT_F_V2 ) ) || ( true == gpio -> get_status( E_interrupt::LIMIT_F_V3 ) )){
+		while( ( gpio -> get_status( E_interrupt::LIMIT_F_V2 ) == false ) || ( false == gpio -> get_status( E_interrupt::LIMIT_F_V3 ) ))
+		{
+			static uint32_t count = 0;
+
+			count++;
+			if( count >= 3500000 )
+			{
+			Error_Handling::error_line = __LINE__;
+			Error_Handling::error_func = __func__;
+			error_handling -> set_flag( E_Errors::Init_move_failed );
+			Error_Handler();
+
+			}
+
 
 		}
-		while( ( true == gpio -> get_status( E_interrupt::LIMIT_F_V2 ) ) || ( true == gpio -> get_status( E_interrupt::LIMIT_F_V3 ) )){
+		while( ( false == gpio -> get_status( E_interrupt::LIMIT_F_V2 ) ) || ( false == gpio -> get_status( E_interrupt::LIMIT_F_V3 ) ))
+		{
+			static uint32_t count = 0;
+
+			count++;
+			if( count >= 3500000 )
+			{
+				Error_Handling::error_line = __LINE__;
+				Error_Handling::error_func = __func__;
+				error_handling -> set_flag( E_Errors::Init_move_failed );
+				Error_Handler();
+			}
 
 		}
 
 		delete gpio;
+		delete error_handling;
 
 		return true;
 	}
 
-	bool wait_L(){
+	bool wait_L()
+	{
 
 		GPIO* gpio = new GPIO();
+		Error_Handling* error_handling = new Error_Handling();
 
-		while( ( true == gpio -> get_status( E_interrupt::LIMIT_L_V3 ))|| (true == gpio -> get_status( E_interrupt::LIMIT_L_V4 )) ){
+		while( ( false == gpio -> get_status( E_interrupt::LIMIT_L_V3 ))|| ( false == gpio -> get_status( E_interrupt::LIMIT_L_V4 )) )
+		{
+			static uint32_t count = 0;
+
+			count++;
+			if( count >= 3500000 )
+			{
+				Error_Handling::error_line = __LINE__;
+				Error_Handling::error_func = __func__;
+				error_handling -> set_flag( E_Errors::Init_move_failed );
+				Error_Handler();
+			}
 
 		}
-		while( ( true == gpio -> get_status( E_interrupt::LIMIT_L_V3 )) || ( true == gpio -> get_status( E_interrupt::LIMIT_L_V4 ) )){
+		while( ( false == gpio -> get_status( E_interrupt::LIMIT_L_V3 )) || ( false == gpio -> get_status( E_interrupt::LIMIT_L_V4 ) ))
+		{
+			static uint32_t count = 0;
+
+			count++;
+			if( count >= 3500000 )
+			{
+				Error_Handling::error_line = __LINE__;
+				Error_Handling::error_func = __func__;
+
+				error_handling -> set_flag( E_Errors::Init_move_failed );
+				Error_Handler();
+			}
 
 		}
 
 		delete gpio;
+		delete error_handling;
 
 		return true;
 
 	}
 
-	bool wait_connection(){
+	bool wait_connection()
+	{
 
 		return true;
 	}
@@ -73,15 +132,17 @@ public:
 }
 
 
-void Init_Move::init_move(E_robot_name robot){
+void Init_Move::init_move(E_robot_name robot)
+{
 
 	PWM* pwm = new PWM();
 	Init_Wait::Wait* wait = new Init_Wait::Wait();
-	LED_Mode* led = new LED_Mode();
+	LED* led = new LED();
 
 	led -> LED_output(E_LED_status::Init);
 
-	switch(robot){
+	switch(robot)
+	{
 	case E_robot_name::A:
 		pwm -> V_output(100, 90, 0, 0, E_move_status::MOVE);
 		wait -> wait_F();
@@ -125,7 +186,8 @@ void Init_Move::init_move(E_robot_name robot){
 
 }
 
-void Init_Move::Initialize(E_robot_name robot){
+void Init_Move::Initialize(E_robot_name robot)
+{
 
 	  Self_Pos::Gyro* gyro = new Self_Pos::Gyro();
 	  Self_Pos* self_pos = new Self_Pos();
@@ -134,7 +196,7 @@ void Init_Move::Initialize(E_robot_name robot){
 	  gyro -> BNO055_Init_I2C(&hi2c1);
 	  gyro -> set_initial_direction(robot);
 
-	  HAL_UART_Receive_IT(&huart4, (uint8_t*)Controller::controller_Rxdata, sizeof(Controller::controller_Rxdata));
+	  HAL_UART_Receive_IT(&huart1, (uint8_t*)Controller::controller_Rxdata, sizeof(Controller::controller_Rxdata));
 
 	  HAL_TIM_Base_Start_IT(&htim6);
 

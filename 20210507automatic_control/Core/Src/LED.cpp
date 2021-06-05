@@ -20,7 +20,7 @@
 #include "LED.hpp"
 #include "function.hpp"
 
-void LED_Mode::LED_output(E_LED_status status)
+void LED::LED_output(E_LED_status status)
 {
 	Function* function = new Function();
 
@@ -34,25 +34,28 @@ void LED_Mode::LED_output(E_LED_status status)
 		function -> drive_LED(1, 20);
 		function -> drive_LED(2, 20);
 		function -> drive_LED(3, 20);
+		break;
 
 	case E_LED_status::Move:
 		function -> drive_LED(1, 0);
 		function -> drive_LED(2, 0);
 		function -> drive_LED(3, 0);
 		function -> drive_LED(3, 20);
-
+		break;
 
 	case E_LED_status::Jump:
 		function -> drive_LED(1, 0);
 		function -> drive_LED(2, 0);
 		function -> drive_LED(3, 0);
 		function -> drive_LED(2, 20);
+		break;
 
 	case E_LED_status::Stop:
 		function -> drive_LED(1, 0);
 		function -> drive_LED(2, 0);
 		function -> drive_LED(3, 0);
 		function -> drive_LED(1, 20);
+		break;
 
 	case E_LED_status::Turn_the_rope:
 		function -> drive_LED(1, 0);
@@ -60,6 +63,7 @@ void LED_Mode::LED_output(E_LED_status status)
 		function -> drive_LED(3, 0);
 		function -> drive_LED(2, 20);
 		function -> drive_LED(3, 20);
+		break;
 
 	case E_LED_status::Connecting:
 		function -> drive_LED(1, 0);
@@ -67,6 +71,7 @@ void LED_Mode::LED_output(E_LED_status status)
 		function -> drive_LED(3, 0);
 		function -> drive_LED(1, 20);
 		function -> drive_LED(2, 20);
+		break;
 
 	case E_LED_status::Measurement:
 		function -> drive_LED(1, 0);
@@ -74,6 +79,7 @@ void LED_Mode::LED_output(E_LED_status status)
 		function -> drive_LED(3, 0);
 		function -> drive_LED(1, 20);
 		function -> drive_LED(3, 20);
+		break;
 	}
 
 	delete function;

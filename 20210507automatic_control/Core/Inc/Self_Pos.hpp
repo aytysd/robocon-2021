@@ -33,7 +33,8 @@
 #include <General_command.hpp>
 #include "main.h"
 
-class Self_Pos{
+class Self_Pos
+{
 public:
 	void set_initial_pos(E_robot_name robot);
 	void update_self_pos(void);
@@ -43,7 +44,8 @@ public:
 
 	Self_Pos(){
 	}
-	class Gyro{
+	class Gyro
+	{
 	public:
 		void BNO055_Init_I2C(I2C_HandleTypeDef* hi2c_device);
 		void BNO055_update_gravity_direction(I2C_HandleTypeDef* hi2c_device);

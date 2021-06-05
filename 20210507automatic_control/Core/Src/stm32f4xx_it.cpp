@@ -27,6 +27,7 @@
 #include "Controller.hpp"
 #include "GPIO.hpp"
 #include "PWM.hpp"
+#include "Jump.hpp"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -61,7 +62,7 @@ Controller* controller = new Controller();
 Self_Pos* self_pos = new Self_Pos();
 GPIO* gpio = new GPIO();
 PWM* pwm = new PWM();
-
+Jump* jump = new Jump();
 /* USER CODE END 0 */
 
 /* External variables --------------------------------------------------------*/
@@ -354,7 +355,7 @@ void TIM6_DAC_IRQHandler(void)
   self_pos -> update_self_pos();
   gpio -> reset_status();
   pwm -> speed_calc(2000);
-
+  jump -> identify();
 
   /* USER CODE END TIM6_DAC_IRQn 1 */
 }

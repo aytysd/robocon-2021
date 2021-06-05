@@ -30,6 +30,8 @@
 #include "GPIO.hpp"
 #include "Init_Move.hpp"
 #include "Controller.hpp"
+#include "LED.hpp"
+#include "Error_Handling.hpp"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -91,7 +93,7 @@ static void MX_USART2_UART_Init(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef*UartHandle){
-	if( HAL_UART_Receive_IT(&huart4, (uint8_t*)Controller::controller_Rxdata, sizeof(Controller::controller_Rxdata)) != HAL_ERROR ){
+	if( HAL_UART_Receive_IT(&huart1, (uint8_t*)Controller::controller_Rxdata, sizeof(Controller::controller_Rxdata)) != HAL_ERROR ){
 
 		Controller* controller = new Controller();
 		controller -> identify_start_button();
@@ -789,6 +791,12 @@ static void MX_GPIO_Init(void)
 void Error_Handler(void)
 {
   /* USER CODE BEGIN Error_Handler_Debug */
+
+	LED* led = new LED();
+	Error_Handling* error_handling = new Error_Handling();
+
+	error_handling -> Emergency_stop();
+
   /* User can add his own implementation to report the HAL error return state */
   __disable_irq();
   while (1)
