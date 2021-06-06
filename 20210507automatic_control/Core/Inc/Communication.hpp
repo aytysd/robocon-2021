@@ -21,10 +21,14 @@
 
 #include "main.h"
 
-class Communication{
+class Communication
+{
 public:
-	Communication(){
+	Communication()
+{
 	}
+	void send_error_data();
+	void send_current_situation();
 
 private:
 

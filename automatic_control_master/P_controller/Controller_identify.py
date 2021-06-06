@@ -1,6 +1,6 @@
 from . import General_command
 
-class controller():
+class Controller():
     def __init__(self):
         Rxdata = []
 
@@ -10,7 +10,7 @@ class controller():
         count = 0
         
         for i in range(8):
-            if( controller.Rxdata[i] == stop_button[i]):
+            if( Controller.Rxdata[i] == stop_button[i]):
                 count += 1
         
         if( count == 8 ):
