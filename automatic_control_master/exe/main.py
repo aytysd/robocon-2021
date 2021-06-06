@@ -2,8 +2,7 @@ import serial
 import time
 import sys
 import os
-
-from Python.exe import P_controller
+from ..P_controller.Controller_identify import Controller
 
 #sys.path.append("C:\Users\Ayato Yoshida\robocon\robocon_2021\automatic_control_master\Python\exe\P_controller")
 
@@ -13,7 +12,7 @@ def main():
 if __name__ == "__main__":
 
 
-    controller = P_controller.Controller_identify.controller()
+    controller = Controller()
 
     controller.identify_stop_button()
  #   os.chdir("Python")
