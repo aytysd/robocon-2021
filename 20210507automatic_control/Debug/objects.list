@@ -1,5 +1,6 @@
 "Core/Src/Communication.o"
 "Core/Src/Controller.o"
+"Core/Src/Error_Handling.o"
 "Core/Src/Function.o"
 "Core/Src/GPIO.o"
 "Core/Src/Init_Move.o"

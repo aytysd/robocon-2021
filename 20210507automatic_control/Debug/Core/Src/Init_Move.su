@@ -1,5 +1,5 @@
-Self_Pos.hpp:44:2:Self_Pos::Self_Pos()	16	static
-Init_Move.cpp:32:7:bool Wait::wait_F()	24	static
-Init_Move.cpp:48:7:bool Wait::wait_L()	24	static
-Init_Move.cpp:72:6:void Init_Move::init_move(E_robot_name)	32	static
-Init_Move.cpp:124:6:void Init_Move::Initialize()	32	static
+Self_Pos.hpp:45:2:Self_Pos::Self_Pos()	16	static
+Init_Move.cpp:39:7:bool Init_Wait::Wait::wait_F()	24	static
+Init_Move.cpp:82:7:bool Init_Wait::Wait::wait_L()	24	static
+Init_Move.cpp:135:6:void Init_Move::init_move(E_robot_name)	32	static
+Init_Move.cpp:189:6:void Init_Move::Initialize(E_robot_name)	32	static

@@ -29,7 +29,6 @@
 #define DT 0.1
 #define RADIUS 53.5
 
-#define FREE 0
 #define CW 1
 #define CCW 2
 #define BRAKE 3

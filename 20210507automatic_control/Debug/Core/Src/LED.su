@@ -1,1 +1,1 @@
-LED.cpp:23:6:void LED_Mode::LED_output(E_LED_status)	24	static
+LED.cpp:23:6:void LED::LED_output(E_LED_status)	24	static

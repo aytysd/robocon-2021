@@ -174,10 +174,6 @@ uint8_t PWM::plus_minus(double number)
 	{
 		return BRAKE;
 	}
-	else
-	{
-		return FREE;
-	}
 
 
 

@@ -1,0 +1,2 @@
+Jump.cpp:27:6:void Jump::identify()	24	static
+Jump.cpp:59:15:E_move_status Jump::get_status()	16	static

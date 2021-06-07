@@ -1,4 +1,5 @@
-Core/Src/stm32f4xx_it.o: ../Core/Src/stm32f4xx_it.cpp ../Core/Inc/main.h \
+Core/Src/Error_Handling.o: ../Core/Src/Error_Handling.cpp \
+ ../Core/Inc/Error_Handling.hpp ../Core/Inc/main.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h \
  ../Core/Inc/stm32f4xx_hal_conf.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h \
@@ -29,11 +30,9 @@ Core/Src/stm32f4xx_it.o: ../Core/Src/stm32f4xx_it.cpp ../Core/Inc/main.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h \
- ../Core/Inc/stm32f4xx_it.h ../Core/Inc/Self_Pos.hpp \
- ../Core/Inc/General_command.hpp ../Core/Inc/main.h \
- ../Core/Inc/Controller.hpp ../Core/Inc/General_command.hpp \
- ../Core/Inc/PWM.hpp ../Core/Inc/GPIO.hpp ../Core/Inc/PWM.hpp \
- ../Core/Inc/Jump.hpp
+ ../Core/Inc/main.h ../Core/Inc/Function.hpp
+
+../Core/Inc/Error_Handling.hpp:
 
 ../Core/Inc/main.h:
 
@@ -97,22 +96,6 @@ Core/Src/stm32f4xx_it.o: ../Core/Src/stm32f4xx_it.cpp ../Core/Inc/main.h \
 
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h:
 
-../Core/Inc/stm32f4xx_it.h:
-
-../Core/Inc/Self_Pos.hpp:
-
-../Core/Inc/General_command.hpp:
-
 ../Core/Inc/main.h:
 
-../Core/Inc/Controller.hpp:
-
-../Core/Inc/General_command.hpp:
-
-../Core/Inc/PWM.hpp:
-
-../Core/Inc/GPIO.hpp:
-
-../Core/Inc/PWM.hpp:
-
-../Core/Inc/Jump.hpp:
+../Core/Inc/Function.hpp:
