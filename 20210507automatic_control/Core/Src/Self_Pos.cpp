@@ -25,6 +25,7 @@
 #include "bno055.h"
 #include "stdio.h"
 #include <math.h>
+#include "Error_Handling.hpp"
 
 double Self_Pos::encoder5=0;//X
 double Self_Pos::encoder2=0;//Y
@@ -79,6 +80,12 @@ void Self_Pos::update_self_pos(void)
 uint32_t Self_Pos::encoder_read_5(void)
 {
 	 uint32_t enc_buff_5 = TIM5->CNT;
+
+	 Error_Handling* error_handling = new Error_Handling();
+	 error_handling -> TIM5_error_handling();
+	 delete error_handling;
+
+
 	  TIM5->CNT = 0;
 	  if (enc_buff_5 > 400000000)
 	  {
@@ -96,6 +103,12 @@ uint32_t Self_Pos::encoder_read_5(void)
 uint32_t Self_Pos::encoder_read_2(void)
 {
 	 uint32_t enc_buff_2 = TIM2->CNT;
+
+	 Error_Handling* error_handling = new Error_Handling();
+	 error_handling -> TIM2_error_handling();
+	 delete error_handling;
+
+
 	  TIM2->CNT = 0;
 	  if (enc_buff_2 > 400000000)
 	  {

@@ -119,6 +119,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 int main(void)
 {
   /* USER CODE BEGIN 1 */
+  START:
   Init_Move* init_move = new Init_Move();
   /* USER CODE END 1 */
 
@@ -154,7 +155,6 @@ int main(void)
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
   init_move -> init_move(E_robot_name::A);
-
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -767,15 +767,19 @@ void Error_Handler(void)
   /* USER CODE BEGIN Error_Handler_Debug */
 
 	LED* led = new LED();
+	Communication* communication = new Communication();
 	Error_Handling* error_handling = new Error_Handling();
 
 	error_handling -> Emergency_stop();
+	communication -> send_data( E_data_type::ERROR_DATA );
 
   /* User can add his own implementation to report the HAL error return state */
   __disable_irq();
   while (1)
   {
   }
+
+  goto START;
   /* USER CODE END Error_Handler_Debug */
 }
 

@@ -20,6 +20,79 @@
 #include <Error_Handling.hpp>
 #include "main.h"
 #include "Function.hpp"
+#include "Communication.hpp"
+
+void Error_Handling::TIM5_error_handling()
+{
+	static bool flag = false;
+	static uint32_t base_time = 0;
+
+	if( flag == false )
+	{
+		base_time = HAL_GetTick();
+	}
+
+
+
+	 if( TIM5 -> CNT == 0 )
+	 {
+
+		 if( ( HAL_GetTick() - base_time ) >= 5000 )
+		 {
+			 Communication* communication = new Communication();
+			 this -> warning_line = __LINE__;
+			 this -> warning_func = __func__;
+			 this -> set_flag(E_Errors::W_X_Encoder_Disconnection);
+			 communication -> send_data( E_data_type::WARNING_DATA );
+			 delete communication;
+		 }
+
+		 flag = true;
+	 }
+	 else
+	 {
+		 flag = false;
+	 }
+
+}
+
+void Error_Handling::TIM2_error_handling()
+{
+	static bool flag = false;
+	static uint32_t base_time = 0;
+
+	if( flag == false )
+	{
+		base_time = HAL_GetTick();
+	}
+
+
+
+	 if( TIM2 -> CNT == 0 )
+	 {
+
+		 if( ( HAL_GetTick() - base_time ) >= 5000 )
+		 {
+			 Communication* communication = new Communication();
+
+			 this -> warning_line = __LINE__;
+			 this -> warning_func = __func__;
+			 this -> set_flag(E_Errors::W_Y_Encoder_Disconnection);
+
+			 communication -> send_data( E_data_type::WARNING_DATA );
+			 delete communication;
+
+		 }
+
+		 flag = true;
+	 }
+	 else
+	 {
+		 flag = false;
+	 }
+
+}
+
 
 void Error_Handling::Emergency_stop()
 {
@@ -47,4 +120,8 @@ void Error_Handling::set_flag(E_Errors errors)
 const char* Error_Handling::error_func = 0;
 uint32_t Error_Handling::error_line = 0;
 
-bool Error_Handling::flag[ static_cast<int>(E_Errors::Count) + 1 ] = { false, false, false, false };
+const char* Error_Handling::current_func = 0;
+uint32_t Error_Handling::current_line = 0;
+
+
+bool Error_Handling::flag[ static_cast<int>(E_Errors::Count) + 1 ] = { false, false, false, false, false };

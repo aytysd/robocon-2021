@@ -48,7 +48,6 @@ void Controller::identify_stop_button(){
 	if(count == 8){
 		Controller::status = E_move_status::STOP;
 		HAL_UART_Transmit(&huart1, (uint8_t*)E_move_status::STOP, sizeof(E_move_status::STOP), 100);
-		Function* function = new Function();
 		Error_Handler();
 	}
 

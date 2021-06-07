@@ -39,6 +39,9 @@ public:
 	bool wait_F()
 	{
 
+		Error_Handling::current_func = __func__;
+		Error_Handling::current_line = __LINE__;
+
 		GPIO* gpio = new GPIO();
 		Error_Handling* error_handling = new Error_Handling();
 
@@ -48,6 +51,7 @@ public:
 
 			count++;
 			if( count >= 3500000 )
+
 			{
 			Error_Handling::error_line = __LINE__;
 			Error_Handling::error_func = __func__;
@@ -81,6 +85,9 @@ public:
 
 	bool wait_L()
 	{
+
+		Error_Handling::current_func = __func__;
+		Error_Handling::current_line = __LINE__;
 
 		GPIO* gpio = new GPIO();
 		Error_Handling* error_handling = new Error_Handling();
@@ -124,6 +131,8 @@ public:
 
 	bool wait_connection()
 	{
+		Error_Handling::current_func = __func__;
+		Error_Handling::current_line = __LINE__;
 
 		return true;
 	}
@@ -144,6 +153,10 @@ void Init_Move::init_move(E_robot_name robot)
 	switch(robot)
 	{
 	case E_robot_name::A:
+
+		Error_Handling::current_func = __func__;
+		Error_Handling::current_line = __LINE__;
+
 		pwm -> V_output(100, 90, 0, 0, E_move_status::MOVE);
 		wait -> wait_F();
 		pwm -> V_output(0, 0, 0, 0, E_move_status::STOP);
@@ -155,6 +168,10 @@ void Init_Move::init_move(E_robot_name robot)
 
 		break;
 	case E_robot_name::B:
+
+		Error_Handling::current_func = __func__;
+		Error_Handling::current_line = __LINE__;
+
 		pwm -> V_output(100, 180, 0, 90, E_move_status::MOVE);
 		wait -> wait_F();
 		pwm -> V_output(0, 0, 0, 0, E_move_status::STOP);
@@ -166,6 +183,10 @@ void Init_Move::init_move(E_robot_name robot)
 
 		break;
 	case E_robot_name::C:
+
+		Error_Handling::current_func = __func__;
+		Error_Handling::current_line = __LINE__;
+
 		pwm -> V_output(100, 270, 0, 180, E_move_status::MOVE);
 		wait -> wait_F();
 		pwm -> V_output(0, 0, 0, 0, E_move_status::STOP);
@@ -177,6 +198,10 @@ void Init_Move::init_move(E_robot_name robot)
 
 		break;
 	}
+
+	Error_Handling::current_func = __func__;
+	Error_Handling::current_line = __LINE__;
+
 
 	this -> Initialize(robot);
 
