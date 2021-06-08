@@ -21,15 +21,19 @@
 
 #include "main.h"
 
+enum class E_data_type
+{
+	CURRENT_DATA,
+	ERROR_DATA,
+	WARNING_DATA,
+	COUNT,
+};
+
+
 class Communication
 {
 public:
-	Communication()
-{
-	}
-	void send_error_data();
-	void send_current_situation();
-
+	void send_data(E_data_type data);
 private:
 
 };
