@@ -119,7 +119,6 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-  START:
   Init_Move* init_move = new Init_Move();
   /* USER CODE END 1 */
 
@@ -779,7 +778,6 @@ void Error_Handler(void)
   {
   }
 
-  goto START;
   /* USER CODE END Error_Handler_Debug */
 }
 

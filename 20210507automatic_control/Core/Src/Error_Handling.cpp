@@ -41,7 +41,7 @@ void Error_Handling::TIM5_error_handling()
 		 {
 			 Communication* communication = new Communication();
 			 this -> warning_line = __LINE__;
-			 this -> warning_func = __func__;
+			 this -> warning_func = const_cast<char*>(__func__);
 			 this -> set_flag(E_Errors::W_X_Encoder_Disconnection);
 			 communication -> send_data( E_data_type::WARNING_DATA );
 			 delete communication;
@@ -76,7 +76,7 @@ void Error_Handling::TIM2_error_handling()
 			 Communication* communication = new Communication();
 
 			 this -> warning_line = __LINE__;
-			 this -> warning_func = __func__;
+			 this -> warning_func = const_cast<char*>(__func__);
 			 this -> set_flag(E_Errors::W_Y_Encoder_Disconnection);
 
 			 communication -> send_data( E_data_type::WARNING_DATA );
@@ -120,8 +120,10 @@ void Error_Handling::set_flag(E_Errors errors)
 const char* Error_Handling::error_func = 0;
 uint32_t Error_Handling::error_line = 0;
 
-const char* Error_Handling::current_func = 0;
+char* Error_Handling::current_func = 0;
 uint32_t Error_Handling::current_line = 0;
 
+char* Error_Handling::warning_func = 0;
+uint32_t Error_Handling::warning_line = 0;
 
 bool Error_Handling::flag[ static_cast<int>(E_Errors::Count) + 1 ] = { false, false, false, false, false };

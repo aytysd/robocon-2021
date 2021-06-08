@@ -57,7 +57,7 @@ void Communication::send_data(E_data_type data)
 	}
 
 	case E_data_type::WARNING_DATA:
-
+	{
 		uint8_t warning_line_p = (uint8_t)(0b1111111100000000 & (uint16_t)Error_Handling::warning_line) >> 8;
 		uint8_t warning_line_q = (uint8_t)(0b0000000011111111 & (uint16_t)Error_Handling::warning_line);
 
@@ -67,6 +67,9 @@ void Communication::send_data(E_data_type data)
 		HAL_UART_Transmit(&huart1, (uint8_t*)data, sizeof(data), 100);
 
 		break;
+
+	}
+
 	case E_data_type::ERROR_DATA:
 		break;
 	default:
