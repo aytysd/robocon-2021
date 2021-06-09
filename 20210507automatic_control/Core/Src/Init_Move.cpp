@@ -42,10 +42,9 @@ public:
 		Error_Handling::current_func = const_cast<char*>(__func__);
 		Error_Handling::current_line = __LINE__;
 
-		GPIO* gpio = new GPIO();
 		Error_Handling* error_handling = new Error_Handling();
 
-		while( ( gpio -> get_status( E_interrupt::LIMIT_F_V2 ) == false ) || ( false == gpio -> get_status( E_interrupt::LIMIT_F_V3 ) ))
+		while( (HAL_GPIO_ReadPin(LIMIT_F_V2_GPIO_Port, LIMIT_F_V2_Pin) == RESET ) || ( HAL_GPIO_ReadPin( LIMIT_F_V3_GPIO_Port, LIMIT_L_V3_Pin ) == RESET))
 		{
 			static uint32_t count = 0;
 
@@ -62,22 +61,6 @@ public:
 
 
 		}
-		while( ( false == gpio -> get_status( E_interrupt::LIMIT_F_V2 ) ) || ( false == gpio -> get_status( E_interrupt::LIMIT_F_V3 ) ))
-		{
-			static uint32_t count = 0;
-
-			count++;
-			if( count >= 3500000 )
-			{
-				Error_Handling::error_line = __LINE__;
-				Error_Handling::error_func = __func__;
-				error_handling -> set_flag( E_Errors::Init_move_failed );
-				Error_Handler();
-			}
-
-		}
-
-		delete gpio;
 		delete error_handling;
 
 		return true;
@@ -89,42 +72,29 @@ public:
 		Error_Handling::current_func = const_cast<char*>(__func__);
 		Error_Handling::current_line = __LINE__;
 
-		GPIO* gpio = new GPIO();
 		Error_Handling* error_handling = new Error_Handling();
 
-		while( ( false == gpio -> get_status( E_interrupt::LIMIT_L_V3 ))|| ( false == gpio -> get_status( E_interrupt::LIMIT_L_V4 )) )
+
+
+		while( (HAL_GPIO_ReadPin(LIMIT_L_V3_GPIO_Port, LIMIT_L_V3_Pin) == RESET ) || ( HAL_GPIO_ReadPin( LIMIT_L_V4_GPIO_Port, LIMIT_L_V4_Pin ) == RESET))
 		{
 			static uint32_t count = 0;
 
 			count++;
 			if( count >= 3500000 )
+
 			{
-				Error_Handling::error_line = __LINE__;
-				Error_Handling::error_func = __func__;
-				error_handling -> set_flag( E_Errors::Init_move_failed );
-				Error_Handler();
+			Error_Handling::error_line = __LINE__;
+			Error_Handling::error_func = __func__;
+			error_handling -> set_flag( E_Errors::Init_move_failed );
+			Error_Handler();
+
 			}
 
-		}
-		while( ( false == gpio -> get_status( E_interrupt::LIMIT_L_V3 )) || ( false == gpio -> get_status( E_interrupt::LIMIT_L_V4 ) ))
-		{
-			static uint32_t count = 0;
-
-			count++;
-			if( count >= 3500000 )
-			{
-				Error_Handling::error_line = __LINE__;
-				Error_Handling::error_func = __func__;
-
-				error_handling -> set_flag( E_Errors::Init_move_failed );
-				Error_Handler();
-			}
 
 		}
 
-		delete gpio;
 		delete error_handling;
-
 		return true;
 
 	}

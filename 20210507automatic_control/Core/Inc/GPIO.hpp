@@ -22,15 +22,15 @@
 #include "main.h"
 
 enum class E_interrupt{
-	PE_SENSOR_T =0,
+	PE_SENSOR_T = 0,
 	SPARE1,//cannot be used
-	LIMIT_F_V3,
-	LIMIT_L_V3,
+	LIMIT_F_V3,//cannot be used
+	LIMIT_L_V3,//cannot be used
 	PE_SENSOR_F,
-	LIMIT_F_V2,
+	LIMIT_F_V2,//cannot be used
 	SPARE2,//cannot be used
 	SPARE3,//cannot be used
-	LIMIT_L_V4,
+	LIMIT_L_V4,//cannot be used
 	SPARE5,//cannot be used
 	SPARE6,//cannot be used
 	SPARE7,//cannot be used

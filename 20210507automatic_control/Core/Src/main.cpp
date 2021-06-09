@@ -683,23 +683,17 @@ static void MX_GPIO_Init(void)
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, GPIO_PIN_SET);
 
-  /*Configure GPIO pins : PE_Sensor_B_Pin PE_Sensor_T_Pin */
-  GPIO_InitStruct.Pin = PE_Sensor_B_Pin|PE_Sensor_T_Pin;
+  /*Configure GPIO pins : PE_Sensor_B_Pin SPARE_Pin PE_Sensor_T_Pin */
+  GPIO_InitStruct.Pin = PE_Sensor_B_Pin|SPARE_Pin|PE_Sensor_T_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
   GPIO_InitStruct.Pull = GPIO_PULLDOWN;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : SPARE_Pin LIMIT_F_V3_Pin LIMIT_L_V3_Pin LIMIT_L_V4_Pin */
-  GPIO_InitStruct.Pin = SPARE_Pin|LIMIT_F_V3_Pin|LIMIT_L_V3_Pin|LIMIT_L_V4_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
-
-  /*Configure GPIO pin : Under_SW_V1_2_Pin */
-  GPIO_InitStruct.Pin = Under_SW_V1_2_Pin;
+  /*Configure GPIO pins : Under_SW_V1_2_Pin LIMIT_F_V3_Pin LIMIT_L_V3_Pin LIMIT_L_V4_Pin */
+  GPIO_InitStruct.Pin = Under_SW_V1_2_Pin|LIMIT_F_V3_Pin|LIMIT_L_V3_Pin|LIMIT_L_V4_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(Under_SW_V1_2_GPIO_Port, &GPIO_InitStruct);
+  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
   /*Configure GPIO pin : PE_Sensor_F_Pin */
   GPIO_InitStruct.Pin = PE_Sensor_F_Pin;
@@ -707,46 +701,31 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_PULLDOWN;
   HAL_GPIO_Init(PE_Sensor_F_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : Under_SW_V2_3_Pin */
-  GPIO_InitStruct.Pin = Under_SW_V2_3_Pin;
+  /*Configure GPIO pins : Under_SW_V2_3_Pin LIMIT_F_V2_Pin */
+  GPIO_InitStruct.Pin = Under_SW_V2_3_Pin|LIMIT_F_V2_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(Under_SW_V2_3_GPIO_Port, &GPIO_InitStruct);
+  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
   /*Configure GPIO pin : LED_Pin */
   GPIO_InitStruct.Pin = LED_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(LED_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pins : Under_SW_V1_4_Pin Under_SW_V3_4_Pin */
   GPIO_InitStruct.Pin = Under_SW_V1_4_Pin|Under_SW_V3_4_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-
-  /*Configure GPIO pin : LIMIT_F_V2_Pin */
-  GPIO_InitStruct.Pin = LIMIT_F_V2_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(LIMIT_F_V2_GPIO_Port, &GPIO_InitStruct);
 
   /* EXTI interrupt init*/
   HAL_NVIC_SetPriority(EXTI0_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(EXTI0_IRQn);
 
-  HAL_NVIC_SetPriority(EXTI2_IRQn, 0, 0);
-  HAL_NVIC_EnableIRQ(EXTI2_IRQn);
-
-  HAL_NVIC_SetPriority(EXTI3_IRQn, 0, 0);
-  HAL_NVIC_EnableIRQ(EXTI3_IRQn);
-
   HAL_NVIC_SetPriority(EXTI4_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(EXTI4_IRQn);
-
-  HAL_NVIC_SetPriority(EXTI9_5_IRQn, 0, 0);
-  HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);
 
   HAL_NVIC_SetPriority(EXTI15_10_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);

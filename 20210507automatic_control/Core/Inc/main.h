@@ -86,10 +86,8 @@ void Error_Handler(void);
 #define Under_SW_V1_2_GPIO_Port GPIOC
 #define LIMIT_F_V3_Pin GPIO_PIN_2
 #define LIMIT_F_V3_GPIO_Port GPIOC
-#define LIMIT_F_V3_EXTI_IRQn EXTI2_IRQn
 #define LIMIT_L_V3_Pin GPIO_PIN_3
 #define LIMIT_L_V3_GPIO_Port GPIOC
-#define LIMIT_L_V3_EXTI_IRQn EXTI3_IRQn
 #define X_OD_Pin GPIO_PIN_0
 #define X_OD_GPIO_Port GPIOA
 #define X_ODA1_Pin GPIO_PIN_1
@@ -113,7 +111,6 @@ void Error_Handler(void);
 #define MOTOR_RX_GPIO_Port GPIOC
 #define LIMIT_L_V4_Pin GPIO_PIN_8
 #define LIMIT_L_V4_GPIO_Port GPIOC
-#define LIMIT_L_V4_EXTI_IRQn EXTI9_5_IRQn
 #define SBDBT_TX_Pin GPIO_PIN_9
 #define SBDBT_TX_GPIO_Port GPIOA
 #define SBDBT_RX_Pin GPIO_PIN_10
@@ -130,7 +127,6 @@ void Error_Handler(void);
 #define Y_ODB3_GPIO_Port GPIOB
 #define LIMIT_F_V2_Pin GPIO_PIN_5
 #define LIMIT_F_V2_GPIO_Port GPIOB
-#define LIMIT_F_V2_EXTI_IRQn EXTI9_5_IRQn
 #define Gyro_ToF_SCL_Pin GPIO_PIN_8
 #define Gyro_ToF_SCL_GPIO_Port GPIOB
 #define Gyro_ToF_SDA_Pin GPIO_PIN_9
