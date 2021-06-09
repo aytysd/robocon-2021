@@ -25,9 +25,10 @@
 #include "LED.hpp"
 #include "Self_Pos.hpp"
 #include "GPIO.hpp"
-#include "Controller.hpp"
 #include "main.h"
 #include "stdio.h"
+#include "Flow.hpp"
+#include "Communication.hpp"
 
 namespace Init_Wait
 {
@@ -44,7 +45,7 @@ public:
 
 		Error_Handling* error_handling = new Error_Handling();
 
-		while( (HAL_GPIO_ReadPin(LIMIT_F_V2_GPIO_Port, LIMIT_F_V2_Pin) == RESET ) || ( HAL_GPIO_ReadPin( LIMIT_F_V3_GPIO_Port, LIMIT_L_V3_Pin ) == RESET))
+		while( (HAL_GPIO_ReadPin(LIMIT_F_V2_GPIO_Port, LIMIT_F_V2_Pin) == GPIO_PIN_RESET ) || ( HAL_GPIO_ReadPin( LIMIT_F_V3_GPIO_Port, LIMIT_F_V3_Pin ) == GPIO_PIN_RESET))
 		{
 			static uint32_t count = 0;
 
@@ -76,7 +77,7 @@ public:
 
 
 
-		while( (HAL_GPIO_ReadPin(LIMIT_L_V3_GPIO_Port, LIMIT_L_V3_Pin) == RESET ) || ( HAL_GPIO_ReadPin( LIMIT_L_V4_GPIO_Port, LIMIT_L_V4_Pin ) == RESET))
+		while( (HAL_GPIO_ReadPin(LIMIT_L_V3_GPIO_Port, LIMIT_L_V3_Pin) == GPIO_PIN_RESET ) || ( HAL_GPIO_ReadPin( LIMIT_L_V4_GPIO_Port, LIMIT_L_V4_Pin ) == GPIO_PIN_RESET))
 		{
 			static uint32_t count = 0;
 
@@ -191,9 +192,9 @@ void Init_Move::Initialize(E_robot_name robot)
 	  gyro -> BNO055_Init_I2C(&hi2c1);
 	  gyro -> set_initial_direction(robot);
 
-	  HAL_UART_Receive_IT(&huart1, (uint8_t*)Controller::controller_Rxdata, sizeof(Controller::controller_Rxdata));
+	  HAL_UART_Receive_IT(&huart1, (uint8_t*)Communication::Rxdata, sizeof(Communication::Rxdata));
 
-	  HAL_TIM_Base_Start_IT(&htim6);
+
 
 	  HAL_TIM_Encoder_Start(&htim5, TIM_CHANNEL_ALL);
 	  HAL_TIM_Encoder_Start(&htim2, TIM_CHANNEL_ALL);

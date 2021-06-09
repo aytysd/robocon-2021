@@ -33,6 +33,7 @@ enum class E_data_type
 class Communication
 {
 public:
+	static uint8_t Rxdata[4];
 	void send_data(E_data_type data);
 private:
 

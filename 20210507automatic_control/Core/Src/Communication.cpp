@@ -22,6 +22,7 @@
 #include "Error_Handling.hpp"
 #include "Self_Pos.hpp"
 
+uint8_t Communication::Rxdata[4] = { 0, 0, 0, 0 };
 
 void Communication::send_data(E_data_type data)
 {
@@ -61,7 +62,7 @@ void Communication::send_data(E_data_type data)
 		uint8_t warning_line_p = (uint8_t)(0b1111111100000000 & (uint16_t)Error_Handling::warning_line) >> 8;
 		uint8_t warning_line_q = (uint8_t)(0b0000000011111111 & (uint16_t)Error_Handling::warning_line);
 
-		uint8_t data[3] = { static_cast<uint8_t>(E_data_type::ERROR_DATA), warning_line_p, warning_line_q };
+		uint8_t data[3] = { static_cast<uint8_t>(E_data_type::WARNING_DATA), warning_line_p, warning_line_q };
 
 		HAL_UART_Transmit(&huart1, (uint8_t*)Error_Handling::warning_func, sizeof(Error_Handling::warning_func), 100);
 		HAL_UART_Transmit(&huart1, (uint8_t*)data, sizeof(data), 100);
@@ -71,7 +72,19 @@ void Communication::send_data(E_data_type data)
 	}
 
 	case E_data_type::ERROR_DATA:
+	{
+		uint8_t error_line_p = (uint8_t)(0b1111111100000000 & (uint16_t)Error_Handling::error_line) >> 8;
+		uint8_t error_line_q = (uint8_t)(0b0000000011111111 & (uint16_t)Error_Handling::error_line);
+
+		uint8_t data[3] = { static_cast<uint8_t>(E_data_type::ERROR_DATA), error_line_p, error_line_q };
+
+		HAL_UART_Transmit(&huart1, (uint8_t*)Error_Handling::error_func, sizeof(Error_Handling::error_func), 100);
+		HAL_UART_Transmit(&huart1, (uint8_t*)data, sizeof(data), 100);
+
 		break;
+
+	}
+
 	default:
 		break;
 	}
