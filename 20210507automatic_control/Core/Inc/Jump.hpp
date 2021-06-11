@@ -19,8 +19,15 @@
 #ifndef INC_JUMP_HPP_
 #define INC_JUMP_HPP_
 
-class Jump{
+#include "General_command.hpp"
+
+class Jump
+{
 public:
+	void identify(void);
+	E_move_status get_status(void);
+private:
+	static E_move_status status;
 
 };
 

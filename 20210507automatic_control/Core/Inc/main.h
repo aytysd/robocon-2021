@@ -44,6 +44,13 @@ extern UART_HandleTypeDef huart4;
 extern UART_HandleTypeDef huart5;
 extern UART_HandleTypeDef huart1;
 
+extern TIM_HandleTypeDef htim2;
+extern TIM_HandleTypeDef htim3;
+extern TIM_HandleTypeDef htim4;
+extern TIM_HandleTypeDef htim5;
+extern TIM_HandleTypeDef htim6;
+
+
 extern I2C_HandleTypeDef hi2c3;
 extern I2C_HandleTypeDef hi2c1;
 /* USER CODE END ET */
@@ -66,69 +73,52 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
-#define USER_BUTTTON_Pin GPIO_PIN_13
-#define USER_BUTTTON_GPIO_Port GPIOC
-#define USER_BUTTTON_EXTI_IRQn EXTI15_10_IRQn
+#define PE_Sensor_B_Pin GPIO_PIN_13
+#define PE_Sensor_B_GPIO_Port GPIOC
+#define PE_Sensor_B_EXTI_IRQn EXTI15_10_IRQn
 #define SPARE_Pin GPIO_PIN_15
 #define SPARE_GPIO_Port GPIOC
 #define SPARE_EXTI_IRQn EXTI15_10_IRQn
-#define PE_Sensor_Pin GPIO_PIN_0
-#define PE_Sensor_GPIO_Port GPIOC
-#define PE_Sensor_EXTI_IRQn EXTI0_IRQn
-#define Under_SW_V4_Pin GPIO_PIN_1
-#define Under_SW_V4_GPIO_Port GPIOC
-#define Under_SW_V4_EXTI_IRQn EXTI1_IRQn
+#define PE_Sensor_T_Pin GPIO_PIN_0
+#define PE_Sensor_T_GPIO_Port GPIOC
+#define PE_Sensor_T_EXTI_IRQn EXTI0_IRQn
+#define Under_SW_V1_2_Pin GPIO_PIN_1
+#define Under_SW_V1_2_GPIO_Port GPIOC
 #define LIMIT_F_V3_Pin GPIO_PIN_2
 #define LIMIT_F_V3_GPIO_Port GPIOC
-#define LIMIT_F_V3_EXTI_IRQn EXTI2_IRQn
 #define LIMIT_L_V3_Pin GPIO_PIN_3
 #define LIMIT_L_V3_GPIO_Port GPIOC
-#define LIMIT_L_V3_EXTI_IRQn EXTI3_IRQn
 #define X_OD_Pin GPIO_PIN_0
 #define X_OD_GPIO_Port GPIOA
 #define X_ODA1_Pin GPIO_PIN_1
 #define X_ODA1_GPIO_Port GPIOA
-#define SBDBT_CONTROLLER_Pin GPIO_PIN_2
-#define SBDBT_CONTROLLER_GPIO_Port GPIOA
-#define SBDBT_CONTROLLERA3_Pin GPIO_PIN_3
-#define SBDBT_CONTROLLERA3_GPIO_Port GPIOA
-#define SPAREA4_Pin GPIO_PIN_4
-#define SPAREA4_GPIO_Port GPIOA
-#define SPAREA4_EXTI_IRQn EXTI4_IRQn
+#define PE_Sensor_F_Pin GPIO_PIN_4
+#define PE_Sensor_F_GPIO_Port GPIOA
+#define PE_Sensor_F_EXTI_IRQn EXTI4_IRQn
 #define Y_OD_Pin GPIO_PIN_5
 #define Y_OD_GPIO_Port GPIOA
 #define SOLENOID_RX_Pin GPIO_PIN_5
 #define SOLENOID_RX_GPIO_Port GPIOC
 #define SOLENOID_TX_Pin GPIO_PIN_10
 #define SOLENOID_TX_GPIO_Port GPIOB
-#define Under_SW_V1_Pin GPIO_PIN_14
-#define Under_SW_V1_GPIO_Port GPIOB
-#define Under_SW_V1_EXTI_IRQn EXTI15_10_IRQn
+#define Under_SW_V2_3_Pin GPIO_PIN_14
+#define Under_SW_V2_3_GPIO_Port GPIOB
+#define LED_Pin GPIO_PIN_15
+#define LED_GPIO_Port GPIOB
 #define MOTOR_TX_Pin GPIO_PIN_6
 #define MOTOR_TX_GPIO_Port GPIOC
 #define MOTOR_RX_Pin GPIO_PIN_7
 #define MOTOR_RX_GPIO_Port GPIOC
 #define LIMIT_L_V4_Pin GPIO_PIN_8
 #define LIMIT_L_V4_GPIO_Port GPIOC
-#define LIMIT_L_V4_EXTI_IRQn EXTI9_5_IRQn
-#define ToF_Pin GPIO_PIN_9
-#define ToF_GPIO_Port GPIOC
-#define ToFA8_Pin GPIO_PIN_8
-#define ToFA8_GPIO_Port GPIOA
 #define SBDBT_TX_Pin GPIO_PIN_9
 #define SBDBT_TX_GPIO_Port GPIOA
 #define SBDBT_RX_Pin GPIO_PIN_10
 #define SBDBT_RX_GPIO_Port GPIOA
-#define Under_SW_V3_Pin GPIO_PIN_11
-#define Under_SW_V3_GPIO_Port GPIOA
-#define Under_SW_V3_EXTI_IRQn EXTI15_10_IRQn
-#define Under_SW_V2_Pin GPIO_PIN_12
-#define Under_SW_V2_GPIO_Port GPIOA
-#define Under_SW_V2_EXTI_IRQn EXTI15_10_IRQn
-#define SBDBT_TXC10_Pin GPIO_PIN_10
-#define SBDBT_TXC10_GPIO_Port GPIOC
-#define SBDBT_RXC11_Pin GPIO_PIN_11
-#define SBDBT_RXC11_GPIO_Port GPIOC
+#define Under_SW_V1_4_Pin GPIO_PIN_11
+#define Under_SW_V1_4_GPIO_Port GPIOA
+#define Under_SW_V3_4_Pin GPIO_PIN_12
+#define Under_SW_V3_4_GPIO_Port GPIOA
 #define LED_TX_Pin GPIO_PIN_12
 #define LED_TX_GPIO_Port GPIOC
 #define LED_RX_Pin GPIO_PIN_2
@@ -137,11 +127,10 @@ void Error_Handler(void);
 #define Y_ODB3_GPIO_Port GPIOB
 #define LIMIT_F_V2_Pin GPIO_PIN_5
 #define LIMIT_F_V2_GPIO_Port GPIOB
-#define LIMIT_F_V2_EXTI_IRQn EXTI9_5_IRQn
-#define Gyro_SCL_Pin GPIO_PIN_8
-#define Gyro_SCL_GPIO_Port GPIOB
-#define Gyro_SDA_Pin GPIO_PIN_9
-#define Gyro_SDA_GPIO_Port GPIOB
+#define Gyro_ToF_SCL_Pin GPIO_PIN_8
+#define Gyro_ToF_SCL_GPIO_Port GPIOB
+#define Gyro_ToF_SDA_Pin GPIO_PIN_9
+#define Gyro_ToF_SDA_GPIO_Port GPIOB
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */

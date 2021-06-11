@@ -32,7 +32,9 @@ Core/Src/main.o: ../Core/Src/main.cpp ../Core/Inc/main.h \
  ../Core/Inc/Function.hpp ../Core/Inc/main.h ../Core/Inc/PWM.hpp \
  ../Core/Inc/General_command.hpp ../Core/Inc/Self_Pos.hpp \
  ../Core/Inc/General_command.hpp ../Core/Inc/Communication.hpp \
- ../Core/Inc/Trans_Controller.hpp ../Core/Inc/GPIO.hpp
+ ../Core/Inc/GPIO.hpp ../Core/Inc/Init_Move.hpp \
+ ../Core/Inc/Controller.hpp ../Core/Inc/PWM.hpp ../Core/Inc/LED.hpp \
+ ../Core/Inc/Error_Handling.hpp
 
 ../Core/Inc/main.h:
 
@@ -110,6 +112,14 @@ Core/Src/main.o: ../Core/Src/main.cpp ../Core/Inc/main.h \
 
 ../Core/Inc/Communication.hpp:
 
-../Core/Inc/Trans_Controller.hpp:
-
 ../Core/Inc/GPIO.hpp:
+
+../Core/Inc/Init_Move.hpp:
+
+../Core/Inc/Controller.hpp:
+
+../Core/Inc/PWM.hpp:
+
+../Core/Inc/LED.hpp:
+
+../Core/Inc/Error_Handling.hpp:

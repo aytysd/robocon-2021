@@ -5,7 +5,7 @@ Self_Pos.cpp:65:6:void Self_Pos::update_self_pos()	64	static
 Self_Pos.cpp:79:10:uint32_t Self_Pos::encoder_read_5()	24	static
 Self_Pos.cpp:96:10:uint32_t Self_Pos::encoder_read_2()	24	static
 Self_Pos.cpp:113:6:void Self_Pos::Gyro::BNO055_Init_I2C(I2C_HandleTypeDef*)	72	static
-Self_Pos.cpp:197:6:void Self_Pos::Gyro::BNO055_update_gravity_direction(I2C_HandleTypeDef*)	88	static
-Self_Pos.cpp:231:7:float Self_Pos::Gyro::get_gravity()	16	static
-Self_Pos.cpp:235:9:int16_t Self_Pos::Gyro::get_direction()	16	static
-Self_Pos.cpp:246:6:void Self_Pos::Gyro::set_initial_direction(E_robot_name)	16	static
+Self_Pos.cpp:198:6:void Self_Pos::Gyro::BNO055_update_gravity_direction(I2C_HandleTypeDef*)	88	static
+Self_Pos.cpp:233:7:float Self_Pos::Gyro::get_gravity()	16	static
+Self_Pos.cpp:238:10:uint16_t Self_Pos::Gyro::get_direction()	16	static
+Self_Pos.cpp:250:6:void Self_Pos::Gyro::set_initial_direction(E_robot_name)	16	static

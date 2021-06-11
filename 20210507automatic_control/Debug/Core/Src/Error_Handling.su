@@ -1,0 +1,2 @@
+Error_Handling.cpp:24:6:void Error_Handling::Emergency_stop()	32	static
+Error_Handling.cpp:34:6:void Error_Handling::set_flag(E_Errors)	24	static

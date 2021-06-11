@@ -25,6 +25,7 @@
 #include "bno055.h"
 #include "stdio.h"
 #include <math.h>
+#include "Error_Handling.hpp"
 
 double Self_Pos::encoder5=0;//X
 double Self_Pos::encoder2=0;//Y
@@ -79,6 +80,12 @@ void Self_Pos::update_self_pos(void)
 uint32_t Self_Pos::encoder_read_5(void)
 {
 	 uint32_t enc_buff_5 = TIM5->CNT;
+
+	 Error_Handling* error_handling = new Error_Handling();
+	 error_handling -> TIM5_error_handling();
+	 delete error_handling;
+
+
 	  TIM5->CNT = 0;
 	  if (enc_buff_5 > 400000000)
 	  {
@@ -96,6 +103,12 @@ uint32_t Self_Pos::encoder_read_5(void)
 uint32_t Self_Pos::encoder_read_2(void)
 {
 	 uint32_t enc_buff_2 = TIM2->CNT;
+
+	 Error_Handling* error_handling = new Error_Handling();
+	 error_handling -> TIM2_error_handling();
+	 delete error_handling;
+
+
 	  TIM2->CNT = 0;
 	  if (enc_buff_2 > 400000000)
 	  {
@@ -110,7 +123,8 @@ uint32_t Self_Pos::encoder_read_2(void)
 	  }
 }
 //-------------------------------------------------------------------------
-void Self_Pos::Gyro::BNO055_Init_I2C(I2C_HandleTypeDef* hi2c_device) {
+void Self_Pos::Gyro::BNO055_Init_I2C(I2C_HandleTypeDef* hi2c_device)
+{
 
 	uint8_t GPwrMode 	= NormalG;   		// Gyro power mode
 	uint8_t Gscale 		= GFS_2000DPS; 	// Gyro full scale
@@ -194,7 +208,8 @@ void Self_Pos::Gyro::BNO055_Init_I2C(I2C_HandleTypeDef* hi2c_device) {
 	HAL_Delay(50);
 }
 
-void Self_Pos::Gyro::BNO055_update_gravity_direction(I2C_HandleTypeDef* hi2c_device){
+void Self_Pos::Gyro::BNO055_update_gravity_direction(I2C_HandleTypeDef* hi2c_device)
+{
 
 	uint8_t	imu_readings[IMU_NUMBER_OF_BYTES];
 	uint8_t gyro_readings[IMU_NUMBER_OF_BYTES];
@@ -228,11 +243,13 @@ void Self_Pos::Gyro::BNO055_update_gravity_direction(I2C_HandleTypeDef* hi2c_dev
 
 }
 
-float Self_Pos::Gyro::get_gravity(){
+float Self_Pos::Gyro::get_gravity()
+{
 	return this -> gravity;
 }
 
-int16_t Self_Pos::Gyro::get_direction(){
+uint16_t Self_Pos::Gyro::get_direction()
+{
 
 	this -> direction += this -> initial_direction;
 	if( this -> direction > 360 ){
@@ -243,8 +260,10 @@ int16_t Self_Pos::Gyro::get_direction(){
 }
 
 
-void Self_Pos::Gyro::set_initial_direction(E_robot_name robot){
-	switch(robot){
+void Self_Pos::Gyro::set_initial_direction(E_robot_name robot)
+{
+	switch(robot)
+	{
 	case E_robot_name::A:
 		this -> initial_direction = 0;
 		break;
@@ -258,8 +277,8 @@ void Self_Pos::Gyro::set_initial_direction(E_robot_name robot){
 }
 
 
-int16_t Self_Pos::Gyro::direction = 0;
+uint16_t Self_Pos::Gyro::direction = 0;
 float Self_Pos::Gyro::gravity = 0;
-int16_t Self_Pos::Gyro::initial_direction = 0;
+uint16_t Self_Pos::Gyro::initial_direction = 0;
 
 

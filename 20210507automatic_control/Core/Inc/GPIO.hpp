@@ -22,22 +22,22 @@
 #include "main.h"
 
 enum class E_interrupt{
-	PE_SENSOR =0,
-	UNDER_SW_V4,
-	LIMIT_F_V3,
-	LIMIT_L_V3,
-	SPARE1,
-	LIMIT_F_V2,
-	SPARE2,
-	SPARE3,
-	LIMIT_L_V4,
-	SPARE5,
-	SPARE6,
-	UNDER_SW_V3,
-	UNDER_SW_V2,
-	USER_BUTTON,
-	UNDER_SW_V1,
-	SPARE7,
+	PE_SENSOR_T = 0,
+	SPARE1,//cannot be used
+	LIMIT_F_V3,//cannot be used
+	LIMIT_L_V3,//cannot be used
+	PE_SENSOR_F,
+	LIMIT_F_V2,//cannot be used
+	SPARE2,//cannot be used
+	SPARE3,//cannot be used
+	LIMIT_L_V4,//cannot be used
+	SPARE5,//cannot be used
+	SPARE6,//cannot be used
+	SPARE7,//cannot be used
+	SPARE8,//cannot be used
+	PE_SENSOR_B,
+	SPARE9,//cannot be used
+	SPARE10,
 
 
 };
@@ -46,6 +46,7 @@ class GPIO{
 public:
 	void identify(uint16_t GPIO_Pin);
 	bool get_status(E_interrupt interrupt);
+	void reset_status();
 
 private:
 	static bool status[16];

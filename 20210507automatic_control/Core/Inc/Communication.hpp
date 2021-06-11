@@ -21,11 +21,19 @@
 
 #include "main.h"
 
-class Communication{
-public:
-	Communication(){
-	}
+enum class E_data_type
+{
+	CURRENT_DATA,
+	ERROR_DATA,
+	WARNING_DATA,
+	COUNT,
+};
 
+
+class Communication
+{
+public:
+	void send_data(E_data_type data);
 private:
 
 };

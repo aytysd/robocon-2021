@@ -18,25 +18,29 @@
  *@Usertouch(static bool get_status(void))
  *
  */
-#ifndef INC_TRANS_CONTROLLER_HPP_
-#define INC_TRANS_CONTROLLER_HPP_
+#ifndef INC_CONTROLLER_HPP_
+#define INC_CONTROLLER_HPP_
 
 #include "main.h"
 #include "General_command.hpp"
+#include "PWM.hpp"
 
-class Trans_Controller{
+class Controller{
 public:
 	static uint8_t controller_Rxdata[8];
 
 	void identify_start_button(void);
 	void identify_stop_button(void);
 
+
 	void reset_status(void);
 	E_move_status get_status(void);
 private:
+
+
 	static E_move_status status;
 };
 
 
 
-#endif /* INC_TRANS_CONTROLLER_HPP_ */
+#endif /* INC_CONTROLLER_HPP_ */

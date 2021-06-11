@@ -37,7 +37,7 @@ enum class E_LED_status
 
 };
 
-class LED_Mode
+class LED
 {
 public:
 	void LED_output(E_LED_status status);
