@@ -43,7 +43,7 @@ void LED::LED_output(E_LED_status status)
 		function -> drive_LED(3, 20);
 		break;
 
-	case E_LED_status::Wait;
+	case E_LED_status::Wait:
 		function -> drive_LED(1, 0);
 		function -> drive_LED(2, 0);
 		function -> drive_LED(3, 0);
