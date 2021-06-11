@@ -27,13 +27,14 @@
 
 enum class E_LED_status
 {
+	Done,
 	Init,
-	Move,
-	Stop,
-	Jump,
-	Turn_the_rope,
-	Connecting,
 	Measurement,
+	Error_Handler,
+	Warning,
+	Wait,
+	OPR_Mode,
+
 };
 
 class LED_Mode

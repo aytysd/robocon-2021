@@ -34,39 +34,44 @@ void LED_Mode::LED_output(E_LED_status status)
 		function -> drive_LED(1, 20);
 		function -> drive_LED(2, 20);
 		function -> drive_LED(3, 20);
+		break;
 
-	case E_LED_status::Move:
+	case E_LED_status::Done:
 		function -> drive_LED(1, 0);
 		function -> drive_LED(2, 0);
 		function -> drive_LED(3, 0);
 		function -> drive_LED(3, 20);
+		break;
 
-
-	case E_LED_status::Jump:
+	case E_LED_status::Wait:
 		function -> drive_LED(1, 0);
 		function -> drive_LED(2, 0);
 		function -> drive_LED(3, 0);
 		function -> drive_LED(2, 20);
+		break;
 
-	case E_LED_status::Stop:
+	case E_LED_status::Error_Handler:
 		function -> drive_LED(1, 0);
 		function -> drive_LED(2, 0);
 		function -> drive_LED(3, 0);
 		function -> drive_LED(1, 20);
+		break;
 
-	case E_LED_status::Turn_the_rope:
+	case E_LED_status::Warning:
 		function -> drive_LED(1, 0);
 		function -> drive_LED(2, 0);
 		function -> drive_LED(3, 0);
 		function -> drive_LED(2, 20);
 		function -> drive_LED(3, 20);
+		break;
 
-	case E_LED_status::Connecting:
+	case E_LED_status::OPR_Mode:
 		function -> drive_LED(1, 0);
 		function -> drive_LED(2, 0);
 		function -> drive_LED(3, 0);
 		function -> drive_LED(1, 20);
 		function -> drive_LED(2, 20);
+		break;
 
 	case E_LED_status::Measurement:
 		function -> drive_LED(1, 0);
@@ -74,6 +79,7 @@ void LED_Mode::LED_output(E_LED_status status)
 		function -> drive_LED(3, 0);
 		function -> drive_LED(1, 20);
 		function -> drive_LED(3, 20);
+		break;
 	}
 
 	delete function;

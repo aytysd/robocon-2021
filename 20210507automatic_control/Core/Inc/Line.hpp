@@ -62,7 +62,7 @@ private:
 
 public:
 	int MoveLine
-	(double befX, double befY, double tgX, double tgY, bool throug);
+	(double befX, double befY, double tgX, double tgY, bool through);
 };
 
 
