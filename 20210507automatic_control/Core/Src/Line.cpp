@@ -66,7 +66,7 @@ int Line::MoveLine
 
 	if(through == true)
 	{
-		if(this -> devY <= 0)
+		if(this -> devY <= 500)
 		{
 			arrive = true;
 		}
@@ -105,13 +105,13 @@ int Line::MoveLine
 		{
 			PWM* pwm = new PWM();
 
-			this -> TG_r = this -> TG_r + 180;
-			if(this -> TG_r > 360)
-			{
-				this -> TG_r = this -> TG_r -360;
-			}
+//			this -> TG_r = this -> TG_r + 180;
+//			if(this -> TG_r > 360)
+//			{
+//				this -> TG_r = this -> TG_r -360;
+//			}
 
-			pwm -> V_output(100, this -> TG_r, 0, now_r, E_move_status::MOVE);
+			pwm -> V_output(1000, this -> TG_r, 0, now_r, E_move_status::MOVE);
 			judge = 2;
 
 			delete pwm;
@@ -139,7 +139,3 @@ int Line::MoveLine
 
 	return judge;
 }
-
-
-
-
