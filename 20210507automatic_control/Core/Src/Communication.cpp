@@ -21,6 +21,7 @@
 #include "Communication.hpp"
 #include "Error_Handling.hpp"
 #include "Self_Pos.hpp"
+#include "Jump.hpp"
 
 uint8_t Communication::Rxdata[4] = { 0, 0, 0, 0 };
 
@@ -46,7 +47,11 @@ void Communication::send_data(E_data_type data)
 		uint8_t current_line_p = (uint8_t)(0b1111111100000000 & (uint16_t)Error_Handling::current_line) >> 8;
 		uint8_t current_line_q = (uint8_t)(0b0000000011111111 & (uint16_t)Error_Handling::current_line);
 
-		uint8_t data[9] = { static_cast<uint8_t>(E_data_type::CURRENT_DATA), X_pos_p, X_pos_q, Y_pos_p, Y_pos_q, direction_p, direction_q, current_line_p, current_line_q };
+		Jump* jump = new Jump();
+
+		uint8_t data[10] = { static_cast<uint8_t>(E_data_type::CURRENT_DATA), X_pos_p, X_pos_q, Y_pos_p, Y_pos_q, direction_p, direction_q, current_line_p, current_line_q, (uint8_t)jump -> get_status() };
+
+		delete jump;
 
 		HAL_UART_Transmit(&huart1, (uint8_t*)Error_Handling::current_func, sizeof(Error_Handling::current_func), 100);
 		HAL_UART_Transmit(&huart1, (uint8_t*)data, sizeof(data), 100);

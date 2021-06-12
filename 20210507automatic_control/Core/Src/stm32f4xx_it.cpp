@@ -311,7 +311,6 @@ void TIM6_DAC_IRQHandler(void)
   gyro -> BNO055_update_gravity_direction(&hi2c1);
   self_pos -> update_self_pos();
   gpio -> reset_status();
-  pwm -> speed_calc(2000);
   jump -> identify();
   communication -> send_data( E_data_type::CURRENT_DATA );
 

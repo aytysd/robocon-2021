@@ -91,7 +91,8 @@ static void MX_USART2_UART_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-void HAL_UART_RxCpltCallback(UART_HandleTypeDef*UartHandle){
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef*UartHandle)
+{
 	HAL_UART_Receive_IT(&huart1, (uint8_t*)Communication::Rxdata, sizeof(Communication::Rxdata));
 
 }

@@ -40,7 +40,6 @@ public:
 	void V_output(double V, double fai, double rotation_speed, double attitude_angle, E_move_status status);
 	bool rotate(double V, uint16_t target_angle);
 
-	int speed_calc(uint16_t target_speed);
 private:
 	uint8_t plus_minus(double number);
 

@@ -30,7 +30,7 @@ void Function::drive_motor(uint8_t motor_number, uint8_t direction, uint8_t PWM,
 
 	if( PID_Enabled == true )
 	{
-		motor[0] |= ( 1<<6 );
+		motor[0] |= ( 0b01 << 6 );
 	}
 
 	HAL_UART_Transmit(&huart6, (uint8_t*)motor, sizeof(motor), 100);
