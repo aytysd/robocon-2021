@@ -29,9 +29,9 @@
 #include "Communication.hpp"
 #include "GPIO.hpp"
 #include "Init_Move.hpp"
-#include "Controller.hpp"
 #include "LED.hpp"
 #include "Error_Handling.hpp"
+#include "Flow.hpp"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -67,6 +67,7 @@ UART_HandleTypeDef huart6;
 
 /* USER CODE BEGIN PV */
 
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -90,15 +91,9 @@ static void MX_USART2_UART_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-void HAL_UART_RxCpltCallback(UART_HandleTypeDef*UartHandle){
-	if( HAL_UART_Receive_IT(&huart1, (uint8_t*)Controller::controller_Rxdata, sizeof(Controller::controller_Rxdata)) != HAL_ERROR ){
-
-		Controller* controller = new Controller();
-		controller -> identify_start_button();
-		controller -> identify_stop_button();
-		delete controller;
-
-	}
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef*UartHandle)
+{
+	HAL_UART_Receive_IT(&huart1, (uint8_t*)Communication::Rxdata, sizeof(Communication::Rxdata));
 
 }
 
@@ -119,6 +114,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 int main(void)
 {
   /* USER CODE BEGIN 1 */
+
   Init_Move* init_move = new Init_Move();
   /* USER CODE END 1 */
 
@@ -748,6 +744,7 @@ void Error_Handler(void)
 	Communication* communication = new Communication();
 	Error_Handling* error_handling = new Error_Handling();
 
+	led -> LED_output(E_LED_status::Connecting);
 	error_handling -> Emergency_stop();
 	communication -> send_data( E_data_type::ERROR_DATA );
 
@@ -756,7 +753,6 @@ void Error_Handler(void)
   while (1)
   {
   }
-
   /* USER CODE END Error_Handler_Debug */
 }
 

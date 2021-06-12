@@ -16,3 +16,6 @@ class Controller():
         if( count == 8 ):
             return General_command.E_move_status.STOP
 
+
+def say_hello():
+    print('hello_world')

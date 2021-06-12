@@ -5,15 +5,20 @@
  *
  *@Author: Ayato Yoshida
  *
- *@Purpose_of_this_class:(description_about_thisclass)
+ *@Purpose_of_this_class:(Handling error occurence)
  *
- *@Input(value)in(variable)of(functionname)
+ *@Input(error type)in(E_errors errors)of(void set_flag(E_errors errors)
  *
- *@Output(value)to(where)
+ *@Output(latest executed line)to(uint32_t current_line)
+ *@Output(latest executed function)to(char* current_func)
+ *@Output(latest warning line)to(uint32_t warning_line)
+ *@Output(latest warning function)to(char* warning_func)
+ *@Output(error line)to(uint32_t error_line)
+ *@Output(error func)to(const char* error_func)
+ *@Output(error flag corresponding to E_Errors components)to(bool flag)
  *
- *@Attention_(description)
+ *@Attention_(only aytysd uses this class)
  *
- *@Usertouch(functionname)&_(variable_name)
  *
  */
 #ifndef INC_ERROR_HANDLING_HPP_
