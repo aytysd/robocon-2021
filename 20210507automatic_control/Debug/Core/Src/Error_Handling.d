@@ -30,7 +30,8 @@ Core/Src/Error_Handling.o: ../Core/Src/Error_Handling.cpp \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h \
- ../Core/Inc/main.h ../Core/Inc/Function.hpp
+ ../Core/Inc/main.h ../Core/Inc/Function.hpp \
+ ../Core/Inc/Communication.hpp ../Core/Inc/LED.hpp
 
 ../Core/Inc/Error_Handling.hpp:
 
@@ -99,3 +100,7 @@ Core/Src/Error_Handling.o: ../Core/Src/Error_Handling.cpp \
 ../Core/Inc/main.h:
 
 ../Core/Inc/Function.hpp:
+
+../Core/Inc/Communication.hpp:
+
+../Core/Inc/LED.hpp:

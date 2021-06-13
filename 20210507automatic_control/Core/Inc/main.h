@@ -111,6 +111,10 @@ void Error_Handler(void);
 #define MOTOR_RX_GPIO_Port GPIOC
 #define LIMIT_L_V4_Pin GPIO_PIN_8
 #define LIMIT_L_V4_GPIO_Port GPIOC
+#define ToF_L_SDA_Pin GPIO_PIN_9
+#define ToF_L_SDA_GPIO_Port GPIOC
+#define ToF_L_SCL_Pin GPIO_PIN_8
+#define ToF_L_SCL_GPIO_Port GPIOA
 #define SBDBT_TX_Pin GPIO_PIN_9
 #define SBDBT_TX_GPIO_Port GPIOA
 #define SBDBT_RX_Pin GPIO_PIN_10
@@ -127,10 +131,10 @@ void Error_Handler(void);
 #define Y_ODB3_GPIO_Port GPIOB
 #define LIMIT_F_V2_Pin GPIO_PIN_5
 #define LIMIT_F_V2_GPIO_Port GPIOB
-#define Gyro_ToF_SCL_Pin GPIO_PIN_8
-#define Gyro_ToF_SCL_GPIO_Port GPIOB
-#define Gyro_ToF_SDA_Pin GPIO_PIN_9
-#define Gyro_ToF_SDA_GPIO_Port GPIOB
+#define Gyro_ToF_F_SCL_Pin GPIO_PIN_8
+#define Gyro_ToF_F_SCL_GPIO_Port GPIOB
+#define Gyro_ToF_F_SDA_Pin GPIO_PIN_9
+#define Gyro_ToF_F_SDA_GPIO_Port GPIOB
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */

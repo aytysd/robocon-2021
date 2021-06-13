@@ -3,7 +3,6 @@ gthr-default.h:229:1:int __gthread_key_delete(__gthread_key_t)	16	static
 PWM.cpp:28:6:void PWM::V_output(double, double, double, double, E_move_status)	136	static
 PWM.cpp:89:6:bool PWM::rotate(double, uint16_t)	48	static
 PWM.cpp:163:9:uint8_t PWM::plus_minus(double)	24	static
-PWM.cpp:182:5:int PWM::speed_calc(uint16_t)	40	static
-PWM.cpp:201:1:void __static_initialization_and_destruction_0(int, int)	16	static
-PWM.cpp:201:1:cpp)	8	static
-PWM.cpp:201:1:cpp)	8	static
+PWM.cpp:180:1:void __static_initialization_and_destruction_0(int, int)	16	static
+PWM.cpp:180:1:cpp)	8	static
+PWM.cpp:180:1:cpp)	8	static
