@@ -21,6 +21,7 @@
 #include "main.h"
 #include "Function.hpp"
 #include "Communication.hpp"
+#include "LED.hpp"
 
 void Error_Handling::TIM5_error_handling()
 {
@@ -45,12 +46,20 @@ void Error_Handling::TIM5_error_handling()
 			 this -> set_flag(E_Errors::W_X_Encoder_Disconnection);
 			 communication -> send_data( E_data_type::WARNING_DATA );
 			 delete communication;
+
+			 LED* led = new LED();
+			 led -> LED_output(E_LED_status::Warning);
+			 delete led;
 		 }
 
 		 flag = true;
 	 }
 	 else
 	 {
+		 LED* led = new LED();
+		 led -> LED_output(LED::old_LED_status);
+		 delete led;
+
 		 flag = false;
 	 }
 
@@ -82,12 +91,67 @@ void Error_Handling::TIM2_error_handling()
 			 communication -> send_data( E_data_type::WARNING_DATA );
 			 delete communication;
 
+			 LED* led = new LED();
+			 led -> LED_output(E_LED_status::Warning);
+			 delete led;
+
+
 		 }
 
 		 flag = true;
 	 }
 	 else
 	 {
+		 LED* led = new LED();
+		 led -> LED_output(LED::old_LED_status);
+		 delete led;
+
+		 flag = false;
+	 }
+
+}
+
+void Error_Handling::gyro_error_handling(uint16_t direction)
+{
+	static bool flag = false;
+	static uint32_t base_time = 0;
+
+	if( flag == false )
+	{
+		base_time = HAL_GetTick();
+	}
+
+
+
+	 if( direction == 0 || direction == 41 || direction > 360 )
+	 {
+
+		 if( ( HAL_GetTick() - base_time ) >= 5000 )
+		 {
+			 Communication* communication = new Communication();
+
+			 this -> warning_line = __LINE__;
+			 this -> warning_func = const_cast<char*>(__func__);
+			 this -> set_flag(E_Errors::W_gyro_Disconnection);
+
+			 communication -> send_data( E_data_type::WARNING_DATA );
+			 delete communication;
+
+			 LED* led = new LED();
+			 led -> LED_output(E_LED_status::Warning);
+			 delete led;
+
+
+		 }
+
+		 flag = true;
+	 }
+	 else
+	 {
+		 LED* led = new LED();
+		 led -> LED_output(LED::old_LED_status);
+		 delete led;
+
 		 flag = false;
 	 }
 
@@ -101,6 +165,7 @@ void Error_Handling::Emergency_stop()
 
 		function -> drive_motor(i, 0, 0, 0, false);
 	}
+	delete function;
 
 }
 
@@ -126,4 +191,4 @@ uint32_t Error_Handling::current_line = 0;
 char* Error_Handling::warning_func = 0;
 uint32_t Error_Handling::warning_line = 0;
 
-bool Error_Handling::flag[ static_cast<int>(E_Errors::Count) + 1 ] = { false, false, false, false, false };
+bool Error_Handling::flag[ static_cast<int>(E_Errors::Count) + 1 ] = { false, false, false, false, false, false };

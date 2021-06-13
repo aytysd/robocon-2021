@@ -26,6 +26,7 @@
 #include "stdio.h"
 #include <math.h>
 #include "Error_Handling.hpp"
+#include "LED.hpp"
 
 double Self_Pos::encoder5=0;//X
 double Self_Pos::encoder2=0;//Y
@@ -255,6 +256,10 @@ uint16_t Self_Pos::Gyro::get_direction()
 	if( this -> direction > 360 ){
 		this -> direction -= 360;
 	}
+
+	Error_Handling* error_handling = new Error_Handling();
+	error_handling -> gyro_error_handling( this -> direction );
+	delete error_handling;
 
 	return this -> direction;
 }

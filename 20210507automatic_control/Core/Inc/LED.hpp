@@ -12,11 +12,11 @@
  *@Output(void)to(LED_output)
  *
  *@Attention_(Init -> white,
- *			  Move -> Blue,
- *			  Stop -> Red,
- *			  Jump -> Green,
- *			  Turn_the_rope -> Light Blue,
- *            Connecting -> Yellow,
+ *			  Done -> Blue,
+ *			  Error_Handler -> Red,
+ *			  Wait -> Green,
+ *			  OPR_Mode -> Light Blue,
+ *            Warning -> Yellow,
  *            Measurement -> Purple)
  *
  *@Usertouch(LED_output)&_(variable_name)
@@ -34,6 +34,7 @@ enum class E_LED_status
 	Warning,
 	Wait,
 	OPR_Mode,
+	None
 
 };
 
@@ -41,6 +42,7 @@ class LED
 {
 public:
 	void LED_output(E_LED_status status);
+	static E_LED_status old_LED_status;
 };
 
 
