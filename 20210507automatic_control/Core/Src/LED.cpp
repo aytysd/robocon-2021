@@ -20,6 +20,8 @@
 #include "LED.hpp"
 #include "function.hpp"
 
+E_LED_status LED::old_LED_status = E_LED_status::None;
+
 void LED::LED_output(E_LED_status status)
 {
 	Function* function = new Function();
@@ -34,6 +36,8 @@ void LED::LED_output(E_LED_status status)
 		function -> drive_LED(1, 20);
 		function -> drive_LED(2, 20);
 		function -> drive_LED(3, 20);
+
+		this -> old_LED_status = status;
 		break;
 
 	case E_LED_status::Done:
@@ -41,6 +45,8 @@ void LED::LED_output(E_LED_status status)
 		function -> drive_LED(2, 0);
 		function -> drive_LED(3, 0);
 		function -> drive_LED(3, 20);
+
+		this -> old_LED_status = status;
 		break;
 
 	case E_LED_status::Wait:
@@ -48,6 +54,8 @@ void LED::LED_output(E_LED_status status)
 		function -> drive_LED(2, 0);
 		function -> drive_LED(3, 0);
 		function -> drive_LED(2, 20);
+
+		this -> old_LED_status = status;
 		break;
 
 	case E_LED_status::Error_Handler:
@@ -57,15 +65,17 @@ void LED::LED_output(E_LED_status status)
 		function -> drive_LED(1, 20);
 		break;
 
-	case E_LED_status::Warning:
+	case E_LED_status::OPR_Mode:
 		function -> drive_LED(1, 0);
 		function -> drive_LED(2, 0);
 		function -> drive_LED(3, 0);
 		function -> drive_LED(2, 20);
 		function -> drive_LED(3, 20);
+
+		this -> old_LED_status = status;
 		break;
 
-	case E_LED_status::OPR_Mode:
+	case E_LED_status::Warning:
 		function -> drive_LED(1, 0);
 		function -> drive_LED(2, 0);
 		function -> drive_LED(3, 0);
@@ -79,9 +89,18 @@ void LED::LED_output(E_LED_status status)
 		function -> drive_LED(3, 0);
 		function -> drive_LED(1, 20);
 		function -> drive_LED(3, 20);
+		this -> old_LED_status = status;
 		break;
+
+	case E_LED_status::None:
+		function -> drive_LED(1, 0);
+		function -> drive_LED(2, 0);
+		function -> drive_LED(3, 0);
+		break;
+
 	}
 
 	delete function;
+
 }
 

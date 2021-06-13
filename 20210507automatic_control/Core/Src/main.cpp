@@ -149,7 +149,9 @@ int main(void)
   MX_TIM3_Init();
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
-  init_move -> init_move(E_robot_name::A);
+
+//  init_move -> init_move(E_robot_name::A);
+  HAL_TIM_Base_Start_IT(&htim6);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -744,7 +746,7 @@ void Error_Handler(void)
 	Communication* communication = new Communication();
 	Error_Handling* error_handling = new Error_Handling();
 
-	led -> LED_output(E_LED_status::Connecting);
+	led -> LED_output(E_LED_status::Error_Handler);
 	error_handling -> Emergency_stop();
 	communication -> send_data( E_data_type::ERROR_DATA );
 

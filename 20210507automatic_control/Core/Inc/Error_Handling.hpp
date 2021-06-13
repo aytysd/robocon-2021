@@ -32,6 +32,7 @@ enum class E_Errors
 	Initialization_failed,
 	W_X_Encoder_Disconnection,
 	W_Y_Encoder_Disconnection,
+	W_gyro_Disconnection,
 	Count,
 };
 
@@ -44,6 +45,8 @@ public:
 
 	void TIM5_error_handling(void);
 	void TIM2_error_handling(void);
+
+	void gyro_error_handling(uint16_t direction);
 
 	static const char* error_func;
 	static uint32_t error_line;
