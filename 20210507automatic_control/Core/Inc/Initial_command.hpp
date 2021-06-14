@@ -21,13 +21,24 @@
 
 namespace Initial{
 
+enum class A{
+	START = 0,
+	INIT_MOVE_INITIALIZE,
+	FINISH = 24,
+};
+
+
 enum class B{
 	START = 0,
+	INIT_MOVE_INITIALIZE,
 	FINISH = 24,
 };
 
 enum class C{
 	START = 0,
+	INIT_MOVE_INITIALIZE,
+
+
 	FINISH = 24,
 };
 
