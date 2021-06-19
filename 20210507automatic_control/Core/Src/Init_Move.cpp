@@ -170,13 +170,15 @@ void Init_Move::init_move(E_robot_name robot)
 	Error_Handling::current_func = const_cast<char*>(__func__);
 	Error_Handling::current_line = __LINE__;
 
-	led -> LED_output(E_LED_status::Done);
+
 
 	this -> Initialize(robot);
 
 	delete led;
 	delete pwm;
 	delete wait;
+
+	led -> LED_output(E_LED_status::Done);
 
 }
 

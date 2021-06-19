@@ -26,6 +26,7 @@ enum class E_data_type
 	CURRENT_DATA,
 	ERROR_DATA,
 	WARNING_DATA,
+	DONE_DATA,
 	COUNT,
 };
 
