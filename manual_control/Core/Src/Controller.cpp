@@ -42,7 +42,7 @@ void Controller::identify()
 	{
 		this -> identify_ABXY_button();
 		this -> identify_SUB_button();
-		this -> identify_LS();
+		this -> identify_LS_SB();
 		this -> identify_CS();
 		this -> identify_RS();
 

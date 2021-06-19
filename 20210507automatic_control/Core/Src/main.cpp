@@ -97,12 +97,25 @@ static void MX_UART4_Init(void);
 /* USER CODE BEGIN 0 */
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef*UartHandle)
 {
-	HAL_UART_Receive_IT(&huart1, (uint8_t*)Controller::controller_Rxdata, sizeof(Controller::controller_Rxdata));
 
-	Controller* controller = new Controller();
-	controller -> identify();
-	delete controller;
+	if( UartHandle == &huart4 )
+	{
+		HAL_UART_Receive_IT(&huart4, (uint8_t*)Controller::controller_Rxdata, sizeof(Controller::controller_Rxdata));
 
+		Controller* controller = new Controller();
+		controller -> identify();
+		delete controller;
+
+	}
+
+	if( UartHandle == &huart1 )
+	{
+		HAL_UART_Receive_IT(&huart1, (uint8_t*)Communication::Rxdata, sizeof(Communication::Rxdata));
+
+		Communication* communication = new Communication();
+		delete communication;
+
+	}
 
 }
 
@@ -160,9 +173,8 @@ int main(void)
   MX_I2C3_Init();
   MX_UART4_Init();
   /* USER CODE BEGIN 2 */
-  HAL_UART_Receive_IT(&huart1, (uint8_t*)Controller::controller_Rxdata, sizeof(Controller::controller_Rxdata));
-//  init_move -> init_move(E_robot_name::A);
-//  HAL_TIM_Base_Start_IT(&htim6);
+
+  init_move -> init_move(E_robot_name::A);
   /* USER CODE END 2 */
 
   /* Infinite loop */
