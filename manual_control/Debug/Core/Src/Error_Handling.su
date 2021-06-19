@@ -1,0 +1,5 @@
+Error_Handling.cpp:26:6:void Error_Handling::TIM5_error_handling()	32	static
+Error_Handling.cpp:68:6:void Error_Handling::TIM2_error_handling()	32	static
+Error_Handling.cpp:114:6:void Error_Handling::gyro_error_handling(uint16_t)	32	static
+Error_Handling.cpp:161:6:void Error_Handling::Emergency_stop()	32	static
+Error_Handling.cpp:172:6:void Error_Handling::set_flag(E_Errors)	24	static

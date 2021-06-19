@@ -1,0 +1,8 @@
+std_abs.h:71:3:constexpr double std::abs(double)	16	static
+cmath:129:3:constexpr long double std::atan(long double)	16	static
+cmath:467:3:constexpr long double std::sqrt(long double)	16	static
+Self_Pos.hpp:45:2:Self_Pos::Self_Pos()	16	static
+Line.cpp:24:6:void Line::set(double, double, double, double)	64	static
+Line.cpp:33:8:double Line::distance(double, double, double, double)	56	static
+Line.cpp:38:8:double Line::TGdistance(double, double, double, double)	64	static
+Line.cpp:43:5:int Line::MoveLine(double, double, double, double, bool)	88	static

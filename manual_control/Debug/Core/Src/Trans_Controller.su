@@ -1,0 +1,4 @@
+Trans_Controller.cpp:24:6:void Trans_Controller::identify_start_button()	32	static
+Trans_Controller.cpp:38:6:void Trans_Controller::identify_stop_button()	40	static
+Trans_Controller.cpp:60:6:void Trans_Controller::reset_status()	16	static
+Trans_Controller.cpp:64:15:E_move_status Trans_Controller::get_status()	16	static
