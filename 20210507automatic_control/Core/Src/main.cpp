@@ -32,6 +32,7 @@
 #include "LED.hpp"
 #include "Error_Handling.hpp"
 #include "Flow.hpp"
+#include "Controller.hpp"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -60,6 +61,7 @@ TIM_HandleTypeDef htim4;
 TIM_HandleTypeDef htim5;
 TIM_HandleTypeDef htim6;
 
+UART_HandleTypeDef huart4;
 UART_HandleTypeDef huart5;
 UART_HandleTypeDef huart1;
 UART_HandleTypeDef huart2;
@@ -67,7 +69,6 @@ UART_HandleTypeDef huart3;
 UART_HandleTypeDef huart6;
 
 /* USER CODE BEGIN PV */
-
 
 /* USER CODE END PV */
 
@@ -87,6 +88,7 @@ static void MX_TIM4_Init(void);
 static void MX_TIM3_Init(void);
 static void MX_USART2_UART_Init(void);
 static void MX_I2C3_Init(void);
+static void MX_UART4_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -95,7 +97,12 @@ static void MX_I2C3_Init(void);
 /* USER CODE BEGIN 0 */
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef*UartHandle)
 {
-	HAL_UART_Receive_IT(&huart1, (uint8_t*)Communication::Rxdata, sizeof(Communication::Rxdata));
+	HAL_UART_Receive_IT(&huart1, (uint8_t*)Controller::controller_Rxdata, sizeof(Controller::controller_Rxdata));
+
+	Controller* controller = new Controller();
+	controller -> identify();
+	delete controller;
+
 
 }
 
@@ -151,16 +158,19 @@ int main(void)
   MX_TIM3_Init();
   MX_USART2_UART_Init();
   MX_I2C3_Init();
+  MX_UART4_Init();
   /* USER CODE BEGIN 2 */
-
+  HAL_UART_Receive_IT(&huart1, (uint8_t*)Controller::controller_Rxdata, sizeof(Controller::controller_Rxdata));
 //  init_move -> init_move(E_robot_name::A);
-  HAL_TIM_Base_Start_IT(&htim6);
+//  HAL_TIM_Base_Start_IT(&htim6);
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+/*
+*/
 
     /* USER CODE END WHILE */
 
@@ -513,6 +523,39 @@ static void MX_TIM6_Init(void)
   /* USER CODE BEGIN TIM6_Init 2 */
 
   /* USER CODE END TIM6_Init 2 */
+
+}
+
+/**
+  * @brief UART4 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_UART4_Init(void)
+{
+
+  /* USER CODE BEGIN UART4_Init 0 */
+
+  /* USER CODE END UART4_Init 0 */
+
+  /* USER CODE BEGIN UART4_Init 1 */
+
+  /* USER CODE END UART4_Init 1 */
+  huart4.Instance = UART4;
+  huart4.Init.BaudRate = 115200;
+  huart4.Init.WordLength = UART_WORDLENGTH_8B;
+  huart4.Init.StopBits = UART_STOPBITS_1;
+  huart4.Init.Parity = UART_PARITY_NONE;
+  huart4.Init.Mode = UART_MODE_TX_RX;
+  huart4.Init.HwFlowCtl = UART_HWCONTROL_NONE;
+  huart4.Init.OverSampling = UART_OVERSAMPLING_16;
+  if (HAL_UART_Init(&huart4) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN UART4_Init 2 */
+
+  /* USER CODE END UART4_Init 2 */
 
 }
 

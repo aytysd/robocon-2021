@@ -28,17 +28,50 @@
 class Controller{
 public:
 	static uint8_t controller_Rxdata[8];
-
-	void identify_start_button(void);
-	void identify_stop_button(void);
+	void identify(void);
 
 
-	void reset_status(void);
-	E_move_status get_status(void);
 private:
 
+	void check_array(void);
 
-	static E_move_status status;
+	void identify_ABXY_button(void);
+	void identify_SUB_button(void);
+	void identify_LS_SB(void);
+	void identify_RS(void);
+	void identify_CS(void);
+	bool identify_NOP(void);
+
+	void NOP(void);
+
+	void X(void);
+	void Y(void);
+	void A(void);
+	void B(void);
+
+	void LB(void);
+	void RB(void);
+	void LT(void);
+	void RT(void);
+	void START(void);
+	void BACK(void);
+
+	void LSU(void);
+	void LSL(void);
+	void LSR(void);
+	void LSD(void);
+
+	void CSU(void);
+	void CSR(void);
+	void CSL(void);
+	void CSD(void);
+
+	void RSU(void);
+	void RSR(void);
+	void RSL(void);
+	void RSD(void);
+
+
 };
 
 
