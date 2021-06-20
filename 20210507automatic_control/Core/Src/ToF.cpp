@@ -18,6 +18,7 @@
  */
 
 #include "main.h"
+#include "ToF.hpp"
 
 extern I2C_HandleTypeDef  XNUCLEO53L1A1_hi2c;
 
@@ -184,7 +185,7 @@ const uint8_t VL51L1X_DEFAULT_CONFIGURATION[] = {
 
 
 
- int _I2CWrite(uint16_t Dev, uint8_t *pdata, uint32_t count) {
+int ToF::_I2CWrite(uint16_t Dev, uint8_t *pdata, uint32_t count) {
     int status;
     int i2c_time_out = I2C_TIME_OUT_BASE+ count* I2C_TIME_OUT_BYTE;
 
@@ -197,7 +198,7 @@ const uint8_t VL51L1X_DEFAULT_CONFIGURATION[] = {
 }
 
 
-int _I2CRead(uint16_t Dev, uint8_t *pdata, uint32_t count) {
+int ToF::_I2CRead(uint16_t Dev, uint8_t *pdata, uint32_t count) {
     int status;
     int i2c_time_out = I2C_TIME_OUT_BASE+ count* I2C_TIME_OUT_BYTE;
 
@@ -210,7 +211,7 @@ int _I2CRead(uint16_t Dev, uint8_t *pdata, uint32_t count) {
 }
 
 
-int8_t VL53L1_WrByte(uint16_t Dev, uint16_t index, uint8_t data) {
+int8_t ToF::VL53L1_WrByte(uint16_t Dev, uint16_t index, uint8_t data) {
 	int8_t Status = 0;
     int32_t status_int;
 
@@ -227,7 +228,7 @@ int8_t VL53L1_WrByte(uint16_t Dev, uint16_t index, uint8_t data) {
     return Status;
 }
 
-int8_t VL53L1_WrWord(uint16_t Dev, uint16_t index, uint16_t data) {
+int8_t ToF::VL53L1_WrWord(uint16_t Dev, uint16_t index, uint16_t data) {
 	int8_t Status = 0;
     int32_t status_int;
 
@@ -246,7 +247,7 @@ int8_t VL53L1_WrWord(uint16_t Dev, uint16_t index, uint16_t data) {
 }
 
 
-int8_t VL53L1_RdWord(uint16_t Dev, uint16_t index, uint16_t *data) {
+int8_t ToF::VL53L1_RdWord(uint16_t Dev, uint16_t index, uint16_t *data) {
     int8_t Status = 0;
     int32_t status_int;
 
@@ -272,19 +273,19 @@ done:
 }
 
 
-void VL53L1X_StartRanging(uint16_t dev)
+void ToF::VL53L1X_StartRanging(uint16_t dev)
 {
 	VL53L1_WrByte(dev, SYSTEM__MODE_START, 0x40);	// Enable VL53L1X
 }
 
 
-void VL53L1X_StopRanging(uint16_t dev)
+void ToF::VL53L1X_StopRanging(uint16_t dev)
 {
 	VL53L1_WrByte(dev, SYSTEM__MODE_START, 0x00);	// Disable VL53L1X
 }
 
 
-void VL53L1X_SensorInit(uint16_t dev)
+void ToF::VL53L1X_SensorInit(uint16_t dev)
 {
 	uint8_t Addr = 0x00;
 
@@ -297,7 +298,7 @@ void VL53L1X_SensorInit(uint16_t dev)
 }
 
 
-int8_t VL53L1X_GetTimingBudgetInMs(uint16_t dev, uint16_t *pTimingBudget)
+int8_t ToF::VL53L1X_GetTimingBudgetInMs(uint16_t dev, uint16_t *pTimingBudget)
 {
 	uint16_t Temp;
 	int8_t status = 0;
@@ -339,7 +340,7 @@ int8_t VL53L1X_GetTimingBudgetInMs(uint16_t dev, uint16_t *pTimingBudget)
 }
 
 
-int8_t VL53L1X_SetDistanceMode(uint16_t dev, uint16_t DM)
+int8_t ToF::VL53L1X_SetDistanceMode(uint16_t dev, uint16_t DM)
 {
 	uint16_t TB;
 	int8_t status = 0;
@@ -368,9 +369,10 @@ int8_t VL53L1X_SetDistanceMode(uint16_t dev, uint16_t DM)
 		status = 1;
 		break;
 	}
+	return 0;
 }
 
-int8_t VL53L1X_GetDistance(uint16_t dev, uint16_t *distance)
+int8_t ToF::VL53L1X_GetDistance(uint16_t dev, uint16_t *distance)
 {
 	int8_t status = 0;
 	uint16_t tmp;
