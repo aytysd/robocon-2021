@@ -416,3 +416,18 @@ void VL53L1X_SetROI(uint16_t dev, uint16_t X, uint16_t Y)
 */
 
 
+uint16_t ToF::get_distance(uint16_t mode)
+{
+	uint16_t VL53L1X_address = 0x52;
+	uint16_t distance = 0;
+
+	VL53L1X_SensorInit(VL53L1X_address);
+	VL53L1X_SetDistanceMode(VL53L1X_address, mode);
+
+	VL53L1X_StartRanging(VL53L1X_address);
+	VL53L1X_GetDistance(VL53L1X_address, &distance);
+	VL53L1X_StopRanging(VL53L1X_address);
+
+	return distance;
+}
+
