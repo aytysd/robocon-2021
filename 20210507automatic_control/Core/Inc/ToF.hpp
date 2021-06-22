@@ -25,7 +25,6 @@
 class ToF{
 public:
 	uint16_t get_distance(uint16_t mode);
-	void update_distance(void);
 	void init_ToF(void);
 private:
 	static uint16_t distance;

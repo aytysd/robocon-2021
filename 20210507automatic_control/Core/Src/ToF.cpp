@@ -220,7 +220,7 @@ int8_t ToF::VL53L1_WrByte(uint16_t Dev, uint16_t index, uint8_t data) {
     _I2CBuffer[2] = data;
 
     VL53L1_GetI2cBus();
-    status_int = _I2CWrite(Dev, _I2CBuffer, 3);
+    status_int = this -> _I2CWrite(Dev, _I2CBuffer, 3);
     if (status_int != 0) {
         Status = 1;
     }
@@ -238,7 +238,7 @@ int8_t ToF::VL53L1_WrWord(uint16_t Dev, uint16_t index, uint16_t data) {
     _I2CBuffer[3] = data & 0x00FF;
 
     VL53L1_GetI2cBus();
-    status_int = _I2CWrite(Dev, _I2CBuffer, 4);
+    status_int = this -> _I2CWrite(Dev, _I2CBuffer, 4);
     if (status_int != 0) {
         Status = 1;
     }
@@ -254,13 +254,13 @@ int8_t ToF::VL53L1_RdWord(uint16_t Dev, uint16_t index, uint16_t *data) {
     _I2CBuffer[0] = index>>8;
 	_I2CBuffer[1] = index&0xFF;
     VL53L1_GetI2cBus();
-    status_int = _I2CWrite(Dev, _I2CBuffer, 2);
+    status_int = this -> _I2CWrite(Dev, _I2CBuffer, 2);
 
    if( status_int ){
         Status = 1;
         goto done;
     }
-    status_int = _I2CRead(Dev, _I2CBuffer, 2);
+    status_int = this -> _I2CRead(Dev, _I2CBuffer, 2);
     if (status_int != 0) {
         Status = 1;
         goto done;
@@ -275,13 +275,13 @@ done:
 
 void ToF::VL53L1X_StartRanging(uint16_t dev)
 {
-	VL53L1_WrByte(dev, SYSTEM__MODE_START, 0x40);	// Enable VL53L1X
+	this -> VL53L1_WrByte(dev, SYSTEM__MODE_START, 0x40);	// Enable VL53L1X
 }
 
 
 void ToF::VL53L1X_StopRanging(uint16_t dev)
 {
-	VL53L1_WrByte(dev, SYSTEM__MODE_START, 0x00);	// Disable VL53L1X
+	this -> VL53L1_WrByte(dev, SYSTEM__MODE_START, 0x00);	// Disable VL53L1X
 }
 
 
@@ -290,11 +290,11 @@ void ToF::VL53L1X_SensorInit(uint16_t dev)
 	uint8_t Addr = 0x00;
 
 	for (Addr = 0x2D; Addr <= 0x87; Addr++){
-		VL53L1_WrByte(dev, Addr, VL51L1X_DEFAULT_CONFIGURATION[Addr - 0x2D]);
+		this -> VL53L1_WrByte(dev, Addr, VL51L1X_DEFAULT_CONFIGURATION[Addr - 0x2D]);
 	}
-	VL53L1X_StartRanging(dev);
+	this -> VL53L1X_StartRanging(dev);
 
-	VL53L1X_StopRanging(dev);
+	this -> VL53L1X_StopRanging(dev);
 }
 
 
@@ -303,7 +303,7 @@ int8_t ToF::VL53L1X_GetTimingBudgetInMs(uint16_t dev, uint16_t *pTimingBudget)
 	uint16_t Temp;
 	int8_t status = 0;
 
-	status = VL53L1_RdWord(dev, RANGE_CONFIG__TIMEOUT_MACROP_A_HI, &Temp);
+	status = this -> VL53L1_RdWord(dev, RANGE_CONFIG__TIMEOUT_MACROP_A_HI, &Temp);
 	switch (Temp) {
 		case 0x001D :
 			*pTimingBudget = 15;
@@ -345,25 +345,25 @@ int8_t ToF::VL53L1X_SetDistanceMode(uint16_t dev, uint16_t DM)
 	uint16_t TB;
 	int8_t status = 0;
 
-	status = VL53L1X_GetTimingBudgetInMs(dev, &TB);
+	status = this -> VL53L1X_GetTimingBudgetInMs(dev, &TB);
 	if (status != 0)
 		return 1;
 	switch (DM) {
 	case 1:
-		status = VL53L1_WrByte(dev, PHASECAL_CONFIG__TIMEOUT_MACROP, 0x14);
-		status = VL53L1_WrByte(dev, RANGE_CONFIG__VCSEL_PERIOD_A, 0x07);
-		status = VL53L1_WrByte(dev, RANGE_CONFIG__VCSEL_PERIOD_B, 0x05);
-		status = VL53L1_WrByte(dev, RANGE_CONFIG__VALID_PHASE_HIGH, 0x38);
-		status = VL53L1_WrWord(dev, SD_CONFIG__WOI_SD0, 0x0705);
-		status = VL53L1_WrWord(dev, SD_CONFIG__INITIAL_PHASE_SD0, 0x0606);
+		status = this -> VL53L1_WrByte(dev, PHASECAL_CONFIG__TIMEOUT_MACROP, 0x14);
+		status = this -> VL53L1_WrByte(dev, RANGE_CONFIG__VCSEL_PERIOD_A, 0x07);
+		status = this -> VL53L1_WrByte(dev, RANGE_CONFIG__VCSEL_PERIOD_B, 0x05);
+		status = this -> VL53L1_WrByte(dev, RANGE_CONFIG__VALID_PHASE_HIGH, 0x38);
+		status = this -> VL53L1_WrWord(dev, SD_CONFIG__WOI_SD0, 0x0705);
+		status = this -> VL53L1_WrWord(dev, SD_CONFIG__INITIAL_PHASE_SD0, 0x0606);
 		break;
 	case 2:
-		status = VL53L1_WrByte(dev, PHASECAL_CONFIG__TIMEOUT_MACROP, 0x0A);
-		status = VL53L1_WrByte(dev, RANGE_CONFIG__VCSEL_PERIOD_A, 0x0F);
-		status = VL53L1_WrByte(dev, RANGE_CONFIG__VCSEL_PERIOD_B, 0x0D);
-		status = VL53L1_WrByte(dev, RANGE_CONFIG__VALID_PHASE_HIGH, 0xB8);
-		status = VL53L1_WrWord(dev, SD_CONFIG__WOI_SD0, 0x0F0D);
-		status = VL53L1_WrWord(dev, SD_CONFIG__INITIAL_PHASE_SD0, 0x0E0E);
+		status = this -> VL53L1_WrByte(dev, PHASECAL_CONFIG__TIMEOUT_MACROP, 0x0A);
+		status = this -> VL53L1_WrByte(dev, RANGE_CONFIG__VCSEL_PERIOD_A, 0x0F);
+		status = this -> VL53L1_WrByte(dev, RANGE_CONFIG__VCSEL_PERIOD_B, 0x0D);
+		status = this -> VL53L1_WrByte(dev, RANGE_CONFIG__VALID_PHASE_HIGH, 0xB8);
+		status = this -> VL53L1_WrWord(dev, SD_CONFIG__WOI_SD0, 0x0F0D);
+		status = this -> VL53L1_WrWord(dev, SD_CONFIG__INITIAL_PHASE_SD0, 0x0E0E);
 		break;
 	default:
 		status = 1;
@@ -377,7 +377,7 @@ int8_t ToF::VL53L1X_GetDistance(uint16_t dev, uint16_t *distance)
 	int8_t status = 0;
 	uint16_t tmp;
 
-	status = (VL53L1_RdWord(dev,
+	status = (this -> VL53L1_RdWord(dev,
 			VL53L1_RESULT__FINAL_CROSSTALK_CORRECTED_RANGE_MM_SD0, &tmp));
 	*distance = tmp;
 	return status;
@@ -421,13 +421,19 @@ uint16_t ToF::get_distance(uint16_t mode)
 	uint16_t VL53L1X_address = 0x52;
 	uint16_t distance = 0;
 
-	VL53L1X_SensorInit(VL53L1X_address);
-	VL53L1X_SetDistanceMode(VL53L1X_address, mode);
+	this -> VL53L1X_SensorInit(VL53L1X_address);
+	this -> VL53L1X_SetDistanceMode(VL53L1X_address, mode);
 
-	VL53L1X_StartRanging(VL53L1X_address);
-	VL53L1X_GetDistance(VL53L1X_address, &distance);
-	VL53L1X_StopRanging(VL53L1X_address);
+	this -> VL53L1X_StartRanging(VL53L1X_address);
+	this -> VL53L1X_GetDistance(VL53L1X_address, &distance);
+	this -> VL53L1X_StopRanging(VL53L1X_address);
 
 	return distance;
+}
+
+void ToF::init_ToF(void)
+{
+	uint16_t VL53L1X_address = 0x52;
+	this -> VL53L1X_SensorInit(VL53L1X_address);
 }
 
