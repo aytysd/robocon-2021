@@ -284,6 +284,13 @@ void ToF::VL53L1X_StopRanging(uint16_t dev)
 	this -> VL53L1_WrByte(dev, SYSTEM__MODE_START, 0x00);	// Disable VL53L1X
 }
 
+uint8_t ToF::VL53L1X_SetI2CAddress(uint16_t dev, uint8_t new_address)
+{
+	uint8_t status = 0;
+
+	status = this -> VL53L1_WrByte(dev, VL53L1_I2C_SLAVE__DEVICE_ADDRESS, new_address >> 1);
+	return status;
+}
 
 void ToF::VL53L1X_SensorInit(uint16_t dev)
 {
@@ -383,38 +390,6 @@ int8_t ToF::VL53L1X_GetDistance(uint16_t dev, uint16_t *distance)
 	return status;
 }
 
-/*
-void VL53L1X_SetInterMeasurementInMs(uint16_t dev, uint16_t InterMeasMs)
-{
-	uint16_t ClockPLL;
-
-	VL53L1_RdWord(dev, VL53L1_RESULT__OSC_CALIBRATE_VAL, &ClockPLL);
-	ClockPLL = ClockPLL&0x3FF;
-	VL53L1_WrDWord(dev, VL53L1_SYSTEM__INTERMEASUREMENT_PERIOD,
-			(uint32_t)(ClockPLL * InterMeasMs * 1.075));
-
-}
-
-void VL53L1X_SetROI(uint16_t dev, uint16_t X, uint16_t Y)
-{
-	uint8_t OpticalCenter;
-
-	VL53L1_RdByte(dev, VL53L1_ROI_CONFIG__MODE_ROI_CENTRE_SPAD, &OpticalCenter);
-	if (X > 16)
-		X = 16;
-	if (Y > 16)
-		Y = 16;
-	if (X > 10 || Y > 10){
-		OpticalCenter = 199;
-	}
-	VL53L1_WrByte(dev, ROI_CONFIG__USER_ROI_CENTRE_SPAD, OpticalCenter);
-	VL53L1_WrByte(dev, ROI_CONFIG__USER_ROI_REQUESTED_GLOBAL_XY_SIZE,
-		       (Y - 1) << 4 | (X - 1));
-}
-
-
-*/
-
 
 uint16_t ToF::get_distance(uint16_t mode)
 {
@@ -436,4 +411,5 @@ void ToF::init_ToF(void)
 	uint16_t VL53L1X_address = 0x52;
 	this -> VL53L1X_SensorInit(VL53L1X_address);
 }
+
 

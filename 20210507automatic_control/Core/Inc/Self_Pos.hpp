@@ -32,6 +32,7 @@
 
 #include <General_command.hpp>
 #include "main.h"
+#include "ToF.hpp"
 
 class Self_Pos
 {
@@ -41,6 +42,8 @@ public:
 
 	double get_Self_Pos_X(void);
 	double get_Self_Pos_Y(void);
+
+	void update_self_pos_ToF();
 
 	Self_Pos(){
 	}
