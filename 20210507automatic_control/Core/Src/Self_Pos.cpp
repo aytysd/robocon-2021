@@ -78,6 +78,14 @@ void Self_Pos::update_self_pos(void)
 }
 //delete self_pos;
 //---------------------------------------
+void Self_Pos::update_self_pos_ToF()
+{
+	ToF* tof = new ToF();
+	this -> Self_Pos_X;
+	this -> Self_Pos_Y;
+	delete tof;
+}
+//---------------------------------------
 uint32_t Self_Pos::encoder_read_5(void)
 {
 	 uint32_t enc_buff_5 = TIM5->CNT;

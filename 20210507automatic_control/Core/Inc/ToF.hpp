@@ -20,6 +20,7 @@
 #define INC_TOF_HPP_
 
 #include "main.h"
+#include "Self_Pos.hpp"
 #define TOF_ADDRESS 0x52
 
 class ToF{
@@ -35,13 +36,11 @@ private:
 	int8_t VL53L1_RdWord(uint16_t Dev, uint16_t index, uint16_t *data);
 	void VL53L1X_StartRanging(uint16_t dev);
 	void VL53L1X_StopRanging(uint16_t dev);
+	uint8_t VL53L1X_SetI2CAddress(uint16_t dev, uint8_t new_address);
 	void VL53L1X_SensorInit(uint16_t dev);
 	int8_t VL53L1X_GetTimingBudgetInMs(uint16_t dev, uint16_t *pTimingBudget);
 	int8_t VL53L1X_SetDistanceMode(uint16_t dev, uint16_t DM);
 	int8_t VL53L1X_GetDistance(uint16_t dev, uint16_t *distance);
-//	int8_t VL53L1X_SetInterMeasurementInMs(uint16_t dev, uint16_t InterMeasMs);
-//	void VL53L1X_SetROI(uint16_t dev, uint16_t X, uint16_t Y);
-
 };
 
 
