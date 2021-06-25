@@ -24,6 +24,7 @@
 #include "main.h"
 #include "General_command.hpp"
 #include "PWM.hpp"
+#include "Init_Move.hpp"
 
 class Controller{
 public:
@@ -41,6 +42,11 @@ private:
 	void identify_RS(void);
 	void identify_CS(void);
 	bool identify_NOP(void);
+
+
+	uint16_t speed;
+	uint8_t direction;/*1=up, 2=right, 3=down, 4=left, 5=R_turn, 6=L_turn*/
+	void footwork(uint8_t direction, uint16_t speed);
 
 	void NOP(void);
 

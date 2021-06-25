@@ -88,9 +88,9 @@ int Line::MoveLine
 
 
 	this -> devTG *= 0.2;
-	if(this -> devTG > 2000)
+	if(this -> devTG > 1000)
 	{
-		this -> devTG = 2000;
+		this -> devTG = 1000;
 	}
 
 	this -> TG_r = this -> TG_r - this -> now_r;
@@ -111,7 +111,7 @@ int Line::MoveLine
 //				this -> TG_r = this -> TG_r -360;
 //			}
 
-			pwm -> V_output(1000, this -> TG_r, 0, now_r, E_move_status::MOVE);
+			pwm -> V_output(800, this -> TG_r, 0, now_r, E_move_status::MOVE);
 			judge = 2;
 
 			delete pwm;
