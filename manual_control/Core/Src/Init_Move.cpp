@@ -187,10 +187,12 @@ void Init_Move::Initialize(E_robot_name robot)
 
 	  Self_Pos::Gyro* gyro = new Self_Pos::Gyro();
 	  Self_Pos* self_pos = new Self_Pos();
+//	  ToF* tof = new ToF();
 
 	  self_pos -> set_initial_pos(robot);
 	  gyro -> BNO055_Init_I2C(&hi2c1);
 	  gyro -> set_initial_direction(robot);
+//	  tof -> init bno055();
 
 	  HAL_UART_Receive_IT(&huart1, (uint8_t*)Communication::Rxdata, sizeof(Communication::Rxdata));
 
@@ -201,6 +203,7 @@ void Init_Move::Initialize(E_robot_name robot)
 	  HAL_TIM_Encoder_Start(&htim3, TIM_CHANNEL_ALL);
 	  HAL_TIM_Encoder_Start(&htim4, TIM_CHANNEL_ALL);
 
+//	  delete tof;
 	  delete gyro;
 	  delete self_pos;
 
