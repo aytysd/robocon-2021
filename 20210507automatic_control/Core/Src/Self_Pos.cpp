@@ -28,35 +28,42 @@
 #include "Error_Handling.hpp"
 #include "LED.hpp"
 
-double Self_Pos::encoder5=0;//X
-double Self_Pos::encoder2=0;//Y
-double Self_Pos::Self_Pos_X=0;//(mm)
-double Self_Pos::Self_Pos_Y=0;//(mm)
+int Self_Pos::Self_Pos_X=0;//(mm)
+int Self_Pos::Self_Pos_Y=0;//(mm)
 //----------------------------------------------------------------------
 //Self_Pos* self_pos = new Self_Pos();
 
-double Self_Pos::get_Self_Pos_X(){
+int Self_Pos::get_Self_Pos_X()
+{
 	return this -> Self_Pos_X;
 }
 
-double Self_Pos::get_Self_Pos_Y(){
+int Self_Pos::get_Self_Pos_Y()
+{
 	return this -> Self_Pos_Y;
 }
 
 void Self_Pos::set_initial_pos(E_robot_name robot)
 {
-	switch(robot){
+	switch(robot)
+	{
 	case E_robot_name::A:
-		this -> encoder5=(-3000+252.5)/(55.5*2*M_PI)*2048;
-		this -> encoder2=(3000-252.5)/(55.5*2*M_PI)*2048;
+
+		this -> Self_Pos_X = -2643;
+		this -> Self_Pos_Y = 2643;
+
 		break;
 	case E_robot_name::B:
-		this -> encoder5=(-3000+252.5)/(55.5*2*M_PI)*2048;
-		this -> encoder2=(-3000+252.5)/(55.5*2*M_PI)*2048;
+
+		this -> Self_Pos_X = -2643;
+		this -> Self_Pos_Y = -2643;
+
 		break;
 	case E_robot_name::C:
-		this -> encoder5=(3000-252.5)/(55.5*2*M_PI)*2048;
-		this -> encoder2=(-3000+252.5)/(55.5*2*M_PI)*2048;
+
+		this -> Self_Pos_X = 2643;
+		this -> Self_Pos_Y = -2643;
+
 		break;
 	}
 
@@ -68,11 +75,12 @@ void Self_Pos::update_self_pos(void)
 {
 	Self_Pos::Gyro* gyro = new Self_Pos::Gyro();
 	
-	double d1=(double)this -> encoder_read_5()/2048*2*55.5*M_PI; //encoder5_moving distance(mm) 55.5=wheel radius 2048=encoder resolution
-	double d2=(double)this -> encoder_read_2()/2048*2*55.5*M_PI; //encoder2_moving distance(mm) 55.5=wheel radius 2048=encoder resolution
+	int d1 = 2 * RADIUS * M_PI * ( this ->encoder_read_5() / 2048 ) * DT; //encoder5_moving distance(mm) 55.5=wheel radius 2048=encoder resolution
+	int d2 = 2 * RADIUS * M_PI * ( this ->encoder_read_2() / 2048 ) * DT; //encoder5_moving distance(mm) 55.5=wheel radius 2048=encoder resolution
 
-	this -> Self_Pos_X=(-1)*d1*cos((double)gyro -> get_direction()*M_PI/180)-d2*sin((double)gyro -> get_direction()*M_PI/180);//X_coordinate
-	this ->  Self_Pos_Y=(-1)*d2*sin((double)gyro -> get_direction()*M_PI/180)-d2*cos((double)gyro -> get_direction()*M_PI/180);//Y_coordinate
+
+	this -> Self_Pos_X += d1 * cos( gyro -> get_direction() * M_PI / 180) - d2 * sin( gyro -> get_direction() * M_PI / 180);//X_coordinate
+	this -> Self_Pos_Y += d1 * sin( gyro -> get_direction() * M_PI / 180) + d2 * cos( gyro -> get_direction() * M_PI / 180);//Y_coordinate
 
 	delete gyro;
 }
@@ -86,16 +94,32 @@ void Self_Pos::update_self_pos_ToF()
 	delete tof;
 }
 //---------------------------------------
-uint32_t Self_Pos::encoder_read_5(void)
+int Self_Pos::encoder_read_5(void)
 {
+	 static int prev_encoder_value = 0;
 	 uint32_t enc_buff_5 = TIM5->CNT;
+	 int encoder_value = 0;
 
 	 Error_Handling* error_handling = new Error_Handling();
 	 error_handling -> TIM5_error_handling();
 	 delete error_handling;
 
 
-	  TIM5->CNT = 0;
+	 if( enc_buff <= 2147483647 )
+	 {
+		 encoder_value = enc_buff_5;
+	 }
+	 else if( enc_buff >= 2147483649 )
+	 {
+		 encoder_value = enc_buff_5 - 4294967295;
+	 }
+
+
+	 prev_encoder_value = encoder_value;
+
+	 return encoder_value - prev_encoder_value;
+
+/*
 	  if (enc_buff_5 > 400000000)
 	  {
 		int Envalue5=enc_buff_5-4294967295;
@@ -107,17 +131,39 @@ uint32_t Self_Pos::encoder_read_5(void)
 		this -> encoder5=+enc_buff_5;
 	    return this -> encoder5;
 	  }
+*/
 }
 //------------------------------------------------------
-uint32_t Self_Pos::encoder_read_2(void)
+int Self_Pos::encoder_read_2(void)
 {
 	 uint32_t enc_buff_2 = TIM2->CNT;
 
+	 static int prev_encoder_value = 0;
+	 uint32_t enc_buff_5 = TIM5->CNT;
+	 int encoder_value = 0;
+
 	 Error_Handling* error_handling = new Error_Handling();
-	 error_handling -> TIM2_error_handling();
+	 error_handling -> TIM5_error_handling();
 	 delete error_handling;
 
 
+	 if( enc_buff <= 2147483647 )
+	 {
+		 encoder_value = enc_buff_5;
+	 }
+	 else if( enc_buff >= 2147483649 )
+	 {
+		 encoder_value = enc_buff_5 - 4294967295;
+	 }
+
+
+	 prev_encoder_value = encoder_value;
+
+	 return encoder_value - prev_encoder_value;
+
+
+
+/*
 	  TIM2->CNT = 0;
 	  if (enc_buff_2 > 400000000)
 	  {
@@ -130,6 +176,7 @@ uint32_t Self_Pos::encoder_read_2(void)
 		this -> encoder2=+enc_buff_2;
 	    return this ->encoder2;
 	  }
+*/
 }
 //-------------------------------------------------------------------------
 void Self_Pos::Gyro::BNO055_Init_I2C(I2C_HandleTypeDef* hi2c_device)

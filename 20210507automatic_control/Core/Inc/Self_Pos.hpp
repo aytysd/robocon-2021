@@ -28,7 +28,8 @@
 #ifndef INC_SELF_POS_HPP_
 #define INC_SELF_POS_HPP_
 
-
+#define RADIUS 27.3
+#define DT 0.1
 
 #include <General_command.hpp>
 #include "main.h"
@@ -40,13 +41,11 @@ public:
 	void set_initial_pos(E_robot_name robot);
 	void update_self_pos(void);
 
-	double get_Self_Pos_X(void);
-	double get_Self_Pos_Y(void);
+	int get_Self_Pos_X(void);
+	int get_Self_Pos_Y(void);
 
 	void update_self_pos_ToF();
 
-	Self_Pos(){
-	}
 	class Gyro
 	{
 	public:
@@ -62,13 +61,11 @@ public:
 
 	};
 private:
-	uint32_t encoder_read_5(void);
-	uint32_t encoder_read_2(void);
+	int encoder_read_5(void);
+	int encoder_read_2(void);
 
-	static double Self_Pos_X;//(mm)
-	static double Self_Pos_Y;//(mm)
-	static double encoder5;
-	static double encoder2;
+	static int Self_Pos_X;
+	static int Self_Pos_Y;
 
 
 };
