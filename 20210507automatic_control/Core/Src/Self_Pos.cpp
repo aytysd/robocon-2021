@@ -33,7 +33,7 @@ int Self_Pos::Self_Pos_Y=0;//(mm)
 //----------------------------------------------------------------------
 //Self_Pos* self_pos = new Self_Pos();
 
-int Self_Pos::get_Self_Pos_X()\
+int Self_Pos::get_Self_Pos_X()
 {
 	return this -> Self_Pos_X;
 }

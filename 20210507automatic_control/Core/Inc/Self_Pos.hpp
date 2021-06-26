@@ -64,8 +64,8 @@ private:
 	int encoder_read_5(void);
 	int encoder_read_2(void);
 
-	static int Self_Pos_X;//(mm)
-	static int Self_Pos_Y;//(mm)
+	static int Self_Pos_X;
+	static int Self_Pos_Y;
 
 
 };
