@@ -24,6 +24,7 @@
 #include "main.h"
 #include "General_command.hpp"
 #include "PWM.hpp"
+#include "Init_Move.hpp"
 
 class Controller{
 public:
@@ -41,6 +42,39 @@ private:
 	void identify_RS(void);
 	void identify_CS(void);
 	bool identify_NOP(void);
+
+//	void NOP(void);
+//
+//	void X(void);
+//	void Y(void);
+//	void A(void);
+//	void B(void);
+//
+//	void LB(void);
+//	void RB(void);
+//	void LT(void);
+//	void RT(void);
+//	void START(void);
+//	void BACK(void);
+//
+//	void LSU(void);
+//	void LSL(void);
+//	void LSR(void);
+//	void LSD(void);
+//
+//	void CSU(void);
+//	void CSR(void);
+//	void CSL(void);
+//	void CSD(void);
+//
+//	void RSU(void);
+//	void RSR(void);
+//	void RSL(void);
+//	void RSD(void);
+
+	uint16_t speed;
+	uint8_t direction;/*1=up, 2=right, 3=down, 4=left, 5=R_turn, 6=L_turn*/
+	void footwork(uint8_t direction, uint16_t speed);
 
 	void NOP(void);
 
@@ -70,8 +104,6 @@ private:
 	void RSR(void);
 	void RSL(void);
 	void RSD(void);
-
-
 };
 
 
