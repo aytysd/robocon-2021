@@ -44,10 +44,10 @@ void PWM::V_output(double V, double fai, double rotation_speed, double attitude_
 		double V3 = Vx * cos( attitude_angle + M_PI * 5/4) + Vy * sin( attitude_angle + M_PI * 5/4) + rotation_speed;
 		double V4 = Vx * cos( attitude_angle + M_PI * 7/4) + Vy * sin( attitude_angle + M_PI * 7/4) + rotation_speed;
 
-		uint8_t V1_pwm = (abs(V1) + 17.242) / 23.677;
-		uint8_t V2_pwm = (abs(V2) + 17.242) / 23.677;
-		uint8_t V3_pwm = (abs(V3) + 17.242) / 23.677;
-		uint8_t V4_pwm = (abs(V4) + 17.242) / 23.677;
+		uint8_t V1_pwm = abs(V1) / 23.677;
+		uint8_t V2_pwm = abs(V2) / 23.677;
+		uint8_t V3_pwm = abs(V3) / 23.677;
+		uint8_t V4_pwm = abs(V4) / 23.677;
 
 
 		function -> drive_motor(1, this -> plus_minus(V1), V1_pwm, (uint16_t)(abs((double)V1)), true);

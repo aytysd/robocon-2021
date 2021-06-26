@@ -110,6 +110,7 @@ void Controller::identify_ABXY_button()
 	}
 
 
+
 }
 
 void Controller::identify_SUB_button()
@@ -162,6 +163,7 @@ void Controller::identify_SUB_button()
 		HAL_UART_Transmit(&huart2, (uint8_t*)str, sizeof(str), 100);
 
 	}
+
 
 
 }
@@ -311,39 +313,135 @@ void Controller::identify_RS()
 
 }
 
-//void Controller::NOP(void){}
-//
-//void Controller::X(void){}
-//void Controller::Y(void){}
-//void Controller::A(void){}
-//void Controller::B(void){}
-//
-//void Controller::LB(void){}
-//void Controller::RB(void){}
-//void Controller::LT(void){}
-//void Controller::RT(void){}
-//void Controller::START(void){}
-//void Controller::BACK(void){}
-//
-//void Controller::LSU(void){}
-//void Controller::LSL(void){}
-//void Controller::LSR(void){}
-//void Controller::LSD(void){}
-//
-//void Controller::CSU(void){}
-//void Controller::CSR(void){}
-//void Controller::CSL(void){}
-//void Controller::CSD(void){}
-//
-//void Controller::RSU(void){}
-//void Controller::RSR(void){}
-//void Controller::RSL(void){}
-//void Controller::RSD(void){}
+/*
+void Controller::NOP(void){}
+
+void Controller::X(void){}
+void Controller::Y(void){}
+void Controller::A(void){}
+void Controller::B(void){}
+
+void Controller::LB(void){}
+void Controller::RB(void){}
+void Controller::LT(void){}
+void Controller::RT(void){}
+void Controller::START(void){}
+void Controller::BACK(void){}
+
+void Controller::LSU(void){}
+void Controller::LSL(void){}
+void Controller::LSR(void){}
+void Controller::LSD(void){}
+
+void Controller::CSU(void){}
+void Controller::CSR(void){}
+void Controller::CSL(void){}
+void Controller::CSD(void){}
+
+void Controller::RSU(void){}
+void Controller::RSR(void){}
+void Controller::RSL(void){}
+void Controller::RSD(void){}
+*/
+
+/*void Controller::NOP(void){}
+
+void Controller::X(void)
+{
+	target_speed -= 100;
+	sprintf(output, "%d\r\n", target_speed);
+	HAL_UART_Transmit(&huart2, (uint8_t*)output, sizeof(output), 100);
+}
+void Controller::Y(void){}
+void Controller::A(void){}
+void Controller::B(void)
+{
+	target_speed += 100;
+	sprintf(output, "%d\r\n", target_speed);
+	HAL_UART_Transmit(&huart2, (uint8_t*)output, sizeof(output), 100);
+
+}
+
+void Controller::LB(void)
+{
+	direction = CW;
+	char direction[8] = "CW\r\n";
+	HAL_UART_Transmit(&huart2, (uint8_t*)direction, sizeof(direction), 100);
+}
+void Controller::RB(void)
+{
+	direction = CCW;
+	char direction[8] = "CCW\r\n";
+	HAL_UART_Transmit(&huart2, (uint8_t*)direction, sizeof(direction), 100);
+
+}
+void Controller::LT(void)
+{
+	direction = BRAKE;
+	char direction[8] = "BRAKE\r\n";
+	HAL_UART_Transmit(&huart2, (uint8_t*)direction, sizeof(direction), 100);
+
+}
+void Controller::RT(void)
+{
+	direction = 0;
+	char direction[8] = "FREE\r\n";
+	HAL_UART_Transmit(&huart2, (uint8_t*)direction, sizeof(direction), 100);
+
+}
+void Controller::START(void)
+{
+	if( PID == true )
+	{
+		PID = false;
+		char direction[10] = "NON_PID\r\n";
+		HAL_UART_Transmit(&huart2, (uint8_t*)direction, sizeof(direction), 100);
+
+	}
+	else
+	{
+		PID = true;
+		char direction[8] = "PID\r\n";
+		HAL_UART_Transmit(&huart2, (uint8_t*)direction, sizeof(direction), 100);
+
+	}
+}
+void Controller::BACK(void)
+{
+	V_output_pwm = 0;
+	sprintf(output, "%d\r\n", V_output_pwm);
+	HAL_UART_Transmit(&huart2, (uint8_t*)output, sizeof(output), 100);
+
+
+	target_speed = 0;
+	sprintf(output, "%d\r\n", target_speed);
+	HAL_UART_Transmit(&huart2, (uint8_t*)output, sizeof(output), 100);
+
+	PID = false;
+	char direction[10] = "NON_PID\r\n";
+	HAL_UART_Transmit(&huart2, (uint8_t*)direction, sizeof(direction), 100);
+
+}
+
+void Controller::LSU(void){}
+void Controller::LSL(void){}
+void Controller::LSR(void){}
+void Controller::LSD(void){}
+
+void Controller::CSU(void){}
+void Controller::CSR(void){}
+void Controller::CSL(void){}
+void Controller::CSD(void){}
+
+void Controller::RSU(void){}
+void Controller::RSR(void){}
+void Controller::RSL(void){}
+void Controller::RSD(void){}*/
 
 
 void Controller::footwork(uint8_t direction, uint16_t speed)
 {
-	uint8_t pwm = (speed + 17.242) / 23.677;
+	uint8_t pwm = speed / 23.677;
 	Function* function = new Function();
 	if(direction == 1)
 	{
