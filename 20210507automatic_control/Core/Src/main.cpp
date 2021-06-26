@@ -136,7 +136,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-
+  Self_Pos::Gyro* gyro = new Self_Pos::Gyro();
   Init_Move* init_move = new Init_Move();
   /* USER CODE END 1 */
 
@@ -174,7 +174,18 @@ int main(void)
   MX_UART4_Init();
   /* USER CODE BEGIN 2 */
 
-  init_move -> init_move(E_robot_name::A);
+  HAL_TIM_Base_Start_IT(&htim6);
+  HAL_TIM_Encoder_Start(&htim5, TIM_CHANNEL_ALL);
+  HAL_TIM_Encoder_Start(&htim3, TIM_CHANNEL_ALL);
+  HAL_TIM_Encoder_Start(&htim2, TIM_CHANNEL_ALL);
+
+  __HAL_UART_ENABLE_IT(&huart4,UART_IT_RXNE);
+
+//  HAL_UART_Receive_IT(&huart4, (uint8_t*)Controller::controller_Rxdata, sizeof(Controller::controller_Rxdata));
+
+  gyro -> BNO055_Init_I2C(&hi2c1);
+
+//  init_move -> init_move(E_robot_name::A);
   /* USER CODE END 2 */
 
   /* Infinite loop */

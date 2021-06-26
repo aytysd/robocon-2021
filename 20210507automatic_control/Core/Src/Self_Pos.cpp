@@ -82,6 +82,15 @@ void Self_Pos::update_self_pos(void)
 	this -> Self_Pos_X += d1 * cos( gyro -> get_direction() * M_PI / 180) - d2 * sin( gyro -> get_direction() * M_PI / 180);//X_coordinate
 	this -> Self_Pos_Y += d1 * sin( gyro -> get_direction() * M_PI / 180) + d2 * cos( gyro -> get_direction() * M_PI / 180);//Y_coordinate
 
+
+	char output[10];
+	sprintf( output, "%d\r\n", this -> Self_Pos_X );
+	HAL_UART_Transmit(&huart4, (uint8_t*)output, sizeof(output), 100);
+	sprintf( output, "%d\r\n", this -> Self_Pos_Y );
+	HAL_UART_Transmit(&huart4, (uint8_t*)output, sizeof(output), 100);
+
+
+
 	delete gyro;
 }
 //delete self_pos;
@@ -105,11 +114,11 @@ int Self_Pos::encoder_read_5(void)
 	 delete error_handling;
 
 
-	 if( enc_buff <= 2147483647 )
+	 if( enc_buff_5 <= 2147483647 )
 	 {
 		 encoder_value = enc_buff_5;
 	 }
-	 else if( enc_buff >= 2147483649 )
+	 else if( enc_buff_5 >= 2147483649 )
 	 {
 		 encoder_value = enc_buff_5 - 4294967295;
 	 }
@@ -136,24 +145,23 @@ int Self_Pos::encoder_read_5(void)
 //------------------------------------------------------
 int Self_Pos::encoder_read_2(void)
 {
-	 uint32_t enc_buff_2 = TIM2->CNT;
 
 	 static int prev_encoder_value = 0;
-	 uint32_t enc_buff_5 = TIM5->CNT;
+	 uint32_t enc_buff_2 = TIM2->CNT;
 	 int encoder_value = 0;
 
 	 Error_Handling* error_handling = new Error_Handling();
-	 error_handling -> TIM5_error_handling();
+	 error_handling -> TIM2_error_handling();
 	 delete error_handling;
 
 
-	 if( enc_buff <= 2147483647 )
+	 if( enc_buff_2 <= 2147483647 )
 	 {
-		 encoder_value = enc_buff_5;
+		 encoder_value = enc_buff_2;
 	 }
-	 else if( enc_buff >= 2147483649 )
+	 else if( enc_buff_2 >= 2147483649 )
 	 {
-		 encoder_value = enc_buff_5 - 4294967295;
+		 encoder_value = enc_buff_2 - 4294967295;
 	 }
 
 
