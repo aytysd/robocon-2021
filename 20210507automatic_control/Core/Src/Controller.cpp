@@ -554,7 +554,7 @@ void Controller::CSD(void)
 void Controller::RSU(void)
 {
 	this -> speed += 50;
-	if(this -> speed >= speed)
+	if(this -> speed >= 1000)
 	{
 		this -> speed = 1000;
 	}
