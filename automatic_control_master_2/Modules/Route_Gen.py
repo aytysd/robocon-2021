@@ -6,8 +6,6 @@ class Route_Gen:
 
     def __init__(self):
 
-        Q = 1
-
         A_X = 0
         A_Y = 0
         B_X = 0
