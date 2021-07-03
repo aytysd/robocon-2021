@@ -11,6 +11,7 @@
  *@Input(address of hi2c(e.g. &hi2c1))in(I2C_HandleTypeDef* hi2c_device)of(void BNO055_update_gravity_direction)
  *@Input(robot name in enum_class E_robot_name)in(E_robot_name)of(void set_initial_direction())
  *@Input(value)in(variable)of(functionname)
+ *@Input(value)in(variable)of(functionname)
  *
  *@Output(gravity value(usually 9.8))to(float gravity)
  *@Output(direction value(0 to 360))to(int16_t direction)

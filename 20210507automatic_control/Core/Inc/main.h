@@ -95,8 +95,6 @@ void Error_Handler(void);
 #define PE_Sensor_F_Pin GPIO_PIN_4
 #define PE_Sensor_F_GPIO_Port GPIOA
 #define PE_Sensor_F_EXTI_IRQn EXTI4_IRQn
-#define Y_OD_Pin GPIO_PIN_5
-#define Y_OD_GPIO_Port GPIOA
 #define SOLENOID_RX_Pin GPIO_PIN_5
 #define SOLENOID_RX_GPIO_Port GPIOC
 #define SOLENOID_TX_Pin GPIO_PIN_10
@@ -123,6 +121,8 @@ void Error_Handler(void);
 #define Under_SW_V1_4_GPIO_Port GPIOA
 #define Under_SW_V3_4_Pin GPIO_PIN_12
 #define Under_SW_V3_4_GPIO_Port GPIOA
+#define Y_OD_Pin GPIO_PIN_15
+#define Y_OD_GPIO_Port GPIOA
 #define Controller_TX_Pin GPIO_PIN_10
 #define Controller_TX_GPIO_Port GPIOC
 #define Controller_RX_Pin GPIO_PIN_11
