@@ -27,9 +27,10 @@
 #include <math.h>
 #include "Error_Handling.hpp"
 #include "LED.hpp"
+#include "PWM.hpp"
 
-int Self_Pos::Self_Pos_X=0;//(mm)
-int Self_Pos::Self_Pos_Y=0;//(mm)
+int Self_Pos::Self_Pos_X = 0;//(mm)
+int Self_Pos::Self_Pos_Y = 0;//(mm)
 //----------------------------------------------------------------------
 //Self_Pos* self_pos = new Self_Pos();
 
@@ -41,6 +42,13 @@ int Self_Pos::get_Self_Pos_X()
 int Self_Pos::get_Self_Pos_Y()
 {
 	return this -> Self_Pos_Y;
+}
+
+void Self_Pos::add_Self_Pos( int add_x, int add_y )
+{
+	this -> Self_Pos_Y += add_x;
+	this -> Self_Pos_X += add_y;
+
 }
 
 void Self_Pos::set_initial_pos(E_robot_name robot)
@@ -65,6 +73,13 @@ void Self_Pos::set_initial_pos(E_robot_name robot)
 		this -> Self_Pos_Y = -2643;
 
 		break;
+
+	case E_robot_name::NONE:
+
+		this -> Self_Pos_X = 2643;
+		this -> Self_Pos_Y = -2643;
+
+		break;
 	}
 
 }
@@ -75,12 +90,21 @@ void Self_Pos::update_self_pos(void)
 {
 	Self_Pos::Gyro* gyro = new Self_Pos::Gyro();
 	
-	int d1 = 2 * RADIUS * M_PI * ( this ->encoder_read_5() / 2048 ) * DT; //encoder5_moving distance(mm) 55.5=wheel radius 2048=encoder resolution
-	int d2 = 2 * RADIUS * M_PI * ( this ->encoder_read_2() / 2048 ) * DT; //encoder5_moving distance(mm) 55.5=wheel radius 2048=encoder resolution
+	int d1 = 2 * RADIUS * M_PI * ( this ->encoder_read_5() / 2048 ); //encoder5_moving distance(mm) 55.5=wheel radius 2048=encoder resolution
+	int d2 = 2 * RADIUS * M_PI * ( this ->encoder_read_2() / 2048 ); //encoder5_moving distance(mm) 55.5=wheel radius 2048=encoder resolution
 
 
 	this -> Self_Pos_X += d1 * cos( gyro -> get_direction() * M_PI / 180) - d2 * sin( gyro -> get_direction() * M_PI / 180);//X_coordinate
 	this -> Self_Pos_Y += d1 * sin( gyro -> get_direction() * M_PI / 180) + d2 * cos( gyro -> get_direction() * M_PI / 180);//Y_coordinate
+
+
+	char output[10];
+	sprintf( output, "%d\r\n", this -> Self_Pos_X );
+	HAL_UART_Transmit(&huart1, (uint8_t*)output, sizeof(output), 100);
+	sprintf( output, "%d\r\n", this -> Self_Pos_Y );
+	HAL_UART_Transmit(&huart1, (uint8_t*)output, sizeof(output), 100);
+
+
 
 	delete gyro;
 }
@@ -100,16 +124,18 @@ int Self_Pos::encoder_read_5(void)
 	 uint32_t enc_buff_5 = TIM5->CNT;
 	 int encoder_value = 0;
 
+/*
 	 Error_Handling* error_handling = new Error_Handling();
 	 error_handling -> TIM5_error_handling();
 	 delete error_handling;
+*/
 
 
-	 if( enc_buff <= 2147483647 )
+	 if( enc_buff_5 <= 2147483647 )
 	 {
 		 encoder_value = enc_buff_5;
 	 }
-	 else if( enc_buff >= 2147483649 )
+	 else if( enc_buff_5 >= 2147483649 )
 	 {
 		 encoder_value = enc_buff_5 - 4294967295;
 	 }
@@ -136,24 +162,25 @@ int Self_Pos::encoder_read_5(void)
 //------------------------------------------------------
 int Self_Pos::encoder_read_2(void)
 {
-	 uint32_t enc_buff_2 = TIM2->CNT;
 
 	 static int prev_encoder_value = 0;
-	 uint32_t enc_buff_5 = TIM5->CNT;
+	 uint32_t enc_buff_2 = TIM2->CNT;
 	 int encoder_value = 0;
 
+/*
 	 Error_Handling* error_handling = new Error_Handling();
-	 error_handling -> TIM5_error_handling();
+	 error_handling -> TIM2_error_handling();
 	 delete error_handling;
+*/
 
 
-	 if( enc_buff <= 2147483647 )
+	 if( enc_buff_2 <= 2147483647 )
 	 {
-		 encoder_value = enc_buff_5;
+		 encoder_value = enc_buff_2;
 	 }
-	 else if( enc_buff >= 2147483649 )
+	 else if( enc_buff_2 >= 2147483649 )
 	 {
-		 encoder_value = enc_buff_5 - 4294967295;
+		 encoder_value = enc_buff_2 - 4294967295;
 	 }
 
 
@@ -178,6 +205,155 @@ int Self_Pos::encoder_read_2(void)
 	  }
 */
 }
+
+int Self_Pos::calc_diff( int prev_x, int prev_y, int current_x, int current_y )
+{
+	int x_diff = current_x - prev_x;
+	int y_diff = current_y - prev_y;
+
+	int diff = sqrt( pow( x_diff, 2 ) + pow( y_diff, 2 ) );
+
+	return diff;
+}
+
+int Self_Pos::Self_Pos_config(void)
+{
+	uint8_t reset_pos = 0;
+	int diff = 0;
+	char output[10];
+
+	PWM* pwm = new PWM();
+
+	if( this -> get_Self_Pos_X() > 0 )
+	{
+		reset_pos |= true;
+	}
+	else
+	{
+		reset_pos |= true << 1;
+	}
+
+	if( this -> get_Self_Pos_Y() > 0 )
+	{
+		reset_pos |= true << 2;
+	}
+	else
+	{
+		reset_pos |= true << 3;
+	}
+
+	switch( reset_pos )
+	{
+	case 0b00000101:
+	{
+
+		pwm -> rotate( 500, 270 );
+
+		pwm -> V_output( 500, 0, 0, 270, E_move_status::MOVE );
+		while( (HAL_GPIO_ReadPin(LIMIT_F_V2_GPIO_Port, LIMIT_F_V2_Pin) == GPIO_PIN_RESET ) || ( HAL_GPIO_ReadPin( LIMIT_F_V3_GPIO_Port, LIMIT_F_V3_Pin ) == GPIO_PIN_RESET) );
+		pwm -> V_output( 0, 0, 0, 0, E_move_status::STOP );
+		HAL_Delay(2000);
+
+		pwm -> V_output( 500, 90, 0, 270, E_move_status::MOVE );
+		while( (HAL_GPIO_ReadPin(LIMIT_L_V3_GPIO_Port, LIMIT_L_V3_Pin) == GPIO_PIN_RESET ) || ( HAL_GPIO_ReadPin( LIMIT_L_V4_GPIO_Port, LIMIT_L_V4_Pin ) == GPIO_PIN_RESET) );
+		pwm -> V_output( 0, 0, 0, 0, E_move_status::STOP );
+
+
+		int prev_x = this -> get_Self_Pos_X();
+		int prev_y = this -> get_Self_Pos_Y();
+
+		this -> set_initial_pos( E_robot_name::NONE );
+
+		diff = this -> calc_diff( prev_x, prev_y, this -> get_Self_Pos_X(), this -> get_Self_Pos_Y() );
+
+		break;
+	}
+	case 0b00001001:
+	{
+		pwm -> rotate( 500, 180 );
+
+		pwm -> V_output( 500, 0, 0, 180, E_move_status::MOVE );
+		while( (HAL_GPIO_ReadPin(LIMIT_L_V3_GPIO_Port, LIMIT_L_V3_Pin) == GPIO_PIN_RESET ) || ( HAL_GPIO_ReadPin( LIMIT_L_V4_GPIO_Port, LIMIT_L_V4_Pin ) == GPIO_PIN_RESET) );
+		pwm -> V_output( 0, 0, 0, 0, E_move_status::STOP );
+		HAL_Delay(2000);
+
+
+		pwm -> V_output( 500, 270, 0, 180, E_move_status::MOVE );
+		while( (HAL_GPIO_ReadPin(LIMIT_F_V2_GPIO_Port, LIMIT_F_V2_Pin) == GPIO_PIN_RESET ) || ( HAL_GPIO_ReadPin( LIMIT_F_V3_GPIO_Port, LIMIT_F_V3_Pin ) == GPIO_PIN_RESET) );
+		pwm -> V_output( 0, 0, 0, 0, E_move_status::STOP );
+
+
+		int prev_x = this -> get_Self_Pos_X();
+		int prev_y = this -> get_Self_Pos_Y();
+
+
+		this -> set_initial_pos( E_robot_name::C );
+
+		diff = this -> calc_diff( prev_x, prev_y, this -> get_Self_Pos_X(), this -> get_Self_Pos_Y() );
+
+		break;
+	}
+	case 0b00000110:
+	{
+		pwm -> rotate( 500, 0 );
+
+		pwm -> V_output( 500, 180, 0, 0, E_move_status::MOVE );
+		while( (HAL_GPIO_ReadPin(LIMIT_L_V3_GPIO_Port, LIMIT_L_V3_Pin) == GPIO_PIN_RESET ) || ( HAL_GPIO_ReadPin( LIMIT_L_V4_GPIO_Port, LIMIT_L_V4_Pin ) == GPIO_PIN_RESET) );
+		pwm -> V_output( 0, 0, 0, 0, E_move_status::STOP );
+		HAL_Delay(2000);
+
+
+		pwm -> V_output( 500, 90, 0, 0, E_move_status::MOVE );
+		while( (HAL_GPIO_ReadPin(LIMIT_F_V2_GPIO_Port, LIMIT_F_V2_Pin) == GPIO_PIN_RESET ) || ( HAL_GPIO_ReadPin( LIMIT_F_V3_GPIO_Port, LIMIT_F_V3_Pin ) == GPIO_PIN_RESET) );
+		pwm -> V_output( 0, 0, 0, 0, E_move_status::STOP );
+
+
+		int prev_x = this -> get_Self_Pos_X();
+		int prev_y = this -> get_Self_Pos_Y();
+
+
+		this -> set_initial_pos( E_robot_name::A );
+
+		diff = this -> calc_diff( prev_x, prev_y, this -> get_Self_Pos_X(), this -> get_Self_Pos_Y() );
+
+		break;
+	}
+	case 0b00001010:
+	{
+		pwm -> rotate( 500, 90 );
+
+		pwm -> V_output( 500, 180, 0, 90, E_move_status::MOVE );
+		while( (HAL_GPIO_ReadPin(LIMIT_F_V2_GPIO_Port, LIMIT_F_V2_Pin) == GPIO_PIN_RESET ) || ( HAL_GPIO_ReadPin( LIMIT_F_V3_GPIO_Port, LIMIT_F_V3_Pin ) == GPIO_PIN_RESET) );
+		pwm -> V_output( 0, 0, 0, 0, E_move_status::STOP );
+		HAL_Delay(2000);
+
+
+		pwm -> V_output( 500, 270, 0, 90, E_move_status::MOVE );
+		while( (HAL_GPIO_ReadPin(LIMIT_L_V3_GPIO_Port, LIMIT_L_V3_Pin) == GPIO_PIN_RESET ) || ( HAL_GPIO_ReadPin( LIMIT_L_V4_GPIO_Port, LIMIT_L_V4_Pin ) == GPIO_PIN_RESET) );
+		pwm -> V_output( 0, 0, 0, 0, E_move_status::STOP );
+
+
+		int prev_x = this -> get_Self_Pos_X();
+		int prev_y = this -> get_Self_Pos_Y();
+
+
+		this -> set_initial_pos( E_robot_name::B );
+
+		diff = this -> calc_diff( prev_x, prev_y, this -> get_Self_Pos_X(), this -> get_Self_Pos_Y() );
+
+		break;
+	}
+	}
+
+	delete pwm;
+
+	sprintf( output, "%d\r\n", diff );
+	HAL_UART_Transmit( &huart2, (uint8_t*)output, sizeof( output ), 100 );
+
+	return diff;
+
+}
+
 //-------------------------------------------------------------------------
 void Self_Pos::Gyro::BNO055_Init_I2C(I2C_HandleTypeDef* hi2c_device)
 {
@@ -274,6 +450,7 @@ void Self_Pos::Gyro::BNO055_update_gravity_direction(I2C_HandleTypeDef* hi2c_dev
 	float acc_z;
 	int16_t rotation;
 	int16_t yaw;
+	char output[10];
 
 
 	HAL_I2C_Mem_Read(hi2c_device, BNO055_I2C_ADDR_HI<<1, BNO055_ACC_DATA_X_LSB, I2C_MEMADD_SIZE_8BIT, imu_readings, IMU_NUMBER_OF_BYTES,100);
@@ -291,11 +468,15 @@ void Self_Pos::Gyro::BNO055_update_gravity_direction(I2C_HandleTypeDef* hi2c_dev
 	this -> gravity = acc_z;
 	this -> direction = yaw;
 
+	sprintf( output, "%d\r\n", this -> direction );
+	HAL_UART_Transmit( &huart1, (uint8_t*)output, sizeof(output), 100 );
+
 
 /*
 	sprintf(output_2, "%lf\r\n",acc_z);
 	HAL_UART_Transmit(&huart2, (uint8_t*)output_2, sizeof(output_2),100);
 */
+
 
 }
 
@@ -332,6 +513,8 @@ void Self_Pos::Gyro::set_initial_direction(E_robot_name robot)
 		break;
 	case E_robot_name::C:
 		this -> initial_direction = 180;
+		break;
+	default:
 		break;
 	}
 }

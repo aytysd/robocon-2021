@@ -20,13 +20,22 @@
 #define INC_JUMP_HPP_
 
 #include "General_command.hpp"
+#include "main.h"
 
 class Jump
 {
 public:
+
 	void identify(void);
 	E_move_status get_status(void);
 private:
+
+	void pre_calc(void);
+	void calc_fly_distance(void);
+
+	uint16_t jump_speed = 0;
+	double x_y_prop = 0;
+
 	static E_move_status status;
 
 };

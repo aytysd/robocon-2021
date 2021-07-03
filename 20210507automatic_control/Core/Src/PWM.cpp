@@ -25,24 +25,24 @@
 
 
 
-void PWM::V_output(double V, double fai, double rotation_speed, double attitude_angle, E_move_status status)
+void PWM::V_output(uint16_t V, uint16_t fai, int16_t rotation_speed, uint16_t attitude_angle, E_move_status status)
 {
 	if( status == E_move_status::MOVE )
 	{
 
 		Function* function = new Function();
 
-		double Vx = V * cos(fai/180 * M_PI);
-		double Vy = V * sin(fai/180 * M_PI);
+		double Vx = V * cos( ( (double)fai / (double)180 ) * M_PI );
+		double Vy = V * sin( ( (double)fai / (double)180 ) * M_PI );
 
-		attitude_angle = attitude_angle/180 * M_PI;
+		double attitude_rad = (double)attitude_angle / (double)180 * M_PI;
 
 
 
-		double V1 = Vx * cos( attitude_angle + M_PI/4) + Vy * sin( attitude_angle + M_PI/4) + rotation_speed;
-		double V2 = Vx * cos( attitude_angle + M_PI * 3/4) + Vy * sin( attitude_angle + M_PI * 3/4) + rotation_speed;
-		double V3 = Vx * cos( attitude_angle + M_PI * 5/4) + Vy * sin( attitude_angle + M_PI * 5/4) + rotation_speed;
-		double V4 = Vx * cos( attitude_angle + M_PI * 7/4) + Vy * sin( attitude_angle + M_PI * 7/4) + rotation_speed;
+		double V1 = Vx * cos( attitude_rad + M_PI/4) + Vy * sin( attitude_rad + M_PI/4) + (double)rotation_speed;
+		double V2 = Vx * cos( attitude_rad + M_PI * 3/4) + Vy * sin( attitude_rad + M_PI * 3/4) + (double)rotation_speed;
+		double V3 = Vx * cos( attitude_rad + M_PI * 5/4) + Vy * sin( attitude_rad + M_PI * 5/4) + (double)rotation_speed;
+		double V4 = Vx * cos( attitude_rad + M_PI * 7/4) + Vy * sin( attitude_rad + M_PI * 7/4) + (double)rotation_speed;
 
 		uint8_t V1_pwm = abs(V1) / 23.677;
 		uint8_t V2_pwm = abs(V2) / 23.677;
@@ -86,7 +86,7 @@ void PWM::V_output(double V, double fai, double rotation_speed, double attitude_
 	}
 }
 
-bool PWM::rotate(double V, uint16_t target_angle)
+bool PWM::rotate(uint16_t V, uint16_t target_angle)
 {
 
 	Self_Pos::Gyro* gyro = new Self_Pos::Gyro();
@@ -102,22 +102,19 @@ bool PWM::rotate(double V, uint16_t target_angle)
 			if( abs(diff) <= 180 )
 			{
 				this -> V_output(0, 0, -V, 0, E_move_status::MOVE);
-				while( target_angle != gyro -> get_direction() )
-				{
-
-				}
+				while( target_angle != gyro -> get_direction() );
 				this -> V_output(0, 0, 0, 0, E_move_status::STOP);
+
+				delete gyro;
 				return true;
 			}
 			else
 			{
 				this -> V_output(0, 0, V, 0, E_move_status::MOVE);
-
 				while( target_angle != gyro -> get_direction() )
-				{
-
-				}
 				this -> V_output(0, 0, 0, 0, E_move_status::STOP);
+
+				delete gyro;
 				return true;
 
 			}
@@ -129,24 +126,20 @@ bool PWM::rotate(double V, uint16_t target_angle)
 			if( abs(diff) <= 180 )
 			{
 				this -> V_output(0, 0, V, 0, E_move_status::MOVE);
-
-				while( target_angle != gyro -> get_direction() )
-				{
-
-				}
+				while( target_angle != gyro -> get_direction() );
 				this -> V_output(0, 0, 0, 0, E_move_status::STOP);
+
+				delete gyro;
 				return true;
 
 			}
 			else
 			{
 				this -> V_output(0, 0, -V, 0, E_move_status::MOVE);
-
-				while( target_angle != gyro -> get_direction() )
-				{
-
-				}
+				while( target_angle != gyro -> get_direction() );
 				this -> V_output(0, 0, 0, 0, E_move_status::STOP);
+
+				delete gyro;
 				return true;
 
 			}
@@ -155,6 +148,7 @@ bool PWM::rotate(double V, uint16_t target_angle)
 	}
 	else
 	{
+		delete gyro;
 		return true;
 	}
 
@@ -178,7 +172,5 @@ uint8_t PWM::plus_minus(double number)
 
 
 }
-
-
 
 

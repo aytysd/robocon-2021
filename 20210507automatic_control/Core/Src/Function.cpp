@@ -38,7 +38,7 @@ void Function::drive_motor(uint8_t motor_number, uint8_t direction, uint8_t PWM,
 void Function::drive_solenoid_valve( int port_number, int ON_OFF)
 {
 
-	uint8_t solenoid_valve = (port_number<<1)|ON_OFF;
+	uint8_t solenoid_valve = (port_number<<1) | ON_OFF;
 	HAL_UART_Transmit(&huart3, (uint8_t*)&solenoid_valve, sizeof(solenoid_valve), 100);
 }
 

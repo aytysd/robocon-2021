@@ -26,6 +26,7 @@ enum class E_robot_name{
 	A,
 	B,
 	C,
+	NONE,
 };
 
 
