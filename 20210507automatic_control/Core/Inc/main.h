@@ -49,6 +49,7 @@ extern TIM_HandleTypeDef htim3;
 extern TIM_HandleTypeDef htim4;
 extern TIM_HandleTypeDef htim5;
 extern TIM_HandleTypeDef htim6;
+extern TIM_HandleTypeDef htim7;
 
 
 extern I2C_HandleTypeDef hi2c3;
@@ -95,10 +96,14 @@ void Error_Handler(void);
 #define PE_Sensor_F_Pin GPIO_PIN_4
 #define PE_Sensor_F_GPIO_Port GPIOA
 #define PE_Sensor_F_EXTI_IRQn EXTI4_IRQn
-#define SOLENOID_RX_Pin GPIO_PIN_5
-#define SOLENOID_RX_GPIO_Port GPIOC
-#define SOLENOID_TX_Pin GPIO_PIN_10
-#define SOLENOID_TX_GPIO_Port GPIOB
+#define ROPE_Pin GPIO_PIN_6
+#define ROPE_GPIO_Port GPIOA
+#define ROPEA7_Pin GPIO_PIN_7
+#define ROPEA7_GPIO_Port GPIOA
+#define A_RX_Pin GPIO_PIN_5
+#define A_RX_GPIO_Port GPIOC
+#define A_TX_Pin GPIO_PIN_10
+#define A_TX_GPIO_Port GPIOB
 #define Under_SW_V2_3_Pin GPIO_PIN_14
 #define Under_SW_V2_3_GPIO_Port GPIOB
 #define LED_Pin GPIO_PIN_15
@@ -123,10 +128,10 @@ void Error_Handler(void);
 #define Under_SW_V3_4_GPIO_Port GPIOA
 #define Y_OD_Pin GPIO_PIN_15
 #define Y_OD_GPIO_Port GPIOA
-#define Controller_TX_Pin GPIO_PIN_10
-#define Controller_TX_GPIO_Port GPIOC
-#define Controller_RX_Pin GPIO_PIN_11
-#define Controller_RX_GPIO_Port GPIOC
+#define B_TX_Pin GPIO_PIN_10
+#define B_TX_GPIO_Port GPIOC
+#define B_RX_Pin GPIO_PIN_11
+#define B_RX_GPIO_Port GPIOC
 #define LED_TX_Pin GPIO_PIN_12
 #define LED_TX_GPIO_Port GPIOC
 #define LED_RX_Pin GPIO_PIN_2
