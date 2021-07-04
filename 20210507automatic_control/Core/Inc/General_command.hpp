@@ -33,7 +33,6 @@ enum class E_robot_name{
 enum class E_move_status{
 	MOVE,
 	STOP,
-	FREE,
 	JUMPING,
 	LANDING,
 };

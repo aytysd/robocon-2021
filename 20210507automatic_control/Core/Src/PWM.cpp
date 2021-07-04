@@ -71,19 +71,6 @@ void PWM::V_output(uint16_t V, uint16_t fai, int16_t rotation_speed, uint16_t at
 		delete function;
 
 	}
-	else if( status == E_move_status::FREE )
-	{
-		Function* function = new Function();
-
-		function -> drive_motor(1, 0, 0, 0, false);
-		function -> drive_motor(2, 0, 0, 0, false);
-		function -> drive_motor(3, 0, 0, 0, false);
-		function -> drive_motor(4, 0, 0, 0, false);
-
-		delete function;
-
-
-	}
 }
 
 bool PWM::rotate(uint16_t V, uint16_t target_angle)
