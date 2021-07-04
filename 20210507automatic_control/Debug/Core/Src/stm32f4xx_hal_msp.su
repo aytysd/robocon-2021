@@ -8,4 +8,4 @@ stm32f4xx_hal_msp.c:440:6:HAL_TIM_Base_MspInit	24	static
 stm32f4xx_hal_msp.c:479:6:HAL_TIM_Encoder_MspDeInit	16	static
 stm32f4xx_hal_msp.c:564:6:HAL_TIM_Base_MspDeInit	16	static
 stm32f4xx_hal_msp.c:603:6:HAL_UART_MspInit	96	static
-stm32f4xx_hal_msp.c:781:6:HAL_UART_MspDeInit	16	static
+stm32f4xx_hal_msp.c:784:6:HAL_UART_MspDeInit	16	static
