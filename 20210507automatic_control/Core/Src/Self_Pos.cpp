@@ -90,18 +90,18 @@ void Self_Pos::update_self_pos(void)
 {
 	Self_Pos::Gyro* gyro = new Self_Pos::Gyro();
 	
-	int d1 = 2 * RADIUS * M_PI * ( this ->encoder_read_5() / 2048 ); //encoder5_moving distance(mm) 55.5=wheel radius 2048=encoder resolution
-	int d2 = 2 * RADIUS * M_PI * ( this ->encoder_read_2() / 2048 ); //encoder5_moving distance(mm) 55.5=wheel radius 2048=encoder resolution
+	int d1 = 2 * OD_RADIUS * M_PI * ( (double)this -> encoder_read_5() / 2048 ); //encoder5_moving distance(mm) 55.5=wheel radius 2048=encoder resolution
+	int d2 = 2 * OD_RADIUS * M_PI * ( (double)this -> encoder_read_2() / 2048 ); //encoder5_moving distance(mm) 55.5=wheel radius 2048=encoder resolution
 
 
-	this -> Self_Pos_X += d1 * cos( gyro -> get_direction() * M_PI / 180) - d2 * sin( gyro -> get_direction() * M_PI / 180);//X_coordinate
-	this -> Self_Pos_Y += d1 * sin( gyro -> get_direction() * M_PI / 180) + d2 * cos( gyro -> get_direction() * M_PI / 180);//Y_coordinate
+	this -> Self_Pos_X += d1 * cos( (double)gyro -> get_direction() * M_PI / 180) - d2 * sin( (double)gyro -> get_direction() * M_PI / 180);//X_coordinate
+	this -> Self_Pos_Y += d1 * sin( (double)gyro -> get_direction() * M_PI / 180) + d2 * cos( (double)gyro -> get_direction() * M_PI / 180);//Y_coordinate
 
 
 	char output[10];
-	sprintf( output, "%d\r\n", this -> Self_Pos_X );
+	sprintf( output, "X:%d\r\n", this -> Self_Pos_X );
 	HAL_UART_Transmit(&huart1, (uint8_t*)output, sizeof(output), 100);
-	sprintf( output, "%d\r\n", this -> Self_Pos_Y );
+	sprintf( output, "Y:%d\r\n", this -> Self_Pos_Y );
 	HAL_UART_Transmit(&huart1, (uint8_t*)output, sizeof(output), 100);
 
 
@@ -121,7 +121,7 @@ void Self_Pos::update_self_pos_ToF()
 int Self_Pos::encoder_read_5(void)
 {
 	 static int prev_encoder_value = 0;
-	 uint32_t enc_buff_5 = TIM5->CNT;
+	 uint32_t enc_buff_5 = TIM5 -> CNT;
 	 int encoder_value = 0;
 
 /*
@@ -164,7 +164,7 @@ int Self_Pos::encoder_read_2(void)
 {
 
 	 static int prev_encoder_value = 0;
-	 uint32_t enc_buff_2 = TIM2->CNT;
+	 uint32_t enc_buff_2 = TIM2 -> CNT;
 	 int encoder_value = 0;
 
 /*
