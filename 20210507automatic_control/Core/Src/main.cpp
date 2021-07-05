@@ -52,8 +52,6 @@
 /* Private variables ---------------------------------------------------------*/
 I2C_HandleTypeDef hi2c1;
 I2C_HandleTypeDef hi2c3;
-DMA_HandleTypeDef hdma_i2c1_rx;
-DMA_HandleTypeDef hdma_i2c1_tx;
 
 SPI_HandleTypeDef hspi1;
 
@@ -78,7 +76,6 @@ UART_HandleTypeDef huart6;
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
-static void MX_DMA_Init(void);
 static void MX_TIM5_Init(void);
 static void MX_TIM6_Init(void);
 static void MX_USART6_UART_Init(void);
@@ -112,8 +109,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef* UartHandle)
 		delete controller;
 
 	}
-
-	if( UartHandle == &huart1 )
+	else if( UartHandle == &huart1 )
 	{
 		HAL_UART_Receive_IT(&huart1, (uint8_t*)Communication::Rxdata, sizeof(Communication::Rxdata));
 
@@ -121,8 +117,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef* UartHandle)
 		delete communication;
 
 	}
-
-	if( UartHandle == &huart3 )
+	else if( UartHandle == &huart3 )
 	{
 		HAL_UART_Receive_IT(&huart1, (uint8_t*)Communication::Rxdata, sizeof(Communication::Rxdata));
 
@@ -173,7 +168,6 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
-  MX_DMA_Init();
   MX_TIM5_Init();
   MX_TIM6_Init();
   MX_USART6_UART_Init();
@@ -190,13 +184,28 @@ int main(void)
   MX_SPI1_Init();
   MX_TIM7_Init();
   /* USER CODE BEGIN 2 */
-  init_move -> init_move(E_robot_name::A);
+  HAL_UART_Receive_IT(&huart4, (uint8_t*)Controller::controller_Rxdata, sizeof(Controller::controller_Rxdata));
+  HAL_TIM_Base_Start_IT(&htim6);
+  gyro -> BNO055_Init_I2C(&hi2c1);
+  HAL_TIM_Encoder_Start(&htim5, TIM_CHANNEL_ALL);
+  HAL_TIM_Encoder_Start(&htim2, TIM_CHANNEL_ALL);
+//  init_move -> init_move(E_robot_name::A);
+  Function* function = new Function();
+  char output[7];
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+//	 function -> drive_motor_Rope( 0, CW, 90, true );
+	  uint16_t degree = gyro -> get_direction();
+
+	  sprintf( output, "%d\r\n", degree );
+	  HAL_UART_Transmit( &huart2, (uint8_t*)output, sizeof( output ), 100);
+
+	  HAL_Delay( 100 );
+
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -821,25 +830,6 @@ static void MX_USART6_UART_Init(void)
   /* USER CODE BEGIN USART6_Init 2 */
 
   /* USER CODE END USART6_Init 2 */
-
-}
-
-/**
-  * Enable DMA controller clock
-  */
-static void MX_DMA_Init(void)
-{
-
-  /* DMA controller clock enable */
-  __HAL_RCC_DMA1_CLK_ENABLE();
-
-  /* DMA interrupt init */
-  /* DMA1_Stream0_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(DMA1_Stream0_IRQn, 0, 0);
-  HAL_NVIC_EnableIRQ(DMA1_Stream0_IRQn);
-  /* DMA1_Stream6_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(DMA1_Stream6_IRQn, 0, 0);
-  HAL_NVIC_EnableIRQ(DMA1_Stream6_IRQn);
 
 }
 
