@@ -187,44 +187,109 @@ void Controller::identify_LS_SB()
 		return;
 	}
 
+	uint8_t data = 0;// 0 bit - left, 1 bit - right, 2 bit - down, 3 bit - up
 
 	if( (this -> controller_Rxdata[2] & 0b00000001) == true)
+	{
+		data |= ( true << 3 );//up
+	}
+	else if( (this -> controller_Rxdata[2] & 0b00000010) >> 1 == true)
+	{
+		data |= ( true << 2 );//down
+	}
+
+	if( (this -> controller_Rxdata[2] & 0b00000100) >> 2 == true)
+	{
+		data |= ( true << 1 );//right
+	}
+	else if( (this -> controller_Rxdata[2] & 0b00001000) >> 3 == true)
+	{
+		data |= ( true << 0 );//left
+	}
+
+	switch( data )
+	{
+	case 0b00001001:
+	{
+		this -> LSUL();
+		char str[8] = "LSUL\r\n";
+		HAL_UART_Transmit(&huart2, (uint8_t*)str, sizeof(str), 100);
+
+		break;
+
+	}
+	case 0b00001010:
+	{
+		this -> LSUR();
+		char str[8] = "LSUR\r\n";
+		HAL_UART_Transmit(&huart2, (uint8_t*)str, sizeof(str), 100);
+
+		break;
+	}
+	case 0b00001000:
 	{
 		this -> LSU();
 		char str[8] = "LSU\r\n";
 		HAL_UART_Transmit(&huart2, (uint8_t*)str, sizeof(str), 100);
 
-	}
+		break;
 
-	if( (this -> controller_Rxdata[2] & 0b00000010) >> 1 == true)
+	}
+	case 0b00000101:
+	{
+		this -> LSDL();
+		char str[8] = "LSDL\r\n";
+		HAL_UART_Transmit(&huart2, (uint8_t*)str, sizeof(str), 100);
+
+		break;
+
+	}
+	case 0b00000110:
+	{
+		this -> LSDR();
+		char str[8] = "LSDR\r\n";
+		HAL_UART_Transmit(&huart2, (uint8_t*)str, sizeof(str), 100);
+
+		break;
+
+	}
+	case 0b00000100:
 	{
 		this -> LSD();
 		char str[8] = "LSD\r\n";
 		HAL_UART_Transmit(&huart2, (uint8_t*)str, sizeof(str), 100);
 
-	}
+		break;
 
-	if( (this -> controller_Rxdata[2] & 0b00000100) >> 2 == true)
+	}
+	case 0b00000001:
+	{
+		this -> LSL();
+		char str[8] = "LSL\r\n";
+		HAL_UART_Transmit(&huart2, (uint8_t*)str, sizeof(str), 100);
+
+		break;
+	}
+	case 0b00000010:
 	{
 		this -> LSR();
 		char str[8] = "LSR\r\n";
 		HAL_UART_Transmit(&huart2, (uint8_t*)str, sizeof(str), 100);
 
+		break;
 	}
-
-	if( (this -> controller_Rxdata[2] & 0b00001000) >> 3 == true)
-	{
-		this -> LSL();
-		char str[8] = "LSL\r\n";
-		HAL_UART_Transmit(&huart2, (uint8_t*)str, sizeof(str), 100);
 
 	}
 
 }
 
 
+/*
 void Controller::identify_CS()
 {
+
+
+
 	if( this -> controller_Rxdata[3] != this -> controller_Rxdata[4])
 	{
 		if( ((this -> controller_Rxdata[3] + this -> controller_Rxdata[4]) & 0b01000000) >> 6 == true)
@@ -267,7 +332,9 @@ void Controller::identify_CS()
 
 
 }
+*/
 
+/*
 void Controller::identify_RS()
 {
 	if( this -> controller_Rxdata[5] != this -> controller_Rxdata[6])
@@ -312,10 +379,213 @@ void Controller::identify_RS()
 
 
 }
+*/
+
+void Controller::identify_RS()
+{
+
+	uint8_t data = 0;// 0 bit - left, 1 bit - right, 2 bit - down, 3 bit - up
+
+	if( this -> controller_Rxdata[6] == 0b00000000 )
+	{
+		data |= ( true << 3 );//up
+	}
+	else if( this -> controller_Rxdata[6] == 0b01111111 )
+	{
+		data |= ( true << 2 );//down
+	}
+
+	if( this -> controller_Rxdata[5] == 0b01111111 )
+	{
+		data |= ( true << 1 );//right
+	}
+	else if( this -> controller_Rxdata[5] == 0b00000000 )
+	{
+		data |= true;//left
+	}
+
+	switch( data )
+	{
+	case 0b00001001:
+	{
+		this -> RSUL();
+		char str[8] = "RSUL\r\n";
+		HAL_UART_Transmit(&huart2, (uint8_t*)str, sizeof(str), 100);
+
+		break;
+
+	}
+	case 0b00001010:
+	{
+		this -> RSUR();
+		char str[8] = "RSUR\r\n";
+		HAL_UART_Transmit(&huart2, (uint8_t*)str, sizeof(str), 100);
+
+		break;
+	}
+	case 0b00001000:
+	{
+		this -> RSU();
+		char str[8] = "RSU\r\n";
+		HAL_UART_Transmit(&huart2, (uint8_t*)str, sizeof(str), 100);
+
+		break;
+
+	}
+	case 0b00000101:
+	{
+		this -> RSDL();
+		char str[8] = "RSDL\r\n";
+		HAL_UART_Transmit(&huart2, (uint8_t*)str, sizeof(str), 100);
+
+		break;
+
+	}
+	case 0b00000110:
+	{
+		this -> RSDR();
+		char str[8] = "RSDR\r\n";
+		HAL_UART_Transmit(&huart2, (uint8_t*)str, sizeof(str), 100);
+
+		break;
+
+	}
+	case 0b00000100:
+	{
+		this -> RSD();
+		char str[8] = "RSD\r\n";
+		HAL_UART_Transmit(&huart2, (uint8_t*)str, sizeof(str), 100);
+
+		break;
+
+	}
+	case 0b00000001:
+	{
+		this -> RSL();
+		char str[8] = "RSL\r\n";
+		HAL_UART_Transmit(&huart2, (uint8_t*)str, sizeof(str), 100);
+
+		break;
+	}
+	case 0b00000010:
+	{
+		this -> RSR();
+		char str[8] = "RSR\r\n";
+		HAL_UART_Transmit(&huart2, (uint8_t*)str, sizeof(str), 100);
+
+		break;
+
+	}
+
+	}
+
+
+}
+
+void Controller::identify_CS()
+{
+	uint8_t data = 0;// 0 bit - left, 1 bit - right, 2 bit - down, 3 bit - up
+
+	if( this -> controller_Rxdata[4] == 0b00000000 )
+	{
+		data |= ( true << 3 );//up
+	}
+	else if( this -> controller_Rxdata[4] == 0b01111111 )
+	{
+		data |= ( true << 2 );//down
+	}
+
+	if( this -> controller_Rxdata[3] == 0b01111111 )
+	{
+		data |= ( true << 1 );//right
+	}
+	else if( this -> controller_Rxdata[3] == 0b00000000 )
+	{
+		data |= true;//left
+	}
+
+	switch( data )
+	{
+	case 0b00001001:
+	{
+		this -> CSUL();
+		char str[8] = "CSUL\r\n";
+		HAL_UART_Transmit(&huart2, (uint8_t*)str, sizeof(str), 100);
+
+		break;
+
+	}
+	case 0b00001010:
+	{
+		this -> CSUR();
+		char str[8] = "CSUR\r\n";
+		HAL_UART_Transmit(&huart2, (uint8_t*)str, sizeof(str), 100);
+
+		break;
+
+	}
+	case 0b00001000:
+	{
+		this -> CSU();
+		char str[8] = "CSU\r\n";
+		HAL_UART_Transmit(&huart2, (uint8_t*)str, sizeof(str), 100);
+
+		break;
+
+	}
+	case 0b00000101:
+	{
+		this -> CSDL();
+		char str[8] = "CSDL\r\n";
+		HAL_UART_Transmit(&huart2, (uint8_t*)str, sizeof(str), 100);
+
+		break;
+
+	}
+	case 0b00000110:
+	{
+		this -> CSDR();
+		char str[8] = "CSDR\r\n";
+		HAL_UART_Transmit(&huart2, (uint8_t*)str, sizeof(str), 100);
+
+		break;
+
+	}
+	case 0b00000100:
+	{
+		this -> CSD();
+		char str[8] = "CSD\r\n";
+		HAL_UART_Transmit(&huart2, (uint8_t*)str, sizeof(str), 100);
+
+		break;
+
+	}
+	case 0b00000010:
+	{
+		this -> CSR();
+		char str[8] = "CSR\r\n";
+		HAL_UART_Transmit(&huart2, (uint8_t*)str, sizeof(str), 100);
+
+		break;
+
+	}
+	case 0b00000001:
+	{
+		this -> CSL();
+		char str[8] = "CSL\r\n";
+		HAL_UART_Transmit(&huart2, (uint8_t*)str, sizeof(str), 100);
+
+		break;
+
+	}
+
+	}
+
+}
 
 
 
-
+/*
 void Controller::NOP(void){}
 
 void Controller::X(void){}
@@ -334,15 +604,30 @@ void Controller::LSU(void){}
 void Controller::LSL(void){}
 void Controller::LSR(void){}
 void Controller::LSD(void){}
+void Controller::LSUL(void){}
+void Controller::LSUR(void){}
+void Controller::LSDR(void){}
+void Controller::LSDL(void){}
+
 
 void Controller::CSU(void){}
 void Controller::CSR(void){}
 void Controller::CSL(void){}
 void Controller::CSD(void){}
+void Controller::CSUL(void){}
+void Controller::CSUR(void){}
+void Controller::CSDL(void){}
+void Controller::CSDR(void){}
 
+void Controller::RSUL(void){}
 void Controller::RSU(void){}
+void Controller::RSUR(void){}
 void Controller::RSR(void){}
-void Controller::RSL(void){}
+void Controller::RSDR(void){}
 void Controller::RSD(void){}
+void Controller::RSDL(void){}
+void Controller::RSL(void){}
+
+*/
 
 

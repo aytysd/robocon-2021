@@ -5,14 +5,34 @@
  *
  *@Author: Ayato Yoshida
  *
- *@Purpose_of_this_class:(To know when "start button" of controller is pushed)
+ *@Purpose_of_this_class:( identify the button which you pushed, and implement some treatment )
  *
  *
  *@Input(value)in(variable)of(functionname)
  *
- *@Output(whether "start button" is pushed (true or false))to(bool status)
+ *@Output( call a function corresponding to button or stick )
  *
- *@Attention_(all of methods and variables in this class are static)
+ *@Attention_(  A() -> A button
+				B() -> B button
+
+				LSU() -> Left_Stick_Up
+				LSR() -> Left_Stick_Right
+
+				CSD() -> Cross_Stick_Down
+				CSL() -> Cross_Stick_Left
+
+				RSR() -> Right_Stick_Right
+				RSU() -> Right_Stick_Up
+
+				NOP() -> status which you aren't pushing any buttons
+
+				START() -> Start_button
+				BACK() -> BACK_button
+
+
+				)
+
+
  *
  *@Usertouch(static void reset_status(void)
  *@Usertouch(static bool get_status(void))
@@ -43,34 +63,6 @@ private:
 	void identify_CS(void);
 	bool identify_NOP(void);
 
-//	void NOP(void);
-//
-//	void X(void);
-//	void Y(void);
-//	void A(void);
-//	void B(void);
-//
-//	void LB(void);
-//	void RB(void);
-//	void LT(void);
-//	void RT(void);
-//	void START(void);
-//	void BACK(void);
-//
-//	void LSU(void);
-//	void LSL(void);
-//	void LSR(void);
-//	void LSD(void);
-//
-//	void CSU(void);
-//	void CSR(void);
-//	void CSL(void);
-//	void CSD(void);
-//
-//	void RSU(void);
-//	void RSR(void);
-//	void RSL(void);
-//	void RSD(void);
 
 	uint16_t speed;
 	uint8_t direction;/*1=up, 2=right, 3=down, 4=left, 5=R_turn, 6=L_turn*/
@@ -94,16 +86,30 @@ private:
 	void LSL(void);
 	void LSR(void);
 	void LSD(void);
+	void LSUL(void);
+	void LSUR(void);
+	void LSDR(void);
+	void LSDL(void);
+
 
 	void CSU(void);
 	void CSR(void);
 	void CSL(void);
 	void CSD(void);
+	void CSUL(void);
+	void CSUR(void);
+	void CSDL(void);
+	void CSDR(void);
+
 
 	void RSU(void);
 	void RSR(void);
 	void RSL(void);
 	void RSD(void);
+	void RSUL(void);
+	void RSUR(void);
+	void RSDR(void);
+	void RSDL(void);
 };
 
 
