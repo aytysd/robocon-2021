@@ -13,6 +13,9 @@
  *@Input(speed you expect)in(uint16_t speed)of(void drive_motor)
  *@Input(PID_Enabled ( enable:true, disable:false, )in(bool PID_Enabled)of(void drive_motor)
  *
+ *
+ *@Input( angular_velocity( degree per second ( e.g. 90, 180 )in( uint8_t angular_velocity )of( void drive_motor_Rope )
+ *
  *@Output(motor_number, direction, PWM)to(MDC)
  *@Output(color(1:Red, 2:Green, 3:Blue),brightness(0~20))to(LED)
  *
@@ -26,11 +29,15 @@
 
 #include "main.h"
 
+#define OMNI_RADIUS 53.5
+
 class Function{
 public:
 	void drive_motor(uint8_t motor_number, uint8_t direction, uint8_t PWM, uint16_t speed, bool PID_Enabled);
-	void drive_solenoid_valve(int port_number, int ON_OFF);
-	void drive_LED(int color, int brightness);
+	void drive_solenoid_valve( uint8_t port_number, uint8_t ON_OFF);
+	void drive_LED( uint8_t color, uint8_t brightness);
+	void drive_motor_Rope( uint8_t motor_number, uint8_t direction, uint8_t angular_velocity, bool PID_Enabled );
+
 };
 
 
