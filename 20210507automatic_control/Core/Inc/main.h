@@ -102,6 +102,10 @@ void Error_Handler(void);
 #define ROPEA7_GPIO_Port GPIOA
 #define A_RX_Pin GPIO_PIN_5
 #define A_RX_GPIO_Port GPIOC
+#define Line_Sensor_L_Pin GPIO_PIN_0
+#define Line_Sensor_L_GPIO_Port GPIOB
+#define Line_Sensor_R_Pin GPIO_PIN_1
+#define Line_Sensor_R_GPIO_Port GPIOB
 #define A_TX_Pin GPIO_PIN_10
 #define A_TX_GPIO_Port GPIOB
 #define Under_SW_V2_3_Pin GPIO_PIN_14
