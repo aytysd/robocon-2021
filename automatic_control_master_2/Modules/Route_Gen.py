@@ -52,7 +52,7 @@ class Route_Gen:
         d0 = sqrt(td[0] ** 2 + td[1] ** 2)
         td[0] /= d0
         td[1] /= d0
-        return (tan * p[0] - p[1]) / (td[1] - tan * td[0]), td
+        return (tan * p[0] - p[1]) / (td[1] - tan * td[0]), td# speed,target direction
 
     def limit_distance(self):
 
