@@ -21,7 +21,7 @@
 #include "PWM.hpp"
 #include "Self_Pos.hpp"
 
-void Line::set(double befX, double befY, double tgX, double tgY)
+void Line::set(int befX, int befY, int tgX, int tgY)
 {
 	this -> a = -(tgY - befY);
 	this -> b = tgX - befX;
@@ -30,18 +30,18 @@ void Line::set(double befX, double befY, double tgX, double tgY)
 	this -> sqrtAABB = sqrt((long double)(a*a + b*b));
 }
 
-double Line::distance(double x, double y, double tgX, double tgY)
+double Line::distance(int x, int y, int tgX, int tgY)
 {
-	return ((a*x) + (b*y) + c) / sqrtAABB;
+	return ((a*x) + (b*y) + c) / (int)sqrtAABB;
 }
 
-double Line::TGdistance(double x, double y, double tgX, double tgY)
+double Line::TGdistance(int x, int y, int tgX, int tgY)
 {
-	return ((-b*x) + (a*y) - (((-b)*tgX) + (a*tgY))) / sqrtAABB;
+	return ((-b*x) + (a*y) - (((-b)*tgX) + (a*tgY))) /(int) sqrtAABB;
 }
 
 int Line::MoveLine
-(double befX, double befY, double tgX, double tgY, bool through)
+(int befX, int befY, int tgX, int tgY, bool through)
 {
 	this -> set(befX, befY, tgX, tgY);
 
@@ -52,10 +52,12 @@ int Line::MoveLine
 
 	this -> devX = this -> distance(this -> now_X, this -> now_Y, tgX, tgY);
 	this -> devY = this -> TGdistance(this -> now_X, this -> now_Y, tgX, tgY);
+	this -> devX = fabs(devX);
+	this -> devY = fabs(devY);
 
 	this -> devTG = sqrt((long double)(this -> devX*this -> devX + this -> devY*this -> devY));
 	this -> TG_r = atan((long double)((this -> now_Y - tgY) / (this -> now_X - tgX)));
-	this -> TG_r = (TG_r * 180) / M_PI;
+	this -> TG_r = ((uint16_t)TG_r * 180) / M_PI;
 
 	Self_Pos::Gyro* gyro = new Self_Pos::Gyro();
 	this -> now_r = (double)gyro -> get_direction();
@@ -93,10 +95,15 @@ int Line::MoveLine
 		this -> devTG = 1000;
 	}
 
-	this -> TG_r = this -> TG_r - this -> now_r;
+	this -> TG_r = (uint16_t)this -> TG_r - this -> now_r;
 	if(this -> TG_r < 0)
 	{
-		this -> TG_r = 360 + this -> TG_r;
+		this -> TG_r = 360 + (uint16_t)this -> TG_r;
+	}
+
+	if(through == true)
+	{
+		devTG = 800;
 	}
 
 	if(arrive == true)
@@ -111,7 +118,7 @@ int Line::MoveLine
 //				this -> TG_r = this -> TG_r -360;
 //			}
 
-			pwm -> V_output(800, this -> TG_r, 0, now_r, E_move_status::MOVE);
+			pwm -> V_output(800, (double)this -> TG_r, 0, (double)this -> now_r, E_move_status::MOVE);
 			judge = 2;
 
 			delete pwm;
@@ -121,7 +128,7 @@ int Line::MoveLine
 		{
 			PWM* pwm = new PWM();
 
-			pwm -> V_output(this -> devTG, this -> TG_r, 0, this -> now_r, E_move_status::STOP);
+			pwm -> V_output((double)this -> devTG, (double)this -> TG_r, 0, (double)this -> now_r, E_move_status::STOP);
 			judge = 1;
 
 			delete pwm;
@@ -131,7 +138,7 @@ int Line::MoveLine
 	{
 		PWM* pwm = new PWM();
 
-		pwm -> V_output(this -> devTG, this -> TG_r, 0, this -> now_r, E_move_status::MOVE);
+		pwm -> V_output((double)this -> devTG, (double)this -> TG_r, 0, (double)this -> now_r, E_move_status::MOVE);
 		judge = 0;
 
 		delete pwm;
