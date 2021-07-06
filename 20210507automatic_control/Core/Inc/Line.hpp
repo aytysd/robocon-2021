@@ -38,31 +38,33 @@
 #ifndef INC_LINE_HPP_
 #define INC_LINE_HPP_
 
+#include "main.h"
+
 class Line
 {
 private:
-	double a;
-	double b;
-	double c;
-	double sqrtAABB;
-	double now_X;
-	double now_Y;
+	int a;
+	int b;
+	int c;
+	long double sqrtAABB;
+	int now_X;
+	int now_Y;
 	double devX;
 	double devY;
-	double devTG;
-	double TG_r;
-	double now_r;
+	long double devTG;
+	long double TG_r;
+	uint16_t now_r;
 	int judge;
 
 
-	void set(double befX, double befY, double tgX, double tgY);
-	double distance(double x, double y, double tgX, double tgY);
-	double TGdistance(double x, double y, double tgX, double tgY);
+	void set(int befX, int befY, int tgX, int tgY);
+	double distance(int x, int y, int tgX, int tgY);
+	double TGdistance(int x, int y, int tgX, int tgY);
 
 
 public:
 	int MoveLine
-	(double befX, double befY, double tgX, double tgY, bool through);
+	(int befX, int befY, int tgX, int tgY, bool through);
 };
 
 
