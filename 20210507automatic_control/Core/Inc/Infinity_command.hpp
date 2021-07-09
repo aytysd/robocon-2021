@@ -19,15 +19,18 @@
 #ifndef INC_INFINITY_COMMAND_HPP_
 #define INC_INFINITY_COMMAND_HPP_
 
-namespace Infinity{
+namespace Infinity
+{
 
-enum class B{
+enum class A_Pos
+{
 
 	START = 75,
 	FINISH = 99,
 };
 
-enum class C{
+enum class B_Pos
+{
 
 	START = 75,
 	FINISH = 99,

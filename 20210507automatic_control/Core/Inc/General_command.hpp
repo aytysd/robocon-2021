@@ -21,21 +21,34 @@
 
 
 
-enum class E_robot_name{
+enum class E_robot_name
+{
 
 	A,
 	B,
 	C,
 	NONE,
+	MASTER,
 };
 
 
-enum class E_move_status{
+enum class E_move_status
+{
 	MOVE,
 	STOP,
 	JUMPING,
 	LANDING,
 };
+
+/*
+enum class E_Flow{
+	INIT_MOVE,
+	INFINITY,
+	DOUBLE_JUMP,
+};
+*/
+
+#define ROBOT E_robot_name::A
 
 
 
