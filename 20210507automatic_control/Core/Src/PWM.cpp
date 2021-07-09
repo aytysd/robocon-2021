@@ -44,16 +44,10 @@ void PWM::V_output(uint16_t V, uint16_t fai, int16_t rotation_speed, uint16_t at
 		double V3 = Vx * cos( attitude_rad + M_PI * 5/4) + Vy * sin( attitude_rad + M_PI * 5/4) + (double)rotation_speed;
 		double V4 = Vx * cos( attitude_rad + M_PI * 7/4) + Vy * sin( attitude_rad + M_PI * 7/4) + (double)rotation_speed;
 
-		uint8_t V1_pwm = abs(V1) / 23.677;
-		uint8_t V2_pwm = abs(V2) / 23.677;
-		uint8_t V3_pwm = abs(V3) / 23.677;
-		uint8_t V4_pwm = abs(V4) / 23.677;
-
-
-		function -> drive_motor(1, this -> plus_minus(V1), V1_pwm, (uint16_t)(abs((double)V1)), true);
-		function -> drive_motor(2, this -> plus_minus(V2), V2_pwm, (uint16_t)(abs((double)V2)), true);
-		function -> drive_motor(3, this -> plus_minus(V3), V3_pwm, (uint16_t)(abs((double)V3)), true);
-		function -> drive_motor(4, this -> plus_minus(V4), V4_pwm, (uint16_t)(abs((double)V4)), true);
+		function -> drive_motor(1, this -> plus_minus(V1), (uint16_t)(abs((double)V1)), true);
+		function -> drive_motor(2, this -> plus_minus(V2), (uint16_t)(abs((double)V2)), true);
+		function -> drive_motor(3, this -> plus_minus(V3), (uint16_t)(abs((double)V3)), true);
+		function -> drive_motor(4, this -> plus_minus(V4), (uint16_t)(abs((double)V4)), true);
 
 
 		delete function;
@@ -63,10 +57,10 @@ void PWM::V_output(uint16_t V, uint16_t fai, int16_t rotation_speed, uint16_t at
 	{
 		Function* function = new Function();
 
-		function -> drive_motor(1, 3, 0, 0, false);
-		function -> drive_motor(2, 3, 0, 0, false);
-		function -> drive_motor(3, 3, 0, 0, false);
-		function -> drive_motor(4, 3, 0, 0, false);
+		function -> drive_motor(1, 3, 0, false);
+		function -> drive_motor(2, 3, 0, false);
+		function -> drive_motor(3, 3, 0, false);
+		function -> drive_motor(4, 3, 0, false);
 
 		delete function;
 

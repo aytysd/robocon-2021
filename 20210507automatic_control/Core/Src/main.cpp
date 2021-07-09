@@ -33,6 +33,7 @@
 #include "Error_Handling.hpp"
 #include "Flow.hpp"
 #include "Controller.hpp"
+#include "Control.hpp"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -73,7 +74,6 @@ UART_HandleTypeDef huart3;
 UART_HandleTypeDef huart6;
 
 /* USER CODE BEGIN PV */
-
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -154,7 +154,6 @@ int main(void)
 {
   /* USER CODE BEGIN 1 */
   Self_Pos::Gyro* gyro = new Self_Pos::Gyro();
-  Init_Move* init_move = new Init_Move();
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -200,6 +199,7 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
