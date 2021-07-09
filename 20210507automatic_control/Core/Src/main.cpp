@@ -153,7 +153,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-  Self_Pos::Gyro* gyro = new Self_Pos::Gyro();
+  Init_Move* init_move = new Init_Move();
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -192,7 +192,7 @@ int main(void)
   MX_ADC1_Init();
   MX_ADC2_Init();
   /* USER CODE BEGIN 2 */
-  init_move -> init_move(E_robot_name::A);
+  init_move -> init_move(ROBOT);
   /* USER CODE END 2 */
 
   /* Infinite loop */
