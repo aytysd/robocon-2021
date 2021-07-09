@@ -220,12 +220,12 @@ int Self_Pos::Self_Pos_config(void)
 		pwm -> rotate( 500, 270 );
 
 		pwm -> V_output( 500, 0, 0, 270, E_move_status::MOVE );
-		while( (HAL_GPIO_ReadPin(LIMIT_F_V2_GPIO_Port, LIMIT_F_V2_Pin) == GPIO_PIN_RESET ) || ( HAL_GPIO_ReadPin( LIMIT_F_V3_GPIO_Port, LIMIT_F_V3_Pin ) == GPIO_PIN_RESET) );
+		while( (HAL_GPIO_ReadPin(LIMIT_F_V2_GPIO_Port, LIMIT_F_V2_Pin) == GPIO_PIN_RESET ) || ( HAL_GPIO_ReadPin( LIMIT_F_V3_GPIO_Port, LIMIT_F_V3_Pin ) == GPIO_PIN_RESET) ){}
 		pwm -> V_output( 0, 0, 0, 0, E_move_status::STOP );
 		HAL_Delay(2000);
 
 		pwm -> V_output( 500, 90, 0, 270, E_move_status::MOVE );
-		while( (HAL_GPIO_ReadPin(LIMIT_L_V3_GPIO_Port, LIMIT_L_V3_Pin) == GPIO_PIN_RESET ) || ( HAL_GPIO_ReadPin( LIMIT_L_V4_GPIO_Port, LIMIT_L_V4_Pin ) == GPIO_PIN_RESET) );
+		while( (HAL_GPIO_ReadPin(LIMIT_L_V3_GPIO_Port, LIMIT_L_V3_Pin) == GPIO_PIN_RESET ) || ( HAL_GPIO_ReadPin( LIMIT_L_V4_GPIO_Port, LIMIT_L_V4_Pin ) == GPIO_PIN_RESET) ){}
 		pwm -> V_output( 0, 0, 0, 0, E_move_status::STOP );
 
 
@@ -243,13 +243,13 @@ int Self_Pos::Self_Pos_config(void)
 		pwm -> rotate( 500, 180 );
 
 		pwm -> V_output( 500, 0, 0, 180, E_move_status::MOVE );
-		while( (HAL_GPIO_ReadPin(LIMIT_L_V3_GPIO_Port, LIMIT_L_V3_Pin) == GPIO_PIN_RESET ) || ( HAL_GPIO_ReadPin( LIMIT_L_V4_GPIO_Port, LIMIT_L_V4_Pin ) == GPIO_PIN_RESET) );
+		while( (HAL_GPIO_ReadPin(LIMIT_L_V3_GPIO_Port, LIMIT_L_V3_Pin) == GPIO_PIN_RESET ) || ( HAL_GPIO_ReadPin( LIMIT_L_V4_GPIO_Port, LIMIT_L_V4_Pin ) == GPIO_PIN_RESET) ){}
 		pwm -> V_output( 0, 0, 0, 0, E_move_status::STOP );
 		HAL_Delay(2000);
 
 
 		pwm -> V_output( 500, 270, 0, 180, E_move_status::MOVE );
-		while( (HAL_GPIO_ReadPin(LIMIT_F_V2_GPIO_Port, LIMIT_F_V2_Pin) == GPIO_PIN_RESET ) || ( HAL_GPIO_ReadPin( LIMIT_F_V3_GPIO_Port, LIMIT_F_V3_Pin ) == GPIO_PIN_RESET) );
+		while( (HAL_GPIO_ReadPin(LIMIT_F_V2_GPIO_Port, LIMIT_F_V2_Pin) == GPIO_PIN_RESET ) || ( HAL_GPIO_ReadPin( LIMIT_F_V3_GPIO_Port, LIMIT_F_V3_Pin ) == GPIO_PIN_RESET) ){}
 		pwm -> V_output( 0, 0, 0, 0, E_move_status::STOP );
 
 
@@ -268,13 +268,13 @@ int Self_Pos::Self_Pos_config(void)
 		pwm -> rotate( 500, 0 );
 
 		pwm -> V_output( 500, 180, 0, 0, E_move_status::MOVE );
-		while( (HAL_GPIO_ReadPin(LIMIT_L_V3_GPIO_Port, LIMIT_L_V3_Pin) == GPIO_PIN_RESET ) || ( HAL_GPIO_ReadPin( LIMIT_L_V4_GPIO_Port, LIMIT_L_V4_Pin ) == GPIO_PIN_RESET) );
+		while( (HAL_GPIO_ReadPin(LIMIT_L_V3_GPIO_Port, LIMIT_L_V3_Pin) == GPIO_PIN_RESET ) || ( HAL_GPIO_ReadPin( LIMIT_L_V4_GPIO_Port, LIMIT_L_V4_Pin ) == GPIO_PIN_RESET) ){}
 		pwm -> V_output( 0, 0, 0, 0, E_move_status::STOP );
 		HAL_Delay(2000);
 
 
 		pwm -> V_output( 500, 90, 0, 0, E_move_status::MOVE );
-		while( (HAL_GPIO_ReadPin(LIMIT_F_V2_GPIO_Port, LIMIT_F_V2_Pin) == GPIO_PIN_RESET ) || ( HAL_GPIO_ReadPin( LIMIT_F_V3_GPIO_Port, LIMIT_F_V3_Pin ) == GPIO_PIN_RESET) );
+		while( (HAL_GPIO_ReadPin(LIMIT_F_V2_GPIO_Port, LIMIT_F_V2_Pin) == GPIO_PIN_RESET ) || ( HAL_GPIO_ReadPin( LIMIT_F_V3_GPIO_Port, LIMIT_F_V3_Pin ) == GPIO_PIN_RESET) ){}
 		pwm -> V_output( 0, 0, 0, 0, E_move_status::STOP );
 
 
@@ -293,13 +293,13 @@ int Self_Pos::Self_Pos_config(void)
 		pwm -> rotate( 500, 90 );
 
 		pwm -> V_output( 500, 180, 0, 90, E_move_status::MOVE );
-		while( (HAL_GPIO_ReadPin(LIMIT_F_V2_GPIO_Port, LIMIT_F_V2_Pin) == GPIO_PIN_RESET ) || ( HAL_GPIO_ReadPin( LIMIT_F_V3_GPIO_Port, LIMIT_F_V3_Pin ) == GPIO_PIN_RESET) );
+		while( (HAL_GPIO_ReadPin(LIMIT_F_V2_GPIO_Port, LIMIT_F_V2_Pin) == GPIO_PIN_RESET ) || ( HAL_GPIO_ReadPin( LIMIT_F_V3_GPIO_Port, LIMIT_F_V3_Pin ) == GPIO_PIN_RESET) ){}
 		pwm -> V_output( 0, 0, 0, 0, E_move_status::STOP );
 		HAL_Delay(2000);
 
 
 		pwm -> V_output( 500, 270, 0, 90, E_move_status::MOVE );
-		while( (HAL_GPIO_ReadPin(LIMIT_L_V3_GPIO_Port, LIMIT_L_V3_Pin) == GPIO_PIN_RESET ) || ( HAL_GPIO_ReadPin( LIMIT_L_V4_GPIO_Port, LIMIT_L_V4_Pin ) == GPIO_PIN_RESET) );
+		while( (HAL_GPIO_ReadPin(LIMIT_L_V3_GPIO_Port, LIMIT_L_V3_Pin) == GPIO_PIN_RESET ) || ( HAL_GPIO_ReadPin( LIMIT_L_V4_GPIO_Port, LIMIT_L_V4_Pin ) == GPIO_PIN_RESET) ){}
 		pwm -> V_output( 0, 0, 0, 0, E_move_status::STOP );
 
 

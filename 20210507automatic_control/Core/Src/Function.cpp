@@ -51,7 +51,7 @@ void Function::drive_LED(uint8_t color, uint8_t brightness)
 	HAL_UART_Transmit(&huart5, &LED, sizeof(LED), 3000);
 }
 
-void Function::drive_motor_Rope( uint8_t motor_number, uint8_t direction, uint8_t angular_velocity, bool PID_Enabled )
+void Function::drive_motor_Rope( uint8_t motor_number, uint8_t direction, uint16_t angular_velocity, bool PID_Enabled )
 {
 	double rad_velocity = ( (double)angular_velocity / (double)180 ) * M_PI;
 	uint16_t speed = rad_velocity * OMNI_RADIUS;
