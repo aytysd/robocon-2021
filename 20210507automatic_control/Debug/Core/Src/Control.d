@@ -1,5 +1,5 @@
-Core/Src/main.o: ../Core/Src/main.cpp ../Core/Inc/main.h \
- ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h \
+Core/Src/Control.o: ../Core/Src/Control.cpp ../Core/Inc/Control.hpp \
+ ../Core/Inc/main.h ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h \
  ../Core/Inc/stm32f4xx_hal_conf.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h \
@@ -33,14 +33,10 @@ Core/Src/main.o: ../Core/Src/main.cpp ../Core/Inc/main.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h \
- ../Core/Inc/Function.hpp ../Core/Inc/main.h ../Core/Inc/PWM.hpp \
- ../Core/Inc/General_command.hpp ../Core/Inc/Self_Pos.hpp \
- ../Core/Inc/General_command.hpp ../Core/Inc/ToF.hpp \
- ../Core/Inc/Self_Pos.hpp ../Core/Inc/Communication.hpp \
- ../Core/Inc/GPIO.hpp ../Core/Inc/Init_Move.hpp ../Core/Inc/LED.hpp \
- ../Core/Inc/Error_Handling.hpp ../Core/Inc/Flow.hpp \
- ../Core/Inc/Controller.hpp ../Core/Inc/PWM.hpp ../Core/Inc/Init_Move.hpp \
- ../Core/Inc/Control.hpp ../Core/Inc/Rope.hpp
+ ../Core/Inc/main.h ../Core/Inc/General_command.hpp \
+ ../Core/Inc/Init_Move.hpp ../Core/Inc/General_command.hpp
+
+../Core/Inc/Control.hpp:
 
 ../Core/Inc/main.h:
 
@@ -112,40 +108,10 @@ Core/Src/main.o: ../Core/Src/main.cpp ../Core/Inc/main.h \
 
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h:
 
-../Core/Inc/Function.hpp:
-
 ../Core/Inc/main.h:
 
-../Core/Inc/PWM.hpp:
-
 ../Core/Inc/General_command.hpp:
-
-../Core/Inc/Self_Pos.hpp:
-
-../Core/Inc/General_command.hpp:
-
-../Core/Inc/ToF.hpp:
-
-../Core/Inc/Self_Pos.hpp:
-
-../Core/Inc/Communication.hpp:
-
-../Core/Inc/GPIO.hpp:
 
 ../Core/Inc/Init_Move.hpp:
 
-../Core/Inc/LED.hpp:
-
-../Core/Inc/Error_Handling.hpp:
-
-../Core/Inc/Flow.hpp:
-
-../Core/Inc/Controller.hpp:
-
-../Core/Inc/PWM.hpp:
-
-../Core/Inc/Init_Move.hpp:
-
-../Core/Inc/Control.hpp:
-
-../Core/Inc/Rope.hpp:
+../Core/Inc/General_command.hpp:

@@ -17,5 +17,20 @@
  *
  */
 
+#include "main.h"
+#include "Rope.hpp"
+
+int Rope::over_flow_cnt_3 = -1;
+int Rope::over_flow_cnt_4 = -1;
+
+int Rope::encoder_read_3()
+{
+	int enc_buff = over_flow_cnt_3 * 0x10000 + TIM3 -> CNT;
+}
+
+int Rope::encoder_read_4()
+{
+	int enc_buff = over_flow_cnt_4 * 0x10000 + TIM4 -> CNT;
+}
 
 

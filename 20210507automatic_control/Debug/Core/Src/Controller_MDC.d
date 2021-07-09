@@ -35,7 +35,7 @@ Core/Src/Controller_MDC.o: ../Core/Src/Controller_MDC.cpp \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h \
  ../Core/Inc/General_command.hpp ../Core/Inc/PWM.hpp \
- ../Core/Inc/Init_Move.hpp
+ ../Core/Inc/Init_Move.hpp ../Core/Inc/main.h
 
 ../Core/Inc/Controller.hpp:
 
@@ -114,3 +114,5 @@ Core/Src/Controller_MDC.o: ../Core/Src/Controller_MDC.cpp \
 ../Core/Inc/PWM.hpp:
 
 ../Core/Inc/Init_Move.hpp:
+
+../Core/Inc/main.h:

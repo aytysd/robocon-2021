@@ -34,6 +34,7 @@
 #include "Flow.hpp"
 #include "Controller.hpp"
 #include "Control.hpp"
+#include "Rope.hpp"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -141,6 +142,34 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 	GPIO* gpio = new GPIO();
 	gpio -> identify(GPIO_Pin);
 	delete gpio;
+
+}
+
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim)
+{
+    if(htim->Instance == TIM3){
+        __HAL_TIM_CLEAR_FLAG(&htim3, TIM_IT_UPDATE);
+        if(__HAL_TIM_IS_TIM_COUNTING_DOWN(&htim3)) //0 → 65535
+        {
+            Rope::over_flow_cnt_3--;
+        }
+        else //65535 → 0
+        {
+            Rope::over_flow_cnt_3++;
+        }
+    }
+    else if(htim->Instance == TIM4){
+        __HAL_TIM_CLEAR_FLAG(&htim4, TIM_IT_UPDATE);
+        if(__HAL_TIM_IS_TIM_COUNTING_DOWN(&htim4)) //0 → 65535
+        {
+            Rope::over_flow_cnt_4--;
+        }
+        else //65535 → 0
+        {
+            Rope::over_flow_cnt_4++;
+        }
+    }
+
 
 }
 

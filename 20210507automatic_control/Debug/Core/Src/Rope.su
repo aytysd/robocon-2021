@@ -1,0 +1,2 @@
+Rope.cpp:26:5:int Rope::encoder_read_3()	24	static
+Rope.cpp:31:5:int Rope::encoder_read_4()	24	static
