@@ -83,7 +83,7 @@ bool PWM::rotate(uint16_t V, uint16_t target_angle)
 			if( abs(diff) <= 180 )
 			{
 				this -> V_output(0, 0, -V, 0, E_move_status::MOVE);
-				while( target_angle != gyro -> get_direction() );
+				while( target_angle != gyro -> get_direction() ){}
 				this -> V_output(0, 0, 0, 0, E_move_status::STOP);
 
 				delete gyro;
@@ -92,7 +92,7 @@ bool PWM::rotate(uint16_t V, uint16_t target_angle)
 			else
 			{
 				this -> V_output(0, 0, V, 0, E_move_status::MOVE);
-				while( target_angle != gyro -> get_direction() )
+				while( target_angle != gyro -> get_direction() ){}
 				this -> V_output(0, 0, 0, 0, E_move_status::STOP);
 
 				delete gyro;
@@ -107,7 +107,7 @@ bool PWM::rotate(uint16_t V, uint16_t target_angle)
 			if( abs(diff) <= 180 )
 			{
 				this -> V_output(0, 0, V, 0, E_move_status::MOVE);
-				while( target_angle != gyro -> get_direction() );
+				while( target_angle != gyro -> get_direction() ){}
 				this -> V_output(0, 0, 0, 0, E_move_status::STOP);
 
 				delete gyro;
@@ -117,7 +117,7 @@ bool PWM::rotate(uint16_t V, uint16_t target_angle)
 			else
 			{
 				this -> V_output(0, 0, -V, 0, E_move_status::MOVE);
-				while( target_angle != gyro -> get_direction() );
+				while( target_angle != gyro -> get_direction() ){}
 				this -> V_output(0, 0, 0, 0, E_move_status::STOP);
 
 				delete gyro;
