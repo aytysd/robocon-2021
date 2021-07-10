@@ -39,6 +39,7 @@
 #define INC_LINE_HPP_
 
 #include "main.h"
+#include "General_command.hpp"
 
 class Line
 {
@@ -54,7 +55,6 @@ private:
 	long double devTG;
 	long double TG_r;
 	uint16_t now_r;
-	int judge;
 
 
 	void set(int befX, int befY, int tgX, int tgY);
@@ -63,8 +63,15 @@ private:
 
 
 public:
-	int MoveLine
-	(int befX, int befY, int tgX, int tgY, bool through);
+	static int AftX;
+	static int AftY;
+	static int BefX;
+	static int BefY;
+	static E_Line_status judge;
+	static bool through;
+
+	void MoveLine(int befX, int befY, int tgX, int tgY, bool through);
+	void Line_driver(int bef, int befY, int tgX, int tgY, bool through);
 };
 
 
