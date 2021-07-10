@@ -37,7 +37,11 @@ enum class E_move_status{
 	LANDING,
 };
 
-
+enum class E_Line_status{
+	MOVING,
+	STOP,
+	THROUGHING,
+};
 
 
 #endif /* INC_GENERAL_COMMAND_HPP_ */
