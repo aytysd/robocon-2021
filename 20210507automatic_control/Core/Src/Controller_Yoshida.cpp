@@ -22,6 +22,8 @@
 
 
 
+
+/*
 void Controller::NOP(void)
 {
 	  PWM* pwm = new PWM();
@@ -31,7 +33,6 @@ void Controller::NOP(void)
 	  delete pwm;
 
 
-	  this -> speed = 0;
 
 
 
@@ -39,19 +40,15 @@ void Controller::NOP(void)
 
 void Controller::X(void)
 {
-	this -> speed -= 100;
 }
 void Controller::Y(void)
 {
-	this -> direction += 10;
 }
 void Controller::A(void)
 {
-	this -> direction -= 10;
 }
 void Controller::B(void)
 {
-	this -> speed += 100;
 }
 
 void Controller::LB(void){}
@@ -170,3 +167,5 @@ void Controller::RSUL(void){}
 void Controller::RSUR(void){}
 void Controller::RSDR(void){}
 void Controller::RSDL(void){}
+*/
+

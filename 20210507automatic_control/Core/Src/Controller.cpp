@@ -37,7 +37,7 @@ void Controller::check_array(void)
 
 void Controller::identify()
 {
-	this -> check_array();
+//	this -> check_array();
 	if( this -> identify_NOP() == false )
 	{
 		this -> identify_ABXY_button();
@@ -283,104 +283,6 @@ void Controller::identify_LS_SB()
 
 }
 
-
-/*
-void Controller::identify_CS()
-{
-
-
-
-	if( this -> controller_Rxdata[3] != this -> controller_Rxdata[4])
-	{
-		if( ((this -> controller_Rxdata[3] + this -> controller_Rxdata[4]) & 0b01000000) >> 6 == true)
-		{
-			if( this -> controller_Rxdata[3] > this -> controller_Rxdata[4] )
-			{
-				this -> CSU();
-				char str[8] = "CSU\r\n";
-				HAL_UART_Transmit(&huart2, (uint8_t*)str, sizeof(str), 100);
-
-			}
-			else
-			{
-				this -> CSL();
-				char str[8] = "CSL\r\n";
-				HAL_UART_Transmit(&huart2, (uint8_t*)str, sizeof(str), 100);
-
-			}
-		}
-		else
-		{
-			if( this -> controller_Rxdata[3] > this -> controller_Rxdata[4] )
-			{
-				this -> CSR();
-				char str[8] = "CSR\r\n";
-				HAL_UART_Transmit(&huart2, (uint8_t*)str, sizeof(str), 100);
-
-			}
-			else
-			{
-				this -> CSD();
-				char str[8] = "CSD\r\n";
-				HAL_UART_Transmit(&huart2, (uint8_t*)str, sizeof(str), 100);
-
-			}
-
-		}
-
-	}
-
-
-}
-*/
-
-/*
-void Controller::identify_RS()
-{
-	if( this -> controller_Rxdata[5] != this -> controller_Rxdata[6])
-	{
-		if( ((this -> controller_Rxdata[5] + this -> controller_Rxdata[6]) & 0b01000000) >> 6 == true)
-		{
-			if( this -> controller_Rxdata[5] > this -> controller_Rxdata[6] )
-			{
-				this -> RSU();
-				char str[8] = "RSU\r\n";
-				HAL_UART_Transmit(&huart2, (uint8_t*)str, sizeof(str), 100);
-
-			}
-			else
-			{
-				this -> RSL();
-				char str[8] = "RSL\r\n";
-				HAL_UART_Transmit(&huart2, (uint8_t*)str, sizeof(str), 100);
-
-			}
-		}
-		else
-		{
-			if( this -> controller_Rxdata[5] > this -> controller_Rxdata[6] )
-			{
-				this -> RSR();
-				char str[8] = "RSR\r\n";
-				HAL_UART_Transmit(&huart2, (uint8_t*)str, sizeof(str), 100);
-
-			}
-			else
-			{
-				this -> RSD();
-				char str[8] = "RSD\r\n";
-				HAL_UART_Transmit(&huart2, (uint8_t*)str, sizeof(str), 100);
-
-			}
-
-		}
-
-	}
-
-
-}
-*/
-
 void Controller::identify_RS()
 {
 
@@ -585,7 +487,7 @@ void Controller::identify_CS()
 
 
 
-/*
+
 void Controller::NOP(void){}
 
 void Controller::X(void){}
@@ -627,7 +529,5 @@ void Controller::RSDR(void){}
 void Controller::RSD(void){}
 void Controller::RSDL(void){}
 void Controller::RSL(void){}
-
-*/
 
 

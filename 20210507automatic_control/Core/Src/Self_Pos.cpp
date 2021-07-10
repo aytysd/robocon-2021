@@ -31,6 +31,7 @@
 
 int Self_Pos::Self_Pos_X = 0;//(mm)
 int Self_Pos::Self_Pos_Y = 0;//(mm)
+
 //----------------------------------------------------------------------
 //Self_Pos* self_pos = new Self_Pos();
 
@@ -90,21 +91,13 @@ void Self_Pos::update_self_pos(void)
 {
 	Self_Pos::Gyro* gyro = new Self_Pos::Gyro();
 	
+
 	int d1 = 2 * OD_RADIUS * M_PI * ( (double)this -> encoder_read_5() / 2048 ); //encoder5_moving distance(mm) 55.5=wheel radius 2048=encoder resolution
-	int d2 = 2 * OD_RADIUS * M_PI * ( (double)this -> encoder_read_2() / 2048 ); //encoder5_moving distance(mm) 55.5=wheel radius 2048=encoder resolution
+	int d2 = -2 * OD_RADIUS * M_PI * ( (double)this -> encoder_read_2() / 2048 ); //encoder5_moving distance(mm) 55.5=wheel radius 2048=encoder resolution
 
 
 	this -> Self_Pos_X += d1 * cos( (double)gyro -> get_direction() * M_PI / 180) - d2 * sin( (double)gyro -> get_direction() * M_PI / 180);//X_coordinate
-	this -> Self_Pos_Y += d1 * sin( (double)gyro -> get_direction() * M_PI / 180) + d2 * cos( (double)gyro -> get_direction() * M_PI / 180);//Y_coordinate
-
-
-	char output[10];
-	sprintf( output, "X:%d\r\n", this -> Self_Pos_X );
-	HAL_UART_Transmit(&huart1, (uint8_t*)output, sizeof(output), 100);
-	sprintf( output, "Y:%d\r\n", this -> Self_Pos_Y );
-	HAL_UART_Transmit(&huart1, (uint8_t*)output, sizeof(output), 100);
-
-
+	this -> Self_Pos_Y += d1 * sin( (double)gyro -> get_direction() * M_PI / 180) + d2 * cos( (double)gyro -> get_direction() * M_PI / 180) ;//Y_coordinate
 
 	delete gyro;
 }
@@ -141,23 +134,13 @@ int Self_Pos::encoder_read_5(void)
 	 }
 
 
+
+	 int encoder_diff = encoder_value - prev_encoder_value;
+
 	 prev_encoder_value = encoder_value;
 
-	 return encoder_value - prev_encoder_value;
+	 return encoder_diff;
 
-/*
-	  if (enc_buff_5 > 400000000)
-	  {
-		int Envalue5=enc_buff_5-4294967295;
-		this -> encoder5=+Envalue5;
-	    return this -> encoder5;
-	  }
-	  else
-	  {
-		this -> encoder5=+enc_buff_5;
-	    return this -> encoder5;
-	  }
-*/
 }
 //------------------------------------------------------
 int Self_Pos::encoder_read_2(void)
@@ -183,27 +166,14 @@ int Self_Pos::encoder_read_2(void)
 		 encoder_value = enc_buff_2 - 4294967295;
 	 }
 
+	 int encoder_diff = encoder_value - prev_encoder_value;
 
 	 prev_encoder_value = encoder_value;
 
-	 return encoder_value - prev_encoder_value;
+	 return encoder_diff;
 
 
 
-/*
-	  TIM2->CNT = 0;
-	  if (enc_buff_2 > 400000000)
-	  {
-		int Envalue2=enc_buff_2-4294967295;
-		this -> encoder2=+Envalue2;
-	    return this -> encoder2;
-	  }
-	  else
-	  {
-		this -> encoder2=+enc_buff_2;
-	    return this ->encoder2;
-	  }
-*/
 }
 
 int Self_Pos::calc_diff( int prev_x, int prev_y, int current_x, int current_y )
@@ -250,12 +220,12 @@ int Self_Pos::Self_Pos_config(void)
 		pwm -> rotate( 500, 270 );
 
 		pwm -> V_output( 500, 0, 0, 270, E_move_status::MOVE );
-		while( (HAL_GPIO_ReadPin(LIMIT_F_V2_GPIO_Port, LIMIT_F_V2_Pin) == GPIO_PIN_RESET ) || ( HAL_GPIO_ReadPin( LIMIT_F_V3_GPIO_Port, LIMIT_F_V3_Pin ) == GPIO_PIN_RESET) );
+		while( (HAL_GPIO_ReadPin(LIMIT_F_V2_GPIO_Port, LIMIT_F_V2_Pin) == GPIO_PIN_RESET ) || ( HAL_GPIO_ReadPin( LIMIT_F_V3_GPIO_Port, LIMIT_F_V3_Pin ) == GPIO_PIN_RESET) ){}
 		pwm -> V_output( 0, 0, 0, 0, E_move_status::STOP );
 		HAL_Delay(2000);
 
 		pwm -> V_output( 500, 90, 0, 270, E_move_status::MOVE );
-		while( (HAL_GPIO_ReadPin(LIMIT_L_V3_GPIO_Port, LIMIT_L_V3_Pin) == GPIO_PIN_RESET ) || ( HAL_GPIO_ReadPin( LIMIT_L_V4_GPIO_Port, LIMIT_L_V4_Pin ) == GPIO_PIN_RESET) );
+		while( (HAL_GPIO_ReadPin(LIMIT_L_V3_GPIO_Port, LIMIT_L_V3_Pin) == GPIO_PIN_RESET ) || ( HAL_GPIO_ReadPin( LIMIT_L_V4_GPIO_Port, LIMIT_L_V4_Pin ) == GPIO_PIN_RESET) ){}
 		pwm -> V_output( 0, 0, 0, 0, E_move_status::STOP );
 
 
@@ -273,13 +243,13 @@ int Self_Pos::Self_Pos_config(void)
 		pwm -> rotate( 500, 180 );
 
 		pwm -> V_output( 500, 0, 0, 180, E_move_status::MOVE );
-		while( (HAL_GPIO_ReadPin(LIMIT_L_V3_GPIO_Port, LIMIT_L_V3_Pin) == GPIO_PIN_RESET ) || ( HAL_GPIO_ReadPin( LIMIT_L_V4_GPIO_Port, LIMIT_L_V4_Pin ) == GPIO_PIN_RESET) );
+		while( (HAL_GPIO_ReadPin(LIMIT_L_V3_GPIO_Port, LIMIT_L_V3_Pin) == GPIO_PIN_RESET ) || ( HAL_GPIO_ReadPin( LIMIT_L_V4_GPIO_Port, LIMIT_L_V4_Pin ) == GPIO_PIN_RESET) ){}
 		pwm -> V_output( 0, 0, 0, 0, E_move_status::STOP );
 		HAL_Delay(2000);
 
 
 		pwm -> V_output( 500, 270, 0, 180, E_move_status::MOVE );
-		while( (HAL_GPIO_ReadPin(LIMIT_F_V2_GPIO_Port, LIMIT_F_V2_Pin) == GPIO_PIN_RESET ) || ( HAL_GPIO_ReadPin( LIMIT_F_V3_GPIO_Port, LIMIT_F_V3_Pin ) == GPIO_PIN_RESET) );
+		while( (HAL_GPIO_ReadPin(LIMIT_F_V2_GPIO_Port, LIMIT_F_V2_Pin) == GPIO_PIN_RESET ) || ( HAL_GPIO_ReadPin( LIMIT_F_V3_GPIO_Port, LIMIT_F_V3_Pin ) == GPIO_PIN_RESET) ){}
 		pwm -> V_output( 0, 0, 0, 0, E_move_status::STOP );
 
 
@@ -298,13 +268,13 @@ int Self_Pos::Self_Pos_config(void)
 		pwm -> rotate( 500, 0 );
 
 		pwm -> V_output( 500, 180, 0, 0, E_move_status::MOVE );
-		while( (HAL_GPIO_ReadPin(LIMIT_L_V3_GPIO_Port, LIMIT_L_V3_Pin) == GPIO_PIN_RESET ) || ( HAL_GPIO_ReadPin( LIMIT_L_V4_GPIO_Port, LIMIT_L_V4_Pin ) == GPIO_PIN_RESET) );
+		while( (HAL_GPIO_ReadPin(LIMIT_L_V3_GPIO_Port, LIMIT_L_V3_Pin) == GPIO_PIN_RESET ) || ( HAL_GPIO_ReadPin( LIMIT_L_V4_GPIO_Port, LIMIT_L_V4_Pin ) == GPIO_PIN_RESET) ){}
 		pwm -> V_output( 0, 0, 0, 0, E_move_status::STOP );
 		HAL_Delay(2000);
 
 
 		pwm -> V_output( 500, 90, 0, 0, E_move_status::MOVE );
-		while( (HAL_GPIO_ReadPin(LIMIT_F_V2_GPIO_Port, LIMIT_F_V2_Pin) == GPIO_PIN_RESET ) || ( HAL_GPIO_ReadPin( LIMIT_F_V3_GPIO_Port, LIMIT_F_V3_Pin ) == GPIO_PIN_RESET) );
+		while( (HAL_GPIO_ReadPin(LIMIT_F_V2_GPIO_Port, LIMIT_F_V2_Pin) == GPIO_PIN_RESET ) || ( HAL_GPIO_ReadPin( LIMIT_F_V3_GPIO_Port, LIMIT_F_V3_Pin ) == GPIO_PIN_RESET) ){}
 		pwm -> V_output( 0, 0, 0, 0, E_move_status::STOP );
 
 
@@ -323,13 +293,13 @@ int Self_Pos::Self_Pos_config(void)
 		pwm -> rotate( 500, 90 );
 
 		pwm -> V_output( 500, 180, 0, 90, E_move_status::MOVE );
-		while( (HAL_GPIO_ReadPin(LIMIT_F_V2_GPIO_Port, LIMIT_F_V2_Pin) == GPIO_PIN_RESET ) || ( HAL_GPIO_ReadPin( LIMIT_F_V3_GPIO_Port, LIMIT_F_V3_Pin ) == GPIO_PIN_RESET) );
+		while( (HAL_GPIO_ReadPin(LIMIT_F_V2_GPIO_Port, LIMIT_F_V2_Pin) == GPIO_PIN_RESET ) || ( HAL_GPIO_ReadPin( LIMIT_F_V3_GPIO_Port, LIMIT_F_V3_Pin ) == GPIO_PIN_RESET) ){}
 		pwm -> V_output( 0, 0, 0, 0, E_move_status::STOP );
 		HAL_Delay(2000);
 
 
 		pwm -> V_output( 500, 270, 0, 90, E_move_status::MOVE );
-		while( (HAL_GPIO_ReadPin(LIMIT_L_V3_GPIO_Port, LIMIT_L_V3_Pin) == GPIO_PIN_RESET ) || ( HAL_GPIO_ReadPin( LIMIT_L_V4_GPIO_Port, LIMIT_L_V4_Pin ) == GPIO_PIN_RESET) );
+		while( (HAL_GPIO_ReadPin(LIMIT_L_V3_GPIO_Port, LIMIT_L_V3_Pin) == GPIO_PIN_RESET ) || ( HAL_GPIO_ReadPin( LIMIT_L_V4_GPIO_Port, LIMIT_L_V4_Pin ) == GPIO_PIN_RESET) ){}
 		pwm -> V_output( 0, 0, 0, 0, E_move_status::STOP );
 
 

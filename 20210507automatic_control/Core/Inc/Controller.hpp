@@ -46,6 +46,7 @@
 #include "PWM.hpp"
 #include "Init_Move.hpp"
 
+
 class Controller{
 public:
 	static uint8_t controller_Rxdata[8];
@@ -64,8 +65,8 @@ private:
 	bool identify_NOP(void);
 
 
-	uint16_t speed;
-	uint8_t direction;/*1=up, 2=right, 3=down, 4=left, 5=R_turn, 6=L_turn*/
+//	uint16_t speed;
+//	uint8_t direction;/*1=up, 2=right, 3=down, 4=left, 5=R_turn, 6=L_turn*/
 	void footwork(uint8_t direction, uint16_t speed);
 
 	void NOP(void);

@@ -48,8 +48,6 @@ public:
 	void add_Self_Pos( int add_x, int add_y );
 
 	int Self_Pos_config(void);
-
-
 	void update_self_pos_ToF();
 
 	class Gyro
@@ -69,6 +67,7 @@ public:
 private:
 	int encoder_read_5(void);
 	int encoder_read_2(void);
+
 
 	int calc_diff( int prev_x, int prev_y, int current_x, int current_y );
 
