@@ -41,7 +41,6 @@ public:
 
 private:
 	uint8_t plus_minus(double number);
-	volatile double degree_to_rad( uint16_t fai );
 
 };
 

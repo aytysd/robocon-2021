@@ -29,7 +29,7 @@
 #ifndef INC_SELF_POS_HPP_
 #define INC_SELF_POS_HPP_
 
-#define OD_RADIUS 25.4
+#define OD_RADIUS 28.5
 #define DT 0.1
 
 #include <General_command.hpp>

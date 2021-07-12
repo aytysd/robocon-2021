@@ -23,7 +23,7 @@
 #include "stdio.h"
 #include "math.h"
 
-void Function::drive_motor(uint8_t motor_number, uint8_t direction, uint16_t speed, bool PID_Enabled)
+void Function::drive_motor(uint8_t motor_number, uint8_t direction, uint16_t speed, bool PID_Enabled, bool Jump_Enabled )
 {
 	uint8_t PWM = speed / 23.677;
 
@@ -34,6 +34,10 @@ void Function::drive_motor(uint8_t motor_number, uint8_t direction, uint16_t spe
 	if( PID_Enabled == true )
 	{
 		motor[0] |= ( 0b01 << 6 );
+	}
+	if( Jump_Enabled == true )
+	{
+		motor[0] |= ( 0b01 << 7 );
 	}
 
 	HAL_UART_Transmit(&huart6, (uint8_t*)motor, sizeof(motor), 100);

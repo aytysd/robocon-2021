@@ -1,6 +1,5 @@
-Core/Src/Controller_Tomioka.o: ../Core/Src/Controller_Tomioka.cpp \
- ../Core/Inc/Controller.hpp ../Core/Inc/main.h \
- ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h \
+Core/Src/Gyro.o: ../Core/Src/Gyro.cpp ../Core/Inc/Gyro.hpp \
+ ../Core/Inc/main.h ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h \
  ../Core/Inc/stm32f4xx_hal_conf.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h \
@@ -34,10 +33,12 @@ Core/Src/Controller_Tomioka.o: ../Core/Src/Controller_Tomioka.cpp \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h \
- ../Core/Inc/General_command.hpp ../Core/Inc/PWM.hpp \
- ../Core/Inc/Init_Move.hpp ../Core/Inc/main.h
+ ../Core/Inc/General_command.hpp ../Core/Inc/Error_Handling.hpp \
+ ../Core/Inc/General_command.hpp ../Core/Inc/main.h \
+ ../Core/Inc/Self_Pos.hpp ../Core/Inc/ToF.hpp ../Core/Inc/Self_Pos.hpp \
+ ../Core/Inc/bno055.h ../Core/Inc/LED.hpp ../Core/Inc/PWM.hpp
 
-../Core/Inc/Controller.hpp:
+../Core/Inc/Gyro.hpp:
 
 ../Core/Inc/main.h:
 
@@ -111,8 +112,20 @@ Core/Src/Controller_Tomioka.o: ../Core/Src/Controller_Tomioka.cpp \
 
 ../Core/Inc/General_command.hpp:
 
-../Core/Inc/PWM.hpp:
+../Core/Inc/Error_Handling.hpp:
 
-../Core/Inc/Init_Move.hpp:
+../Core/Inc/General_command.hpp:
 
 ../Core/Inc/main.h:
+
+../Core/Inc/Self_Pos.hpp:
+
+../Core/Inc/ToF.hpp:
+
+../Core/Inc/Self_Pos.hpp:
+
+../Core/Inc/bno055.h:
+
+../Core/Inc/LED.hpp:
+
+../Core/Inc/PWM.hpp:

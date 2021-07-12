@@ -35,7 +35,7 @@ Core/Src/PWM.o: ../Core/Src/PWM.cpp ../Core/Inc/Function.hpp \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h \
  ../Core/Inc/PWM.hpp ../Core/Inc/General_command.hpp \
  ../Core/Inc/General_command.hpp ../Core/Inc/Self_Pos.hpp \
- ../Core/Inc/ToF.hpp ../Core/Inc/Self_Pos.hpp
+ ../Core/Inc/ToF.hpp ../Core/Inc/Self_Pos.hpp ../Core/Inc/Gyro.hpp
 
 ../Core/Inc/Function.hpp:
 
@@ -120,3 +120,5 @@ Core/Src/PWM.o: ../Core/Src/PWM.cpp ../Core/Inc/Function.hpp \
 ../Core/Inc/ToF.hpp:
 
 ../Core/Inc/Self_Pos.hpp:
+
+../Core/Inc/Gyro.hpp:

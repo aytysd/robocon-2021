@@ -163,7 +163,7 @@ void Error_Handling::Emergency_stop()
 	Function* function = new Function();
 	for(int i = 0; i<8; i++){
 
-		function -> drive_motor(i, 3, 0, false);
+		function -> drive_motor(i, 3, 0, false, false);
 	}
 	delete function;
 

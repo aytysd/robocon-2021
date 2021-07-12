@@ -66,6 +66,7 @@ GPIO* gpio = new GPIO();
 PWM* pwm = new PWM();
 Jump* jump = new Jump();
 Communication* communication = new Communication();
+Line* line = new Line();
 /* USER CODE END 0 */
 
 /* External variables --------------------------------------------------------*/
@@ -346,10 +347,7 @@ void TIM6_DAC_IRQHandler(void)
   self_pos -> update_self_pos();
   gpio -> reset_status();
   jump -> identify();
-
-  Line* line = new Line();
   line -> MoveLine(line -> BefX, line -> BefY, line -> AftX, line -> AftY, line -> through);
-  delete line;
 
   /* USER CODE END TIM6_DAC_IRQn 1 */
 }

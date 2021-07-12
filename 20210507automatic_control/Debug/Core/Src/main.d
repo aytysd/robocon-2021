@@ -40,7 +40,7 @@ Core/Src/main.o: ../Core/Src/main.cpp ../Core/Inc/main.h \
  ../Core/Inc/GPIO.hpp ../Core/Inc/Init_Move.hpp ../Core/Inc/LED.hpp \
  ../Core/Inc/Error_Handling.hpp ../Core/Inc/Flow.hpp \
  ../Core/Inc/Controller.hpp ../Core/Inc/PWM.hpp ../Core/Inc/Init_Move.hpp \
- ../Core/Inc/Control.hpp ../Core/Inc/Rope.hpp
+ ../Core/Inc/Control.hpp ../Core/Inc/Rope.hpp ../Core/Inc/Gyro.hpp
 
 ../Core/Inc/main.h:
 
@@ -149,3 +149,5 @@ Core/Src/main.o: ../Core/Src/main.cpp ../Core/Inc/main.h \
 ../Core/Inc/Control.hpp:
 
 ../Core/Inc/Rope.hpp:
+
+../Core/Inc/Gyro.hpp:
