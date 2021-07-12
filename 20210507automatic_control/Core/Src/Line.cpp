@@ -20,6 +20,7 @@
 #include "math.h"
 #include "PWM.hpp"
 #include "Self_Pos.hpp"
+#include "Gyro.hpp"
 #include "General_command.hpp"
 
 int Line::AftX = 0;
@@ -90,7 +91,7 @@ void Line::MoveLine
 	}
 
 
-	Self_Pos::Gyro* gyro = new Self_Pos::Gyro();
+	Gyro* gyro = new Gyro();
 	this -> now_r = (double)gyro -> get_direction();
 	delete gyro;
 

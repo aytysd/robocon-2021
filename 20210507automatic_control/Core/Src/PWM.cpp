@@ -22,6 +22,7 @@
 #include <iostream>
 #include "General_command.hpp"
 #include "Self_Pos.hpp"
+#include "Gyro.hpp"
 
 
 
@@ -67,10 +68,11 @@ void PWM::V_output(uint16_t V, uint16_t fai, int16_t rotation_speed, uint16_t at
 	}
 }
 
+
 bool PWM::rotate(uint16_t V, uint16_t target_angle)
 {
 
-	Self_Pos::Gyro* gyro = new Self_Pos::Gyro();
+	Gyro* gyro = new Gyro();
 
 
 	if( target_angle != gyro -> get_direction() )
@@ -134,6 +136,9 @@ bool PWM::rotate(uint16_t V, uint16_t target_angle)
 	}
 
 }
+
+
+
 
 uint8_t PWM::plus_minus(double number)
 {

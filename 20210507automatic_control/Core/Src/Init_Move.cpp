@@ -31,6 +31,7 @@
 #include "Communication.hpp"
 #include "LED.hpp"
 #include "Controller.hpp"
+#include "Gyro.hpp"
 
 namespace Init_Wait
 {
@@ -186,11 +187,12 @@ void Init_Move::init_move(E_robot_name robot)
 void Init_Move::Initialize(E_robot_name robot)
 {
 
-	  Self_Pos::Gyro* gyro = new Self_Pos::Gyro();
+	  Gyro* gyro = new Gyro();
 	  Self_Pos* self_pos = new Self_Pos();
 
 	  self_pos -> set_initial_pos(robot);
 	  gyro -> BNO055_Init_I2C(&hi2c1);
+	  gyro -> BNO055_Init_I2C(&hi2c3);
 	  gyro -> set_initial_direction(robot);
 
 	  HAL_UART_Receive_IT(&huart1, (uint8_t*)Communication::Rxdata, sizeof(Communication::Rxdata));

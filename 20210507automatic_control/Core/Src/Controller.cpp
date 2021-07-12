@@ -23,7 +23,7 @@
 #include "PWM.hpp"
 #include "stdio.h"
 
-uint8_t Controller::controller_Rxdata[8] = {0, 0, 0, 0, 0, 0, 0, 0};
+uint8_t Controller::controller_Rxdata[8] = {128, 0, 0, 64, 64, 64, 64, 0};
 
 void Controller::check_array(void)
 {
@@ -40,6 +40,7 @@ void Controller::identify()
 //	this -> check_array();
 	if( this -> identify_NOP() == false )
 	{
+
 		this -> identify_ABXY_button();
 		this -> identify_SUB_button();
 		this -> identify_LS_SB();
@@ -488,6 +489,7 @@ void Controller::identify_CS()
 
 
 
+/*
 void Controller::NOP(void){}
 
 void Controller::X(void){}
@@ -531,3 +533,4 @@ void Controller::RSDL(void){}
 void Controller::RSL(void){}
 
 
+*/

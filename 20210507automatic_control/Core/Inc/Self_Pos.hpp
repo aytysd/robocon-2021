@@ -47,26 +47,14 @@ public:
 
 	void add_Self_Pos( int add_x, int add_y );
 
-	int Self_Pos_config(void);
+	int Self_Pos_config_Limit(void);
 	void update_self_pos_ToF();
 
-	class Gyro
-	{
-	public:
-		void BNO055_Init_I2C(I2C_HandleTypeDef* hi2c_device);
-		void BNO055_update_gravity_direction(I2C_HandleTypeDef* hi2c_device);
-		float get_gravity(void);
-		uint16_t get_direction(void);
-		void set_initial_direction(E_robot_name robot);
-	private:
-		static float gravity;
-		static uint16_t direction;
-		static uint16_t initial_direction;
-
-	};
-private:
 	int encoder_read_5(void);
 	int encoder_read_2(void);
+
+
+private:
 
 
 	int calc_diff( int prev_x, int prev_y, int current_x, int current_y );
