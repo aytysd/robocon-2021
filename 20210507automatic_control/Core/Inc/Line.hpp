@@ -55,6 +55,7 @@ private:
 	long double devTG;
 	long double TG_r;
 	uint16_t now_r;
+	uint16_t TG_v;
 
 
 	void set(int befX, int befY, int tgX, int tgY);

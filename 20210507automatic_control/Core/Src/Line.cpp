@@ -20,6 +20,7 @@
 #include "math.h"
 #include "PWM.hpp"
 #include "Self_Pos.hpp"
+#include <stdio.h>
 #include "Gyro.hpp"
 #include "General_command.hpp"
 
@@ -43,11 +44,19 @@ void Line::set(int befX, int befY, int tgX, int tgY)
 
 double Line::distance(int x, int y, int tgX, int tgY)
 {
+	if(sqrtAABB == 0)
+	{
+		sqrtAABB = 1;
+	}
 	return ((a*x) + (b*y) + c) / (int)sqrtAABB;
 }
 
 double Line::TGdistance(int x, int y, int tgX, int tgY)
 {
+	if(sqrtAABB == 0)
+	{
+		sqrtAABB = 1;
+	}
 	return ((-b*x) + (a*y) - (((-b)*tgX) + (a*tgY))) /(int) sqrtAABB;
 }
 
@@ -60,6 +69,8 @@ void Line::MoveLine
 	this -> now_X = self_pos -> get_Self_Pos_X();
 	this -> now_Y = self_pos -> get_Self_Pos_Y();
 	delete self_pos;
+
+
 
 	this -> devX = this -> distance(this -> now_X, this -> now_Y, tgX, tgY);
 	this -> devY = this -> TGdistance(this -> now_X, this -> now_Y, tgX, tgY);
@@ -78,18 +89,25 @@ void Line::MoveLine
 	}
 	else
 	{
-		this -> TG_r = atan((long double)((tgY - this -> now_Y) / (tgX - this -> now_X)));
-		this -> TG_r = ((uint16_t)TG_r * 180) / M_PI;
-		if(tgY > this -> now_Y)
+		if((tgX - this -> now_X) == 0)
 		{
-			now_r += 180;
+			tgX = 1;
 		}
-		else if(this -> now_Y < 0)
+		this -> TG_r = atan(((long double)(tgY - this -> now_Y) / (long double)(tgX - this -> now_X)));
+		this -> TG_r = ((long double)TG_r * (long double)180) / M_PI;
+		if(tgX < this -> now_X)
 		{
-			now_r += 360;
+			TG_r = TG_r + 180;
+		}
+		else if(this -> TG_r < 0)
+		{
+			TG_r = TG_r + 360;
+		}
+		else if(this -> TG_r >= 360)
+		{
+			TG_r = TG_r - 360;
 		}
 	}
-
 
 	Gyro* gyro = new Gyro();
 	this -> now_r = (double)gyro -> get_direction();
@@ -121,22 +139,29 @@ void Line::MoveLine
 	}
 
 
-	this -> devTG *= 0.2;
-	if(this -> devTG > 1000)
+	this -> TG_v = this -> devTG * 0.2;
+	if(this -> TG_v > 1000)
 	{
-		this -> devTG = 1000;
+		this -> TG_v = 1000;
 	}
-
-//	this -> TG_r = (uint16_t)this -> TG_r - this -> now_r;
-//	if(this -> TG_r < 0)
-//	{
-//		this -> TG_r = 360 + (uint16_t)this -> TG_r;
-//	}
-
-	if(through == true)
+  
+  if(through == true)
 	{
-		devTG = 800;
+		if(this -> devTG > 1500)
+		{
+			this -> TG_v = 1000;
+		}
+		else if((this -> devTG > 1000) && (this -> devTG < 1500))
+		{
+			this -> TG_v = 750;
+		}
+		else if(this -> devTG < 1000)
+		{
+			this -> TG_v = 500;
+		}
 	}
+	sprintf(output, "TG_v:%d\r\n", TG_v);
+	HAL_UART_Transmit(&huart2, (uint8_t*)output, sizeof(output), 1000);
 
 	if(arrive == true)
 	{
@@ -160,7 +185,7 @@ void Line::MoveLine
 		{
 			PWM* pwm = new PWM();
 
-			pwm -> V_output((uint16_t)this -> devTG, (uint16_t)this -> TG_r, 0, (uint16_t)this -> now_r, E_move_status::STOP);
+			pwm -> V_output(this -> TG_v, (uint16_t)this -> TG_r, 0, (uint16_t)this -> now_r, E_move_status::STOP);
 			judge = E_Line_status::STOP;
 
 			delete pwm;
@@ -170,7 +195,7 @@ void Line::MoveLine
 	{
 		PWM* pwm = new PWM();
 
-		pwm -> V_output((uint16_t)this -> devTG, (uint16_t)this -> TG_r, 0, (uint16_t)this -> now_r, E_move_status::MOVE);
+		pwm -> V_output(this -> TG_v, (uint16_t)this -> TG_r, 0, (uint16_t)this -> now_r, E_move_status::MOVE);
 		judge = E_Line_status::MOVING;
 
 		delete pwm;
