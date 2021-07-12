@@ -37,7 +37,7 @@ Core/Src/Communication.o: ../Core/Src/Communication.cpp \
  ../Core/Inc/Error_Handling.hpp ../Core/Inc/Self_Pos.hpp \
  ../Core/Inc/General_command.hpp ../Core/Inc/ToF.hpp \
  ../Core/Inc/Self_Pos.hpp ../Core/Inc/Jump.hpp \
- ../Core/Inc/General_command.hpp
+ ../Core/Inc/General_command.hpp ../Core/Inc/Gyro.hpp
 
 ../Core/Inc/main.h:
 
@@ -126,3 +126,5 @@ Core/Src/Communication.o: ../Core/Src/Communication.cpp \
 ../Core/Inc/Jump.hpp:
 
 ../Core/Inc/General_command.hpp:
+
+../Core/Inc/Gyro.hpp:

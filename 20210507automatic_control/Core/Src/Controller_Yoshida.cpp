@@ -23,7 +23,7 @@
 
 
 
-/*
+
 void Controller::NOP(void)
 {
 	  PWM* pwm = new PWM();
@@ -38,18 +38,10 @@ void Controller::NOP(void)
 
 }
 
-void Controller::X(void)
-{
-}
-void Controller::Y(void)
-{
-}
-void Controller::A(void)
-{
-}
-void Controller::B(void)
-{
-}
+void Controller::X(void){}
+void Controller::Y(void){}
+void Controller::A(void){}
+void Controller::B(void){}
 
 void Controller::LB(void){}
 void Controller::RB(void){}
@@ -167,5 +159,5 @@ void Controller::RSUL(void){}
 void Controller::RSUR(void){}
 void Controller::RSDR(void){}
 void Controller::RSDL(void){}
-*/
+
 

@@ -9,6 +9,7 @@
 "Core/Src/Flow.o"
 "Core/Src/Function.o"
 "Core/Src/GPIO.o"
+"Core/Src/Gyro.o"
 "Core/Src/Init_Move.o"
 "Core/Src/Jump.o"
 "Core/Src/LED.o"

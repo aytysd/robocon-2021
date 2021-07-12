@@ -27,7 +27,6 @@ public:
 private:
 	int encoder_read_3();
 
-
 	int encoder_read_4();
 
 };

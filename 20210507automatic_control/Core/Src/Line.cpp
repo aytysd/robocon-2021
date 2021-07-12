@@ -21,6 +21,7 @@
 #include "PWM.hpp"
 #include "Self_Pos.hpp"
 #include <stdio.h>
+#include "Gyro.hpp"
 #include "General_command.hpp"
 
 int Line::AftX = 0;
@@ -76,12 +77,6 @@ void Line::MoveLine
 	this -> devX = fabs(devX);
 	this -> devY = fabs(devY);
 
-	char output[10];
-	sprintf(output, "X:%d\r\n", now_X);
-	HAL_UART_Transmit(&huart2, (uint8_t*)output, sizeof(output), 1000);
-	sprintf(output, "Y:%d\r\n", now_Y);
-	HAL_UART_Transmit(&huart2, (uint8_t*)output, sizeof(output), 1000);
-
 	this -> devTG = sqrt((long double)(this -> devX*this -> devX + this -> devY*this -> devY));
 
 	if((tgX == now_X) && (tgY > now_Y))
@@ -114,12 +109,7 @@ void Line::MoveLine
 		}
 	}
 
-	sprintf(output, "TG_r:%f\r\n", (double)TG_r);
-	HAL_UART_Transmit(&huart2, (uint8_t*)output, sizeof(output), 1000);
-	sprintf(output, "devTG:%f\r\n", (double)devTG);
-	HAL_UART_Transmit(&huart2, (uint8_t*)output, sizeof(output), 1000);
-
-	Self_Pos::Gyro* gyro = new Self_Pos::Gyro();
+	Gyro* gyro = new Gyro();
 	this -> now_r = (double)gyro -> get_direction();
 	delete gyro;
 
@@ -154,16 +144,8 @@ void Line::MoveLine
 	{
 		this -> TG_v = 1000;
 	}
-
-
-
-//	this -> TG_r = (uint16_t)this -> TG_r - this -> now_r;
-//	if(this -> TG_r < 0)
-//	{
-//		this -> TG_r = 360 + (uint16_t)this -> TG_r;
-//	}
-
-	if(through == true)
+  
+  if(through == true)
 	{
 		if(this -> devTG > 1500)
 		{

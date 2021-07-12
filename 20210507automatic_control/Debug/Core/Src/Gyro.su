@@ -1,0 +1,5 @@
+Gyro.cpp:37:6:void Gyro::BNO055_Init_I2C(I2C_HandleTypeDef*)	72	static
+Gyro.cpp:122:6:void Gyro::BNO055_update_gravity_direction(I2C_HandleTypeDef*)	96	static
+Gyro.cpp:162:7:float Gyro::get_gravity()	16	static
+Gyro.cpp:167:10:uint16_t Gyro::get_direction()	24	static
+Gyro.cpp:183:6:void Gyro::set_initial_direction(E_robot_name)	16	static
