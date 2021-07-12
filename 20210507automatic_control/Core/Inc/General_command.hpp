@@ -40,6 +40,13 @@ enum class E_move_status
 	LANDING,
 };
 
+
+enum class E_Line_status{
+	MOVING,
+	STOP,
+	THROUGHING,
+};
+
 /*
 enum class E_Flow{
 	INIT_MOVE,
@@ -49,6 +56,7 @@ enum class E_Flow{
 */
 
 #define ROBOT E_robot_name::A
+
 
 
 

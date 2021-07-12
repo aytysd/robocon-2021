@@ -30,6 +30,7 @@
 #include "Jump.hpp"
 #include "Communication.hpp"
 #include "Gyro.hpp"
+#include "Line.hpp"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -346,6 +347,9 @@ void TIM6_DAC_IRQHandler(void)
   gpio -> reset_status();
   jump -> identify();
 
+  Line* line = new Line();
+  line -> MoveLine(line -> BefX, line -> BefY, line -> AftX, line -> AftY, line -> through);
+  delete line;
 
   /* USER CODE END TIM6_DAC_IRQn 1 */
 }

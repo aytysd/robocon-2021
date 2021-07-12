@@ -21,6 +21,16 @@
 #include "PWM.hpp"
 #include "Self_Pos.hpp"
 #include "Gyro.hpp"
+#include "General_command.hpp"
+
+int Line::AftX = 0;
+int Line::AftY = 0;
+
+int Line::BefX = 0;
+int Line::BefY = 0;
+
+E_Line_status Line::judge = E_Line_status::STOP;
+bool Line::through = false;
 
 void Line::set(int befX, int befY, int tgX, int tgY)
 {
@@ -41,7 +51,7 @@ double Line::TGdistance(int x, int y, int tgX, int tgY)
 	return ((-b*x) + (a*y) - (((-b)*tgX) + (a*tgY))) /(int) sqrtAABB;
 }
 
-int Line::MoveLine
+void Line::MoveLine
 (int befX, int befY, int tgX, int tgY, bool through)
 {
 	this -> set(befX, befY, tgX, tgY);
@@ -57,8 +67,29 @@ int Line::MoveLine
 	this -> devY = fabs(devY);
 
 	this -> devTG = sqrt((long double)(this -> devX*this -> devX + this -> devY*this -> devY));
-	this -> TG_r = atan((long double)((this -> now_Y - tgY) / (this -> now_X - tgX)));
-	this -> TG_r = ((uint16_t)TG_r * 180) / M_PI;
+
+	if((tgX == now_X) && (tgY > now_Y))
+	{
+		TG_r = 90;
+	}
+	else if((tgX == now_X) && (tgY < now_Y))
+	{
+		TG_r = 270;
+	}
+	else
+	{
+		this -> TG_r = atan((long double)((tgY - this -> now_Y) / (tgX - this -> now_X)));
+		this -> TG_r = ((uint16_t)TG_r * 180) / M_PI;
+		if(tgY > this -> now_Y)
+		{
+			now_r += 180;
+		}
+		else if(this -> now_Y < 0)
+		{
+			now_r += 360;
+		}
+	}
+
 
 	Gyro* gyro = new Gyro();
 	this -> now_r = (double)gyro -> get_direction();
@@ -96,11 +127,11 @@ int Line::MoveLine
 		this -> devTG = 1000;
 	}
 
-	this -> TG_r = (uint16_t)this -> TG_r - this -> now_r;
-	if(this -> TG_r < 0)
-	{
-		this -> TG_r = 360 + (uint16_t)this -> TG_r;
-	}
+//	this -> TG_r = (uint16_t)this -> TG_r - this -> now_r;
+//	if(this -> TG_r < 0)
+//	{
+//		this -> TG_r = 360 + (uint16_t)this -> TG_r;
+//	}
 
 	if(through == true)
 	{
@@ -119,8 +150,8 @@ int Line::MoveLine
 //				this -> TG_r = this -> TG_r -360;
 //			}
 
-			pwm -> V_output(800, (double)this -> TG_r, 0, (double)this -> now_r, E_move_status::MOVE);
-			judge = 2;
+			pwm -> V_output(800, (uint16_t)this -> TG_r, 0, (uint16_t)this -> now_r, E_move_status::MOVE);
+			judge = E_Line_status::THROUGHING;
 
 			delete pwm;
 
@@ -129,8 +160,8 @@ int Line::MoveLine
 		{
 			PWM* pwm = new PWM();
 
-			pwm -> V_output((double)this -> devTG, (double)this -> TG_r, 0, (double)this -> now_r, E_move_status::STOP);
-			judge = 1;
+			pwm -> V_output((uint16_t)this -> devTG, (uint16_t)this -> TG_r, 0, (uint16_t)this -> now_r, E_move_status::STOP);
+			judge = E_Line_status::STOP;
 
 			delete pwm;
 		}
@@ -139,11 +170,18 @@ int Line::MoveLine
 	{
 		PWM* pwm = new PWM();
 
-		pwm -> V_output((double)this -> devTG, (double)this -> TG_r, 0, (double)this -> now_r, E_move_status::MOVE);
-		judge = 0;
+		pwm -> V_output((uint16_t)this -> devTG, (uint16_t)this -> TG_r, 0, (uint16_t)this -> now_r, E_move_status::MOVE);
+		judge = E_Line_status::MOVING;
 
 		delete pwm;
 	}
+}
 
-	return judge;
+void Line::Line_driver(int befX, int befY, int tgX, int tgY, bool through)
+{
+	this -> BefX = befX;
+	this -> BefY = befY;
+	this -> AftX = tgX;
+	this -> AftY = tgY;
+	this -> through = through;
 }
