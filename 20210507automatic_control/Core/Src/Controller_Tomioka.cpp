@@ -17,6 +17,8 @@
  *
  */
 
+#include "Controller.hpp"
+#include "main.h"
 
 /*
 void Controller::NOP(void){}

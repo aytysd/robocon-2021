@@ -20,6 +20,7 @@
 #include "math.h"
 #include "PWM.hpp"
 #include "Self_Pos.hpp"
+#include "Gyro.hpp"
 
 void Line::set(int befX, int befY, int tgX, int tgY)
 {
@@ -59,7 +60,7 @@ int Line::MoveLine
 	this -> TG_r = atan((long double)((this -> now_Y - tgY) / (this -> now_X - tgX)));
 	this -> TG_r = ((uint16_t)TG_r * 180) / M_PI;
 
-	Self_Pos::Gyro* gyro = new Self_Pos::Gyro();
+	Gyro* gyro = new Gyro();
 	this -> now_r = (double)gyro -> get_direction();
 	delete gyro;
 

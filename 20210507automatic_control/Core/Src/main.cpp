@@ -35,6 +35,7 @@
 #include "Controller.hpp"
 #include "Control.hpp"
 #include "Rope.hpp"
+#include "Gyro.hpp"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -115,8 +116,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef* UartHandle)
 		delete controller;
 
 	}
-
-	if( UartHandle == &huart1 )
+	else if( UartHandle == &huart1 )
 	{
 		HAL_UART_Receive_IT(&huart1, (uint8_t*)Communication::Rxdata, sizeof(Communication::Rxdata));
 
@@ -124,8 +124,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef* UartHandle)
 		delete communication;
 
 	}
-
-	if( UartHandle == &huart3 )
+	else if( UartHandle == &huart3 )
 	{
 		HAL_UART_Receive_IT(&huart1, (uint8_t*)Communication::Rxdata, sizeof(Communication::Rxdata));
 
@@ -147,7 +146,8 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim)
 {
-    if(htim->Instance == TIM3){
+    if(htim->Instance == TIM3)
+    {
         __HAL_TIM_CLEAR_FLAG(&htim3, TIM_IT_UPDATE);
         if(__HAL_TIM_IS_TIM_COUNTING_DOWN(&htim3)) //0 → 65535
         {
@@ -158,7 +158,8 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim)
             Rope::over_flow_cnt_3++;
         }
     }
-    else if(htim->Instance == TIM4){
+    else if(htim->Instance == TIM4)
+    {
         __HAL_TIM_CLEAR_FLAG(&htim4, TIM_IT_UPDATE);
         if(__HAL_TIM_IS_TIM_COUNTING_DOWN(&htim4)) //0 → 65535
         {
@@ -228,7 +229,6 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -1024,7 +1024,36 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
+void time_calc(void)
+{
+	static int i;
+	static uint32_t start_time;
+	static uint32_t end_time;
 
+	i++;
+
+
+	switch( i % 2 )
+	{
+	case 1:
+		start_time = HAL_GetTick();
+		break;
+	case 0:
+	{
+		end_time = HAL_GetTick();
+		uint32_t diff = end_time - start_time;
+
+		char output[10];
+		sprintf( output, "%d\r\n", diff );
+		HAL_UART_Transmit( &huart2, (uint8_t*)output, sizeof( output ), 100 );
+
+		break;
+	}
+
+	}
+
+
+}
 /* USER CODE END 4 */
 
 /**

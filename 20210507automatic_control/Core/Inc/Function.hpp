@@ -36,7 +36,7 @@ public:
 	void drive_motor(uint8_t motor_number, uint8_t direction, uint16_t speed, bool PID_Enabled);
 	void drive_solenoid_valve( uint8_t port_number, uint8_t ON_OFF);
 	void drive_LED( uint8_t color, uint8_t brightness);
-	void drive_motor_Rope( uint8_t motor_number, uint8_t direction, uint8_t angular_velocity, bool PID_Enabled );
+	void drive_motor_Rope( uint8_t motor_number, uint8_t direction, uint16_t angular_velocity, bool PID_Enabled );
 };
 
 

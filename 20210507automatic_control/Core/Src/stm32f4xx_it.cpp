@@ -29,6 +29,7 @@
 #include "PWM.hpp"
 #include "Jump.hpp"
 #include "Communication.hpp"
+#include "Gyro.hpp"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -58,7 +59,7 @@
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-Self_Pos::Gyro* gyro = new Self_Pos::Gyro();
+Gyro* gyro = new Gyro();
 Self_Pos* self_pos = new Self_Pos();
 GPIO* gpio = new GPIO();
 PWM* pwm = new PWM();
@@ -340,6 +341,7 @@ void TIM6_DAC_IRQHandler(void)
   HAL_TIM_IRQHandler(&htim6);
   /* USER CODE BEGIN TIM6_DAC_IRQn 1 */
   gyro -> BNO055_update_gravity_direction(&hi2c1);
+//  gyro -> BNO055_update_gravity_direction(&hi2c3);
   self_pos -> update_self_pos();
   gpio -> reset_status();
   jump -> identify();

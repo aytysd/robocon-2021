@@ -22,6 +22,7 @@
 #include "Error_Handling.hpp"
 #include "Self_Pos.hpp"
 #include "Jump.hpp"
+#include "Gyro.hpp"
 
 uint8_t Communication::Rxdata[4] = { 0, 0, 0, 0 };
 
@@ -33,7 +34,7 @@ void Communication::send_data(E_data_type data)
 	case E_data_type::CURRENT_DATA:
 	{
 		Self_Pos* self_pos = new Self_Pos();
-		Self_Pos::Gyro* gyro = new Self_Pos::Gyro();
+		Gyro* gyro = new Gyro();
 
 		uint8_t X_pos_p = (uint8_t)(0b1111111100000000 & (uint16_t)self_pos -> get_Self_Pos_X()) >> 8;
 		uint8_t X_pos_q = (uint8_t)(0b0000000011111111 & (uint16_t)self_pos -> get_Self_Pos_X());
