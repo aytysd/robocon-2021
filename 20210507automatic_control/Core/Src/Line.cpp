@@ -92,7 +92,7 @@ void Line::MoveLine
 
 
 	Gyro* gyro = new Gyro();
-	this -> now_r = (double)gyro -> get_direction();
+	this -> now_r = (double)gyro -> get_direction( &hi2c1 );
 	delete gyro;
 
 

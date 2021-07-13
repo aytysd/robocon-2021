@@ -29,10 +29,10 @@
 #include "PWM.hpp"
 
 
-uint16_t Gyro::direction = 0;
+double Gyro::robot_direction = 0;
 float Gyro::gravity = 0;
-uint16_t Gyro::initial_direction = 0;
-
+uint16_t Gyro::robot_initial_direction = 0;
+double Gyro::table_direction = 0;
 
 void Gyro::BNO055_Init_I2C(I2C_HandleTypeDef* hi2c_device)
 {
@@ -119,43 +119,38 @@ void Gyro::BNO055_Init_I2C(I2C_HandleTypeDef* hi2c_device)
 	HAL_Delay(50);
 }
 
-void Gyro::BNO055_update_gravity_direction(I2C_HandleTypeDef* hi2c_device)
+void Gyro::BNO055_update_gravity_direction( I2C_HandleTypeDef* hi2c_device )
 {
 
-	uint8_t	imu_readings[IMU_NUMBER_OF_BYTES];
-	uint8_t gyro_readings[IMU_NUMBER_OF_BYTES];
+		uint8_t	imu_readings[IMU_NUMBER_OF_BYTES] = {0};
+		uint8_t gyro_readings[IMU_NUMBER_OF_BYTES] = {0};
 
-	int16_t accel_data;
-	float acc_z;
-	int16_t rotation;
-	int16_t yaw;
-	char output[10];
-
-
-	HAL_I2C_Mem_Read(hi2c_device, BNO055_I2C_ADDR_HI<<1, BNO055_ACC_DATA_X_LSB, I2C_MEMADD_SIZE_8BIT, imu_readings, IMU_NUMBER_OF_BYTES,100);
-	HAL_I2C_Mem_Read(hi2c_device, BNO055_I2C_ADDR_HI<<1, BNO055_EUL_HEADING_LSB, I2C_MEMADD_SIZE_8BIT, gyro_readings, IMU_NUMBER_OF_BYTES,100);
-
-	accel_data = (((int16_t)((uint8_t *)(imu_readings))[5] << 8) | ((uint8_t *)(imu_readings))[4]);
-
-	acc_z = ((float)(accel_data))/100.0f;
+		int16_t accel_data;
+		float acc_z;
+		int16_t rotation;
+		double yaw;
 
 
-	rotation = (((int16_t)((uint8_t *)(gyro_readings))[1] << 8) | ((uint8_t *)(gyro_readings))[0]);      // Turn the MSB and LSB into a signed 16-bit value
+		HAL_I2C_Mem_Read(hi2c_device, BNO055_I2C_ADDR_HI<<1, BNO055_ACC_DATA_X_LSB, I2C_MEMADD_SIZE_8BIT, imu_readings, IMU_NUMBER_OF_BYTES,100);
+		HAL_I2C_Mem_Read(hi2c_device, BNO055_I2C_ADDR_HI<<1, BNO055_EUL_HEADING_LSB, I2C_MEMADD_SIZE_8BIT, gyro_readings, IMU_NUMBER_OF_BYTES,100);
 
-	yaw = rotation / 16;
+		accel_data = (((int16_t)((uint8_t *)(imu_readings))[5] << 8) | ((uint8_t *)(imu_readings))[4]);
 
-	this -> gravity = acc_z;
-	this -> direction = yaw;
-
-	sprintf( output, "%d\r\n", this -> direction );
-	HAL_UART_Transmit( &huart1, (uint8_t*)output, sizeof(output), 100 );
+		acc_z = ((float)(accel_data))/100.0f;
 
 
-/*
-	sprintf(output_2, "%lf\r\n",acc_z);
-	HAL_UART_Transmit(&huart2, (uint8_t*)output_2, sizeof(output_2),100);
-*/
+		rotation = (((int16_t)((uint8_t *)(gyro_readings))[1] << 8) | ((uint8_t *)(gyro_readings))[0]);      // Turn the MSB and LSB into a signed 16-bit value
 
+		yaw = rotation / 16;
+
+		if( hi2c_device == &hi2c1 )
+		{
+			this -> robot_direction = yaw;
+		}
+		else if( hi2c_device == &hi2c3 )
+		{
+			this -> table_direction = yaw;
+		}
 
 }
 
@@ -164,19 +159,26 @@ float Gyro::get_gravity()
 	return this -> gravity;
 }
 
-uint16_t Gyro::get_direction()
+double Gyro::get_direction( I2C_HandleTypeDef* hi2c_device )
 {
+	if( hi2c_device == &hi2c1 )
+	{
+		this -> robot_direction += this -> robot_initial_direction;
+		if( this -> robot_direction > 360 ){
+			this -> robot_direction -= 360;
+		}
 
-	this -> direction += this -> initial_direction;
-	if( this -> direction > 360 ){
-		this -> direction -= 360;
+		Error_Handling* error_handling = new Error_Handling();
+		error_handling -> gyro_error_handling( this -> robot_direction );
+		delete error_handling;
+
+		return this -> robot_direction;
+
 	}
-
-	Error_Handling* error_handling = new Error_Handling();
-	error_handling -> gyro_error_handling( this -> direction );
-	delete error_handling;
-
-	return this -> direction;
+	else if( hi2c_device == &hi2c3 )
+	{
+		return this -> table_direction;
+	}
 }
 
 
@@ -185,13 +187,13 @@ void Gyro::set_initial_direction(E_robot_name robot)
 	switch(robot)
 	{
 	case E_robot_name::A:
-		this -> initial_direction = 0;
+		this -> robot_initial_direction = 0;
 		break;
 	case E_robot_name::B:
-		this -> initial_direction = 90;
+		this -> robot_initial_direction = 90;
 		break;
 	case E_robot_name::C:
-		this -> initial_direction = 180;
+		this -> robot_initial_direction = 180;
 		break;
 	default:
 		break;

@@ -29,12 +29,14 @@ public:
 	void BNO055_Init_I2C(I2C_HandleTypeDef* hi2c_device);
 	void BNO055_update_gravity_direction(I2C_HandleTypeDef* hi2c_device);
 	float get_gravity(void);
-	uint16_t get_direction(void);
+	double get_direction( I2C_HandleTypeDef* hi2c_device );
 	void set_initial_direction(E_robot_name robot);
 private:
 	static float gravity;
-	static uint16_t direction;
-	static uint16_t initial_direction;
+	static double robot_direction;
+	static uint16_t robot_initial_direction;
+
+	static double table_direction;
 
 };
 

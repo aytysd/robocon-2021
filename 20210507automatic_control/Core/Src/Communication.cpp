@@ -42,8 +42,8 @@ void Communication::send_data(E_data_type data)
 		uint8_t Y_pos_p = (uint8_t)(0b1111111100000000 & (uint16_t)self_pos -> get_Self_Pos_Y()) >> 8;
 		uint8_t Y_pos_q = (uint8_t)(0b0000000011111111 & (uint16_t)self_pos -> get_Self_Pos_Y());
 
-		uint8_t direction_p = (uint8_t)(0b1111111100000000 & gyro -> get_direction()) >> 8;
-		uint8_t direction_q = (uint8_t)(0b0000000011111111 & gyro -> get_direction());
+		uint8_t direction_p = (uint8_t)(0b1111111100000000 & (uint8_t)gyro -> get_direction( &hi2c1 ) ) >> 8;
+		uint8_t direction_q = (uint8_t)(0b0000000011111111 & (uint8_t)gyro -> get_direction( &hi2c1 ) );
 
 		uint8_t current_line_p = (uint8_t)(0b1111111100000000 & (uint16_t)Error_Handling::current_line) >> 8;
 		uint8_t current_line_q = (uint8_t)(0b0000000011111111 & (uint16_t)Error_Handling::current_line);
