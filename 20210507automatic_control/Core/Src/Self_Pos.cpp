@@ -97,8 +97,8 @@ void Self_Pos::update_self_pos(void)
 	int d2 = 2 * OD_RADIUS * M_PI * ( (double)this -> encoder_read_2() / (double)2048 ); //encoder5_moving distance(mm) 55.5=wheel radius 2048=encoder resolution
 
 
-	this -> Self_Pos_X += d1 * cos( (double)gyro -> get_direction() * M_PI / (double)180) - d2 * sin( (double)gyro -> get_direction() * M_PI / (double)180);//X_coordinate
-	this -> Self_Pos_Y += d1 * sin( (double)gyro -> get_direction() * M_PI / (double)180) + d2 * cos( (double)gyro -> get_direction() * M_PI / (double)180);//Y_coordinate
+	this -> Self_Pos_X += d1 * cos( (double)gyro -> get_direction( &hi2c1 ) * M_PI / (double)180) - d2 * sin( (double)gyro -> get_direction( &hi2c1 ) * M_PI / (double)180);//X_coordinate
+	this -> Self_Pos_Y += d1 * sin( (double)gyro -> get_direction( &hi2c1 ) * M_PI / (double)180) + d2 * cos( (double)gyro -> get_direction( &hi2c1 ) * M_PI / (double)180);//Y_coordinate
 
 	delete gyro;
 }

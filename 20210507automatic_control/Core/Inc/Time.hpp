@@ -12,15 +12,17 @@
  *@Usertouch(functionname)&_(variable_name)
  *
  */
-#ifndef INC_SUPER_WAIT_HPP_
-#define INC_SUPER_WAIT_HPP_
+#ifndef INC_TIME_HPP_
+#define INC_TIME_HPP_
 
 
-class Super_Wait
+class Time
 {
 public:
 	void wait();
+	void time_calc();
+
 };
 
 
-#endif /* INC_SUPER_WAIT_HPP_ */
+#endif /* INC_TIME_HPP_ */

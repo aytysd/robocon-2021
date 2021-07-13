@@ -14,11 +14,11 @@ class A_connection:
         
 
 
-    def Serial_A(self):
+    def Serial_A_read(self):
 
         print("your are using Serial_A")
 
-        SERIALPORT = "COM3"
+        SERIALPORT = "COM6"
         BAUDRATE = 115200
 
         ser = serial.Serial(SERIALPORT, BAUDRATE)
@@ -30,6 +30,22 @@ class A_connection:
         print(Rxdata)
 
         return Rxdata
+
+
+    def Serial_A_write(self):
+
+        print( "you are using Serial_A ")
+
+        SERIALPORT = "COM6"
+        BAUDRATE = 115200
+
+        ser = serial.Serial(SERIALPORT, BAUDRATE)
+        ser.bytesize = serial.EIGHTBITS
+
+        Rxdata = ser.write( 123 )
+
+
+
 
 
     def check_connection(self):

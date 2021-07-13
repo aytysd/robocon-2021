@@ -18,10 +18,10 @@
  */
 
 #include <Error_Handling.hpp>
+#include <Time.hpp>
 #include "Init_Move.hpp"
 #include "General_command.hpp"
 #include "PWM.hpp"
-#include "Super_Wait.hpp"
 #include "LED.hpp"
 #include "Self_Pos.hpp"
 #include "GPIO.hpp"
@@ -36,7 +36,7 @@
 namespace Init_Wait
 {
 
-class Wait : public Super_Wait
+class Wait : public Time
 {
 public:
 
