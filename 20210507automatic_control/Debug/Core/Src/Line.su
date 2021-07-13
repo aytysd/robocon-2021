@@ -1,7 +1,7 @@
 cmath:129:3:constexpr long double std::atan(long double)	16	static
 cmath:467:3:constexpr long double std::sqrt(long double)	16	static
-Line.cpp:35:6:void Line::set(int, int, int, int)	24	static
-Line.cpp:44:8:double Line::distance(int, int, int, int)	32	static
-Line.cpp:49:8:double Line::TGdistance(int, int, int, int)	32	static
-Line.cpp:54:6:void Line::MoveLine(int, int, int, int, bool)	80	static
-Line.cpp:180:6:void Line::Line_driver(int, int, int, int, bool)	24	static
+Line.cpp:36:6:void Line::set(int, int, int, int)	24	static
+Line.cpp:45:8:double Line::distance(int, int, int, int)	32	static
+Line.cpp:54:8:double Line::TGdistance(int, int, int, int)	32	static
+Line.cpp:63:6:void Line::MoveLine(int, int, int, int, bool)	88	static
+Line.cpp:206:6:void Line::Line_driver(int, int, int, int, bool)	24	static

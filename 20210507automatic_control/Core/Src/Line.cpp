@@ -145,7 +145,7 @@ void Line::MoveLine
 		this -> TG_v = 1000;
 	}
   
-  if(through == true)
+	if(through == true)
 	{
 		if(this -> devTG > 1500)
 		{
@@ -160,6 +160,7 @@ void Line::MoveLine
 			this -> TG_v = 500;
 		}
 	}
+  	char output[10];
 	sprintf(output, "TG_v:%d\r\n", TG_v);
 	HAL_UART_Transmit(&huart2, (uint8_t*)output, sizeof(output), 1000);
 
