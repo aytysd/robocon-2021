@@ -50,11 +50,12 @@ public:
 	int Self_Pos_config_Limit(void);
 	void update_self_pos_ToF();
 
-	int encoder_read_5(void);
-	int encoder_read_2(void);
-
+	int* Self_pos_correction( int pos_x, int pos_y );
+	void Spin( int speed , int direction , int angle );
 
 private:
+	int encoder_read_5(void);
+	int encoder_read_2(void);
 
 
 	int calc_diff( int prev_x, int prev_y, int current_x, int current_y );
