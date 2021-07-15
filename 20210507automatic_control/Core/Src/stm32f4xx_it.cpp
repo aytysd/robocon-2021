@@ -347,7 +347,7 @@ void TIM6_DAC_IRQHandler(void)
   self_pos -> update_self_pos();
   gpio -> reset_status();
   jump -> identify();
-  line -> MoveLine(line -> BefX, line -> BefY, line -> AftX, line -> AftY, line -> through);
+//  line -> MoveLine(line -> BefX, line -> BefY, line -> AftX, line -> AftY, line -> through);
 
   /* USER CODE END TIM6_DAC_IRQn 1 */
 }

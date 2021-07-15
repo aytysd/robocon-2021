@@ -102,3 +102,17 @@ void Jump::pre_calc()
 	delete self_pos;
 }
 
+void Jump::Jumping_PE_Sencor(void)
+{
+	GPIO* gpio = new GPIO();
+	if((gpio -> get_status(E_interrupt::PE_SENSOR_B) == true) || (gpio -> get_status(E_interrupt::PE_SENSOR_F) == true) || (gpio -> get_status(E_interrupt::PE_SENSOR_T) == true))
+	{
+
+	}
+	delete gpio;
+}
+
+void Jump::Jumping_Rope(void)
+{
+
+}

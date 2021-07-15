@@ -33,6 +33,8 @@ int Line::BefY = 0;
 E_Line_status Line::judge = E_Line_status::STOP;
 bool Line::through = false;
 
+uint16_t direction = 0;
+
 void Line::set(int befX, int befY, int tgX, int tgY)
 {
 	this -> a = -(tgY - befY);
@@ -69,8 +71,6 @@ void Line::MoveLine
 	this -> now_X = self_pos -> get_Self_Pos_X();
 	this -> now_Y = self_pos -> get_Self_Pos_Y();
 	delete self_pos;
-
-
 
 	this -> devX = this -> distance(this -> now_X, this -> now_Y, tgX, tgY);
 	this -> devY = this -> TGdistance(this -> now_X, this -> now_Y, tgX, tgY);
@@ -112,6 +112,8 @@ void Line::MoveLine
 	Gyro* gyro = new Gyro();
 	this -> now_r = (double)gyro -> get_direction();
 	delete gyro;
+
+	direction = this -> now_r;
 
 
 	bool arrive = false;
@@ -160,8 +162,6 @@ void Line::MoveLine
 			this -> TG_v = 500;
 		}
 	}
-	sprintf(output, "TG_v:%d\r\n", TG_v);
-	HAL_UART_Transmit(&huart2, (uint8_t*)output, sizeof(output), 1000);
 
 	if(arrive == true)
 	{

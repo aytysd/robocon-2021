@@ -28,11 +28,12 @@ public:
 
 	void identify(void);
 	E_move_status get_status(void);
+	void Jumping_PE_Sencor(void);
+	void Jumping_Rope(void);
 private:
 
 	void pre_calc(void);
 	void calc_fly_distance(void);
-
 	uint16_t jump_speed = 0;
 	double x_y_prop = 0;
 
