@@ -119,7 +119,6 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef* UartHandle)
 	else if( UartHandle == &huart1 )
 	{
 		HAL_UART_Receive_IT(&huart1, (uint8_t*)Communication::Rxdata, sizeof(Communication::Rxdata));
-
 		Communication* communication = new Communication();
 		delete communication;
 
@@ -149,11 +148,11 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim)
     if(htim->Instance == TIM3)
     {
         __HAL_TIM_CLEAR_FLAG(&htim3, TIM_IT_UPDATE);
-        if(__HAL_TIM_IS_TIM_COUNTING_DOWN(&htim3)) //0 â†’ 65535
+        if(__HAL_TIM_IS_TIM_COUNTING_DOWN(&htim3)) //0 â†? 65535
         {
             Rope::over_flow_cnt_3--;
         }
-        else //65535 â†’ 0
+        else //65535 â†? 0
         {
             Rope::over_flow_cnt_3++;
         }
@@ -161,11 +160,11 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim)
     else if(htim->Instance == TIM4)
     {
         __HAL_TIM_CLEAR_FLAG(&htim4, TIM_IT_UPDATE);
-        if(__HAL_TIM_IS_TIM_COUNTING_DOWN(&htim4)) //0 â†’ 65535
+        if(__HAL_TIM_IS_TIM_COUNTING_DOWN(&htim4)) //0 â†? 65535
         {
             Rope::over_flow_cnt_4--;
         }
-        else //65535 â†’ 0
+        else //65535 â†? 0
         {
             Rope::over_flow_cnt_4++;
         }
@@ -184,6 +183,10 @@ int main(void)
 {
   /* USER CODE BEGIN 1 */
   Init_Move* init_move = new Init_Move();
+  PWM* pwm = new PWM();
+  Gyro* gyro = new Gyro();
+  Self_Pos* self_pos = new Self_Pos();
+
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -229,6 +232,7 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -1024,36 +1028,6 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
-void time_calc(void)
-{
-	static int i;
-	static uint32_t start_time;
-	static uint32_t end_time;
-
-	i++;
-
-
-	switch( i % 2 )
-	{
-	case 1:
-		start_time = HAL_GetTick();
-		break;
-	case 0:
-	{
-		end_time = HAL_GetTick();
-		uint32_t diff = end_time - start_time;
-
-		char output[10];
-		sprintf( output, "%d\r\n", diff );
-		HAL_UART_Transmit( &huart2, (uint8_t*)output, sizeof( output ), 100 );
-
-		break;
-	}
-
-	}
-
-
-}
 /* USER CODE END 4 */
 
 /**

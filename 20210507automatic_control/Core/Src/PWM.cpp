@@ -23,7 +23,7 @@
 #include "General_command.hpp"
 #include "Self_Pos.hpp"
 #include "Gyro.hpp"
-
+#include "Time.hpp"
 
 
 void PWM::V_output(uint16_t V, uint16_t fai, int16_t rotation_speed, uint16_t attitude_angle, E_move_status status)
@@ -73,32 +73,29 @@ bool PWM::rotate(uint16_t V, uint16_t target_angle)
 {
 
 	Gyro* gyro = new Gyro();
+	Time* time = new Time();
 
-
-	if( target_angle != gyro -> get_direction() )
+	if( target_angle != gyro -> get_direction( &hi2c1 ) )
 	{
 
-		int16_t diff = target_angle - gyro -> get_direction();
+		int16_t diff = target_angle - gyro -> get_direction( &hi2c1 );
 
-		if( target_angle > gyro -> get_direction() )
+		if( target_angle > gyro -> get_direction( &hi2c1 ) )
 		{
 			if( abs(diff) <= 180 )
 			{
 				this -> V_output(0, 0, -V, 0, E_move_status::MOVE);
-				while( target_angle != gyro -> get_direction() ){}
+				while( target_angle != gyro -> get_direction( &hi2c1 ) ){}
 				this -> V_output(0, 0, 0, 0, E_move_status::STOP);
 
-				delete gyro;
-				return true;
 			}
 			else
 			{
 				this -> V_output(0, 0, V, 0, E_move_status::MOVE);
-				while( target_angle != gyro -> get_direction() ){}
+				time -> time_calc();
+				while( target_angle != gyro -> get_direction( &hi2c1 ) ){}
+				time -> time_calc();
 				this -> V_output(0, 0, 0, 0, E_move_status::STOP);
-
-				delete gyro;
-				return true;
 
 			}
 
@@ -109,21 +106,15 @@ bool PWM::rotate(uint16_t V, uint16_t target_angle)
 			if( abs(diff) <= 180 )
 			{
 				this -> V_output(0, 0, V, 0, E_move_status::MOVE);
-				while( target_angle != gyro -> get_direction() ){}
+				while( target_angle != gyro -> get_direction( &hi2c1 ) ){}
 				this -> V_output(0, 0, 0, 0, E_move_status::STOP);
-
-				delete gyro;
-				return true;
 
 			}
 			else
 			{
 				this -> V_output(0, 0, -V, 0, E_move_status::MOVE);
-				while( target_angle != gyro -> get_direction() ){}
+				while( target_angle != gyro -> get_direction( &hi2c1 ) ){}
 				this -> V_output(0, 0, 0, 0, E_move_status::STOP);
-
-				delete gyro;
-				return true;
 
 			}
 
@@ -131,10 +122,11 @@ bool PWM::rotate(uint16_t V, uint16_t target_angle)
 	}
 	else
 	{
-		delete gyro;
-		return true;
 	}
 
+	delete gyro;
+	delete time;
+	return true;
 }
 
 

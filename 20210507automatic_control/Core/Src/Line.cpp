@@ -110,7 +110,7 @@ void Line::MoveLine
 	}
 
 	Gyro* gyro = new Gyro();
-	this -> now_r = (double)gyro -> get_direction();
+	this -> now_r = (double)gyro -> get_direction( &hi2c1 );
 	delete gyro;
 
 	direction = this -> now_r;
@@ -147,7 +147,7 @@ void Line::MoveLine
 		this -> TG_v = 1000;
 	}
   
-  if(through == true)
+	if(through == true)
 	{
 		if(this -> devTG > 1500)
 		{

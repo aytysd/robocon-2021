@@ -29,6 +29,7 @@
 #include "LED.hpp"
 #include "PWM.hpp"
 #include "Gyro.hpp"
+#include "Function.hpp"
 
 int Self_Pos::Self_Pos_X = 0;//(mm)
 int Self_Pos::Self_Pos_Y = 0;//(mm)
@@ -97,8 +98,8 @@ void Self_Pos::update_self_pos(void)
 	int d2 = 2 * OD_RADIUS * M_PI * ( (double)this -> encoder_read_2() / (double)2048 ); //encoder5_moving distance(mm) 55.5=wheel radius 2048=encoder resolution
 
 
-	this -> Self_Pos_X += d1 * cos( (double)gyro -> get_direction() * M_PI / (double)180) - d2 * sin( (double)gyro -> get_direction() * M_PI / (double)180);//X_coordinate
-	this -> Self_Pos_Y += d1 * sin( (double)gyro -> get_direction() * M_PI / (double)180) + d2 * cos( (double)gyro -> get_direction() * M_PI / (double)180);//Y_coordinate
+	this -> Self_Pos_X += d1 * cos( (double)gyro -> get_direction( &hi2c1 ) * M_PI / (double)180) - d2 * sin( (double)gyro -> get_direction( &hi2c1 ) * M_PI / (double)180);//X_coordinate
+	this -> Self_Pos_Y += d1 * sin( (double)gyro -> get_direction( &hi2c1 ) * M_PI / (double)180) + d2 * cos( (double)gyro -> get_direction( &hi2c1 ) * M_PI / (double)180);//Y_coordinate
 
 	delete gyro;
 }
@@ -325,6 +326,74 @@ int Self_Pos::Self_Pos_config_Limit(void)
 
 }
 
+int* Self_Pos::Self_Pos_correction( int pos_x , int pos_y , int direction )
+{
+
+	Function* function = new Function();
+	Gyro* gyro = new Gyro();
+
+	int speed;
+	int	moter_number;
+	int line_angle;
+	int photoelectric_angle;
+
+	int out_angle = direction + line_angle + photoelectric_angle + 180;
+	while( out_angle > 359 ){
+		out_angle -= 360;
+	}
+
+	int low_angle = 280;
+	int high_angle = 440;
+	int tawer[][] = {{1500,750},{1500,-750}};
+	int d = 1;
+	if(pos_x <= 0){
+		d = -1;
+		tawer[0][0] *= -1;
+		tawer[1][0] *= -1;
+		low_angle -= 180;
+		high_angle -= 180;
+	}
+
+	int now_angle0 = gyro -> get_direction();
+	int n_l_dis = fabs( low_angle - now_angle );
+	int co = ( low_angle - now_angle )/n_l_dis;
+	if( n_l_dis > 180 ){
+		n_l_dis = fabs()
+	}
+	if( ( low_angle <= out_angle && high_angle >= out_angle )||
+			(low_angle <= out_angle + 360 && high_angle >= out_angle + 360)){
+
+	}else{
+
+	}
+	float a0;
+	float a1;
+	if(a0 <= 0){
+		a1
+	}
+
+	int wait_time = 1000*fabs(gyro -> get_direction()-180)/speed;
+	function -> drive_moter_Rope( moter_number , (dire * -1) + 3 , speed , true );
+	HAL_Delay( wait_time );
+	function -> drive_moter_Rope( moter_number , BRAKE , 0 , true );
+	delete function;
+	delete gyro;
+}
+
+void Spin( int speed , int direction , int angle )
+{
+
+	Function* function = new Function();
+	Gyro* gyro = new Gyro();
+
+	int line_angle;
+	int photoelectric_angle;
+
+
+
+	delete function;
+	delete gyro;
+}
 //-------------------------------------------------------------------------
 
 
