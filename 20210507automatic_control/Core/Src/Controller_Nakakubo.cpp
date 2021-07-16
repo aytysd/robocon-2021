@@ -21,151 +21,219 @@
 #include "Function.hpp"
 #include "Init_move.hpp"
 
-/*
-void Controller::footwork(uint8_t direction, uint16_t speed)
-{
-	uint8_t pwm = speed / 23.677;
-	Function* function = new Function();
-	if(direction == 1)
-	{
-		function -> drive_motor(1, 2, pwm, speed, true);
-		function -> drive_motor(2, 2, pwm, speed, true);
-		function -> drive_motor(3, 1, pwm, speed, true);
-		function -> drive_motor(4, 1, pwm, speed, true);
-	}
-	else if(direction == 2)
-	{
-		function -> drive_motor(1, 2, pwm, speed, true);
-		function -> drive_motor(2, 1, pwm, speed, true);
-		function -> drive_motor(3, 1, pwm, speed, true);
-		function -> drive_motor(4, 2, pwm, speed, true);
-	}
-	else if(direction == 3)
-	{
-		function -> drive_motor(1, 1, pwm, speed, true);
-		function -> drive_motor(2, 1, pwm, speed, true);
-		function -> drive_motor(3, 2, pwm, speed, true);
-		function -> drive_motor(4, 2, pwm, speed, true);
-	}
-	else if(direction == 4)
-	{
-		function -> drive_motor(1, 1, pwm, speed, true);
-		function -> drive_motor(2, 2, pwm, speed, true);
-		function -> drive_motor(3, 2, pwm, speed, true);
-		function -> drive_motor(4, 1, pwm, speed, true);
-	}
-	else if(direction == 5)
-	{
-		function -> drive_motor(1, 1, pwm, speed, true);
-		function -> drive_motor(2, 1, pwm, speed, true);
-		function -> drive_motor(3, 1, pwm, speed, true);
-		function -> drive_motor(4, 1, pwm, speed, true);
-	}
-	else if(direction == 6)
-	{
-		function -> drive_motor(1, 2, pwm, speed, true);
-		function -> drive_motor(2, 2, pwm, speed, true);
-		function -> drive_motor(3, 2, pwm, speed, true);
-		function -> drive_motor(4, 2, pwm, speed, true);
-	}
-	delete function;
-}
+uint16_t Controller::speed = 500;
+uint16_t Controller::speed_jump = 1000;
 
+
+//--------------------------------------------------
+//init
 void Controller::NOP(void)
 {
-	this -> speed = 700;
+	PWM* pwm = new PWM();
 	Function* function = new Function();
-	function -> drive_motor(1, 3, 0, 0, false);
-	function -> drive_motor(2, 3, 0, 0, false);
-	function -> drive_motor(3, 3, 0, 0, false);
-	function -> drive_motor(4, 3, 0, 0, false);
+
+	pwm -> V_output( 0, 0, 0, 0, E_move_status::STOP );
+	function -> drive_motor(5, BRAKE, 0, false, true);
+
 	delete function;
+	delete pwm;
 }
 
-void Controller::X(void){}
+
+//--------------------------------------------------
+//Jump
+void Controller::X(void)
+{
+	Function* function = new Function();
+	function -> drive_motor(5, CW, this -> speed_jump, false, true);
+	delete function;
+}
 void Controller::Y(void){}
 void Controller::A(void){}
 void Controller::B(void){}
 
 void Controller::LB(void)
 {
+/*
 	Init_Move* init_move = new Init_Move();
 	init_move -> init_move(E_robot_name::A);
 	delete init_move;
+*/
 }
 
-void Controller::RB(void){}
-void Controller::LT(void){}
-void Controller::RT(void){}
+
+//--------------------------------------------------
+//stop
+void Controller::LT(void)
+{
+	Function* function = new Function();
+
+	function -> drive_motor(1, BRAKE, 0, false, false);
+	function -> drive_motor(2, BRAKE, 0, false, false);
+	function -> drive_motor(3, BRAKE, 0, false, false);
+	function -> drive_motor(4, BRAKE, 0, false, false);
+	function -> drive_motor(5, BRAKE, 0, false, false);
+
+	delete function;
+}
+
+
+//--------------------------------------------------
+//reset
+void Controller::RB(void)
+{
+	this -> speed = 500;
+}
+void Controller::RT(void)
+{
+	this -> speed_jump = 1000;
+}
+
+
 void Controller::START(void){}
 void Controller::BACK(void){}
 
 
-void Controller::LSU(void){}
-void Controller::LSL(void){}
-void Controller::LSR(void){}
-void Controller::LSD(void){}
+
+//--------------------------------------------------
+//move in 8 direction
+void Controller::CSR(void)
+{
+	  PWM* pwm = new PWM();
+
+	  pwm -> V_output( this -> speed, 0, 0, 0, E_move_status::MOVE );
+
+	  delete pwm;
+}
+
+void Controller::CSUR(void)
+{
+	  PWM* pwm = new PWM();
+
+	  pwm -> V_output( this -> speed, 45, 0, 0, E_move_status::MOVE );
+
+	  delete pwm;
+}
 
 void Controller::CSU(void)
 {
-	this -> footwork(1, speed);
+	  PWM* pwm = new PWM();
 
-	this -> direction = 1;
+	  pwm -> V_output( this -> speed, 90, 0, 0, E_move_status::MOVE );
+
+	  delete pwm;
 }
-
-void Controller::CSR(void)
+void Controller::CSUL(void)
 {
-	this -> footwork(2, speed);
+	  PWM* pwm = new PWM();
 
-	this -> direction = 2;
+	  pwm -> V_output( this -> speed, 135, 0, 0, E_move_status::MOVE );
+
+	  delete pwm;
 }
-
 void Controller::CSL(void)
 {
-	this -> footwork(4, speed);
+	  PWM* pwm = new PWM();
 
-	this -> direction = 4;
+	  pwm -> V_output( this -> speed, 180, 0, 0, E_move_status::MOVE );
+
+	  delete pwm;
 }
+void Controller::CSDL(void)
+{
+	  PWM* pwm = new PWM();
 
+	  pwm -> V_output( this -> speed, 225, 0, 0, E_move_status::MOVE );
+
+	  delete pwm;
+}
 void Controller::CSD(void)
 {
-	this -> footwork(3, speed);
+	  PWM* pwm = new PWM();
 
-	this -> direction = 3;
+	  pwm -> V_output( this -> speed, 270, 0, 0, E_move_status::MOVE );
+
+	  delete pwm;
+}
+void Controller::CSDR(void)
+{
+	  PWM* pwm = new PWM();
+
+	  pwm -> V_output( this -> speed, 315, 0, 0, E_move_status::MOVE );
+
+	  delete pwm;
 }
 
+
+//--------------------------------------------------
+//speed up and down
 void Controller::RSU(void)
 {
 	this -> speed += 50;
-	if(this -> speed >= 1000)
+	if(this -> speed > 1300)
 	{
-		this -> speed = 1000;
+		this -> speed = 1300;
 	}
-	this -> footwork(this -> direction, this -> speed);
-}
-
-void Controller::RSR(void)
-{
-	this -> footwork(5, 400);
-
-	this -> direction = 5;
-}
-void Controller::RSL(void)
-{
-	this -> footwork(6, 400);
-
-	this -> direction = 6;
 }
 void Controller::RSD(void)
 {
 	this -> speed -= 50;
-	if(this -> speed <= 300)
+	if(this -> speed < 500)
 	{
-		this -> speed = 300;
+		this -> speed = 500;
 	}
-	this -> footwork(this -> direction, this -> speed);
-
 }
 
 
-*/
+//--------------------------------------------------
+//rotation
+void Controller::RSL(void)
+{
+	  PWM* pwm = new PWM();
+
+	  pwm -> V_output( 0, 0, -300, 0, E_move_status::MOVE );
+
+	  delete pwm;
+}
+
+void Controller::RSR(void)
+{
+	  PWM* pwm = new PWM();
+
+	  pwm -> V_output( 0, 0, 300, 0, E_move_status::MOVE );
+
+	  delete pwm;
+}
+
+void Controller::RSUL(void){}
+void Controller::RSUR(void){}
+void Controller::RSDR(void){}
+void Controller::RSDL(void){}
+
+
+//--------------------------------------------------
+//speed_jump up and down
+void Controller::LSU(void)
+{
+	this -> speed_jump += 50;
+	if(this -> speed_jump > 1200)
+	{
+		this -> speed_jump = 1200;
+	}
+}
+
+void Controller::LSD(void)
+{
+	this -> speed_jump -= 50;
+	if(this -> speed_jump < 800)
+	{
+		this -> speed_jump = 800;
+	}
+}
+
+void Controller::LSL(void){}
+void Controller::LSR(void){}
+void Controller::LSUL(void){}
+void Controller::LSUR(void){}
+void Controller::LSDR(void){}
+void Controller::LSDL(void){}
