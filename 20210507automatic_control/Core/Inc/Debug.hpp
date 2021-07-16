@@ -1,7 +1,7 @@
 /*
- * Time.cpp
+ * Debug.hpp
  *
- *  Created on: 13 Jul 2021
+ *  Created on: 17 Jul 2021
  *
  *@Author: Ayato Yoshida
  *
@@ -16,11 +16,17 @@
  *@Usertouch(functionname)&_(variable_name)
  *
  */
+#ifndef INC_DEBUG_HPP_
+#define INC_DEBUG_HPP_
 
-#include "Time.hpp"
-#include "stdio.h"
-#include "main.h"
+class Debug
+{
+public:
+	template< typename addr >
+	static void TTO( addr var_addr, const char* str );
+	static void time_calc();
+
+};
 
 
-
-
+#endif /* INC_DEBUG_HPP_ */

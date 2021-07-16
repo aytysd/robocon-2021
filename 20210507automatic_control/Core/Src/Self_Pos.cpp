@@ -326,7 +326,7 @@ int Self_Pos::Self_Pos_config_Limit(void)
 
 }
 
-int* Self_Pos::Self_Pos_correction( int pos_x , int pos_y , int direction )
+/*int* Self_Pos::Self_Pos_correction( int pos_x , int pos_y , int direction )
 {
 
 	Function* function = new Function();
@@ -393,7 +393,7 @@ void Spin( int speed , int direction , int angle )
 
 	delete function;
 	delete gyro;
-}
+}*/
 //-------------------------------------------------------------------------
 
 

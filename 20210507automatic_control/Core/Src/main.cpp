@@ -36,6 +36,7 @@
 #include "Control.hpp"
 #include "Rope.hpp"
 #include "Gyro.hpp"
+#include <string>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -99,7 +100,10 @@ static void MX_TIM7_Init(void);
 static void MX_ADC1_Init(void);
 static void MX_ADC2_Init(void);
 /* USER CODE BEGIN PFP */
-
+template < typename addr >
+void TTO( addr var_addr, const char* str );
+template <> void TTO<double*>( double* var_addr, const char* str );
+template <> void TTO<float*>( float* var_addr, const char* str );
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -148,11 +152,11 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim)
     if(htim->Instance == TIM3)
     {
         __HAL_TIM_CLEAR_FLAG(&htim3, TIM_IT_UPDATE);
-        if(__HAL_TIM_IS_TIM_COUNTING_DOWN(&htim3)) //0 â†? 65535
+        if(__HAL_TIM_IS_TIM_COUNTING_DOWN(&htim3)) //0 ï¿½? 65535
         {
             Rope::over_flow_cnt_3--;
         }
-        else //65535 â†? 0
+        else //65535 ï¿½? 0
         {
             Rope::over_flow_cnt_3++;
         }
@@ -160,11 +164,11 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim)
     else if(htim->Instance == TIM4)
     {
         __HAL_TIM_CLEAR_FLAG(&htim4, TIM_IT_UPDATE);
-        if(__HAL_TIM_IS_TIM_COUNTING_DOWN(&htim4)) //0 â†? 65535
+        if(__HAL_TIM_IS_TIM_COUNTING_DOWN(&htim4)) //0 ï¿½? 65535
         {
             Rope::over_flow_cnt_4--;
         }
-        else //65535 â†? 0
+        else //65535 ï¿½? 0
         {
             Rope::over_flow_cnt_4++;
         }
@@ -232,7 +236,6 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
