@@ -18,14 +18,41 @@
  */
 
 #include "Controller.hpp"
+#include "Function.hpp"
 #include "main.h"
 
-/*
-void Controller::NOP(void){}
 
-void Controller::X(void){}
-void Controller::Y(void){}
-void Controller::A(void){}
+void Controller::NOP(void)
+{
+	PWM* pwm = new PWM();
+
+	pwm -> V_output( 0, 0, 0, 0, E_move_status::STOP );
+
+	delete pwm;
+}
+
+void Controller::X(void) //right rotation 720(rad/s)
+{
+	Function* function = new Function();
+	function -> drive_motor_Rope(5, CW, 720, true);
+
+	delete function;
+}
+
+void Controller::Y(void) //left rotation 720(rad/s)
+{
+	Function* function = new Function();
+	function -> drive_motor_Rope(5, CCW, 720, true);
+
+	delete function;
+}
+void Controller::A(void) //stop rotation
+{
+	Function* function = new Function();
+	function -> drive_motor_Rope(5, BRAKE, 720, true);
+
+	delete function;
+}
 void Controller::B(void){}
 
 void Controller::LB(void){}
@@ -44,24 +71,102 @@ void Controller::LSUR(void){}
 void Controller::LSDR(void){}
 void Controller::LSDL(void){}
 
+void Controller::CSU(void)
+{
+	  PWM* pwm = new PWM();
 
-void Controller::CSU(void){}
-void Controller::CSR(void){}
-void Controller::CSL(void){}
-void Controller::CSD(void){}
-void Controller::CSUL(void){}
-void Controller::CSUR(void){}
-void Controller::CSDL(void){}
-void Controller::CSDR(void){}
+	  pwm -> V_output( 500, 90, 0, 0, E_move_status::MOVE );
 
-void Controller::RSUL(void){}
+	  delete pwm;
+
+}
+void Controller::CSR(void)
+{
+	  PWM* pwm = new PWM();
+
+	  pwm -> V_output( 500, 0, 0, 0, E_move_status::MOVE );
+
+	  delete pwm;
+
+
+}
+void Controller::CSL(void)
+{
+	  PWM* pwm = new PWM();
+
+	  pwm -> V_output( 500, 180, 0, 0, E_move_status::MOVE );
+
+	  delete pwm;
+
+
+}
+void Controller::CSD(void)
+{
+	  PWM* pwm = new PWM();
+
+	  pwm -> V_output( 500, 270, 0, 0, E_move_status::MOVE );
+
+	  delete pwm;
+
+}
+void Controller::CSUL(void)
+{
+	  PWM* pwm = new PWM();
+
+	  pwm -> V_output( 500, 135, 0, 0, E_move_status::MOVE );
+
+	  delete pwm;
+
+}
+void Controller::CSUR(void)
+{
+	  PWM* pwm = new PWM();
+
+	  pwm -> V_output( 500, 45, 0, 0, E_move_status::MOVE );
+
+	  delete pwm;
+
+}
+void Controller::CSDL(void)
+{
+	  PWM* pwm = new PWM();
+
+	  pwm -> V_output( 500, 225, 0, 0, E_move_status::MOVE );
+
+	  delete pwm;
+}
+void Controller::CSDR(void)
+{
+	  PWM* pwm = new PWM();
+
+	  pwm -> V_output( 500, 315, 0, 0, E_move_status::MOVE );
+
+	  delete pwm;
+
+}
+
+
 void Controller::RSU(void){}
-void Controller::RSUR(void){}
-void Controller::RSR(void){}
-void Controller::RSDR(void){}
+void Controller::RSR(void)
+{
+	  PWM* pwm = new PWM();
+
+	  pwm -> V_output( 0, 0, 500, 0, E_move_status::MOVE );
+
+	  delete pwm;
+
+}
+void Controller::RSL(void)
+{
+	  PWM* pwm = new PWM();
+
+	  pwm -> V_output( 0, 0, -500, 0, E_move_status::MOVE );
+
+	  delete pwm;
+
+}
 void Controller::RSD(void){}
+void Controller::RSUL(void){}
+void Controller::RSUR(void){}
+void Controller::RSDR(void){}
 void Controller::RSDL(void){}
-void Controller::RSL(void){}
-
-*/
-
