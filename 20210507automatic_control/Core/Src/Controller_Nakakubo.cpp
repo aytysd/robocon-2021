@@ -20,23 +20,21 @@
 #include "Controller.hpp"
 #include "Function.hpp"
 #include "Init_move.hpp"
+#include "GPIO.hpp"
+#include "main.h"
 
-uint16_t Controller::speed = 500;
+uint16_t Controller::speed = 700;
 uint16_t Controller::speed_jump = 1000;
 
 
 //--------------------------------------------------
 //init
-/*
 void Controller::NOP(void)
 {
 	PWM* pwm = new PWM();
-	Function* function = new Function();
 
 	pwm -> V_output( 0, 0, 0, 0, E_move_status::STOP );
-	function -> drive_motor(5, BRAKE, 0, false, true);
 
-	delete function;
 	delete pwm;
 }
 
@@ -44,22 +42,32 @@ void Controller::NOP(void)
 //--------------------------------------------------
 //Jump
 void Controller::X(void)
-{
-	Function* function = new Function();
-	function -> drive_motor(5, CW, this -> speed_jump, false, true);
-	delete function;
-}
+{}
 void Controller::Y(void){}
 void Controller::A(void){}
 void Controller::B(void){}
 
 void Controller::LB(void)
 {
+	Function* function = new Function();
 
+	function -> drive_motor(5, CW, this -> speed_jump, false, true);
+	while( HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_3) == 1)
+	{
+
+	}
+	while( HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_3) == 0 )
+	{
+    
+	}
+	function -> drive_motor(5, BRAKE, 0, false, true);
+
+	delete function;
+  /*
 	Init_Move* init_move = new Init_Move();
 	init_move -> init_move(E_robot_name::A);
 	delete init_move;
-
+  */
 }
 
 
@@ -73,7 +81,7 @@ void Controller::LT(void)
 	function -> drive_motor(2, BRAKE, 0, false, false);
 	function -> drive_motor(3, BRAKE, 0, false, false);
 	function -> drive_motor(4, BRAKE, 0, false, false);
-	function -> drive_motor(5, BRAKE, 0, false, false);
+	function -> drive_motor(5, BRAKE, 0, false, true);
 
 	delete function;
 }
@@ -179,9 +187,9 @@ void Controller::RSU(void)
 void Controller::RSD(void)
 {
 	this -> speed -= 50;
-	if(this -> speed < 500)
+	if(this -> speed < 700)
 	{
-		this -> speed = 500;
+		this -> speed = 700;
 	}
 }
 
@@ -238,4 +246,3 @@ void Controller::LSUL(void){}
 void Controller::LSUR(void){}
 void Controller::LSDR(void){}
 void Controller::LSDL(void){}
-*/

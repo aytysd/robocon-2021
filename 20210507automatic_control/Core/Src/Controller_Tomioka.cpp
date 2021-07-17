@@ -21,6 +21,7 @@
 #include "Function.hpp"
 #include "main.h"
 
+/*
 
 /*
 void Controller::NOP(void)
@@ -152,7 +153,7 @@ void Controller::RSR(void)
 {
 	  PWM* pwm = new PWM();
 
-	  pwm -> V_output( 0, 0, 500, 0, E_move_status::MOVE );
+	  pwm -> V_output( 0, 0, 300, 0, E_move_status::MOVE );
 
 	  delete pwm;
 
@@ -161,7 +162,7 @@ void Controller::RSL(void)
 {
 	  PWM* pwm = new PWM();
 
-	  pwm -> V_output( 0, 0, -500, 0, E_move_status::MOVE );
+	  pwm -> V_output( 0, 0, -300, 0, E_move_status::MOVE );
 
 	  delete pwm;
 
@@ -171,4 +172,5 @@ void Controller::RSUL(void){}
 void Controller::RSUR(void){}
 void Controller::RSDR(void){}
 void Controller::RSDL(void){}
+
 */
