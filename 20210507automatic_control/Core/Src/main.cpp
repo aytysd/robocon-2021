@@ -36,6 +36,7 @@
 #include "Control.hpp"
 #include "Rope.hpp"
 #include "Gyro.hpp"
+#include <string>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -58,8 +59,6 @@ ADC_HandleTypeDef hadc2;
 
 I2C_HandleTypeDef hi2c1;
 I2C_HandleTypeDef hi2c3;
-
-SPI_HandleTypeDef hspi1;
 
 TIM_HandleTypeDef htim2;
 TIM_HandleTypeDef htim3;
@@ -94,12 +93,10 @@ static void MX_TIM3_Init(void);
 static void MX_USART2_UART_Init(void);
 static void MX_I2C3_Init(void);
 static void MX_UART4_Init(void);
-static void MX_SPI1_Init(void);
 static void MX_TIM7_Init(void);
 static void MX_ADC1_Init(void);
 static void MX_ADC2_Init(void);
 /* USER CODE BEGIN PFP */
-
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -125,7 +122,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef* UartHandle)
 	}
 	else if( UartHandle == &huart3 )
 	{
-		HAL_UART_Receive_IT(&huart1, (uint8_t*)Communication::Rxdata, sizeof(Communication::Rxdata));
+		HAL_UART_Receive_IT(&huart3, (uint8_t*)Communication::Rxdata, sizeof(Communication::Rxdata));
 
 		Communication* communication = new Communication();
 		delete communication;
@@ -148,11 +145,11 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim)
     if(htim->Instance == TIM3)
     {
         __HAL_TIM_CLEAR_FLAG(&htim3, TIM_IT_UPDATE);
-        if(__HAL_TIM_IS_TIM_COUNTING_DOWN(&htim3)) //0 â†? 65535
+        if(__HAL_TIM_IS_TIM_COUNTING_DOWN(&htim3)) //0 ??¿½?¿½? 65535
         {
             Rope::over_flow_cnt_3--;
         }
-        else //65535 â†? 0
+        else //65535 ??¿½?¿½? 0
         {
             Rope::over_flow_cnt_3++;
         }
@@ -160,11 +157,11 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim)
     else if(htim->Instance == TIM4)
     {
         __HAL_TIM_CLEAR_FLAG(&htim4, TIM_IT_UPDATE);
-        if(__HAL_TIM_IS_TIM_COUNTING_DOWN(&htim4)) //0 â†? 65535
+        if(__HAL_TIM_IS_TIM_COUNTING_DOWN(&htim4)) //0 ??¿½?¿½? 65535
         {
             Rope::over_flow_cnt_4--;
         }
-        else //65535 â†? 0
+        else //65535 ??¿½?¿½? 0
         {
             Rope::over_flow_cnt_4++;
         }
@@ -220,7 +217,6 @@ int main(void)
   MX_USART2_UART_Init();
   MX_I2C3_Init();
   MX_UART4_Init();
-  MX_SPI1_Init();
   MX_TIM7_Init();
   MX_ADC1_Init();
   MX_ADC2_Init();
@@ -232,7 +228,6 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -450,43 +445,6 @@ static void MX_I2C3_Init(void)
   /* USER CODE BEGIN I2C3_Init 2 */
 
   /* USER CODE END I2C3_Init 2 */
-
-}
-
-/**
-  * @brief SPI1 Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_SPI1_Init(void)
-{
-
-  /* USER CODE BEGIN SPI1_Init 0 */
-
-  /* USER CODE END SPI1_Init 0 */
-
-  /* USER CODE BEGIN SPI1_Init 1 */
-
-  /* USER CODE END SPI1_Init 1 */
-  /* SPI1 parameter configuration*/
-  hspi1.Instance = SPI1;
-  hspi1.Init.Mode = SPI_MODE_SLAVE;
-  hspi1.Init.Direction = SPI_DIRECTION_2LINES;
-  hspi1.Init.DataSize = SPI_DATASIZE_8BIT;
-  hspi1.Init.CLKPolarity = SPI_POLARITY_LOW;
-  hspi1.Init.CLKPhase = SPI_PHASE_1EDGE;
-  hspi1.Init.NSS = SPI_NSS_SOFT;
-  hspi1.Init.FirstBit = SPI_FIRSTBIT_MSB;
-  hspi1.Init.TIMode = SPI_TIMODE_DISABLE;
-  hspi1.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
-  hspi1.Init.CRCPolynomial = 10;
-  if (HAL_SPI_Init(&hspi1) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /* USER CODE BEGIN SPI1_Init 2 */
-
-  /* USER CODE END SPI1_Init 2 */
 
 }
 
@@ -976,10 +934,13 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOD_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_RESET);
+
+  /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, GPIO_PIN_SET);
 
-  /*Configure GPIO pins : PE_Sensor_B_Pin SPARE_Pin PE_Sensor_T_Pin */
-  GPIO_InitStruct.Pin = PE_Sensor_B_Pin|SPARE_Pin|PE_Sensor_T_Pin;
+  /*Configure GPIO pins : PE_Sensor_2_Pin SPARE_Pin PE_Sensor_1_Pin */
+  GPIO_InitStruct.Pin = PE_Sensor_2_Pin|SPARE_Pin|PE_Sensor_1_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
   GPIO_InitStruct.Pull = GPIO_PULLDOWN;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
@@ -990,17 +951,30 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_PULLDOWN;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : PE_Sensor_F_Pin */
-  GPIO_InitStruct.Pin = PE_Sensor_F_Pin;
+  /*Configure GPIO pins : PE_Sensor_3_Pin Self_Pos_PE_2_Pin */
+  GPIO_InitStruct.Pin = PE_Sensor_3_Pin|Self_Pos_PE_2_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
   GPIO_InitStruct.Pull = GPIO_PULLDOWN;
-  HAL_GPIO_Init(PE_Sensor_F_GPIO_Port, &GPIO_InitStruct);
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : Under_SW_V2_3_Pin LIMIT_F_V2_Pin */
-  GPIO_InitStruct.Pin = Under_SW_V2_3_Pin|LIMIT_F_V2_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  /*Configure GPIO pin : PA5 */
+  GPIO_InitStruct.Pin = GPIO_PIN_5;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : Photo_Interrupt_Pin */
+  GPIO_InitStruct.Pin = Photo_Interrupt_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
+  GPIO_InitStruct.Pull = GPIO_PULLUP;
+  HAL_GPIO_Init(Photo_Interrupt_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : Self_Pos_PE_1_Pin */
+  GPIO_InitStruct.Pin = Self_Pos_PE_1_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
   GPIO_InitStruct.Pull = GPIO_PULLDOWN;
-  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+  HAL_GPIO_Init(Self_Pos_PE_1_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pin : LED_Pin */
   GPIO_InitStruct.Pin = LED_Pin;
@@ -1009,11 +983,17 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(LED_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : Under_SW_V1_4_Pin Under_SW_V3_4_Pin */
-  GPIO_InitStruct.Pin = Under_SW_V1_4_Pin|Under_SW_V3_4_Pin;
+  /*Configure GPIO pin : Under_SW_V3_4_Pin */
+  GPIO_InitStruct.Pin = Under_SW_V3_4_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_PULLDOWN;
-  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+  HAL_GPIO_Init(Under_SW_V3_4_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : LIMIT_F_V2_Pin */
+  GPIO_InitStruct.Pin = LIMIT_F_V2_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+  HAL_GPIO_Init(LIMIT_F_V2_GPIO_Port, &GPIO_InitStruct);
 
   /* EXTI interrupt init*/
   HAL_NVIC_SetPriority(EXTI0_IRQn, 0, 0);

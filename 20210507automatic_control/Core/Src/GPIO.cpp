@@ -22,76 +22,70 @@
 void GPIO::identify(uint16_t GPIO_Pin){
 	switch(GPIO_Pin){
 	case GPIO_PIN_0:
-		this -> status[0] = true;
+		this -> GPIO_PIN_0_func();
 		break;
 	case GPIO_PIN_1:
-		this -> status[1] = true;
+		this -> GPIO_PIN_1_func();
 		break;
 	case GPIO_PIN_2:
-		this -> status[2] = true;
+		this -> GPIO_PIN_2_func();
 		break;
 	case GPIO_PIN_3:
-		this -> status[3] = true;
+		this -> GPIO_PIN_3_func();
 		break;
 	case GPIO_PIN_4:
-		this -> status[4] = true;
+		this -> GPIO_PIN_4_func();
 		break;
-
 	case GPIO_PIN_5:
-		this -> status[5] = true;
+		this -> GPIO_PIN_5_func();
 		break;
 	case GPIO_PIN_6:
-		this -> status[6] = true;
+		this -> GPIO_PIN_6_func();
 		break;
 	case GPIO_PIN_7:
-		this -> status[7] = true;
+		this -> GPIO_PIN_7_func();
 		break;
 	case GPIO_PIN_8:
-		this -> status[8] = true;
+		this -> GPIO_PIN_8_func();
 		break;
 	case GPIO_PIN_9:
-		this -> status[9] = true;
+		this -> GPIO_PIN_9_func();
 		break;
 	case GPIO_PIN_10:
-		this -> status[10] = true;
+		this -> GPIO_PIN_10_func();
 		break;
 	case GPIO_PIN_11:
-		this -> status[11] = true;
+		this -> GPIO_PIN_11_func();
 		break;
 	case GPIO_PIN_12:
-		this -> status[12] = true;
+		this -> GPIO_PIN_12_func();
 		break;
 	case GPIO_PIN_13:
-		this -> status[13] = true;
+		this -> GPIO_PIN_13_func();
 		break;
 	case GPIO_PIN_14:
-		this -> status[14] = true;
+		this -> GPIO_PIN_14_func();
 		break;
 	case GPIO_PIN_15:
-		this -> status[15] = true;
+		this -> GPIO_PIN_15_func();
 		break;
 
 	}
 }
 
-bool GPIO::get_status(E_interrupt interrupt){
-	for(int i = 0; i<16; i++){
-		if( static_cast<int>(interrupt) == i ){
-
-			bool temp = this -> GPIO::status[i];
-			this -> GPIO::status[i] = false;
-			return temp;
-		}
-	}
-	return false;
-}
-
-void GPIO::reset_status(){
-	for(int i = 0; i<16; i++){
-
-		GPIO::status[i] = false;
-	}
-
-}
-
-bool GPIO::status[16] = {false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false};
+void GPIO::GPIO_PIN_0_func(void){};
+void GPIO::GPIO_PIN_1_func(void){};
+void GPIO::GPIO_PIN_2_func(void){};
+void GPIO::GPIO_PIN_3_func(void){};
+void GPIO::GPIO_PIN_4_func(void){};
+void GPIO::GPIO_PIN_5_func(void){};
+void GPIO::GPIO_PIN_6_func(void){};
+void GPIO::GPIO_PIN_7_func(void){};
+void GPIO::GPIO_PIN_8_func(void){};
+void GPIO::GPIO_PIN_9_func(void){};
+void GPIO::GPIO_PIN_10_func(void){};
+void GPIO::GPIO_PIN_11_func(void){};
+void GPIO::GPIO_PIN_12_func(void){};
+void GPIO::GPIO_PIN_13_func(void){};
+void GPIO::GPIO_PIN_14_func(void){};
+void GPIO::GPIO_PIN_15_func(void){};

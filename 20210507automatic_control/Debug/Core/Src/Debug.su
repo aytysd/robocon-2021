@@ -1,0 +1,7 @@
+Debug.cpp:24:6:static void Debug::TTO(addr, const char*, UART_HandleTypeDef*) [with addr = short unsigned int*]	40	static
+Debug.cpp:35:6:static void Debug::TTO(addr, const char*, UART_HandleTypeDef*) [with addr = long unsigned int*]	40	static
+Debug.cpp:46:6:static void Debug::TTO(addr, const char*, UART_HandleTypeDef*) [with addr = unsigned char*]	40	static
+Debug.cpp:57:6:static void Debug::TTO(addr, const char*, UART_HandleTypeDef*) [with addr = int*]	40	static
+Debug.cpp:68:6:static void Debug::TTO(addr, const char*, UART_HandleTypeDef*) [with addr = double*]	40	static
+Debug.cpp:79:6:static void Debug::TTO(addr, const char*, UART_HandleTypeDef*) [with addr = float*]	40	static
+Debug.cpp:101:6:static void Debug::time_calc(UART_HandleTypeDef*)	48	static

@@ -24,7 +24,7 @@
 #include "Self_Pos.hpp"
 #include "Gyro.hpp"
 #include "Time.hpp"
-
+#include "Debug.hpp"
 
 void PWM::V_output(uint16_t V, uint16_t fai, int16_t rotation_speed, uint16_t attitude_angle, E_move_status status)
 {
@@ -62,6 +62,7 @@ void PWM::V_output(uint16_t V, uint16_t fai, int16_t rotation_speed, uint16_t at
 		function -> drive_motor(2, 3, 0, false, false);
 		function -> drive_motor(3, 3, 0, false, false);
 		function -> drive_motor(4, 3, 0, false, false);
+		function -> drive_motor(5, 3, 0, false, false);
 
 		delete function;
 
@@ -73,7 +74,6 @@ bool PWM::rotate(uint16_t V, uint16_t target_angle)
 {
 
 	Gyro* gyro = new Gyro();
-	Time* time = new Time();
 
 	if( target_angle != gyro -> get_direction( &hi2c1 ) )
 	{
@@ -92,9 +92,9 @@ bool PWM::rotate(uint16_t V, uint16_t target_angle)
 			else
 			{
 				this -> V_output(0, 0, V, 0, E_move_status::MOVE);
-				time -> time_calc();
+				Debug::time_calc( &huart2 );
 				while( target_angle != gyro -> get_direction( &hi2c1 ) ){}
-				time -> time_calc();
+				Debug::time_calc( &huart2 );
 				this -> V_output(0, 0, 0, 0, E_move_status::STOP);
 
 			}
@@ -125,7 +125,6 @@ bool PWM::rotate(uint16_t V, uint16_t target_angle)
 	}
 
 	delete gyro;
-	delete time;
 	return true;
 }
 

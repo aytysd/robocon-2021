@@ -58,16 +58,16 @@ void Controller::LB(void)
 	}
 	while( HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_3) == 0 )
 	{
+    
 	}
 	function -> drive_motor(5, BRAKE, 0, false, true);
 
 	delete function;
-
-/*
+  /*
 	Init_Move* init_move = new Init_Move();
 	init_move -> init_move(E_robot_name::A);
 	delete init_move;
-*/
+  */
 }
 
 
@@ -246,4 +246,3 @@ void Controller::LSUL(void){}
 void Controller::LSUR(void){}
 void Controller::LSDR(void){}
 void Controller::LSDL(void){}
-

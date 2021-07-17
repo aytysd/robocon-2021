@@ -45,13 +45,26 @@ enum class E_interrupt{
 class GPIO{
 public:
 	void identify(uint16_t GPIO_Pin);
-	bool get_status(E_interrupt interrupt);
-	void reset_status();
-
 private:
-	static bool status[16];
+
+	void GPIO_PIN_0_func(void);
+	void GPIO_PIN_1_func(void);
+	void GPIO_PIN_2_func(void);
+	void GPIO_PIN_3_func(void);
+	void GPIO_PIN_4_func(void);
+	void GPIO_PIN_5_func(void);
+	void GPIO_PIN_6_func(void);
+	void GPIO_PIN_7_func(void);
+	void GPIO_PIN_8_func(void);
+	void GPIO_PIN_9_func(void);
+	void GPIO_PIN_10_func(void);
+	void GPIO_PIN_11_func(void);
+	void GPIO_PIN_12_func(void);
+	void GPIO_PIN_13_func(void);
+	void GPIO_PIN_14_func(void);
+	void GPIO_PIN_15_func(void);
+
 
 };
-
 
 #endif /* INC_GPIO_HPP_ */

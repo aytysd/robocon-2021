@@ -74,15 +74,15 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
-#define PE_Sensor_B_Pin GPIO_PIN_13
-#define PE_Sensor_B_GPIO_Port GPIOC
-#define PE_Sensor_B_EXTI_IRQn EXTI15_10_IRQn
+#define PE_Sensor_2_Pin GPIO_PIN_13
+#define PE_Sensor_2_GPIO_Port GPIOC
+#define PE_Sensor_2_EXTI_IRQn EXTI15_10_IRQn
 #define SPARE_Pin GPIO_PIN_15
 #define SPARE_GPIO_Port GPIOC
 #define SPARE_EXTI_IRQn EXTI15_10_IRQn
-#define PE_Sensor_T_Pin GPIO_PIN_0
-#define PE_Sensor_T_GPIO_Port GPIOC
-#define PE_Sensor_T_EXTI_IRQn EXTI0_IRQn
+#define PE_Sensor_1_Pin GPIO_PIN_0
+#define PE_Sensor_1_GPIO_Port GPIOC
+#define PE_Sensor_1_EXTI_IRQn EXTI0_IRQn
 #define Under_SW_V1_2_Pin GPIO_PIN_1
 #define Under_SW_V1_2_GPIO_Port GPIOC
 #define LIMIT_F_V3_Pin GPIO_PIN_2
@@ -93,9 +93,9 @@ void Error_Handler(void);
 #define X_OD_GPIO_Port GPIOA
 #define X_ODA1_Pin GPIO_PIN_1
 #define X_ODA1_GPIO_Port GPIOA
-#define PE_Sensor_F_Pin GPIO_PIN_4
-#define PE_Sensor_F_GPIO_Port GPIOA
-#define PE_Sensor_F_EXTI_IRQn EXTI4_IRQn
+#define PE_Sensor_3_Pin GPIO_PIN_4
+#define PE_Sensor_3_GPIO_Port GPIOA
+#define PE_Sensor_3_EXTI_IRQn EXTI4_IRQn
 #define ROPE_Pin GPIO_PIN_6
 #define ROPE_GPIO_Port GPIOA
 #define ROPEA7_Pin GPIO_PIN_7
@@ -108,8 +108,12 @@ void Error_Handler(void);
 #define Line_Sensor_R_GPIO_Port GPIOB
 #define A_TX_Pin GPIO_PIN_10
 #define A_TX_GPIO_Port GPIOB
-#define Under_SW_V2_3_Pin GPIO_PIN_14
-#define Under_SW_V2_3_GPIO_Port GPIOB
+#define Photo_Interrupt_Pin GPIO_PIN_12
+#define Photo_Interrupt_GPIO_Port GPIOB
+#define Photo_Interrupt_EXTI_IRQn EXTI15_10_IRQn
+#define Self_Pos_PE_1_Pin GPIO_PIN_14
+#define Self_Pos_PE_1_GPIO_Port GPIOB
+#define Self_Pos_PE_1_EXTI_IRQn EXTI15_10_IRQn
 #define LED_Pin GPIO_PIN_15
 #define LED_GPIO_Port GPIOB
 #define MOTOR_TX_Pin GPIO_PIN_6
@@ -118,16 +122,17 @@ void Error_Handler(void);
 #define MOTOR_RX_GPIO_Port GPIOC
 #define LIMIT_L_V4_Pin GPIO_PIN_8
 #define LIMIT_L_V4_GPIO_Port GPIOC
-#define ToF_L_SDA_Pin GPIO_PIN_9
-#define ToF_L_SDA_GPIO_Port GPIOC
-#define ToF_L_SCL_Pin GPIO_PIN_8
-#define ToF_L_SCL_GPIO_Port GPIOA
+#define Self_Pos_Gyro_SDA_Pin GPIO_PIN_9
+#define Self_Pos_Gyro_SDA_GPIO_Port GPIOC
+#define Self_Pos_Gyro_SCL_Pin GPIO_PIN_8
+#define Self_Pos_Gyro_SCL_GPIO_Port GPIOA
 #define PC_TX_Pin GPIO_PIN_9
 #define PC_TX_GPIO_Port GPIOA
 #define PC_RX_Pin GPIO_PIN_10
 #define PC_RX_GPIO_Port GPIOA
-#define Under_SW_V1_4_Pin GPIO_PIN_11
-#define Under_SW_V1_4_GPIO_Port GPIOA
+#define Self_Pos_PE_2_Pin GPIO_PIN_11
+#define Self_Pos_PE_2_GPIO_Port GPIOA
+#define Self_Pos_PE_2_EXTI_IRQn EXTI15_10_IRQn
 #define Under_SW_V3_4_Pin GPIO_PIN_12
 #define Under_SW_V3_4_GPIO_Port GPIOA
 #define Y_OD_Pin GPIO_PIN_15
@@ -144,10 +149,10 @@ void Error_Handler(void);
 #define Y_ODB3_GPIO_Port GPIOB
 #define LIMIT_F_V2_Pin GPIO_PIN_5
 #define LIMIT_F_V2_GPIO_Port GPIOB
-#define Gyro_ToF_F_SCL_Pin GPIO_PIN_8
-#define Gyro_ToF_F_SCL_GPIO_Port GPIOB
-#define Gyro_ToF_F_SDA_Pin GPIO_PIN_9
-#define Gyro_ToF_F_SDA_GPIO_Port GPIOB
+#define Robot_Gyro_SCL_Pin GPIO_PIN_8
+#define Robot_Gyro_SCL_GPIO_Port GPIOB
+#define Robot_Gyro_SDA_Pin GPIO_PIN_9
+#define Robot_Gyro_SDA_GPIO_Port GPIOB
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */

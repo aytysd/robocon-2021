@@ -30,14 +30,14 @@ Core/Src/Self_Pos.o: ../Core/Src/Self_Pos.cpp \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_i2c_ex.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h \
- ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h \
  ../Core/Inc/Self_Pos.hpp ../Core/Inc/main.h ../Core/Inc/ToF.hpp \
  ../Core/Inc/Self_Pos.hpp ../Core/Inc/bno055.h \
  ../Core/Inc/Error_Handling.hpp ../Core/Inc/LED.hpp ../Core/Inc/PWM.hpp \
- ../Core/Inc/General_command.hpp ../Core/Inc/Gyro.hpp
+ ../Core/Inc/General_command.hpp ../Core/Inc/Gyro.hpp \
+ ../Core/Inc/Function.hpp
 
 ../Core/Inc/General_command.hpp:
 
@@ -103,8 +103,6 @@ Core/Src/Self_Pos.o: ../Core/Src/Self_Pos.cpp \
 
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h:
 
-../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h:
-
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h:
 
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h:
@@ -130,3 +128,5 @@ Core/Src/Self_Pos.o: ../Core/Src/Self_Pos.cpp \
 ../Core/Inc/General_command.hpp:
 
 ../Core/Inc/Gyro.hpp:
+
+../Core/Inc/Function.hpp:

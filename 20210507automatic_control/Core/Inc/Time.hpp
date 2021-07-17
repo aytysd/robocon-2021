@@ -20,7 +20,6 @@ class Time
 {
 public:
 	void wait();
-	void time_calc();
 
 };
 

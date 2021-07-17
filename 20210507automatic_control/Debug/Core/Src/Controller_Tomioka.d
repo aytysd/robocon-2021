@@ -30,12 +30,11 @@ Core/Src/Controller_Tomioka.o: ../Core/Src/Controller_Tomioka.cpp \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_i2c_ex.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h \
- ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h \
  ../Core/Inc/General_command.hpp ../Core/Inc/PWM.hpp \
- ../Core/Inc/Init_Move.hpp ../Core/Inc/main.h
+ ../Core/Inc/Init_Move.hpp ../Core/Inc/Function.hpp ../Core/Inc/main.h
 
 ../Core/Inc/Controller.hpp:
 
@@ -101,8 +100,6 @@ Core/Src/Controller_Tomioka.o: ../Core/Src/Controller_Tomioka.cpp \
 
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h:
 
-../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h:
-
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h:
 
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h:
@@ -114,5 +111,7 @@ Core/Src/Controller_Tomioka.o: ../Core/Src/Controller_Tomioka.cpp \
 ../Core/Inc/PWM.hpp:
 
 ../Core/Inc/Init_Move.hpp:
+
+../Core/Inc/Function.hpp:
 
 ../Core/Inc/main.h:
