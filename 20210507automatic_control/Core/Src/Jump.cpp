@@ -34,15 +34,7 @@ void Jump::identify()
 	{
 		count++;
 	}
-	if( GPIO_PIN_RESET == HAL_GPIO_ReadPin(Under_SW_V2_3_GPIO_Port, Under_SW_V2_3_Pin ))
-	{
-		count++;
-	}
 	if( GPIO_PIN_RESET == HAL_GPIO_ReadPin(Under_SW_V3_4_GPIO_Port, Under_SW_V3_4_Pin ))
-	{
-		count++;
-	}
-	if( GPIO_PIN_RESET == HAL_GPIO_ReadPin(Under_SW_V1_4_GPIO_Port, Under_SW_V1_4_Pin ))
 	{
 		count++;
 	}
@@ -104,12 +96,14 @@ void Jump::pre_calc()
 
 void Jump::Jumping_PE_Sencor(void)
 {
+/*
 	GPIO* gpio = new GPIO();
-	if((gpio -> get_status(E_interrupt::PE_SENSOR_B) == true) || (gpio -> get_status(E_interrupt::PE_SENSOR_F) == true) || (gpio -> get_status(E_interrupt::PE_SENSOR_T) == true))
+	if((gpio -> get_status(E_interrupt::PE_SENSOR_1) == true) || (gpio -> get_status(E_interrupt::PE_SENSOR_2) == true) || (gpio -> get_status(E_interrupt::PE_SENSOR_3) == true))
 	{
 
 	}
 	delete gpio;
+*/
 }
 
 void Jump::Jumping_Rope(void)

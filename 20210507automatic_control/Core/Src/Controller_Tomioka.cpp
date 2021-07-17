@@ -22,6 +22,7 @@
 #include "main.h"
 
 
+/*
 void Controller::NOP(void)
 {
 	PWM* pwm = new PWM();
@@ -170,3 +171,4 @@ void Controller::RSUL(void){}
 void Controller::RSUR(void){}
 void Controller::RSDR(void){}
 void Controller::RSDL(void){}
+*/

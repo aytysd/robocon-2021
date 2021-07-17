@@ -1,6 +1,8 @@
 Jump.cpp:29:6:void Jump::identify()	24	static
-Jump.cpp:61:15:E_move_status Jump::get_status()	16	static
-Jump.cpp:66:6:void Jump::calc_fly_distance()	48	static
-Jump.cpp:86:6:void Jump::pre_calc()	48	static
+Jump.cpp:53:15:E_move_status Jump::get_status()	16	static
+Jump.cpp:58:6:void Jump::calc_fly_distance()	48	static
+Jump.cpp:78:6:void Jump::pre_calc()	48	static
+Jump.cpp:97:6:void Jump::Jumping_PE_Sencor()	16	static
+Jump.cpp:109:6:void Jump::Jumping_Rope()	16	static
 cmath:415:5:constexpr typename __gnu_cxx::__promote_2<_Tp, _Up>::__type std::pow(_Tp, _Up) [with _Tp = double; _Up = int]	24	static
 cmath:415:5:constexpr typename __gnu_cxx::__promote_2<_Tp, _Up>::__type std::pow(_Tp, _Up) [with _Tp = int; _Up = int]	24	static

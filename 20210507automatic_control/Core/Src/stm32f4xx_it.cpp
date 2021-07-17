@@ -311,7 +311,10 @@ void EXTI15_10_IRQHandler(void)
   /* USER CODE BEGIN EXTI15_10_IRQn 0 */
 
   /* USER CODE END EXTI15_10_IRQn 0 */
+  HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_11);
+  HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_12);
   HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_13);
+  HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_14);
   HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_15);
   /* USER CODE BEGIN EXTI15_10_IRQn 1 */
 
@@ -345,8 +348,6 @@ void TIM6_DAC_IRQHandler(void)
   gyro -> BNO055_update_gravity_direction(&hi2c1);
 //  gyro -> BNO055_update_gravity_direction(&hi2c3);
   self_pos -> update_self_pos();
-  gpio -> reset_status();
-  jump -> identify();
 //  line -> MoveLine(line -> BefX, line -> BefY, line -> AftX, line -> AftY, line -> through);
 
   /* USER CODE END TIM6_DAC_IRQn 1 */
