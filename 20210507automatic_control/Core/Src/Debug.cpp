@@ -21,40 +21,84 @@
 #include "main.h"
 
 template <>
-void Debug::TTO( double* var_address, const char* str )
+void Debug::TTO( uint16_t* var_address, const char* str, UART_HandleTypeDef* UART )
 {
 	char output[13] = "0";
 
-	sprintf( output, "%lf\r\n", *var_address );
-	HAL_UART_Transmit( &huart2, (uint8_t*)str, sizeof( str ), 100 );
-	HAL_UART_Transmit( &huart2, (uint8_t*)output, sizeof( output ), 100 );
+	sprintf( output, "%d\r\n", *var_address );
+	HAL_UART_Transmit( UART, (uint8_t*)str, sizeof( str ), 100 );
+	HAL_UART_Transmit( UART, (uint8_t*)output, sizeof( output ), 100 );
 
 }
 
 template <>
-void Debug::TTO( float* var_address, const char* str )
+void Debug::TTO( uint32_t* var_address, const char* str, UART_HandleTypeDef* UART )
+{
+	char output[13] = "0";
+
+	sprintf( output, "%d\r\n", *var_address );
+	HAL_UART_Transmit( UART, (uint8_t*)str, sizeof( str ), 100 );
+	HAL_UART_Transmit( UART, (uint8_t*)output, sizeof( output ), 100 );
+
+}
+
+template <>
+void Debug::TTO( uint8_t* var_address, const char* str, UART_HandleTypeDef* UART )
+{
+	char output[13] = "0";
+
+	sprintf( output, "%d\r\n", *var_address );
+	HAL_UART_Transmit( UART, (uint8_t*)str, sizeof( str ), 100 );
+	HAL_UART_Transmit( UART, (uint8_t*)output, sizeof( output ), 100 );
+
+}
+
+template <>
+void Debug::TTO( int* var_address, const char* str, UART_HandleTypeDef* UART )
+{
+	char output[13] = "0";
+
+	sprintf( output, "%d\r\n", *var_address );
+	HAL_UART_Transmit( UART, (uint8_t*)str, sizeof( str ), 100 );
+	HAL_UART_Transmit( UART, (uint8_t*)output, sizeof( output ), 100 );
+
+}
+
+template <>
+void Debug::TTO( double* var_address, const char* str, UART_HandleTypeDef* UART )
 {
 	char output[13] = "0";
 
 	sprintf( output, "%lf\r\n", *var_address );
-	HAL_UART_Transmit( &huart2, (uint8_t*)str, sizeof( str ), 100 );
-	HAL_UART_Transmit( &huart2, (uint8_t*)output, sizeof( output ), 100 );
+	HAL_UART_Transmit( UART, (uint8_t*)str, sizeof( str ), 100 );
+	HAL_UART_Transmit( UART, (uint8_t*)output, sizeof( output ), 100 );
+
+}
+
+template <>
+void Debug::TTO( float* var_address, const char* str, UART_HandleTypeDef* UART )
+{
+	char output[13] = "0";
+
+	sprintf( output, "%lf\r\n", *var_address );
+	HAL_UART_Transmit( UART, (uint8_t*)str, sizeof( str ), 100 );
+	HAL_UART_Transmit( UART, (uint8_t*)output, sizeof( output ), 100 );
 
 }
 
 
 template< typename addr >
-void Debug::TTO( addr var_address, const char* str )
+void Debug::TTO( addr var_address, const char* str, UART_HandleTypeDef* UART )
 {
 	char output[10] = "0";
 
 	sprintf( output, "%d\r\n", *var_address );
-	HAL_UART_Transmit( &huart2, (uint8_t*)str, sizeof( str ), 100 );
-	HAL_UART_Transmit( &huart2, (uint8_t*)output, sizeof( output ), 100 );
+	HAL_UART_Transmit( UART, (uint8_t*)str, sizeof( str ), 100 );
+	HAL_UART_Transmit( UART, (uint8_t*)output, sizeof( output ), 100 );
 }
 
 
-void Debug::time_calc(void)
+void Debug::time_calc( UART_HandleTypeDef* UART )
 {
 	static int i;
 	static uint32_t start_time;
@@ -76,8 +120,8 @@ void Debug::time_calc(void)
 		char output[10] = "0";
 		char desc[10] = "Time";
 		sprintf( output, "%d\r\n", diff );
-		HAL_UART_Transmit( &huart2, (uint8_t*)desc, sizeof( desc ), 100 );
-		HAL_UART_Transmit( &huart2, (uint8_t*)output, sizeof( output ), 100 );
+		HAL_UART_Transmit( UART, (uint8_t*)desc, sizeof( desc ), 100 );
+		HAL_UART_Transmit( UART, (uint8_t*)output, sizeof( output ), 100 );
 
 		break;
 	}

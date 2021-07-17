@@ -19,12 +19,14 @@
 #ifndef INC_DEBUG_HPP_
 #define INC_DEBUG_HPP_
 
+#include "main.h"
+
 class Debug
 {
 public:
 	template< typename addr >
-	static void TTO( addr var_addr, const char* str );
-	static void time_calc();
+	static void TTO( addr var_addr, const char* str, UART_HandleTypeDef* UART );
+	static void time_calc( UART_HandleTypeDef* UART );
 
 };
 
