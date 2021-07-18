@@ -19,11 +19,11 @@
 
 #include "Controller.hpp"
 #include "Function.hpp"
+#include "Debug.hpp"
 #include "main.h"
 
-/*
+int max_angular_velocity = 360;
 
-/*
 void Controller::NOP(void)
 {
 	PWM* pwm = new PWM();
@@ -35,19 +35,44 @@ void Controller::NOP(void)
 
 void Controller::X(void) //right rotation 720(rad/s)
 {
+	Debug* debug = new Debug();
 	Function* function = new Function();
-	function -> drive_motor_Rope(5, CW, 720, true);
+
+	char string[10];
+	char output[10];
+	sprintf(output, "CW%d\r\n", max_angular_velocity);
+
+	for( int i = 0; i < max_angular_velocity; i += 90)
+	{
+		debug -> TTO((uint16_t*)max_angular_velocity, &output, &huart2);
+		function -> drive_motor_Rope(5, CW, (uint16_t*)i, true);
+		HAL_Delay(2000);
+	}
 
 	delete function;
+	delete debug;
 }
 
 void Controller::Y(void) //left rotation 720(rad/s)
 {
-	Function* function = new Function();
-	function -> drive_motor_Rope(5, CCW, 720, true);
+	Debug* debug = new Debug();
+		Function* function = new Function();
 
-	delete function;
+		char string[10];
+		char output[10];
+		sprintf(output, "CW%d\r\n", max_angular_velocity);
+
+		for( int i = 0; i < max_angular_velocity; i += 90)
+		{
+			debug -> TTO((uint16_t*)max_angular_velocity, &output, &huart2);
+			function -> drive_motor_Rope(5, CCW, (uint16_t*)i, true);
+			HAL_Delay(2000);
+		}
+
+		delete function;
+		delete debug;
 }
+
 void Controller::A(void) //stop rotation
 {
 	Function* function = new Function();
@@ -172,5 +197,3 @@ void Controller::RSUL(void){}
 void Controller::RSUR(void){}
 void Controller::RSDR(void){}
 void Controller::RSDL(void){}
-
-*/
