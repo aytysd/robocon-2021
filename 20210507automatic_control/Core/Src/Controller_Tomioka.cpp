@@ -45,7 +45,7 @@ void Controller::X(void) //right rotation 720(rad/s)
 	for( int i = 0; i < max_angular_velocity; i += 90)
 	{
 		debug -> TTO((uint16_t*)max_angular_velocity, &output, &huart2);
-		function -> drive_motor_Rope(5, CW, (uint16_t*)i, true);
+		function -> drive_motor_Rope(5, CW, (uint16_t*)i, false);
 		HAL_Delay(2000);
 	}
 
@@ -65,7 +65,7 @@ void Controller::Y(void) //left rotation 720(rad/s)
 		for( int i = 0; i < max_angular_velocity; i += 90)
 		{
 			debug -> TTO((uint16_t*)max_angular_velocity, &output, &huart2);
-			function -> drive_motor_Rope(5, CCW, (uint16_t*)i, true);
+			function -> drive_motor_Rope(5, CCW, (uint16_t*)i, false);
 			HAL_Delay(2000);
 		}
 
