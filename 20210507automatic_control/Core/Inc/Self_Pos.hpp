@@ -50,8 +50,10 @@ public:
 	int Self_Pos_config_Limit(void);
 	void update_self_pos_ToF();
 
-	void Self_Pos_correction( int pos_x, int direction );
-	void Spin( int out_angle , int goal_angle , bool scan );
+	void Self_Pos_correction( int pos_x);
+	void Spin(int goal_angle , bool scan );
+
+	static int out_angle;
 private:
 	int encoder_read_5(void);
 	int encoder_read_2(void);

@@ -17,12 +17,14 @@
  *
  */
 #include <GPIO.hpp>
+#include "Self_Pos.hpp"
+#include "Gyro.hpp"
 #include "main.h"
 
 int GPIO::count = 0;
-	bool GPIO::allow = false;
-	int GPIO::angle[2] = {0,0};
-	int GPIO::plus = 1;
+bool GPIO::allow = false;
+int GPIO::angle[2] = {0,0};
+int GPIO::plus = 1;
 
 void GPIO::identify(uint16_t GPIO_Pin){
 	switch(GPIO_Pin){
