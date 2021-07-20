@@ -32,6 +32,7 @@
 int Self_Pos::Self_Pos_X = 0; //(mm)
 int Self_Pos::Self_Pos_Y = 0; //(mm)
 
+int Self_Pos::out_angle = 0;
 //----------------------------------------------------------------------
 //Self_Pos* self_pos = new Self_Pos();
 
