@@ -45,6 +45,12 @@ enum class E_interrupt{
 class GPIO{
 public:
 	void identify(uint16_t GPIO_Pin);
+
+	static int plus;
+	static bool allow;
+	static int angle[2];
+	static int count;
+
 private:
 
 	void GPIO_PIN_0_func(void);
