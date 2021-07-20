@@ -19,6 +19,11 @@
 #include <GPIO.hpp>
 #include "main.h"
 
+int GPIO::count = 0;
+	bool GPIO::allow = false;
+	int GPIO::angle[2] = {0,0};
+	int GPIO::plus = 1;
+
 void GPIO::identify(uint16_t GPIO_Pin){
 	switch(GPIO_Pin){
 	case GPIO_PIN_0:
@@ -84,8 +89,42 @@ void GPIO::GPIO_PIN_7_func(void){};
 void GPIO::GPIO_PIN_8_func(void){};
 void GPIO::GPIO_PIN_9_func(void){};
 void GPIO::GPIO_PIN_10_func(void){};
-void GPIO::GPIO_PIN_11_func(void){};
+void GPIO::GPIO_PIN_11_func(void)
+{
+	if (this->count <= 1 && this->allow) {
+			Gyro *gyro = new Gyro();
+
+			int ang = gyro->get_direction(&hi2c3);
+			int low_angle = 280 - 180 * (-0.5 * this->plus + 0.5);
+			int high_angle = 440 - 180 * (-0.5 * this->plus + 0.5);
+			if ((low_angle <= ang && ang <= high_angle
+					&& ang != Self_Pos::out_angle)
+					|| (low_angle <= ang + 360 && ang + 360 <= high_angle
+							&& ang != Self_Pos::out_angle)) {
+				this->angle[this->count] = ang;
+				this->count++;
+			}
+			delete gyro;
+		}
+};
 void GPIO::GPIO_PIN_12_func(void){};
 void GPIO::GPIO_PIN_13_func(void){};
-void GPIO::GPIO_PIN_14_func(void){};
+void GPIO::GPIO_PIN_14_func(void)
+{
+	if (this->count <= 1 && this->allow) {
+			Gyro *gyro = new Gyro();
+
+			int ang = gyro->get_direction(&hi2c3);
+			int low_angle = 280 - 180 * (-0.5 * this->plus + 0.5);
+			int high_angle = 440 - 180 * (-0.5 * this->plus + 0.5);
+			if ((low_angle <= ang && ang <= high_angle
+					&& ang != Self_Pos::out_angle)
+					|| (low_angle <= ang + 360 && ang + 360 <= high_angle
+							&& ang != Self_Pos::out_angle)) {
+				this->angle[this->count] = ang;
+				this->count++;
+			}
+			delete gyro;
+		}
+};
 void GPIO::GPIO_PIN_15_func(void){};

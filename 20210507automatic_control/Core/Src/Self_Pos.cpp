@@ -326,45 +326,56 @@ int Self_Pos::Self_Pos_config_Limit(void) {
 
 }
 
-void Self_Pos::Self_Pos_correction(int pos_x, int direction) {
+void Self_Pos::Self_Pos_correction(int pos_x) {
+	Gyro *gyro = new Gyro();
+
+	int direction = gyro->get_direction(&hi2c1);
 	int line_angle;
 	int photoelectric_angle;
 
-	int out_angle = direction + line_angle + photoelectric_angle + 180;
-	while (out_angle > 359) {
-		out_angle -= 360;
+	int out = direction + line_angle + photoelectric_angle + 180;
+	while (out > 359) {
+		out -= 360;
 	}
+	this->out_angle = out;
 
 	int low_angle = 280;
 	int high_angle = 440;
 	int tower[][2] = { { 1500, 750 }, { 1500, -750 } };
-	int d = 1;
+	GPIO::plus = 1;
 	if (pos_x <= 0) {
-		d = -1;
 		tower[0][0] *= -1;
 		tower[1][0] *= -1;
 		low_angle -= 180;
 		high_angle -= 180;
+		GPIO::plus = -1;
 	}
 
-	this->Spin(out_angle, low_angle, false);
-	this->Spin(out_angle, low_angle, true);
-	float a0;
-	float a1;
-	if (d * a0 <= 0) {
+	int d = 0;
+	this->Spin(low_angle, false);
+	int a[2] = { high_angle, low_angle };
+	while (GPIO::count != 2) {
+		GPIO::count = 0;
+		this->Spin(a[d], true);
+		d = -d + 1;
+	}
+	float a0 = tan(GPIO::angle[0]);
+	float a1 = tan(GPIO::angle[1]);
+	if (GPIO::plus * a0 <= 0) {
 		int a = a0;
 		a0 = a1;
 		a1 = a;
 	}
-	Self_Pos_X = (tower[1][1] - tower[0][1] + tower[0][0] * a0
+	this -> Self_Pos_X = (tower[1][1] - tower[0][1] + tower[0][0] * a0
 			- tower[1][0] * a1) / (a0 - a1);
-	Self_Pos_Y = a0
+	this -> Self_Pos_Y = a0
 			* (tower[1][1] - tower[0][1] + a1 * (tower[0][0] - tower[1][0]))
 			/ (a0 - a1) + tower[0][1];
 
+	delete gyro;
 }
 
-void Self_Pos::Spin(int out_angle, int goal_angle, bool scan) {
+void Self_Pos::Spin(int goal_angle, bool scan) {
 
 	Function *function = new Function();
 	Gyro *gyro = new Gyro();
@@ -390,49 +401,56 @@ void Self_Pos::Spin(int out_angle, int goal_angle, bool scan) {
 		hi = l;
 	}
 	if (scan) {
-		int n0 = (lo <= out_angle && out_angle <= hi) ? 1 :
-					(lo <= out_angle + 360 && out_angle + 360 <= hi) ? -1 : 0;
+		GPIO::allow = true;
+		int n0 =
+				(lo <= this->out_angle && this->out_angle <= hi) ? 1 :
+				(lo <= this->out_angle + 360 && this->out_angle + 360 <= hi) ?
+						-1 : 0;
 		if (n0 == 0) {
 			function->drive_motor_Rope(motor_number, (int) 0.5 * dire + 1.5,
 					speed, true);
 			HAL_Delay(1000 * k[n] / speed);
 			function->drive_motor_Rope(motor_number, 3, 0, true);
+			GPIO::allow = false;
 		} else {
 			int out_d = fabs(
 					now_angle + (n == 2) ?
-							360 : 0 - out_angle + (-0.5 * n0 + 0.5) * 360);
+							360 :
+							0 - this->out_angle + (-0.5 * n0 + 0.5) * 360);
 			function->drive_motor_Rope(motor_number, (int) 0.5 * dire + 1.5,
-					speed, true);
+					speed, false);
 
 			HAL_Delay(1000 * out_d / speed);
 
-			function->drive_motor_Rope(motor_number, 3, 0, true);
+			function->drive_motor_Rope(motor_number, 3, 0, false);
+			GPIO::allow = false;
 			function->drive_motor_Rope(motor_number, (int) -0.5 * dire + 1.5,
-					speed, true);
+					speed, false);
 
 			HAL_Delay(1000 * 359 / speed);
 
-			function->drive_motor_Rope(motor_number, 3, 0, true);
+			function->drive_motor_Rope(motor_number, 3, 0, false);
+			GPIO::allow = true;
 			function->drive_motor_Rope(motor_number, (int) 0.5 * dire + 1.5,
-					speed, true);
+					speed, false);
 
 			HAL_Delay(1000 * (k[n] - out_d) / speed);
-			function->drive_motor_Rope(motor_number, 3, 0, true);
+			function->drive_motor_Rope(motor_number, 3, 0, false);
+			GPIO::allow = false;
 		}
 	} else {
 		int n0 =
-				((lo <= out_angle && out_angle <= hi)
-						|| (lo <= out_angle + 360 && out_angle + 360 <= hi)) ?
-						-1 : 1;
+				((lo <= this->out_angle && this->out_angle <= hi)
+						|| (lo <= this->out_angle + 360
+								&& this->out_angle + 360 <= hi)) ? -1 : 1;
 		int spin_d = (int) 0.5 * n0 * dire + 1.5;
 		int spin_a = (int) (-0.5 * n0 + 0.5) * 360 + n0 * k[n];
-		function->drive_motor_Rope(motor_number, spin_d, speed, true);
+		function -> drive_motor_Rope(motor_number, spin_d, speed, false);
 		HAL_Delay(1000 * spin_a / speed);
-		function->drive_motor_Rope(motor_number, 3, 0, true);
+		function->drive_motor_Rope(motor_number, 3, 0, false);
 	}
 
 	delete function;
 	delete gyro;
 
 }
-
