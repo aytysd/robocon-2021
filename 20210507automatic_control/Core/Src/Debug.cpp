@@ -19,9 +19,12 @@
 #include "Debug.hpp"
 #include "stdio.h"
 #include "main.h"
+#include "string.h"
+#include <string>
+
 
 template <>
-void Debug::TTO( uint16_t* var_address, const char* str, UART_HandleTypeDef* UART )
+void Debug::TTO_addr( uint16_t* var_address, const char* str, UART_HandleTypeDef* UART )
 {
 	char output[13] = "0";
 
@@ -32,7 +35,7 @@ void Debug::TTO( uint16_t* var_address, const char* str, UART_HandleTypeDef* UAR
 }
 
 template <>
-void Debug::TTO( uint32_t* var_address, const char* str, UART_HandleTypeDef* UART )
+void Debug::TTO_addr( uint32_t* var_address, const char* str, UART_HandleTypeDef* UART )
 {
 	char output[13] = "0";
 
@@ -43,7 +46,7 @@ void Debug::TTO( uint32_t* var_address, const char* str, UART_HandleTypeDef* UAR
 }
 
 template <>
-void Debug::TTO( uint8_t* var_address, const char* str, UART_HandleTypeDef* UART )
+void Debug::TTO_addr( uint8_t* var_address, const char* str, UART_HandleTypeDef* UART )
 {
 	char output[13] = "0";
 
@@ -54,7 +57,7 @@ void Debug::TTO( uint8_t* var_address, const char* str, UART_HandleTypeDef* UART
 }
 
 template <>
-void Debug::TTO( int* var_address, const char* str, UART_HandleTypeDef* UART )
+void Debug::TTO_addr( int* var_address, const char* str, UART_HandleTypeDef* UART )
 {
 	char output[13] = "0";
 
@@ -65,7 +68,7 @@ void Debug::TTO( int* var_address, const char* str, UART_HandleTypeDef* UART )
 }
 
 template <>
-void Debug::TTO( double* var_address, const char* str, UART_HandleTypeDef* UART )
+void Debug::TTO_addr( double* var_address, const char* str, UART_HandleTypeDef* UART )
 {
 	char output[13] = "0";
 
@@ -76,7 +79,7 @@ void Debug::TTO( double* var_address, const char* str, UART_HandleTypeDef* UART 
 }
 
 template <>
-void Debug::TTO( float* var_address, const char* str, UART_HandleTypeDef* UART )
+void Debug::TTO_addr( float* var_address, const char* str, UART_HandleTypeDef* UART )
 {
 	char output[13] = "0";
 
@@ -88,7 +91,7 @@ void Debug::TTO( float* var_address, const char* str, UART_HandleTypeDef* UART )
 
 
 template< typename addr >
-void Debug::TTO( addr var_address, const char* str, UART_HandleTypeDef* UART )
+void Debug::TTO_addr( addr var_address, const char* str, UART_HandleTypeDef* UART )
 {
 	char output[10] = "0";
 
@@ -96,6 +99,90 @@ void Debug::TTO( addr var_address, const char* str, UART_HandleTypeDef* UART )
 	HAL_UART_Transmit( UART, (uint8_t*)str, sizeof( str ), 100 );
 	HAL_UART_Transmit( UART, (uint8_t*)output, sizeof( output ), 100 );
 }
+
+
+
+template<>
+void Debug::TTO_val( int value, const char* str, UART_HandleTypeDef* UART )
+{
+	char output[10] = "0";
+
+	sprintf( output, "%d\r\n", value );
+
+	HAL_UART_Transmit( UART, (uint8_t*)str, sizeof( str ), 100 );
+	HAL_UART_Transmit( UART, (uint8_t*)output, sizeof( output ), 100 );
+
+}
+
+
+template<>
+void Debug::TTO_val( uint8_t value, const char* str, UART_HandleTypeDef* UART )
+{
+	char output[10] = "0";
+
+	sprintf( output, "%d\r\n", value );
+	HAL_UART_Transmit( UART, (uint8_t*)str, sizeof( str ), 100 );
+	HAL_UART_Transmit( UART, (uint8_t*)output, sizeof( output ), 100 );
+}
+
+template<>
+void Debug::TTO_val( uint16_t value, const char* str, UART_HandleTypeDef* UART )
+{
+	char output[10] = "0";
+
+	sprintf( output, "%d\r\n", value );
+	HAL_UART_Transmit( UART, (uint8_t*)str, sizeof( str ), 100 );
+	HAL_UART_Transmit( UART, (uint8_t*)output, sizeof( output ), 100 );
+}
+
+template<>
+void Debug::TTO_val( uint32_t value, const char* str, UART_HandleTypeDef* UART )
+{
+	char output[10] = "0";
+
+	sprintf( output, "%d\r\n", value );
+	HAL_UART_Transmit( UART, (uint8_t*)str, sizeof( str ), 100 );
+	HAL_UART_Transmit( UART, (uint8_t*)output, sizeof( output ), 100 );
+}
+
+template<>
+void Debug::TTO_val( double value, const char* str, UART_HandleTypeDef* UART )
+{
+	char output[10] = "0";
+
+	sprintf( output, "%lf\r\n", value );
+	HAL_UART_Transmit( UART, (uint8_t*)str, sizeof( str ), 100 );
+	HAL_UART_Transmit( UART, (uint8_t*)output, sizeof( output ), 100 );
+}
+
+template<>
+void Debug::TTO_val( float value, const char* str, UART_HandleTypeDef* UART )
+{
+	char output[10] = "0";
+
+	sprintf( output, "%lf\r\n", value );
+
+
+	HAL_UART_Transmit( UART, (uint8_t*)str, sizeof( str ), 100 );
+	HAL_UART_Transmit( UART, (uint8_t*)output, sizeof( output ), 100 );
+}
+
+
+
+
+
+
+template< typename type >
+void Debug::TTO_val( type value, const char* str, UART_HandleTypeDef* UART )
+{
+	char output[10] = "0";
+
+	sprintf( output, "%d\r\n", value );
+
+	HAL_UART_Transmit( UART, (uint8_t*)str, sizeof( str ), 100 );
+	HAL_UART_Transmit( UART, (uint8_t*)output, sizeof( output ), 100 );
+}
+
 
 
 void Debug::time_calc( UART_HandleTypeDef* UART )

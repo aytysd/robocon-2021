@@ -50,12 +50,16 @@
 class Controller{
 public:
 	static uint8_t controller_Rxdata[8];
-	static uint16_t speed;
-	static uint16_t speed_jump;
 	void identify(void);
 
 
 private:
+
+	static uint16_t speed;
+	static uint16_t speed_jump;
+
+	static uint8_t direction;
+	static uint16_t target_speed;
 
 	void check_array(void);
 
