@@ -20,9 +20,12 @@
 #include "Controller.hpp"
 #include "Function.hpp"
 #include "Debug.hpp"
+#include "Rope.hpp"
 #include "main.h"
 
-int max_angular_velocity = 360;
+bool CW_run = false;
+bool force_stop = false;
+int last_encoder_pos = 0;
 
 void Controller::NOP(void)
 {
@@ -33,54 +36,78 @@ void Controller::NOP(void)
 	delete pwm;
 }
 
-void Controller::X(void) //right rotation 720(rad/s)
+void Controller::X(void) //Rotate
 {
-	Debug* debug = new Debug();
-	Function* function = new Function();
+	if( CW_run == true ) return; //You can push X, only once.
 
-	char string[10];
-	char output[10];
-	sprintf(output, "CW%d\r\n", max_angular_velocity);
-
-	for( int i = 0; i < max_angular_velocity; i += 90)
-	{
-		debug -> TTO((uint16_t*)max_angular_velocity, &output, &huart2);
-		function -> drive_motor_Rope(5, CW, (uint16_t*)i, false);
-		HAL_Delay(2000);
-	}
-
-	delete function;
-	delete debug;
-}
-
-void Controller::Y(void) //left rotation 720(rad/s)
-{
-	Debug* debug = new Debug();
 		Function* function = new Function();
+		Rope* rope = new Rope();
 
-		char string[10];
-		char output[10];
-		sprintf(output, "CW%d\r\n", max_angular_velocity);
-
-		for( int i = 0; i < max_angular_velocity; i += 90)
+		if( CW_run == false && rope -> encoder_read_5() != last_encoder_pos )
 		{
-			debug -> TTO((uint16_t*)max_angular_velocity, &output, &huart2);
-			function -> drive_motor_Rope(5, CCW, (uint16_t*)i, false);
-			HAL_Delay(2000);
+			CW_run = true;
+		}
+
+		while( CW_run == true )
+		{
+			if( rope -> encoder_read_5() > 1024 )
+			{
+				function -> drive_motor_Rope(5, CW, 520, false);
+
+				for(int i=0;i<100;++i)
+				{
+					HAL_Delay(1);
+					if( force_stop == true ) return;
+				}
+			}
+			else
+			{
+				function -> drive_motor_Rope(5, CW, 1080, false);
+
+				for(int i=0;i<100;++i)
+				{
+					HAL_Delay(1);
+					if( force_stop == true ) return;
+				}
+			}
 		}
 
 		delete function;
-		delete debug;
+		delete rope;
 }
 
-void Controller::A(void) //stop rotation
+void Controller::Y(void) //Debug
+{
+	Rope* rope = new Rope();
+
+	int now_encoder_pos = rope -> encoder_read_5();
+	Debug::TTO((uint8_t*)&last_encoder_pos, "prv ", &huart2);
+	Debug::TTO((uint8_t*)&now_encoder_pos, "now ", &huart2);
+
+	delete rope;
+}
+
+void Controller::A(void) //Stop all.
 {
 	Function* function = new Function();
-	function -> drive_motor_Rope(5, BRAKE, 720, true);
+	Rope* rope = new Rope();
+
+	CW_run = false;
+	force_stop = true;
+	function -> drive_motor_Rope(5, BRAKE, 0, true);
+	last_encoder_pos = rope -> encoder_read_5();
 
 	delete function;
+	delete rope;
 }
-void Controller::B(void){}
+
+void Controller::B(void){ //CWの2重跳び
+	Function* function = new Fnction();
+	Rope* rope = new Rope();
+
+	delete funtion;
+	delete rope;
+}
 
 void Controller::LB(void){}
 void Controller::RB(void){}
@@ -172,8 +199,8 @@ void Controller::CSDR(void)
 
 }
 
-
 void Controller::RSU(void){}
+
 void Controller::RSR(void)
 {
 	  PWM* pwm = new PWM();

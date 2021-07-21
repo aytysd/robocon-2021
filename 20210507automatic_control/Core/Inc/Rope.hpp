@@ -24,9 +24,13 @@ class Rope
 public:
 	static int over_flow_cnt_3;
 	static int over_flow_cnt_4;
-private:
-	int encoder_read_3();
+	static int over_flow_cnt_5;
 
+	int encoder_read_5();
+
+private:
+
+	int encoder_read_3();
 	int encoder_read_4();
 
 };
