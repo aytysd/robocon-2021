@@ -18,55 +18,74 @@
  */
 #include <GPIO.hpp>
 #include "main.h"
+#include "Debug.hpp"
+
+UART_HandleTypeDef* UART = &huart2;
 
 void GPIO::identify(uint16_t GPIO_Pin){
-	switch(GPIO_Pin){
+	switch( GPIO_Pin ){
 	case GPIO_PIN_0:
+		Debug::TTO_addr( &GPIO_Pin, "0", UART );
 		this -> GPIO_PIN_0_func();
 		break;
 	case GPIO_PIN_1:
+		Debug::TTO_addr( &GPIO_Pin, "1", UART );
 		this -> GPIO_PIN_1_func();
 		break;
 	case GPIO_PIN_2:
+		Debug::TTO_addr( &GPIO_Pin, "2", UART );
 		this -> GPIO_PIN_2_func();
 		break;
 	case GPIO_PIN_3:
+		Debug::TTO_addr( &GPIO_Pin, "3", UART );
 		this -> GPIO_PIN_3_func();
 		break;
 	case GPIO_PIN_4:
+		Debug::TTO_addr( &GPIO_Pin, "4", UART );
 		this -> GPIO_PIN_4_func();
 		break;
 	case GPIO_PIN_5:
+		Debug::TTO_addr( &GPIO_Pin, "5", UART );
 		this -> GPIO_PIN_5_func();
 		break;
 	case GPIO_PIN_6:
+		Debug::TTO_addr( &GPIO_Pin, "6", UART );
 		this -> GPIO_PIN_6_func();
 		break;
 	case GPIO_PIN_7:
+		Debug::TTO_addr( &GPIO_Pin, "7", UART );
 		this -> GPIO_PIN_7_func();
 		break;
 	case GPIO_PIN_8:
+		Debug::TTO_addr( &GPIO_Pin, "8", UART );
 		this -> GPIO_PIN_8_func();
 		break;
 	case GPIO_PIN_9:
+		Debug::TTO_addr( &GPIO_Pin, "9", UART );
 		this -> GPIO_PIN_9_func();
 		break;
 	case GPIO_PIN_10:
+		Debug::TTO_addr( &GPIO_Pin, "10", UART );
 		this -> GPIO_PIN_10_func();
 		break;
 	case GPIO_PIN_11:
+		Debug::TTO_addr( &GPIO_Pin, "11", UART );
 		this -> GPIO_PIN_11_func();
 		break;
 	case GPIO_PIN_12:
+		Debug::TTO_addr( &GPIO_Pin, "12", UART );
 		this -> GPIO_PIN_12_func();
 		break;
 	case GPIO_PIN_13:
+		Debug::TTO_addr( &GPIO_Pin, "13", UART );
 		this -> GPIO_PIN_13_func();
 		break;
 	case GPIO_PIN_14:
+		Debug::TTO_addr( &GPIO_Pin, "14", UART );
 		this -> GPIO_PIN_14_func();
 		break;
 	case GPIO_PIN_15:
+		Debug::TTO_addr( &GPIO_Pin, "15", UART );
 		this -> GPIO_PIN_15_func();
 		break;
 
