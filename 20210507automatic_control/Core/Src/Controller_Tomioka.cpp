@@ -27,6 +27,7 @@ bool CW_run = false;
 bool force_stop = false;
 int last_encoder_pos = 0;
 
+/*
 void Controller::NOP(void)
 {
 	PWM* pwm = new PWM();
@@ -81,8 +82,8 @@ void Controller::Y(void) //Debug
 	Rope* rope = new Rope();
 
 	int now_encoder_pos = rope -> encoder_read_5();
-	Debug::TTO((uint8_t*)&last_encoder_pos, "prv ", &huart2);
-	Debug::TTO((uint8_t*)&now_encoder_pos, "now ", &huart2);
+	Debug::TTO_addr( (uint8_t*)&last_encoder_pos, "prv ", &huart2);
+	Debug::TTO_addr( (uint8_t*)&now_encoder_pos, "now ", &huart2);
 
 	delete rope;
 }
@@ -102,10 +103,10 @@ void Controller::A(void) //Stop all.
 }
 
 void Controller::B(void){ //CWの2重跳び
-	Function* function = new Fnction();
+	Function* function = new Function();
 	Rope* rope = new Rope();
 
-	delete funtion;
+	delete function;
 	delete rope;
 }
 
@@ -224,3 +225,4 @@ void Controller::RSUL(void){}
 void Controller::RSUR(void){}
 void Controller::RSDR(void){}
 void Controller::RSDL(void){}
+*/

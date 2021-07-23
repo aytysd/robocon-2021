@@ -29,8 +29,10 @@ bool GPIO::allow = false;
 int GPIO::angle[2] = {0,0};
 int GPIO::plus = 1;
 
-void GPIO::identify(uint16_t GPIO_Pin){
-	switch( GPIO_Pin ){
+void GPIO::identify( uint16_t GPIO_Pin )
+	{
+	switch( GPIO_Pin )
+	{
 	case GPIO_PIN_0:
 		Debug::TTO_addr( &GPIO_Pin, "0", UART );
 		this -> GPIO_PIN_0_func();

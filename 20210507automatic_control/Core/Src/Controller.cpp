@@ -56,13 +56,7 @@ bool Controller::identify_NOP()
 	uint8_t initial_value[8] = {128, 0, 0, 64, 64, 64, 64, 0};
 	uint8_t count = 0;
 
-	for( int i = 0; i<8; i++)
-	{
-		if( this -> controller_Rxdata[i] == initial_value[i] )
-		{
-			count++;
-		}
-	}
+	for( int i = 0; i < 8; i++ ) if( this -> controller_Rxdata[i] == initial_value[i] ) count++;
 
 	if( count == 8 )
 	{
@@ -71,8 +65,7 @@ bool Controller::identify_NOP()
 		HAL_UART_Transmit(&huart2, (uint8_t*)str, sizeof(str), 100);
 		return true;
 	}
-
-	return false;
+	else return false;
 
 }
 
@@ -190,23 +183,11 @@ void Controller::identify_LS_SB()
 
 	uint8_t data = 0;// 0 bit - left, 1 bit - right, 2 bit - down, 3 bit - up
 
-	if( (this -> controller_Rxdata[2] & 0b00000001) == true)
-	{
-		data |= ( true << 3 );//up
-	}
-	else if( (this -> controller_Rxdata[2] & 0b00000010) >> 1 == true)
-	{
-		data |= ( true << 2 );//down
-	}
+	if( (this -> controller_Rxdata[2] & 0b00000001) == true) data |= ( true << 3 );//up
+	else if( (this -> controller_Rxdata[2] & 0b00000010) >> 1 == true) data |= ( true << 2 );//down
 
-	if( (this -> controller_Rxdata[2] & 0b00000100) >> 2 == true)
-	{
-		data |= ( true << 1 );//right
-	}
-	else if( (this -> controller_Rxdata[2] & 0b00001000) >> 3 == true)
-	{
-		data |= ( true << 0 );//left
-	}
+	if( (this -> controller_Rxdata[2] & 0b00000100) >> 2 == true) data |= ( true << 1 );//right
+	else if( (this -> controller_Rxdata[2] & 0b00001000) >> 3 == true) data |= ( true << 0 );//left
 
 	switch( data )
 	{
@@ -289,23 +270,11 @@ void Controller::identify_RS()
 
 	uint8_t data = 0;// 0 bit - left, 1 bit - right, 2 bit - down, 3 bit - up
 
-	if( this -> controller_Rxdata[6] == 0b00000000 )
-	{
-		data |= ( true << 3 );//up
-	}
-	else if( this -> controller_Rxdata[6] == 0b01111111 )
-	{
-		data |= ( true << 2 );//down
-	}
+	if( this -> controller_Rxdata[6] == 0b00000000 ) data |= ( true << 3 );//up
+	else if( this -> controller_Rxdata[6] == 0b01111111 ) data |= ( true << 2 );//down
 
-	if( this -> controller_Rxdata[5] == 0b01111111 )
-	{
-		data |= ( true << 1 );//right
-	}
-	else if( this -> controller_Rxdata[5] == 0b00000000 )
-	{
-		data |= true;//left
-	}
+	if( this -> controller_Rxdata[5] == 0b01111111 ) data |= ( true << 1 );//right
+	else if( this -> controller_Rxdata[5] == 0b00000000 ) data |= true;//left
 
 	switch( data )
 	{
@@ -389,23 +358,11 @@ void Controller::identify_CS()
 {
 	uint8_t data = 0;// 0 bit - left, 1 bit - right, 2 bit - down, 3 bit - up
 
-	if( this -> controller_Rxdata[4] == 0b00000000 )
-	{
-		data |= ( true << 3 );//up
-	}
-	else if( this -> controller_Rxdata[4] == 0b01111111 )
-	{
-		data |= ( true << 2 );//down
-	}
+	if( this -> controller_Rxdata[4] == 0b00000000 ) data |= ( true << 3 );//up
+	else if( this -> controller_Rxdata[4] == 0b01111111 ) data |= ( true << 2 );//down
 
-	if( this -> controller_Rxdata[3] == 0b01111111 )
-	{
-		data |= ( true << 1 );//right
-	}
-	else if( this -> controller_Rxdata[3] == 0b00000000 )
-	{
-		data |= true;//left
-	}
+	if( this -> controller_Rxdata[3] == 0b01111111 ) data |= ( true << 1 );//right
+	else if( this -> controller_Rxdata[3] == 0b00000000 ) data |= true;//left
 
 	switch( data )
 	{

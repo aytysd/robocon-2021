@@ -22,7 +22,7 @@
 #include "General_command.hpp"
 #include "Init_Move.hpp"
 
-/*
+
 uint8_t Control::master_Rxdata[4] = { 0, 0, 0, 0 };
 
 void Control::control()
@@ -39,7 +39,7 @@ void Control::control()
 	{
 
 	}
-	if( Control::master_Rxdata[0] == (uint8_t)E_Flow::MODE_INIFINITY_INITIAL_POS )
+	if( Control::master_Rxdata[0] == (uint8_t)E_Flow::MOVE_INFINITY_INITIAL_POS )
 	{
 
 	}
@@ -78,4 +78,4 @@ void Control::control()
 
 
 }
-*/
+

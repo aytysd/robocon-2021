@@ -29,6 +29,7 @@ uint16_t Controller::speed_jump = 1000;
 
 //--------------------------------------------------
 //init
+/*
 void Controller::NOP(void)
 {
 	PWM* pwm = new PWM();
@@ -52,22 +53,16 @@ void Controller::LB(void)
 	Function* function = new Function();
 
 	function -> drive_motor(5, CW, this -> speed_jump, false, true);
-	while( HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_3) == 1)
-	{
-
-	}
-	while( HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_3) == 0 )
-	{
-    
-	}
+	while( HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_3) == 1){}
+	while( HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_3) == 0 ){}
 	function -> drive_motor(5, BRAKE, 0, false, true);
 
 	delete function;
-  /*
+
 	Init_Move* init_move = new Init_Move();
 	init_move -> init_move(E_robot_name::A);
 	delete init_move;
-  */
+
 }
 
 
@@ -179,18 +174,12 @@ void Controller::CSDR(void)
 void Controller::RSU(void)
 {
 	this -> speed += 50;
-	if(this -> speed > 1300)
-	{
-		this -> speed = 1300;
-	}
+	if(this -> speed > 1300) this -> speed = 1300;
 }
 void Controller::RSD(void)
 {
 	this -> speed -= 50;
-	if(this -> speed < 700)
-	{
-		this -> speed = 700;
-	}
+	if(this -> speed < 700) this -> speed = 700;
 }
 
 
@@ -225,19 +214,13 @@ void Controller::RSDL(void){}
 void Controller::LSU(void)
 {
 	this -> speed_jump += 50;
-	if(this -> speed_jump > 1200)
-	{
-		this -> speed_jump = 1200;
-	}
+	if(this -> speed_jump > 1200) this -> speed_jump = 1200;
 }
 
 void Controller::LSD(void)
 {
 	this -> speed_jump -= 50;
-	if(this -> speed_jump < 800)
-	{
-		this -> speed_jump = 800;
-	}
+	if(this -> speed_jump < 800) this -> speed_jump = 800;
 }
 
 void Controller::LSL(void){}
@@ -246,3 +229,4 @@ void Controller::LSUL(void){}
 void Controller::LSUR(void){}
 void Controller::LSDR(void){}
 void Controller::LSDL(void){}
+*/

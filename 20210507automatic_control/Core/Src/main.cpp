@@ -31,7 +31,6 @@
 #include "Init_Move.hpp"
 #include "LED.hpp"
 #include "Error_Handling.hpp"
-#include "Flow.hpp"
 #include "Controller.hpp"
 #include "Control.hpp"
 #include "Rope.hpp"
@@ -145,11 +144,11 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim)
     if(htim->Instance == TIM3)
     {
         __HAL_TIM_CLEAR_FLAG(&htim3, TIM_IT_UPDATE);
-        if(__HAL_TIM_IS_TIM_COUNTING_DOWN(&htim3)) //0 ??¿½?¿½? 65535
+        if(__HAL_TIM_IS_TIM_COUNTING_DOWN(&htim3)) //0 ??ï¿½ï¿½?ï¿½ï¿½? 65535
         {
             Rope::over_flow_cnt_3--;
         }
-        else //65535 ??¿½?¿½? 0
+        else //65535 ??ï¿½ï¿½?ï¿½ï¿½? 0
         {
             Rope::over_flow_cnt_3++;
         }
@@ -157,11 +156,11 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim)
     else if(htim->Instance == TIM4)
     {
         __HAL_TIM_CLEAR_FLAG(&htim4, TIM_IT_UPDATE);
-        if(__HAL_TIM_IS_TIM_COUNTING_DOWN(&htim4)) //0 ??¿½?¿½? 65535
+        if(__HAL_TIM_IS_TIM_COUNTING_DOWN(&htim4)) //0 ??ï¿½ï¿½?ï¿½ï¿½? 65535
         {
             Rope::over_flow_cnt_4--;
         }
-        else //65535 ??¿½?¿½? 0
+        else //65535 ??ï¿½ï¿½?ï¿½ï¿½? 0
         {
             Rope::over_flow_cnt_4++;
         }

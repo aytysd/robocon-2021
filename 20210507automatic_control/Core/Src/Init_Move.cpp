@@ -27,7 +27,6 @@
 #include "GPIO.hpp"
 #include "main.h"
 #include "stdio.h"
-#include "Flow.hpp"
 #include "Communication.hpp"
 #include "LED.hpp"
 #include "Controller.hpp"
@@ -48,7 +47,7 @@ public:
 
 		Error_Handling* error_handling = new Error_Handling();
 
-		while( (HAL_GPIO_ReadPin(LIMIT_F_V2_GPIO_Port, LIMIT_F_V2_Pin) == GPIO_PIN_RESET ) || ( HAL_GPIO_ReadPin( LIMIT_F_V3_GPIO_Port, LIMIT_F_V3_Pin ) == GPIO_PIN_RESET))
+		while( ( HAL_GPIO_ReadPin( LIMIT_F_V2_GPIO_Port, LIMIT_Fl_V2_Pin ) == GPIO_PIN_RESET ) || ( HAL_GPIO_ReadPin( LIMIT_F_V3_GPIO_Port, LIMIT_F_V3_Pin ) == GPIO_PIN_RESET ) )
 		{
 			static uint32_t start_time = HAL_GetTick();
 
@@ -77,12 +76,11 @@ public:
 		Error_Handling* error_handling = new Error_Handling();
 
 
-		while( (HAL_GPIO_ReadPin(LIMIT_L_V3_GPIO_Port, LIMIT_L_V3_Pin) == GPIO_PIN_RESET ) || ( HAL_GPIO_ReadPin( LIMIT_L_V4_GPIO_Port, LIMIT_L_V4_Pin ) == GPIO_PIN_RESET))
+		while( ( HAL_GPIO_ReadPin( LIMIT_L_V3_GPIO_Port, LIMIT_L_V3_Pin ) == GPIO_PIN_RESET ) || ( HAL_GPIO_ReadPin( LIMIT_L_V4_GPIO_Port, LIMIT_L_V4_Pin ) == GPIO_PIN_RESET ) )
 		{
 			static uint32_t start_time = HAL_GetTick();
 
 			if( HAL_GetTick() - start_time >= 3000 )
-
 			{
 			Error_Handling::error_line = __LINE__;
 			Error_Handling::error_func = __func__;
@@ -111,14 +109,16 @@ public:
 }
 
 
-void Init_Move::init_move(E_robot_name robot)
+void Init_Move::init_move( E_robot_name robot )
 {
 
 	PWM* pwm = new PWM();
 	Init_Wait::Wait* wait = new Init_Wait::Wait();
 	LED* led = new LED();
 
-	led -> LED_output(E_LED_status::Init);
+	led -> LED_output( E_LED_status::Init );
+
+	uint16_t speed = 400;
 
 	switch(robot)
 	{
@@ -127,14 +127,14 @@ void Init_Move::init_move(E_robot_name robot)
 		Error_Handling::current_func = const_cast<char*>(__func__);
 		Error_Handling::current_line = __LINE__;
 
-		pwm -> V_output(100, 90, 0, 0, E_move_status::MOVE);
+		pwm -> V_output( speed, 90, 0, 0, E_move_status::MOVE );
 		wait -> wait_F();
-		pwm -> V_output(0, 0, 0, 0, E_move_status::STOP);
-		HAL_Delay(3000);
+		pwm -> V_output( 0, 0, 0, 0, E_move_status::STOP );
+		HAL_Delay( 3000 );
 
-		pwm -> V_output(100, 180, 0, 0, E_move_status::MOVE);
+		pwm -> V_output( speed, 180, 0, 0, E_move_status::MOVE );
 		wait -> wait_L();
-		pwm -> V_output(0, 0, 0, 0, E_move_status::STOP);
+		pwm -> V_output( 0, 0, 0, 0, E_move_status::STOP );
 
 		break;
 	case E_robot_name::B:
@@ -142,14 +142,14 @@ void Init_Move::init_move(E_robot_name robot)
 		Error_Handling::current_func = const_cast<char*>(__func__);
 		Error_Handling::current_line = __LINE__;
 
-		pwm -> V_output(100, 180, 0, 90, E_move_status::MOVE);
+		pwm -> V_output( speed, 180, 0, 90, E_move_status::MOVE );
 		wait -> wait_F();
-		pwm -> V_output(0, 0, 0, 0, E_move_status::STOP);
-		HAL_Delay(3000);
+		pwm -> V_output( 0, 0, 0, 0, E_move_status::STOP );
+		HAL_Delay( 3000 );
 
-		pwm -> V_output(100, 270, 0, 90, E_move_status::MOVE);
+		pwm -> V_output( speed, 270, 0, 90, E_move_status::MOVE );
 		wait -> wait_L();
-		pwm -> V_output(0, 0, 0, 0, E_move_status::STOP);
+		pwm -> V_output( 0, 0, 0, 0, E_move_status::STOP );
 
 		break;
 	case E_robot_name::C:
@@ -157,14 +157,14 @@ void Init_Move::init_move(E_robot_name robot)
 		Error_Handling::current_func = const_cast<char*>(__func__);
 		Error_Handling::current_line = __LINE__;
 
-		pwm -> V_output(100, 270, 0, 180, E_move_status::MOVE);
+		pwm -> V_output( speed, 270, 0, 180, E_move_status::MOVE );
 		wait -> wait_F();
-		pwm -> V_output(0, 0, 0, 0, E_move_status::STOP);
+		pwm -> V_output( 0, 0, 0, 0, E_move_status::STOP );
 		HAL_Delay(3000);
 
-		pwm -> V_output(100, 360, 0, 180, E_move_status::MOVE);
+		pwm -> V_output( speed, 360, 0, 180, E_move_status::MOVE );
 		wait -> wait_L();
-		pwm -> V_output(0, 0, 0, 0, E_move_status::STOP);
+		pwm -> V_output( 0, 0, 0, 0, E_move_status::STOP );
 
 		break;
 	}
@@ -174,41 +174,53 @@ void Init_Move::init_move(E_robot_name robot)
 
 
 
-	this -> Initialize(robot);
+	this -> Initialize( robot );
 
 	delete led;
 	delete pwm;
 	delete wait;
 
-	led -> LED_output(E_LED_status::Done);
+	led -> LED_output( E_LED_status::Done );
 
 }
 
-void Init_Move::Initialize(E_robot_name robot)
+void Init_Move::Initialize( E_robot_name robot )
 {
 
 	  Gyro* gyro = new Gyro();
 	  Self_Pos* self_pos = new Self_Pos();
 
-	  self_pos -> set_initial_pos(robot);
-	  gyro -> BNO055_Init_I2C(&hi2c1);
-	  gyro -> BNO055_Init_I2C(&hi2c3);
-	  gyro -> set_initial_direction(robot);
+	  self_pos -> set_initial_pos( robot );
+	  gyro -> BNO055_Init_I2C( &hi2c1 );
+	  gyro -> BNO055_Init_I2C( &hi2c3 );
+	  gyro -> set_initial_direction( robot );
 
+
+	  __HAL_UART_ENABLE_IT( &huart4, UART_IT_RXNE );
+	  __HAL_UART_ENABLE_IT( &huart2, UART_IT_RXNE );
+	  __HAL_UART_ENABLE_IT( &huart1, UART_IT_RXNE );
+
+/*
+	  __HAL_UART_DISABLE_IT( &huart2 , UART_IT_RXNE );
+	  __HAL_UART_DISABLE_IT( &huart4 , UART_IT_RXNE );
+	  __HAL_UART_DISABLE_IT( &huart1 , UART_IT_RXNE );
+*/
+/*
 	  HAL_UART_Receive_IT(&huart1, (uint8_t*)Communication::Rxdata, sizeof(Communication::Rxdata));
 	  HAL_UART_Receive_IT(&huart4, (uint8_t*)Controller::controller_Rxdata, sizeof(Controller::controller_Rxdata));
 	  HAL_UART_Receive_IT(&huart3, (uint8_t*)Communication::Rxdata, sizeof(Communication::Rxdata));
+*/
 
 
-	  HAL_TIM_Base_Start_IT(&htim6);
-	  HAL_TIM_Base_Start_IT(&htim7);
-	  HAL_TIM_Base_Start_IT(&htim3);
-	  HAL_TIM_Base_Start_IT(&htim4);
+	  HAL_TIM_Base_Start_IT( &htim6 );
+	  HAL_TIM_Base_Start_IT( &htim7 );
+	  HAL_TIM_Base_Start_IT( &htim3 );
+	  HAL_TIM_Base_Start_IT( &htim4 );
 
-	  HAL_TIM_Encoder_Start(&htim5, TIM_CHANNEL_ALL);
-	  HAL_TIM_Encoder_Start(&htim2, TIM_CHANNEL_ALL);
-	  HAL_TIM_Encoder_Start(&htim3, TIM_CHANNEL_ALL);
-	  HAL_TIM_Encoder_Start(&htim4, TIM_CHANNEL_ALL);
+	  HAL_TIM_Encoder_Start( &htim5, TIM_CHANNEL_ALL );
+	  HAL_TIM_Encoder_Start( &htim2, TIM_CHANNEL_ALL );
+	  HAL_TIM_Encoder_Start( &htim3, TIM_CHANNEL_ALL );
+	  HAL_TIM_Encoder_Start( &htim4, TIM_CHANNEL_ALL );
 
 	  delete gyro;
 	  delete self_pos;

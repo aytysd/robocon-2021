@@ -28,6 +28,7 @@
 #include "PWM.hpp"
 #include "Gyro.hpp"
 #include "Function.hpp"
+#include "GPIO.hpp"
 
 int Self_Pos::Self_Pos_X = 0; //(mm)
 int Self_Pos::Self_Pos_Y = 0; //(mm)
@@ -115,7 +116,8 @@ void Self_Pos::update_self_pos_ToF() {
 	delete tof;
 }
 //---------------------------------------
-int Self_Pos::encoder_read_5(void) {
+int Self_Pos::encoder_read_5(void)
+{
 	static int prev_encoder_value = 0;
 	uint32_t enc_buff_5 = TIM5->CNT;
 	int encoder_value = 0;
@@ -140,7 +142,8 @@ int Self_Pos::encoder_read_5(void) {
 
 }
 //------------------------------------------------------
-int Self_Pos::encoder_read_2(void) {
+int Self_Pos::encoder_read_2(void)
+{
 
 	static int prev_encoder_value = 0;
 	uint32_t enc_buff_2 = TIM2->CNT;
@@ -166,7 +169,8 @@ int Self_Pos::encoder_read_2(void) {
 
 }
 
-int Self_Pos::calc_diff(int prev_x, int prev_y, int current_x, int current_y) {
+int Self_Pos::calc_diff(int prev_x, int prev_y, int current_x, int current_y)
+{
 	int x_diff = current_x - prev_x;
 	int y_diff = current_y - prev_y;
 
@@ -182,38 +186,38 @@ int Self_Pos::Self_Pos_config_Limit(void) {
 
 	PWM *pwm = new PWM();
 
-	if (this->get_Self_Pos_X() > 0) {
+	if (this->get_Self_Pos_X() > 0)
+	{
 		reset_pos |= true;
-	} else {
+	}
+	else
+	{
 		reset_pos |= true << 1;
 	}
 
-	if (this->get_Self_Pos_Y() > 0) {
+	if (this->get_Self_Pos_Y() > 0)
+	{
 		reset_pos |= true << 2;
-	} else {
+	}
+	else
+	{
 		reset_pos |= true << 3;
 	}
 
-	switch (reset_pos) {
-	case 0b00000101: {
+	switch (reset_pos)
+	{
+	case 0b00000101:
+	{
 
 		pwm->rotate(500, 270);
 
 		pwm->V_output(500, 0, 0, 270, E_move_status::MOVE);
-		while ((HAL_GPIO_ReadPin(LIMIT_F_V2_GPIO_Port, LIMIT_F_V2_Pin)
-				== GPIO_PIN_RESET)
-				|| (HAL_GPIO_ReadPin( LIMIT_F_V3_GPIO_Port, LIMIT_F_V3_Pin)
-						== GPIO_PIN_RESET)) {
-		}
+		while ( ( HAL_GPIO_ReadPin( LIMIT_F_V2_GPIO_Port, LIMIT_F_V2_Pin ) == GPIO_PIN_RESET ) || ( HAL_GPIO_ReadPin( LIMIT_F_V3_GPIO_Port, LIMIT_F_V3_Pin ) == GPIO_PIN_RESET ) ){}
 		pwm->V_output(0, 0, 0, 0, E_move_status::STOP);
 		HAL_Delay(2000);
 
 		pwm->V_output(500, 90, 0, 270, E_move_status::MOVE);
-		while ((HAL_GPIO_ReadPin(LIMIT_L_V3_GPIO_Port, LIMIT_L_V3_Pin)
-				== GPIO_PIN_RESET)
-				|| (HAL_GPIO_ReadPin( LIMIT_L_V4_GPIO_Port, LIMIT_L_V4_Pin)
-						== GPIO_PIN_RESET)) {
-		}
+		while ( ( HAL_GPIO_ReadPin( LIMIT_L_V3_GPIO_Port, LIMIT_L_V3_Pin ) == GPIO_PIN_RESET ) || ( HAL_GPIO_ReadPin( LIMIT_L_V4_GPIO_Port, LIMIT_L_V4_Pin ) == GPIO_PIN_RESET ) ){}
 		pwm->V_output(0, 0, 0, 0, E_move_status::STOP);
 
 		int prev_x = this->get_Self_Pos_X();
@@ -221,29 +225,21 @@ int Self_Pos::Self_Pos_config_Limit(void) {
 
 		this->set_initial_pos(E_robot_name::NONE);
 
-		diff = this->calc_diff(prev_x, prev_y, this->get_Self_Pos_X(),
-				this->get_Self_Pos_Y());
+		diff = this->calc_diff(prev_x, prev_y, this->get_Self_Pos_X(), this->get_Self_Pos_Y());
 
 		break;
 	}
-	case 0b00001001: {
+	case 0b00001001:
+	{
 		pwm->rotate(500, 180);
 
 		pwm->V_output(500, 0, 0, 180, E_move_status::MOVE);
-		while ((HAL_GPIO_ReadPin(LIMIT_L_V3_GPIO_Port, LIMIT_L_V3_Pin)
-				== GPIO_PIN_RESET)
-				|| (HAL_GPIO_ReadPin( LIMIT_L_V4_GPIO_Port, LIMIT_L_V4_Pin)
-						== GPIO_PIN_RESET)) {
-		}
+		while ((HAL_GPIO_ReadPin(LIMIT_L_V3_GPIO_Port, LIMIT_L_V3_Pin) == GPIO_PIN_RESET) || (HAL_GPIO_ReadPin( LIMIT_L_V4_GPIO_Port, LIMIT_L_V4_Pin) == GPIO_PIN_RESET)) {}
 		pwm->V_output(0, 0, 0, 0, E_move_status::STOP);
 		HAL_Delay(2000);
 
 		pwm->V_output(500, 270, 0, 180, E_move_status::MOVE);
-		while ((HAL_GPIO_ReadPin(LIMIT_F_V2_GPIO_Port, LIMIT_F_V2_Pin)
-				== GPIO_PIN_RESET)
-				|| (HAL_GPIO_ReadPin( LIMIT_F_V3_GPIO_Port, LIMIT_F_V3_Pin)
-						== GPIO_PIN_RESET)) {
-		}
+		while ((HAL_GPIO_ReadPin(LIMIT_F_V2_GPIO_Port, LIMIT_F_V2_Pin) == GPIO_PIN_RESET) || (HAL_GPIO_ReadPin( LIMIT_F_V3_GPIO_Port, LIMIT_F_V3_Pin) == GPIO_PIN_RESET)) {}
 		pwm->V_output(0, 0, 0, 0, E_move_status::STOP);
 
 		int prev_x = this->get_Self_Pos_X();
@@ -251,29 +247,21 @@ int Self_Pos::Self_Pos_config_Limit(void) {
 
 		this->set_initial_pos(E_robot_name::C);
 
-		diff = this->calc_diff(prev_x, prev_y, this->get_Self_Pos_X(),
-				this->get_Self_Pos_Y());
+		diff = this->calc_diff(prev_x, prev_y, this->get_Self_Pos_X(), this->get_Self_Pos_Y());
 
 		break;
 	}
-	case 0b00000110: {
+	case 0b00000110:
+	{
 		pwm->rotate(500, 0);
 
 		pwm->V_output(500, 180, 0, 0, E_move_status::MOVE);
-		while ((HAL_GPIO_ReadPin(LIMIT_L_V3_GPIO_Port, LIMIT_L_V3_Pin)
-				== GPIO_PIN_RESET)
-				|| (HAL_GPIO_ReadPin( LIMIT_L_V4_GPIO_Port, LIMIT_L_V4_Pin)
-						== GPIO_PIN_RESET)) {
-		}
+		while ((HAL_GPIO_ReadPin(LIMIT_L_V3_GPIO_Port, LIMIT_L_V3_Pin) == GPIO_PIN_RESET) || (HAL_GPIO_ReadPin( LIMIT_L_V4_GPIO_Port, LIMIT_L_V4_Pin) == GPIO_PIN_RESET)) {}
 		pwm->V_output(0, 0, 0, 0, E_move_status::STOP);
 		HAL_Delay(2000);
 
 		pwm->V_output(500, 90, 0, 0, E_move_status::MOVE);
-		while ((HAL_GPIO_ReadPin(LIMIT_F_V2_GPIO_Port, LIMIT_F_V2_Pin)
-				== GPIO_PIN_RESET)
-				|| (HAL_GPIO_ReadPin( LIMIT_F_V3_GPIO_Port, LIMIT_F_V3_Pin)
-						== GPIO_PIN_RESET)) {
-		}
+		while ((HAL_GPIO_ReadPin(LIMIT_F_V2_GPIO_Port, LIMIT_F_V2_Pin) == GPIO_PIN_RESET) || (HAL_GPIO_ReadPin( LIMIT_F_V3_GPIO_Port, LIMIT_F_V3_Pin) == GPIO_PIN_RESET)) {}
 		pwm->V_output(0, 0, 0, 0, E_move_status::STOP);
 
 		int prev_x = this->get_Self_Pos_X();
@@ -281,29 +269,21 @@ int Self_Pos::Self_Pos_config_Limit(void) {
 
 		this->set_initial_pos(E_robot_name::A);
 
-		diff = this->calc_diff(prev_x, prev_y, this->get_Self_Pos_X(),
-				this->get_Self_Pos_Y());
+		diff = this->calc_diff(prev_x, prev_y, this->get_Self_Pos_X(), this->get_Self_Pos_Y());
 
 		break;
 	}
-	case 0b00001010: {
+	case 0b00001010:
+	{
 		pwm->rotate(500, 90);
 
 		pwm->V_output(500, 180, 0, 90, E_move_status::MOVE);
-		while ((HAL_GPIO_ReadPin(LIMIT_F_V2_GPIO_Port, LIMIT_F_V2_Pin)
-				== GPIO_PIN_RESET)
-				|| (HAL_GPIO_ReadPin( LIMIT_F_V3_GPIO_Port, LIMIT_F_V3_Pin)
-						== GPIO_PIN_RESET)) {
-		}
+		while ((HAL_GPIO_ReadPin(LIMIT_F_V2_GPIO_Port, LIMIT_F_V2_Pin) == GPIO_PIN_RESET) || (HAL_GPIO_ReadPin( LIMIT_F_V3_GPIO_Port, LIMIT_F_V3_Pin) == GPIO_PIN_RESET)) {}
 		pwm->V_output(0, 0, 0, 0, E_move_status::STOP);
 		HAL_Delay(2000);
 
 		pwm->V_output(500, 270, 0, 90, E_move_status::MOVE);
-		while ((HAL_GPIO_ReadPin(LIMIT_L_V3_GPIO_Port, LIMIT_L_V3_Pin)
-				== GPIO_PIN_RESET)
-				|| (HAL_GPIO_ReadPin( LIMIT_L_V4_GPIO_Port, LIMIT_L_V4_Pin)
-						== GPIO_PIN_RESET)) {
-		}
+		while ((HAL_GPIO_ReadPin(LIMIT_L_V3_GPIO_Port, LIMIT_L_V3_Pin) == GPIO_PIN_RESET) || (HAL_GPIO_ReadPin( LIMIT_L_V4_GPIO_Port, LIMIT_L_V4_Pin) == GPIO_PIN_RESET)) {}
 		pwm->V_output(0, 0, 0, 0, E_move_status::STOP);
 
 		int prev_x = this->get_Self_Pos_X();
@@ -311,8 +291,7 @@ int Self_Pos::Self_Pos_config_Limit(void) {
 
 		this->set_initial_pos(E_robot_name::B);
 
-		diff = this->calc_diff(prev_x, prev_y, this->get_Self_Pos_X(),
-				this->get_Self_Pos_Y());
+		diff = this->calc_diff(prev_x, prev_y, this->get_Self_Pos_X(), this->get_Self_Pos_Y());
 
 		break;
 	}
