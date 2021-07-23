@@ -51,14 +51,14 @@ public:
 	void update_self_pos_ToF();
 
 	void Self_Pos_correction( int pos_x);
-	void Spin(int goal_angle , bool scan );
+
 
 	static int out_angle;
 private:
 	int encoder_read_5(void);
 	int encoder_read_2(void);
 
-
+	void Spin(int goal_angle , bool scan );
 	int calc_diff( int prev_x, int prev_y, int current_x, int current_y );
 
 	static int Self_Pos_X;

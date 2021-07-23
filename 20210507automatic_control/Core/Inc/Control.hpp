@@ -21,6 +21,21 @@
 
 #include "main.h"
 
+enum class E_Flow
+{
+	INIT_MOVE = 0x10,
+	MOVE_INFINITY_INITIAL_POS = 0x20,
+	MODE_INFINITY_JUMP = 0x30,
+	MODE_SELF_POS_COR = 0x40,
+	MOVE_DOUBLE_JUMP_INITIAL_POS = 0x50,
+	MODE_DOUBLE_JUMP = 0x60,
+	FINISH = 0x70,
+
+
+
+};
+
+
 class Control
 {
 public:
