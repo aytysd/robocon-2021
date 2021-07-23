@@ -28,12 +28,7 @@ void Error_Handling::TIM5_error_handling()
 	static bool flag = false;
 	static uint32_t base_time = 0;
 
-	if( flag == false )
-	{
-		base_time = HAL_GetTick();
-	}
-
-
+	if( flag == false ) base_time = HAL_GetTick();
 
 	 if( TIM5 -> CNT == 0 )
 	 {
@@ -70,12 +65,7 @@ void Error_Handling::TIM2_error_handling()
 	static bool flag = false;
 	static uint32_t base_time = 0;
 
-	if( flag == false )
-	{
-		base_time = HAL_GetTick();
-	}
-
-
+	if( flag == false ) base_time = HAL_GetTick();
 
 	 if( TIM2 -> CNT == 0 )
 	 {
@@ -116,12 +106,7 @@ void Error_Handling::gyro_error_handling(uint16_t direction)
 	static bool flag = false;
 	static uint32_t base_time = 0;
 
-	if( flag == false )
-	{
-		base_time = HAL_GetTick();
-	}
-
-
+	if( flag == false ) base_time = HAL_GetTick();
 
 	 if( direction == 0 || direction == 41 || direction > 360 )
 	 {
@@ -161,23 +146,14 @@ void Error_Handling::gyro_error_handling(uint16_t direction)
 void Error_Handling::Emergency_stop()
 {
 	Function* function = new Function();
-	for(int i = 0; i<8; i++){
-
-		function -> drive_motor(i, 3, 0, false, false);
-	}
+	for(int i = 0; i<8; i++) function -> drive_motor(i, 3, 0, false, false);
 	delete function;
 
 }
 
 void Error_Handling::set_flag(E_Errors errors)
 {
-	for( int i = 0; i<static_cast<int>(E_Errors::Count); i++)
-	{
-		if( static_cast<int>(errors) == i )
-		{
-			this -> flag[i] = true;
-		}
-	}
+	for( int i = 0; i<static_cast<int>(E_Errors::Count); i++) if( static_cast<int>(errors) == i ) this -> flag[i] = true;
 
 }
 

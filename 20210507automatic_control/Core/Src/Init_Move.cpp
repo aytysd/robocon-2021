@@ -31,6 +31,7 @@
 #include "LED.hpp"
 #include "Controller.hpp"
 #include "Gyro.hpp"
+#include "MPU6050.hpp"
 
 namespace Init_Wait
 {
@@ -47,7 +48,7 @@ public:
 
 		Error_Handling* error_handling = new Error_Handling();
 
-		while( ( HAL_GPIO_ReadPin( LIMIT_F_V2_GPIO_Port, LIMIT_Fl_V2_Pin ) == GPIO_PIN_RESET ) || ( HAL_GPIO_ReadPin( LIMIT_F_V3_GPIO_Port, LIMIT_F_V3_Pin ) == GPIO_PIN_RESET ) )
+		while( ( HAL_GPIO_ReadPin( LIMIT_F_V2_GPIO_Port, LIMIT_F_V2_Pin ) == GPIO_PIN_RESET ) || ( HAL_GPIO_ReadPin( LIMIT_F_V3_GPIO_Port, LIMIT_F_V3_Pin ) == GPIO_PIN_RESET ) )
 		{
 			static uint32_t start_time = HAL_GetTick();
 
@@ -189,12 +190,14 @@ void Init_Move::Initialize( E_robot_name robot )
 
 	  Gyro* gyro = new Gyro();
 	  Self_Pos* self_pos = new Self_Pos();
+	  MPU6050* mpu6050 = new MPU6050();
 
 	  self_pos -> set_initial_pos( robot );
 	  gyro -> BNO055_Init_I2C( &hi2c1 );
 	  gyro -> BNO055_Init_I2C( &hi2c3 );
 	  gyro -> set_initial_direction( robot );
 
+	  mpu6050 -> MPU6050_Init( &hi2c1 );
 
 	  __HAL_UART_ENABLE_IT( &huart4, UART_IT_RXNE );
 	  __HAL_UART_ENABLE_IT( &huart2, UART_IT_RXNE );
@@ -224,6 +227,7 @@ void Init_Move::Initialize( E_robot_name robot )
 
 	  delete gyro;
 	  delete self_pos;
+	  delete mpu6050;
 
 
 

@@ -120,9 +120,6 @@ bool PWM::rotate(uint16_t V, uint16_t target_angle)
 
 		}
 	}
-	else
-	{
-	}
 
 	delete gyro;
 	return true;
@@ -133,20 +130,9 @@ bool PWM::rotate(uint16_t V, uint16_t target_angle)
 
 uint8_t PWM::plus_minus(double number)
 {
-	if( number > 0 )
-	{
-		return CW;
-	}
-	if( number < 0 )
-	{
-		return CCW;
-	}
-	if( number == 0 )
-	{
-		return BRAKE;
-	}
-
-
+	if( number > 0 ) return CW;
+	else if( number < 0 ) return CCW;
+	else if( number == 0 ) return BRAKE;
 
 }
 

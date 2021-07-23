@@ -37,21 +37,25 @@ int Self_Pos::out_angle = 0;
 //----------------------------------------------------------------------
 //Self_Pos* self_pos = new Self_Pos();
 
-int Self_Pos::get_Self_Pos_X() {
+int Self_Pos::get_Self_Pos_X()
+{
 	return this->Self_Pos_X;
 }
 
-int Self_Pos::get_Self_Pos_Y() {
+int Self_Pos::get_Self_Pos_Y()
+{
 	return this->Self_Pos_Y;
 }
 
-void Self_Pos::add_Self_Pos(int add_x, int add_y) {
+void Self_Pos::add_Self_Pos(int add_x, int add_y)
+{
 	this->Self_Pos_Y += add_x;
 	this->Self_Pos_X += add_y;
 
 }
 
-void Self_Pos::set_initial_pos(E_robot_name robot) {
+void Self_Pos::set_initial_pos(E_robot_name robot)
+{
 	switch (robot) {
 	case E_robot_name::A:
 
@@ -84,32 +88,22 @@ void Self_Pos::set_initial_pos(E_robot_name robot) {
 //delete self_pos;
 //-------------------------------------
 //Self_Pos* self_pos = new Self_Pos();
-void Self_Pos::update_self_pos(void) {
+void Self_Pos::update_self_pos(void)
+{
 	Gyro *gyro = new Gyro();
 
-	int d1 = -2 * OD_RADIUS * M_PI
-			* ((double) this->encoder_read_5() / (double) 2048); //encoder5_moving distance(mm) 55.5=wheel radius 2048=encoder resolution
-	int d2 = 2 * OD_RADIUS * M_PI
-			* ((double) this->encoder_read_2() / (double) 2048); //encoder5_moving distance(mm) 55.5=wheel radius 2048=encoder resolution
+	int d1 = -2 * OD_RADIUS * M_PI * ((double) this->encoder_read_5() / (double) 2048); //encoder5_moving distance(mm) 55.5=wheel radius 2048=encoder resolution
+	int d2 = 2 * OD_RADIUS * M_PI * ((double) this->encoder_read_2() / (double) 2048); //encoder5_moving distance(mm) 55.5=wheel radius 2048=encoder resolution
 
-	this->Self_Pos_X += d1
-			* cos((double) gyro->get_direction(&hi2c1) * M_PI / (double) 180)
-			- d2
-					* sin(
-							(double) gyro->get_direction(&hi2c1) * M_PI
-									/ (double) 180); //X_coordinate
-	this->Self_Pos_Y += d1
-			* sin((double) gyro->get_direction(&hi2c1) * M_PI / (double) 180)
-			+ d2
-					* cos(
-							(double) gyro->get_direction(&hi2c1) * M_PI
-									/ (double) 180); //Y_coordinate
+	this->Self_Pos_X += d1 * cos((double) gyro->get_direction(&hi2c1) * M_PI / (double) 180) - d2 * sin( (double) gyro->get_direction(&hi2c1) * M_PI / (double) 180); //X_coordinate
+	this->Self_Pos_Y += d1 * sin((double) gyro->get_direction(&hi2c1) * M_PI / (double) 180) + d2 * cos( (double) gyro->get_direction(&hi2c1) * M_PI / (double) 180); //Y_coordinate
 
 	delete gyro;
 }
 //delete self_pos;
 //---------------------------------------
-void Self_Pos::update_self_pos_ToF() {
+void Self_Pos::update_self_pos_ToF()
+{
 	ToF *tof = new ToF();
 	this->Self_Pos_X;
 	this->Self_Pos_Y;
@@ -128,11 +122,8 @@ int Self_Pos::encoder_read_5(void)
 	 delete error_handling;
 	 */
 
-	if (enc_buff_5 <= 2147483647) {
-		encoder_value = enc_buff_5;
-	} else if (enc_buff_5 >= 2147483649) {
-		encoder_value = enc_buff_5 - 4294967295;
-	}
+	if (enc_buff_5 <= 2147483647) encoder_value = enc_buff_5;
+	else if (enc_buff_5 >= 2147483649)  encoder_value = enc_buff_5 - 4294967295;
 
 	int encoder_diff = encoder_value - prev_encoder_value;
 
@@ -155,11 +146,8 @@ int Self_Pos::encoder_read_2(void)
 	 delete error_handling;
 	 */
 
-	if (enc_buff_2 <= 2147483647) {
-		encoder_value = enc_buff_2;
-	} else if (enc_buff_2 >= 2147483649) {
-		encoder_value = enc_buff_2 - 4294967295;
-	}
+	if (enc_buff_2 <= 2147483647) encoder_value = enc_buff_2;
+	else if (enc_buff_2 >= 2147483649) encoder_value = enc_buff_2 - 4294967295;
 
 	int encoder_diff = encoder_value - prev_encoder_value;
 
@@ -186,23 +174,11 @@ int Self_Pos::Self_Pos_config_Limit(void) {
 
 	PWM *pwm = new PWM();
 
-	if (this->get_Self_Pos_X() > 0)
-	{
-		reset_pos |= true;
-	}
-	else
-	{
-		reset_pos |= true << 1;
-	}
+	if (this->get_Self_Pos_X() > 0) reset_pos |= true;
+	else reset_pos |= true << 1;
 
-	if (this->get_Self_Pos_Y() > 0)
-	{
-		reset_pos |= true << 2;
-	}
-	else
-	{
-		reset_pos |= true << 3;
-	}
+	if (this->get_Self_Pos_Y() > 0) reset_pos |= true << 2;
+	else reset_pos |= true << 3;
 
 	switch (reset_pos)
 	{

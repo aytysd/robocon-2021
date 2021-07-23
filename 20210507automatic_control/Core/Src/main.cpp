@@ -144,26 +144,14 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim)
     if(htim->Instance == TIM3)
     {
         __HAL_TIM_CLEAR_FLAG(&htim3, TIM_IT_UPDATE);
-        if(__HAL_TIM_IS_TIM_COUNTING_DOWN(&htim3)) //0 ??��?��? 65535
-        {
-            Rope::over_flow_cnt_3--;
-        }
-        else //65535 ??��?��? 0
-        {
-            Rope::over_flow_cnt_3++;
-        }
+        if(__HAL_TIM_IS_TIM_COUNTING_DOWN(&htim3)) Rope::over_flow_cnt_3--;
+        else Rope::over_flow_cnt_3++;
     }
     else if(htim->Instance == TIM4)
     {
         __HAL_TIM_CLEAR_FLAG(&htim4, TIM_IT_UPDATE);
-        if(__HAL_TIM_IS_TIM_COUNTING_DOWN(&htim4)) //0 ??��?��? 65535
-        {
-            Rope::over_flow_cnt_4--;
-        }
-        else //65535 ??��?��? 0
-        {
-            Rope::over_flow_cnt_4++;
-        }
+        if(__HAL_TIM_IS_TIM_COUNTING_DOWN(&htim4)) Rope::over_flow_cnt_4--;
+        else Rope::over_flow_cnt_4++;
     }
 
 
