@@ -31,14 +31,8 @@ void Function::drive_motor(uint8_t motor_number, uint8_t direction, uint16_t spe
 	uint8_t speed_q = ( speed & 0b0000000011111111 );
 	uint8_t motor[4] = { (motor_number<<2) | direction, PWM, speed_p, speed_q};
 
-	if( PID_Enabled == true )
-	{
-		motor[0] |= ( 0b01 << 6 );
-	}
-	if( Jump_Enabled == true )
-	{
-		motor[0] |= ( 0b01 << 7 );
-	}
+	if( PID_Enabled == true ) motor[0] |= ( 0b01 << 6 );
+	if( Jump_Enabled == true ) motor[0] |= ( 0b01 << 7 );
 
 	HAL_UART_Transmit(&huart6, (uint8_t*)motor, sizeof(motor), 100);
 }
@@ -66,10 +60,7 @@ void Function::drive_motor_Rope( uint8_t motor_number, uint8_t direction, uint16
 	uint8_t speed_q = ( speed & 0b0000000011111111 );
 	uint8_t motor[4] = { (motor_number<<2) | direction, PWM, speed_p, speed_q};
 
-	if( PID_Enabled == true )
-	{
-		motor[0] |= ( 0b01 << 6 );
-	}
+	if( PID_Enabled == true ) motor[0] |= ( 0b01 << 6 );
 
 	HAL_UART_Transmit(&huart6, (uint8_t*)motor, sizeof(motor), 100);
 }

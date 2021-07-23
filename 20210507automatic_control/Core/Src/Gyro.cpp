@@ -143,14 +143,8 @@ void Gyro::BNO055_update_gravity_direction( I2C_HandleTypeDef* hi2c_device )
 
 		yaw = rotation / 16;
 
-		if( hi2c_device == &hi2c1 )
-		{
-			this -> robot_direction = yaw;
-		}
-		else if( hi2c_device == &hi2c3 )
-		{
-			this -> table_direction = yaw;
-		}
+		if( hi2c_device == &hi2c1 ) this -> robot_direction = yaw;
+		else if( hi2c_device == &hi2c3 ) this -> table_direction = yaw;
 
 }
 
@@ -164,9 +158,7 @@ double Gyro::get_direction( I2C_HandleTypeDef* hi2c_device )
 	if( hi2c_device == &hi2c1 )
 	{
 		this -> robot_direction += this -> robot_initial_direction;
-		if( this -> robot_direction > 360 ){
-			this -> robot_direction -= 360;
-		}
+		if( this -> robot_direction > 360 ) this -> robot_direction -= 360;
 
 		Error_Handling* error_handling = new Error_Handling();
 		error_handling -> gyro_error_handling( this -> robot_direction );
@@ -175,10 +167,7 @@ double Gyro::get_direction( I2C_HandleTypeDef* hi2c_device )
 		return this -> robot_direction;
 
 	}
-	else if( hi2c_device == &hi2c3 )
-	{
-		return this -> table_direction;
-	}
+	else if( hi2c_device == &hi2c3 ) return this -> table_direction;
 }
 
 

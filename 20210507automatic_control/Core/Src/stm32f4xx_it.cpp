@@ -31,6 +31,7 @@
 #include "Communication.hpp"
 #include "Gyro.hpp"
 #include "Line.hpp"
+#include "MPU6050.hpp"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -67,6 +68,7 @@ PWM* pwm = new PWM();
 Jump* jump = new Jump();
 Communication* communication = new Communication();
 Line* line = new Line();
+MPU6050* mpu6050 = new MPU6050();
 /* USER CODE END 0 */
 
 /* External variables --------------------------------------------------------*/
@@ -345,11 +347,11 @@ void TIM6_DAC_IRQHandler(void)
   /* USER CODE END TIM6_DAC_IRQn 0 */
   HAL_TIM_IRQHandler(&htim6);
   /* USER CODE BEGIN TIM6_DAC_IRQn 1 */
-  gyro -> BNO055_update_gravity_direction(&hi2c1);
+//  gyro -> BNO055_update_gravity_direction(&hi2c1);
 //  gyro -> BNO055_update_gravity_direction(&hi2c3);
   self_pos -> update_self_pos();
   line -> MoveLine(line -> BefX, line -> BefY, line -> AftX, line -> AftY, line -> through);
-
+  mpu6050 -> MPU6050_update_Gyro( &hi2c1 );
   /* USER CODE END TIM6_DAC_IRQn 1 */
 }
 
