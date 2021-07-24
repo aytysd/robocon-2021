@@ -12,6 +12,7 @@
 
 #include "main.h"
 #include <stdint.h>
+#include "General_command.hpp"
 
 #define RAD_TO_DEG 57.295779513082320876798154814105
 
@@ -37,10 +38,14 @@ public:
 	bool MPU6050_Init(I2C_HandleTypeDef *I2Cx);
 	void MPU6050_update_Gyro(I2C_HandleTypeDef *I2Cx);
 
+	void set_initial_direction(E_robot_name robot);
 	double get_direction( I2C_HandleTypeDef *I2Cx );
 private:
 
-	static double direction;
+	static double robot_direction;
+	static uint16_t robot_initial_direction;
+	static double table_direction;
+
 
 };
 
