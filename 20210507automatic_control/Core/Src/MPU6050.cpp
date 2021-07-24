@@ -10,35 +10,20 @@
  * e-mail   :  leech001@gmail.com
  */
 
-/*
- * |---------------------------------------------------------------------------------
- * | Copyright (C) Bulanov Konstantin,2019
- * |
- * | This program is free software: you can redistribute it and/or modify
- * | it under the terms of the GNU General Public License as published by
- * | the Free Software Foundation, either version 3 of the License, or
- * | any later version.
- * |
- * | This program is distributed in the hope that it will be useful,
- * | but WITHOUT ANY WARRANTY; without even the implied warranty of
- * | MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * | GNU General Public License for more details.
- * |
- * | You should have received a copy of the GNU General Public License
- * | along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * |
- * | Kalman filter algorithm used from https://github.com/TKJElectronics/KalmanFilter
- * |---------------------------------------------------------------------------------
- */
 
 
 #include <math.h>
 #include <MPU6050.hpp>
+#include "General_command.hpp"
+#include "Debug.hpp"
 
-double MPU6050::direction = 0;
+double MPU6050::robot_direction = 0;
+uint16_t MPU6050::robot_initial_direction = 0;
+double MPU6050::table_direction = 0;
 
 
-bool MPU6050::MPU6050_Init(I2C_HandleTypeDef *I2Cx) {
+bool MPU6050::MPU6050_Init(I2C_HandleTypeDef *I2Cx)
+{
     uint8_t check;
     uint8_t Data;
 
@@ -72,7 +57,8 @@ bool MPU6050::MPU6050_Init(I2C_HandleTypeDef *I2Cx) {
 
 
 
-void MPU6050::MPU6050_update_Gyro(I2C_HandleTypeDef *I2Cx ) {
+void MPU6050::MPU6050_update_Gyro(I2C_HandleTypeDef *I2Cx )
+{
     uint8_t Rec_Data[6];
     int16_t Gyro_Z_RAW = 0;
     // Read 6 BYTES of data starting from GYRO_XOUT_H register
@@ -86,12 +72,29 @@ void MPU6050::MPU6050_update_Gyro(I2C_HandleTypeDef *I2Cx ) {
          I have configured FS_SEL = 0. So I am dividing by 131.0
          for more details check GYRO_CONFIG Register              ****/
 
-    this -> direction = (double)Gyro_Z_RAW / (double)131.0;
+    this -> robot_direction = (double)Gyro_Z_RAW / (double)131.0;
+
+    Debug::TTO_val( this -> robot_direction, "Gyro", &huart2 );
 }
 
-double MPU6050::get_direction( I2C_HandleTypeDef *I2Cx )
+double MPU6050::get_direction( I2C_HandleTypeDef *I2Cx ){ return this -> robot_direction; }
+
+void MPU6050::set_initial_direction(E_robot_name robot)
 {
-	return this -> direction;
+	switch(robot)
+	{
+	case E_robot_name::A:
+		this -> robot_initial_direction = 0;
+		break;
+	case E_robot_name::B:
+		this -> robot_initial_direction = 90;
+		break;
+	case E_robot_name::C:
+		this -> robot_initial_direction = 180;
+		break;
+	default:
+		break;
+	}
 }
 
 
