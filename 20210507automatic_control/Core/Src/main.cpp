@@ -102,7 +102,7 @@ static void MX_ADC2_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-void HAL_UART_RxCpltCallback(UART_HandleTypeDef* UartHandle)
+void HAL_UART_RxCpltCallback( UART_HandleTypeDef* UartHandle )
 {
 
 	if( UartHandle == &huart4 )
@@ -133,26 +133,26 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef* UartHandle)
 
 }
 
-void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+void HAL_GPIO_EXTI_Callback( uint16_t GPIO_Pin )
 {
 	GPIO* gpio = new GPIO();
-	gpio -> identify(GPIO_Pin);
+	gpio -> identify( GPIO_Pin );
 	delete gpio;
 
 }
 
-void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim)
+void HAL_TIM_PeriodElapsedCallback( TIM_HandleTypeDef* htim )
 {
-    if(htim->Instance == TIM3)
+    if ( htim -> Instance == TIM3 )
     {
         __HAL_TIM_CLEAR_FLAG(&htim3, TIM_IT_UPDATE);
         if(__HAL_TIM_IS_TIM_COUNTING_DOWN(&htim3)) Rope::over_flow_cnt_3--;
         else Rope::over_flow_cnt_3++;
     }
-    else if(htim->Instance == TIM4)
+    else if( htim -> Instance == TIM4 )
     {
-        __HAL_TIM_CLEAR_FLAG(&htim4, TIM_IT_UPDATE);
-        if(__HAL_TIM_IS_TIM_COUNTING_DOWN(&htim4)) Rope::over_flow_cnt_4--;
+        __HAL_TIM_CLEAR_FLAG( &htim4, TIM_IT_UPDATE );
+        if( __HAL_TIM_IS_TIM_COUNTING_DOWN( &htim4 ) ) Rope::over_flow_cnt_4--;
         else Rope::over_flow_cnt_4++;
     }
 
@@ -212,6 +212,7 @@ int main(void)
   /* USER CODE BEGIN 2 */
   init_move -> init_move(ROBOT);
   /* USER CODE END 2 */
+
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
@@ -384,7 +385,7 @@ static void MX_I2C1_Init(void)
 
   /* USER CODE END I2C1_Init 1 */
   hi2c1.Instance = I2C1;
-  hi2c1.Init.ClockSpeed = 100000;
+  hi2c1.Init.ClockSpeed = 400000;
   hi2c1.Init.DutyCycle = I2C_DUTYCYCLE_2;
   hi2c1.Init.OwnAddress1 = 0;
   hi2c1.Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;

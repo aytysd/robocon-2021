@@ -8840,7 +8840,7 @@ int Self_Pos::encoder_read_2(void)
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-void HAL_UART_RxCpltCallback(UART_HandleTypeDef* UartHandle)
+void HAL_UART_RxCpltCallback( UART_HandleTypeDef* UartHandle )
 {
  8004ac8:	b580      	push	{r7, lr}
  8004aca:	b086      	sub	sp, #24
@@ -8940,7 +8940,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef* UartHandle)
 
 08004b74 <HAL_GPIO_EXTI_Callback>:
 
-void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+void HAL_GPIO_EXTI_Callback( uint16_t GPIO_Pin )
 {
  8004b74:	b580      	push	{r7, lr}
  8004b76:	b084      	sub	sp, #16
@@ -8952,7 +8952,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
  8004b80:	f005 fcb9 	bl	800a4f6 <_Znwj>
  8004b84:	4603      	mov	r3, r0
  8004b86:	60fb      	str	r3, [r7, #12]
-	gpio -> identify(GPIO_Pin);
+	gpio -> identify( GPIO_Pin );
  8004b88:	88fb      	ldrh	r3, [r7, #6]
  8004b8a:	4619      	mov	r1, r3
  8004b8c:	68f8      	ldr	r0, [r7, #12]
@@ -8973,13 +8973,13 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 
 08004ba8 <HAL_TIM_PeriodElapsedCallback>:
 
-void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim)
+void HAL_TIM_PeriodElapsedCallback( TIM_HandleTypeDef* htim )
 {
  8004ba8:	b480      	push	{r7}
  8004baa:	b083      	sub	sp, #12
  8004bac:	af00      	add	r7, sp, #0
  8004bae:	6078      	str	r0, [r7, #4]
-    if(htim->Instance == TIM3)
+    if ( htim -> Instance == TIM3 )
  8004bb0:	687b      	ldr	r3, [r7, #4]
  8004bb2:	681b      	ldr	r3, [r3, #0]
  8004bb4:	4a23      	ldr	r2, [pc, #140]	; (8004c44 <HAL_TIM_PeriodElapsedCallback+0x9c>)
@@ -9008,7 +9008,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim)
  8004be0:	3b01      	subs	r3, #1
  8004be2:	4a1a      	ldr	r2, [pc, #104]	; (8004c4c <HAL_TIM_PeriodElapsedCallback+0xa4>)
  8004be4:	6013      	str	r3, [r2, #0]
-        if(__HAL_TIM_IS_TIM_COUNTING_DOWN(&htim4)) Rope::over_flow_cnt_4--;
+        if( __HAL_TIM_IS_TIM_COUNTING_DOWN( &htim4 ) ) Rope::over_flow_cnt_4--;
         else Rope::over_flow_cnt_4++;
     }
 
@@ -9023,18 +9023,18 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim)
  8004bf0:	6013      	str	r3, [r2, #0]
 }
  8004bf2:	e020      	b.n	8004c36 <HAL_TIM_PeriodElapsedCallback+0x8e>
-    else if(htim->Instance == TIM4)
+    else if( htim -> Instance == TIM4 )
  8004bf4:	687b      	ldr	r3, [r7, #4]
  8004bf6:	681b      	ldr	r3, [r3, #0]
  8004bf8:	4a15      	ldr	r2, [pc, #84]	; (8004c50 <HAL_TIM_PeriodElapsedCallback+0xa8>)
  8004bfa:	4293      	cmp	r3, r2
  8004bfc:	d11b      	bne.n	8004c36 <HAL_TIM_PeriodElapsedCallback+0x8e>
-        __HAL_TIM_CLEAR_FLAG(&htim4, TIM_IT_UPDATE);
+        __HAL_TIM_CLEAR_FLAG( &htim4, TIM_IT_UPDATE );
  8004bfe:	4b15      	ldr	r3, [pc, #84]	; (8004c54 <HAL_TIM_PeriodElapsedCallback+0xac>)
  8004c00:	681b      	ldr	r3, [r3, #0]
  8004c02:	f06f 0201 	mvn.w	r2, #1
  8004c06:	611a      	str	r2, [r3, #16]
-        if(__HAL_TIM_IS_TIM_COUNTING_DOWN(&htim4)) Rope::over_flow_cnt_4--;
+        if( __HAL_TIM_IS_TIM_COUNTING_DOWN( &htim4 ) ) Rope::over_flow_cnt_4--;
  8004c08:	4b12      	ldr	r3, [pc, #72]	; (8004c54 <HAL_TIM_PeriodElapsedCallback+0xac>)
  8004c0a:	681b      	ldr	r3, [r3, #0]
  8004c0c:	681b      	ldr	r3, [r3, #0]
@@ -9163,6 +9163,7 @@ int main(void)
  8004cd8:	68f8      	ldr	r0, [r7, #12]
  8004cda:	f7fe fb1b 	bl	8003314 <_ZN9Init_Move9init_moveE12E_robot_name>
   /* USER CODE END 2 */
+
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
@@ -9598,7 +9599,7 @@ static void MX_I2C1_Init(void)
  8004f44:	4b15      	ldr	r3, [pc, #84]	; (8004f9c <_ZL12MX_I2C1_Initv+0x5c>)
  8004f46:	4a16      	ldr	r2, [pc, #88]	; (8004fa0 <_ZL12MX_I2C1_Initv+0x60>)
  8004f48:	601a      	str	r2, [r3, #0]
-  hi2c1.Init.ClockSpeed = 100000;
+  hi2c1.Init.ClockSpeed = 400000;
  8004f4a:	4b14      	ldr	r3, [pc, #80]	; (8004f9c <_ZL12MX_I2C1_Initv+0x5c>)
  8004f4c:	4a15      	ldr	r2, [pc, #84]	; (8004fa4 <_ZL12MX_I2C1_Initv+0x64>)
  8004f4e:	605a      	str	r2, [r3, #4]
@@ -9655,7 +9656,7 @@ static void MX_I2C1_Init(void)
  8004f9a:	bf00      	nop
  8004f9c:	20000448 	.word	0x20000448
  8004fa0:	40005400 	.word	0x40005400
- 8004fa4:	000186a0 	.word	0x000186a0
+ 8004fa4:	00061a80 	.word	0x00061a80
 
 08004fa8 <_ZL12MX_I2C3_Initv>:
   * @brief I2C3 Initialization Function
