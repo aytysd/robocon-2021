@@ -36,6 +36,8 @@
 #include "Rope.hpp"
 #include "Gyro.hpp"
 #include <string>
+#include "Debug.hpp"
+#include <cstring>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -210,7 +212,6 @@ int main(void)
   /* USER CODE BEGIN 2 */
   init_move -> init_move(ROBOT);
   /* USER CODE END 2 */
-
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
@@ -953,7 +954,7 @@ static void MX_GPIO_Init(void)
 
   /*Configure GPIO pin : Photo_Interrupt_Pin */
   GPIO_InitStruct.Pin = Photo_Interrupt_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
   GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(Photo_Interrupt_GPIO_Port, &GPIO_InitStruct);
 

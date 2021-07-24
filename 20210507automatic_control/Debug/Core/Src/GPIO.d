@@ -32,7 +32,10 @@ Core/Src/GPIO.o: ../Core/Src/GPIO.cpp ../Core/Inc/GPIO.hpp \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h \
- ../Core/Inc/main.h
+ ../Core/Inc/Self_Pos.hpp ../Core/Inc/General_command.hpp \
+ ../Core/Inc/ToF.hpp ../Core/Inc/Self_Pos.hpp ../Core/Inc/Gyro.hpp \
+ ../Core/Inc/General_command.hpp ../Core/Inc/main.h ../Core/Inc/Debug.hpp \
+ ../Core/Inc/Function.hpp ../Core/Inc/PWM.hpp
 
 ../Core/Inc/GPIO.hpp:
 
@@ -104,4 +107,22 @@ Core/Src/GPIO.o: ../Core/Src/GPIO.cpp ../Core/Inc/GPIO.hpp \
 
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h:
 
+../Core/Inc/Self_Pos.hpp:
+
+../Core/Inc/General_command.hpp:
+
+../Core/Inc/ToF.hpp:
+
+../Core/Inc/Self_Pos.hpp:
+
+../Core/Inc/Gyro.hpp:
+
+../Core/Inc/General_command.hpp:
+
 ../Core/Inc/main.h:
+
+../Core/Inc/Debug.hpp:
+
+../Core/Inc/Function.hpp:
+
+../Core/Inc/PWM.hpp:

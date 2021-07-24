@@ -1,2 +1,4 @@
-Rope.cpp:26:5:int Rope::encoder_read_3()	24	static
-Rope.cpp:31:5:int Rope::encoder_read_4()	24	static
+gthr-default.h:229:1:int __gthread_key_delete(__gthread_key_t)	16	static
+Rope.cpp:28:5:int Rope::encoder_read_3()	24	static
+Rope.cpp:34:5:int Rope::encoder_read_4()	24	static
+Rope.cpp:40:5:int Rope::encoder_read_5()	24	static

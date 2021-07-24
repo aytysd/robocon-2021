@@ -1,7 +1,15 @@
-Debug.cpp:24:6:static void Debug::TTO(addr, const char*, UART_HandleTypeDef*) [with addr = short unsigned int*]	40	static
-Debug.cpp:35:6:static void Debug::TTO(addr, const char*, UART_HandleTypeDef*) [with addr = long unsigned int*]	40	static
-Debug.cpp:46:6:static void Debug::TTO(addr, const char*, UART_HandleTypeDef*) [with addr = unsigned char*]	40	static
-Debug.cpp:57:6:static void Debug::TTO(addr, const char*, UART_HandleTypeDef*) [with addr = int*]	40	static
-Debug.cpp:68:6:static void Debug::TTO(addr, const char*, UART_HandleTypeDef*) [with addr = double*]	40	static
-Debug.cpp:79:6:static void Debug::TTO(addr, const char*, UART_HandleTypeDef*) [with addr = float*]	40	static
-Debug.cpp:101:6:static void Debug::time_calc(UART_HandleTypeDef*)	48	static
+gthr-default.h:229:1:int __gthread_key_delete(__gthread_key_t)	16	static
+Debug.cpp:29:6:static void Debug::TTO_addr(addr, std::string, UART_HandleTypeDef*) [with addr = short unsigned int*]	64	static
+Debug.cpp:44:6:static void Debug::TTO_addr(addr, std::string, UART_HandleTypeDef*) [with addr = long unsigned int*]	64	static
+Debug.cpp:59:6:static void Debug::TTO_addr(addr, std::string, UART_HandleTypeDef*) [with addr = unsigned char*]	64	static
+Debug.cpp:74:6:static void Debug::TTO_addr(addr, std::string, UART_HandleTypeDef*) [with addr = int*]	64	static
+Debug.cpp:89:6:static void Debug::TTO_addr(addr, std::string, UART_HandleTypeDef*) [with addr = double*]	64	static
+Debug.cpp:103:6:static void Debug::TTO_addr(addr, std::string, UART_HandleTypeDef*) [with addr = float*]	64	static
+Debug.cpp:135:6:static void Debug::TTO_val(type, std::string, UART_HandleTypeDef*) [with type = int]	64	static
+Debug.cpp:151:6:static void Debug::TTO_val(type, std::string, UART_HandleTypeDef*) [with type = unsigned char]	64	static
+Debug.cpp:165:6:static void Debug::TTO_val(type, std::string, UART_HandleTypeDef*) [with type = short unsigned int]	64	static
+Debug.cpp:179:6:static void Debug::TTO_val(type, std::string, UART_HandleTypeDef*) [with type = long unsigned int]	64	static
+Debug.cpp:193:6:static void Debug::TTO_val(type, std::string, UART_HandleTypeDef*) [with type = double]	64	static
+Debug.cpp:209:6:static void Debug::TTO_val(type, std::string, UART_HandleTypeDef*) [with type = float]	64	static
+Debug.cpp:243:6:static void Debug::time_calc(UART_HandleTypeDef*)	104	static
+Debug.cpp:277:6:void Debug::str_output(std::string, UART_HandleTypeDef*)	56	dynamic

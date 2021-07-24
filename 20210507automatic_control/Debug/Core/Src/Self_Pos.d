@@ -37,7 +37,7 @@ Core/Src/Self_Pos.o: ../Core/Src/Self_Pos.cpp \
  ../Core/Inc/Self_Pos.hpp ../Core/Inc/bno055.h \
  ../Core/Inc/Error_Handling.hpp ../Core/Inc/LED.hpp ../Core/Inc/PWM.hpp \
  ../Core/Inc/General_command.hpp ../Core/Inc/Gyro.hpp \
- ../Core/Inc/Function.hpp
+ ../Core/Inc/Function.hpp ../Core/Inc/GPIO.hpp
 
 ../Core/Inc/General_command.hpp:
 
@@ -130,3 +130,5 @@ Core/Src/Self_Pos.o: ../Core/Src/Self_Pos.cpp \
 ../Core/Inc/Gyro.hpp:
 
 ../Core/Inc/Function.hpp:
+
+../Core/Inc/GPIO.hpp:

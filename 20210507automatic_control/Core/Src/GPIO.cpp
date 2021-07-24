@@ -21,6 +21,8 @@
 #include "Gyro.hpp"
 #include "main.h"
 #include "Debug.hpp"
+#include "Function.hpp"
+#include "PWM.hpp"
 
 UART_HandleTypeDef* UART = &huart2;
 
@@ -130,7 +132,14 @@ void GPIO::GPIO_PIN_11_func(void)
 			delete gyro;
 		}
 };
-void GPIO::GPIO_PIN_12_func(void){};
+void GPIO::GPIO_PIN_12_func(void)
+{
+	Function* function = new Function();
+
+	function -> drive_motor( 5, BRAKE, 0, false, true );
+
+	delete function;
+};
 void GPIO::GPIO_PIN_13_func(void){};
 void GPIO::GPIO_PIN_14_func(void)
 {

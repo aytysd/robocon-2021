@@ -35,7 +35,7 @@ Core/Src/Controller_Nakakubo.o: ../Core/Src/Controller_Nakakubo.cpp \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h \
  ../Core/Inc/General_command.hpp ../Core/Inc/PWM.hpp \
  ../Core/Inc/Init_Move.hpp ../Core/Inc/Function.hpp \
- ../Core/Inc/Init_move.hpp
+ ../Core/Inc/Init_move.hpp ../Core/Inc/GPIO.hpp ../Core/Inc/main.h
 
 ../Core/Inc/Controller.hpp:
 
@@ -116,3 +116,7 @@ Core/Src/Controller_Nakakubo.o: ../Core/Src/Controller_Nakakubo.cpp \
 ../Core/Inc/Function.hpp:
 
 ../Core/Inc/Init_move.hpp:
+
+../Core/Inc/GPIO.hpp:
+
+../Core/Inc/main.h:

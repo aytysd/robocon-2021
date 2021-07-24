@@ -38,7 +38,7 @@ Core/Src/stm32f4xx_it.o: ../Core/Src/stm32f4xx_it.cpp ../Core/Inc/main.h \
  ../Core/Inc/General_command.hpp ../Core/Inc/PWM.hpp \
  ../Core/Inc/Init_Move.hpp ../Core/Inc/GPIO.hpp ../Core/Inc/PWM.hpp \
  ../Core/Inc/Jump.hpp ../Core/Inc/Communication.hpp ../Core/Inc/Gyro.hpp \
- ../Core/Inc/Line.hpp
+ ../Core/Inc/Line.hpp ../Core/Inc/MPU6050.hpp
 
 ../Core/Inc/main.h:
 
@@ -139,3 +139,5 @@ Core/Src/stm32f4xx_it.o: ../Core/Src/stm32f4xx_it.cpp ../Core/Inc/main.h \
 ../Core/Inc/Gyro.hpp:
 
 ../Core/Inc/Line.hpp:
+
+../Core/Inc/MPU6050.hpp:
