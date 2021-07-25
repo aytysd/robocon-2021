@@ -23,6 +23,12 @@
 #include <stdio.h>
 #include "Gyro.hpp"
 #include "General_command.hpp"
+#include "adc.h"
+#include "i2c.h"
+#include "tim.h"
+#include "usart.h"
+#include "gpio.h"
+
 
 int Line::AftX = 0;
 int Line::AftY = 0;

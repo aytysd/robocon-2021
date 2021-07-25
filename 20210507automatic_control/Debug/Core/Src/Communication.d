@@ -36,7 +36,9 @@ Core/Src/Communication.o: ../Core/Src/Communication.cpp \
  ../Core/Inc/Error_Handling.hpp ../Core/Inc/Self_Pos.hpp \
  ../Core/Inc/General_command.hpp ../Core/Inc/ToF.hpp \
  ../Core/Inc/Self_Pos.hpp ../Core/Inc/Jump.hpp \
- ../Core/Inc/General_command.hpp ../Core/Inc/Gyro.hpp
+ ../Core/Inc/General_command.hpp ../Core/Inc/Gyro.hpp ../Core/Inc/adc.h \
+ ../Core/Inc/i2c.h ../Core/Inc/tim.h ../Core/Inc/usart.h \
+ ../Core/Inc/gpio.h
 
 ../Core/Inc/main.h:
 
@@ -125,3 +127,13 @@ Core/Src/Communication.o: ../Core/Src/Communication.cpp \
 ../Core/Inc/General_command.hpp:
 
 ../Core/Inc/Gyro.hpp:
+
+../Core/Inc/adc.h:
+
+../Core/Inc/i2c.h:
+
+../Core/Inc/tim.h:
+
+../Core/Inc/usart.h:
+
+../Core/Inc/gpio.h:

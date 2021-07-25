@@ -16,13 +16,16 @@
  *@Usertouch(functionname)&_(variable_name)
  *
  */
-#include <GPIO.hpp>
+#include <hGPIO.hpp>
 #include "Self_Pos.hpp"
 #include "Gyro.hpp"
 #include "main.h"
 #include "Debug.hpp"
 #include "Function.hpp"
 #include "PWM.hpp"
+#include "gpio.h"
+#include "usart.h"
+#include "i2c.h"
 
 UART_HandleTypeDef* UART = &huart2;
 

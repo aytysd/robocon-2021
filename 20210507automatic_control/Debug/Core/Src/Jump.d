@@ -33,8 +33,10 @@ Core/Src/Jump.o: ../Core/Src/Jump.cpp ../Core/Inc/Jump.hpp \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h \
- ../Core/Inc/General_command.hpp ../Core/Inc/GPIO.hpp ../Core/Inc/main.h \
- ../Core/Inc/Self_Pos.hpp ../Core/Inc/ToF.hpp ../Core/Inc/Self_Pos.hpp
+ ../Core/Inc/General_command.hpp ../Core/Inc/hGPIO.hpp ../Core/Inc/main.h \
+ ../Core/Inc/Self_Pos.hpp ../Core/Inc/ToF.hpp ../Core/Inc/Self_Pos.hpp \
+ ../Core/Inc/adc.h ../Core/Inc/i2c.h ../Core/Inc/tim.h \
+ ../Core/Inc/usart.h ../Core/Inc/gpio.h
 
 ../Core/Inc/Jump.hpp:
 
@@ -110,7 +112,7 @@ Core/Src/Jump.o: ../Core/Src/Jump.cpp ../Core/Inc/Jump.hpp \
 
 ../Core/Inc/General_command.hpp:
 
-../Core/Inc/GPIO.hpp:
+../Core/Inc/hGPIO.hpp:
 
 ../Core/Inc/main.h:
 
@@ -119,3 +121,13 @@ Core/Src/Jump.o: ../Core/Src/Jump.cpp ../Core/Inc/Jump.hpp \
 ../Core/Inc/ToF.hpp:
 
 ../Core/Inc/Self_Pos.hpp:
+
+../Core/Inc/adc.h:
+
+../Core/Inc/i2c.h:
+
+../Core/Inc/tim.h:
+
+../Core/Inc/usart.h:
+
+../Core/Inc/gpio.h:

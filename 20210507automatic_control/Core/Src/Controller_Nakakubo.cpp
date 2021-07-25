@@ -20,7 +20,7 @@
 #include "Controller.hpp"
 #include "Function.hpp"
 #include "Init_move.hpp"
-#include "GPIO.hpp"
+#include "hGPIO.hpp"
 #include "main.h"
 
 uint16_t Controller::speed = 700;

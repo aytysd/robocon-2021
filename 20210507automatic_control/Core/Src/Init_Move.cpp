@@ -24,7 +24,7 @@
 #include "PWM.hpp"
 #include "LED.hpp"
 #include "Self_Pos.hpp"
-#include "GPIO.hpp"
+#include "hGPIO.hpp"
 #include "main.h"
 #include "stdio.h"
 #include "Communication.hpp"
@@ -32,6 +32,12 @@
 #include "Controller.hpp"
 #include "Gyro.hpp"
 #include "MPU6050.hpp"
+#include "adc.h"
+#include "i2c.h"
+#include "tim.h"
+#include "usart.h"
+#include "gpio.h"
+
 
 namespace Init_Wait
 {

@@ -22,6 +22,12 @@
 #include "Function.hpp"
 #include "PWM.hpp"
 #include "stdio.h"
+#include "adc.h"
+#include "i2c.h"
+#include "tim.h"
+#include "usart.h"
+#include "gpio.h"
+
 
 uint8_t Controller::controller_Rxdata[8] = {128, 0, 0, 64, 64, 64, 64, 0};
 

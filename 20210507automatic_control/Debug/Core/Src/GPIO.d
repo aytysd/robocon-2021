@@ -1,5 +1,5 @@
-Core/Src/GPIO.o: ../Core/Src/GPIO.cpp ../Core/Inc/GPIO.hpp \
- ../Core/Inc/main.h ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h \
+Core/Src/gpio.o: ../Core/Src/gpio.c ../Core/Inc/gpio.h ../Core/Inc/main.h \
+ ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h \
  ../Core/Inc/stm32f4xx_hal_conf.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h \
@@ -31,13 +31,9 @@ Core/Src/GPIO.o: ../Core/Src/GPIO.cpp ../Core/Inc/GPIO.hpp \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h \
- ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h \
- ../Core/Inc/Self_Pos.hpp ../Core/Inc/General_command.hpp \
- ../Core/Inc/ToF.hpp ../Core/Inc/Self_Pos.hpp ../Core/Inc/Gyro.hpp \
- ../Core/Inc/General_command.hpp ../Core/Inc/main.h ../Core/Inc/Debug.hpp \
- ../Core/Inc/Function.hpp ../Core/Inc/PWM.hpp
+ ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
 
-../Core/Inc/GPIO.hpp:
+../Core/Inc/gpio.h:
 
 ../Core/Inc/main.h:
 
@@ -106,23 +102,3 @@ Core/Src/GPIO.o: ../Core/Src/GPIO.cpp ../Core/Inc/GPIO.hpp \
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h:
 
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h:
-
-../Core/Inc/Self_Pos.hpp:
-
-../Core/Inc/General_command.hpp:
-
-../Core/Inc/ToF.hpp:
-
-../Core/Inc/Self_Pos.hpp:
-
-../Core/Inc/Gyro.hpp:
-
-../Core/Inc/General_command.hpp:
-
-../Core/Inc/main.h:
-
-../Core/Inc/Debug.hpp:
-
-../Core/Inc/Function.hpp:
-
-../Core/Inc/PWM.hpp:

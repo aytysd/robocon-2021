@@ -16,8 +16,8 @@
  *@Usertouch(bool get_status())
  *
  */
-#ifndef INC_GPIO_HPP_
-#define INC_GPIO_HPP_
+#ifndef INC_HGPIO_HPP_
+#define INC_HGPIO_HPP_
 
 #include "main.h"
 
@@ -73,4 +73,4 @@ private:
 
 };
 
-#endif /* INC_GPIO_HPP_ */
+#endif /* INC_HGPIO_HPP_ */

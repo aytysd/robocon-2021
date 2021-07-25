@@ -19,10 +19,16 @@
 
 #include "Jump.hpp"
 #include "General_command.hpp"
-#include "GPIO.hpp"
+#include "hGPIO.hpp"
 #include "main.h"
 #include "Self_Pos.hpp"
 #include "math.h"
+#include "adc.h"
+#include "i2c.h"
+#include "tim.h"
+#include "usart.h"
+#include "gpio.h"
+
 
 E_move_status Jump::status = E_move_status::LANDING;
 

@@ -16,6 +16,12 @@
 #include <MPU6050.hpp>
 #include "General_command.hpp"
 #include "Debug.hpp"
+#include "adc.h"
+#include "i2c.h"
+#include "tim.h"
+#include "usart.h"
+#include "gpio.h"
+
 
 double MPU6050::robot_direction = 0;
 uint16_t MPU6050::robot_initial_direction = 0;

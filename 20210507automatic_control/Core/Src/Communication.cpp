@@ -23,6 +23,12 @@
 #include "Self_Pos.hpp"
 #include "Jump.hpp"
 #include "Gyro.hpp"
+#include "adc.h"
+#include "i2c.h"
+#include "tim.h"
+#include "usart.h"
+#include "gpio.h"
+
 
 uint8_t Communication::Rxdata[4] = { 0, 0, 0, 0 };
 

@@ -22,6 +22,12 @@
 #include "string.h"
 #include <string>
 #include <cstring>
+#include "adc.h"
+#include "i2c.h"
+#include "tim.h"
+#include "usart.h"
+#include "gpio.h"
+
 
 using namespace std;
 

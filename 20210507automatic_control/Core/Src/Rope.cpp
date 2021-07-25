@@ -20,6 +20,12 @@
 #include "main.h"
 #include "Rope.hpp"
 #include "Debug.hpp"
+#include "adc.h"
+#include "i2c.h"
+#include "tim.h"
+#include "usart.h"
+#include "gpio.h"
+
 
 int Rope::over_flow_cnt_3 = -1;
 int Rope::over_flow_cnt_4 = -1;

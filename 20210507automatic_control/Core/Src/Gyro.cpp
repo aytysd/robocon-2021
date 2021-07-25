@@ -27,6 +27,12 @@
 #include <math.h>
 #include "LED.hpp"
 #include "PWM.hpp"
+#include "adc.h"
+#include "i2c.h"
+#include "tim.h"
+#include "usart.h"
+#include "gpio.h"
+
 
 
 double Gyro::robot_direction = 0;

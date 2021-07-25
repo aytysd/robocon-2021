@@ -35,7 +35,9 @@ Core/Src/Gyro.o: ../Core/Src/Gyro.cpp ../Core/Inc/Gyro.hpp \
  ../Core/Inc/General_command.hpp ../Core/Inc/Error_Handling.hpp \
  ../Core/Inc/General_command.hpp ../Core/Inc/main.h \
  ../Core/Inc/Self_Pos.hpp ../Core/Inc/ToF.hpp ../Core/Inc/Self_Pos.hpp \
- ../Core/Inc/bno055.h ../Core/Inc/LED.hpp ../Core/Inc/PWM.hpp
+ ../Core/Inc/bno055.h ../Core/Inc/LED.hpp ../Core/Inc/PWM.hpp \
+ ../Core/Inc/adc.h ../Core/Inc/i2c.h ../Core/Inc/tim.h \
+ ../Core/Inc/usart.h ../Core/Inc/gpio.h
 
 ../Core/Inc/Gyro.hpp:
 
@@ -126,3 +128,13 @@ Core/Src/Gyro.o: ../Core/Src/Gyro.cpp ../Core/Inc/Gyro.hpp \
 ../Core/Inc/LED.hpp:
 
 ../Core/Inc/PWM.hpp:
+
+../Core/Inc/adc.h:
+
+../Core/Inc/i2c.h:
+
+../Core/Inc/tim.h:
+
+../Core/Inc/usart.h:
+
+../Core/Inc/gpio.h:

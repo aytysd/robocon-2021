@@ -28,7 +28,13 @@
 #include "PWM.hpp"
 #include "Gyro.hpp"
 #include "Function.hpp"
-#include "GPIO.hpp"
+#include "hGPIO.hpp"
+#include "adc.h"
+#include "i2c.h"
+#include "tim.h"
+#include "usart.h"
+#include "gpio.h"
+
 
 int Self_Pos::Self_Pos_X = 0; //(mm)
 int Self_Pos::Self_Pos_Y = 0; //(mm)

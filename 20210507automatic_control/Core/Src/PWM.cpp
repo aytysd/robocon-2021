@@ -25,6 +25,12 @@
 #include "Gyro.hpp"
 #include "Time.hpp"
 #include "Debug.hpp"
+#include "adc.h"
+#include "i2c.h"
+#include "tim.h"
+#include "usart.h"
+#include "gpio.h"
+
 
 void PWM::V_output(uint16_t V, uint16_t fai, int16_t rotation_speed, uint16_t attitude_angle, E_move_status status)
 {

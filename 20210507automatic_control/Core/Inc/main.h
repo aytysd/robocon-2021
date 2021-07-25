@@ -37,23 +37,6 @@ extern "C" {
 
 /* Exported types ------------------------------------------------------------*/
 /* USER CODE BEGIN ET */
-extern UART_HandleTypeDef huart6;
-extern UART_HandleTypeDef huart2;
-extern UART_HandleTypeDef huart3;
-extern UART_HandleTypeDef huart4;
-extern UART_HandleTypeDef huart5;
-extern UART_HandleTypeDef huart1;
-
-extern TIM_HandleTypeDef htim2;
-extern TIM_HandleTypeDef htim3;
-extern TIM_HandleTypeDef htim4;
-extern TIM_HandleTypeDef htim5;
-extern TIM_HandleTypeDef htim6;
-extern TIM_HandleTypeDef htim7;
-
-
-extern I2C_HandleTypeDef hi2c3;
-extern I2C_HandleTypeDef hi2c1;
 /* USER CODE END ET */
 
 /* Exported constants --------------------------------------------------------*/

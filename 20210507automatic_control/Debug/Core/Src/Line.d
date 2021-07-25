@@ -34,7 +34,9 @@ Core/Src/Line.o: ../Core/Src/Line.cpp ../Core/Inc/Line.hpp \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h \
  ../Core/Inc/General_command.hpp ../Core/Inc/PWM.hpp \
  ../Core/Inc/Self_Pos.hpp ../Core/Inc/General_command.hpp \
- ../Core/Inc/ToF.hpp ../Core/Inc/Self_Pos.hpp ../Core/Inc/Gyro.hpp
+ ../Core/Inc/ToF.hpp ../Core/Inc/Self_Pos.hpp ../Core/Inc/Gyro.hpp \
+ ../Core/Inc/adc.h ../Core/Inc/i2c.h ../Core/Inc/tim.h \
+ ../Core/Inc/usart.h ../Core/Inc/gpio.h
 
 ../Core/Inc/Line.hpp:
 
@@ -119,3 +121,13 @@ Core/Src/Line.o: ../Core/Src/Line.cpp ../Core/Inc/Line.hpp \
 ../Core/Inc/Self_Pos.hpp:
 
 ../Core/Inc/Gyro.hpp:
+
+../Core/Inc/adc.h:
+
+../Core/Inc/i2c.h:
+
+../Core/Inc/tim.h:
+
+../Core/Inc/usart.h:
+
+../Core/Inc/gpio.h:

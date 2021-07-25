@@ -36,7 +36,8 @@ Core/Src/Controller.o: ../Core/Src/Controller.cpp \
  ../Core/Inc/General_command.hpp ../Core/Inc/PWM.hpp \
  ../Core/Inc/Init_Move.hpp ../Core/Inc/main.h \
  ../Core/Inc/General_command.hpp ../Core/Inc/Function.hpp \
- ../Core/Inc/PWM.hpp
+ ../Core/Inc/PWM.hpp ../Core/Inc/adc.h ../Core/Inc/i2c.h \
+ ../Core/Inc/tim.h ../Core/Inc/usart.h ../Core/Inc/gpio.h
 
 ../Core/Inc/Controller.hpp:
 
@@ -121,3 +122,13 @@ Core/Src/Controller.o: ../Core/Src/Controller.cpp \
 ../Core/Inc/Function.hpp:
 
 ../Core/Inc/PWM.hpp:
+
+../Core/Inc/adc.h:
+
+../Core/Inc/i2c.h:
+
+../Core/Inc/tim.h:
+
+../Core/Inc/usart.h:
+
+../Core/Inc/gpio.h:

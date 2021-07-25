@@ -25,13 +25,19 @@
 /* USER CODE BEGIN Includes */
 #include "Self_Pos.hpp"
 #include "Controller.hpp"
-#include "GPIO.hpp"
+#include "hGPIO.hpp"
 #include "PWM.hpp"
 #include "Jump.hpp"
 #include "Communication.hpp"
 #include "Gyro.hpp"
 #include "Line.hpp"
 #include "MPU6050.hpp"
+#include "adc.h"
+#include "i2c.h"
+#include "tim.h"
+#include "usart.h"
+#include "gpio.h"
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/

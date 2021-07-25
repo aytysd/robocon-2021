@@ -22,6 +22,12 @@
 #include "main.h"
 #include "stdio.h"
 #include "math.h"
+#include "adc.h"
+#include "i2c.h"
+#include "tim.h"
+#include "usart.h"
+#include "gpio.h"
+
 
 void Function::drive_motor(uint8_t motor_number, uint8_t direction, uint16_t speed, bool PID_Enabled, bool Jump_Enabled )
 {

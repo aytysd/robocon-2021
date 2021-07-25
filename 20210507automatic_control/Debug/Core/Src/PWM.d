@@ -35,7 +35,9 @@ Core/Src/PWM.o: ../Core/Src/PWM.cpp ../Core/Inc/Function.hpp \
  ../Core/Inc/PWM.hpp ../Core/Inc/General_command.hpp \
  ../Core/Inc/General_command.hpp ../Core/Inc/Self_Pos.hpp \
  ../Core/Inc/ToF.hpp ../Core/Inc/Self_Pos.hpp ../Core/Inc/Gyro.hpp \
- ../Core/Inc/Time.hpp ../Core/Inc/Debug.hpp
+ ../Core/Inc/Time.hpp ../Core/Inc/Debug.hpp ../Core/Inc/adc.h \
+ ../Core/Inc/i2c.h ../Core/Inc/tim.h ../Core/Inc/usart.h \
+ ../Core/Inc/gpio.h
 
 ../Core/Inc/Function.hpp:
 
@@ -124,3 +126,13 @@ Core/Src/PWM.o: ../Core/Src/PWM.cpp ../Core/Inc/Function.hpp \
 ../Core/Inc/Time.hpp:
 
 ../Core/Inc/Debug.hpp:
+
+../Core/Inc/adc.h:
+
+../Core/Inc/i2c.h:
+
+../Core/Inc/tim.h:
+
+../Core/Inc/usart.h:
+
+../Core/Inc/gpio.h:
