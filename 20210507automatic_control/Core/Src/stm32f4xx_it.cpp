@@ -69,7 +69,7 @@
 /* USER CODE BEGIN 0 */
 Gyro* gyro = new Gyro();
 Self_Pos* self_pos = new Self_Pos();
-GPIO* gpio = new GPIO();
+HGPIO* gpio = new HGPIO();
 PWM* pwm = new PWM();
 Jump* jump = new Jump();
 Communication* communication = new Communication();

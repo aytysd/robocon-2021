@@ -56,6 +56,8 @@ enum class E_Flow{
 */
 
 #define ROBOT E_robot_name::A
+//#define ROBOT E_robot_name::B
+//#define ROBOT E_robot_name::C
 
 
 

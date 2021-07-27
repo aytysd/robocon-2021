@@ -104,9 +104,9 @@ void HAL_UART_RxCpltCallback( UART_HandleTypeDef* UartHandle )
 
 void HAL_GPIO_EXTI_Callback( uint16_t GPIO_Pin )
 {
-	GPIO* gpio = new GPIO();
-	gpio -> identify( GPIO_Pin );
-	delete gpio;
+	HGPIO* hgpio = new HGPIO();
+	hgpio -> identify( GPIO_Pin );
+	delete hgpio;
 
 }
 

@@ -42,7 +42,7 @@ enum class E_interrupt{
 
 };
 
-class GPIO{
+class HGPIO{
 public:
 	void identify(uint16_t GPIO_Pin);
 

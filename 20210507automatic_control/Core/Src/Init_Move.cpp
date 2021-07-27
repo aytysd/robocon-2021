@@ -39,153 +39,40 @@
 #include "gpio.h"
 
 
-namespace Init_Wait
-{
-
-class Wait : public Time
-{
-public:
-
-	bool wait_F()
-	{
-
-		Error_Handling::current_func = const_cast<char*>(__func__);
-		Error_Handling::current_line = __LINE__;
-
-		Error_Handling* error_handling = new Error_Handling();
-
-		while( ( HAL_GPIO_ReadPin( LIMIT_F_V2_GPIO_Port, LIMIT_F_V2_Pin ) == GPIO_PIN_RESET ) || ( HAL_GPIO_ReadPin( LIMIT_F_V3_GPIO_Port, LIMIT_F_V3_Pin ) == GPIO_PIN_RESET ) )
-		{
-			static uint32_t start_time = HAL_GetTick();
-
-			if( HAL_GetTick() - start_time >= 3000 )
-			{
-			Error_Handling::error_line = __LINE__;
-			Error_Handling::error_func = __func__;
-			error_handling -> set_flag( E_Errors::Init_move_failed );
-			Error_Handler();
-
-			}
-
-
-		}
-		delete error_handling;
-
-		return true;
-	}
-
-	bool wait_L()
-	{
-
-		Error_Handling::current_func = const_cast<char*>(__func__);
-		Error_Handling::current_line = __LINE__;
-
-		Error_Handling* error_handling = new Error_Handling();
-
-
-		while( ( HAL_GPIO_ReadPin( LIMIT_L_V3_GPIO_Port, LIMIT_L_V3_Pin ) == GPIO_PIN_RESET ) || ( HAL_GPIO_ReadPin( LIMIT_L_V4_GPIO_Port, LIMIT_L_V4_Pin ) == GPIO_PIN_RESET ) )
-		{
-			static uint32_t start_time = HAL_GetTick();
-
-			if( HAL_GetTick() - start_time >= 3000 )
-			{
-			Error_Handling::error_line = __LINE__;
-			Error_Handling::error_func = __func__;
-			error_handling -> set_flag( E_Errors::Init_move_failed );
-			Error_Handler();
-
-			}
-
-
-		}
-
-		delete error_handling;
-		return true;
-
-	}
-
-	bool wait_connection()
-	{
-		Error_Handling::current_func = const_cast<char*>(__func__);
-		Error_Handling::current_line = __LINE__;
-
-		return true;
-	}
-};
-
-}
-
-
 void Init_Move::init_move( E_robot_name robot )
 {
 
 	PWM* pwm = new PWM();
-	Init_Wait::Wait* wait = new Init_Wait::Wait();
 	LED* led = new LED();
 
 	led -> LED_output( E_LED_status::Init );
 
-	uint16_t speed = 400;
-
-	switch(robot)
+	switch( robot )
 	{
 	case E_robot_name::A:
 
-		Error_Handling::current_func = const_cast<char*>(__func__);
-		Error_Handling::current_line = __LINE__;
-
-		pwm -> V_output( speed, 90, 0, 0, E_move_status::MOVE );
-		wait -> wait_F();
-		pwm -> V_output( 0, 0, 0, 0, E_move_status::STOP );
-		HAL_Delay( 3000 );
-
-		pwm -> V_output( speed, 180, 0, 0, E_move_status::MOVE );
-		wait -> wait_L();
-		pwm -> V_output( 0, 0, 0, 0, E_move_status::STOP );
+		while( ( HAL_GPIO_ReadPin( LIMIT_F_V2_GPIO_Port, LIMIT_F_V2_Pin ) == GPIO_PIN_RESET ) || ( HAL_GPIO_ReadPin( LIMIT_F_V3_GPIO_Port, LIMIT_F_V3_Pin ) == GPIO_PIN_RESET ) ){}
+		while( ( HAL_GPIO_ReadPin( LIMIT_L_V3_GPIO_Port, LIMIT_L_V3_Pin ) == GPIO_PIN_RESET ) || ( HAL_GPIO_ReadPin( LIMIT_L_V4_GPIO_Port, LIMIT_L_V4_Pin ) == GPIO_PIN_RESET ) ){}
 
 		break;
 	case E_robot_name::B:
 
-		Error_Handling::current_func = const_cast<char*>(__func__);
-		Error_Handling::current_line = __LINE__;
-
-		pwm -> V_output( speed, 180, 0, 90, E_move_status::MOVE );
-		wait -> wait_F();
-		pwm -> V_output( 0, 0, 0, 0, E_move_status::STOP );
-		HAL_Delay( 3000 );
-
-		pwm -> V_output( speed, 270, 0, 90, E_move_status::MOVE );
-		wait -> wait_L();
-		pwm -> V_output( 0, 0, 0, 0, E_move_status::STOP );
+		while( ( HAL_GPIO_ReadPin( LIMIT_F_V2_GPIO_Port, LIMIT_F_V2_Pin ) == GPIO_PIN_RESET ) || ( HAL_GPIO_ReadPin( LIMIT_F_V3_GPIO_Port, LIMIT_F_V3_Pin ) == GPIO_PIN_RESET ) ){}
+		while( ( HAL_GPIO_ReadPin( LIMIT_L_V3_GPIO_Port, LIMIT_L_V3_Pin ) == GPIO_PIN_RESET ) || ( HAL_GPIO_ReadPin( LIMIT_L_V4_GPIO_Port, LIMIT_L_V4_Pin ) == GPIO_PIN_RESET ) ){}
 
 		break;
 	case E_robot_name::C:
 
-		Error_Handling::current_func = const_cast<char*>(__func__);
-		Error_Handling::current_line = __LINE__;
-
-		pwm -> V_output( speed, 270, 0, 180, E_move_status::MOVE );
-		wait -> wait_F();
-		pwm -> V_output( 0, 0, 0, 0, E_move_status::STOP );
-		HAL_Delay(3000);
-
-		pwm -> V_output( speed, 360, 0, 180, E_move_status::MOVE );
-		wait -> wait_L();
-		pwm -> V_output( 0, 0, 0, 0, E_move_status::STOP );
+		while( ( HAL_GPIO_ReadPin( LIMIT_F_V2_GPIO_Port, LIMIT_F_V2_Pin ) == GPIO_PIN_RESET ) || ( HAL_GPIO_ReadPin( LIMIT_F_V3_GPIO_Port, LIMIT_F_V3_Pin ) == GPIO_PIN_RESET ) ){}
+		while( ( HAL_GPIO_ReadPin( LIMIT_L_V3_GPIO_Port, LIMIT_L_V3_Pin ) == GPIO_PIN_RESET ) || ( HAL_GPIO_ReadPin( LIMIT_L_V4_GPIO_Port, LIMIT_L_V4_Pin ) == GPIO_PIN_RESET ) ){}
 
 		break;
 	}
-
-	Error_Handling::current_func = const_cast<char*>(__func__);
-	Error_Handling::current_line = __LINE__;
-
-
 
 	this -> Initialize( robot );
 
 	delete led;
 	delete pwm;
-	delete wait;
 
 	led -> LED_output( E_LED_status::Done );
 
@@ -206,11 +93,11 @@ void Init_Move::Initialize( E_robot_name robot )
 	  mpu6050 -> MPU6050_Init( &hi2c1 );
 
 	  __HAL_UART_ENABLE_IT( &huart4, UART_IT_RXNE );
-	  __HAL_UART_ENABLE_IT( &huart2, UART_IT_RXNE );
+	  __HAL_UART_ENABLE_IT( &huart3, UART_IT_RXNE );
 	  __HAL_UART_ENABLE_IT( &huart1, UART_IT_RXNE );
 
 /*
-	  __HAL_UART_DISABLE_IT( &huart2 , UART_IT_RXNE );
+	  __HAL_UART_DISABLE_IT( &huart3 , UART_IT_RXNE );
 	  __HAL_UART_DISABLE_IT( &huart4 , UART_IT_RXNE );
 	  __HAL_UART_DISABLE_IT( &huart1 , UART_IT_RXNE );
 */
