@@ -16,7 +16,7 @@
  *@Usertouch(functionname)&_(variable_name)
  *
  */
-#include <hGPIO.hpp>
+#include <HGPIO.hpp>
 #include "Self_Pos.hpp"
 #include "Gyro.hpp"
 #include "main.h"
@@ -29,95 +29,95 @@
 
 UART_HandleTypeDef* UART = &huart2;
 
-int GPIO::count = 0;
-bool GPIO::allow = false;
-int GPIO::angle[2] = {0,0};
-int GPIO::plus = 1;
+int HGPIO::count = 0;
+bool HGPIO::allow = false;
+int HGPIO::angle[2] = {0,0};
+int HGPIO::plus = 1;
 
-void GPIO::identify( uint16_t GPIO_Pin )
+void HGPIO::identify( uint16_t GPIO_Pin )
 	{
 	switch( GPIO_Pin )
 	{
 	case GPIO_PIN_0:
-		Debug::TTO_addr( &GPIO_Pin, "0", UART );
+		Debug::TTO_addr( &GPIO_Pin, "GPIO0", UART );
 		this -> GPIO_PIN_0_func();
 		break;
 	case GPIO_PIN_1:
-		Debug::TTO_addr( &GPIO_Pin, "1", UART );
+		Debug::TTO_addr( &GPIO_Pin, "GPIO1", UART );
 		this -> GPIO_PIN_1_func();
 		break;
 	case GPIO_PIN_2:
-		Debug::TTO_addr( &GPIO_Pin, "2", UART );
+		Debug::TTO_addr( &GPIO_Pin, "GPIO2", UART );
 		this -> GPIO_PIN_2_func();
 		break;
 	case GPIO_PIN_3:
-		Debug::TTO_addr( &GPIO_Pin, "3", UART );
+		Debug::TTO_addr( &GPIO_Pin, "GPIO3", UART );
 		this -> GPIO_PIN_3_func();
 		break;
 	case GPIO_PIN_4:
-		Debug::TTO_addr( &GPIO_Pin, "4", UART );
+		Debug::TTO_addr( &GPIO_Pin, "GPIO4", UART );
 		this -> GPIO_PIN_4_func();
 		break;
 	case GPIO_PIN_5:
-		Debug::TTO_addr( &GPIO_Pin, "5", UART );
+		Debug::TTO_addr( &GPIO_Pin, "GPIO5", UART );
 		this -> GPIO_PIN_5_func();
 		break;
 	case GPIO_PIN_6:
-		Debug::TTO_addr( &GPIO_Pin, "6", UART );
+		Debug::TTO_addr( &GPIO_Pin, "GPIO6", UART );
 		this -> GPIO_PIN_6_func();
 		break;
 	case GPIO_PIN_7:
-		Debug::TTO_addr( &GPIO_Pin, "7", UART );
+		Debug::TTO_addr( &GPIO_Pin, "GPIO7", UART );
 		this -> GPIO_PIN_7_func();
 		break;
 	case GPIO_PIN_8:
-		Debug::TTO_addr( &GPIO_Pin, "8", UART );
+		Debug::TTO_addr( &GPIO_Pin, "GPIO8", UART );
 		this -> GPIO_PIN_8_func();
 		break;
 	case GPIO_PIN_9:
-		Debug::TTO_addr( &GPIO_Pin, "9", UART );
+		Debug::TTO_addr( &GPIO_Pin, "GPIO9", UART );
 		this -> GPIO_PIN_9_func();
 		break;
 	case GPIO_PIN_10:
-		Debug::TTO_addr( &GPIO_Pin, "10", UART );
+		Debug::TTO_addr( &GPIO_Pin, "GPIO10", UART );
 		this -> GPIO_PIN_10_func();
 		break;
 	case GPIO_PIN_11:
-		Debug::TTO_addr( &GPIO_Pin, "11", UART );
+		Debug::TTO_addr( &GPIO_Pin, "GPIO11", UART );
 		this -> GPIO_PIN_11_func();
 		break;
 	case GPIO_PIN_12:
-		Debug::TTO_addr( &GPIO_Pin, "12", UART );
+		Debug::TTO_addr( &GPIO_Pin, "GPIO12", UART );
 		this -> GPIO_PIN_12_func();
 		break;
 	case GPIO_PIN_13:
-		Debug::TTO_addr( &GPIO_Pin, "13", UART );
+		Debug::TTO_addr( &GPIO_Pin, "GPIO13", UART );
 		this -> GPIO_PIN_13_func();
 		break;
 	case GPIO_PIN_14:
-		Debug::TTO_addr( &GPIO_Pin, "14", UART );
+		Debug::TTO_addr( &GPIO_Pin, "GPIO14", UART );
 		this -> GPIO_PIN_14_func();
 		break;
 	case GPIO_PIN_15:
-		Debug::TTO_addr( &GPIO_Pin, "15", UART );
+		Debug::TTO_addr( &GPIO_Pin, "GPIO15", UART );
 		this -> GPIO_PIN_15_func();
 		break;
 
 	}
 }
 
-void GPIO::GPIO_PIN_0_func(void){};
-void GPIO::GPIO_PIN_1_func(void){};
-void GPIO::GPIO_PIN_2_func(void){};
-void GPIO::GPIO_PIN_3_func(void){};
-void GPIO::GPIO_PIN_4_func(void){};
-void GPIO::GPIO_PIN_5_func(void){};
-void GPIO::GPIO_PIN_6_func(void){};
-void GPIO::GPIO_PIN_7_func(void){};
-void GPIO::GPIO_PIN_8_func(void){};
-void GPIO::GPIO_PIN_9_func(void){};
-void GPIO::GPIO_PIN_10_func(void){};
-void GPIO::GPIO_PIN_11_func(void)
+void HGPIO::GPIO_PIN_0_func(void){};
+void HGPIO::GPIO_PIN_1_func(void){};
+void HGPIO::GPIO_PIN_2_func(void){};
+void HGPIO::GPIO_PIN_3_func(void){};
+void HGPIO::GPIO_PIN_4_func(void){};
+void HGPIO::GPIO_PIN_5_func(void){};
+void HGPIO::GPIO_PIN_6_func(void){};
+void HGPIO::GPIO_PIN_7_func(void){};
+void HGPIO::GPIO_PIN_8_func(void){};
+void HGPIO::GPIO_PIN_9_func(void){};
+void HGPIO::GPIO_PIN_10_func(void){};
+void HGPIO::GPIO_PIN_11_func(void)
 {
 	if (this->count <= 1 && this->allow) {
 			Gyro *gyro = new Gyro();
@@ -135,7 +135,7 @@ void GPIO::GPIO_PIN_11_func(void)
 			delete gyro;
 		}
 };
-void GPIO::GPIO_PIN_12_func(void)
+void HGPIO::GPIO_PIN_12_func(void)
 {
 	Function* function = new Function();
 
@@ -143,8 +143,8 @@ void GPIO::GPIO_PIN_12_func(void)
 
 	delete function;
 };
-void GPIO::GPIO_PIN_13_func(void){};
-void GPIO::GPIO_PIN_14_func(void)
+void HGPIO::GPIO_PIN_13_func(void){};
+void HGPIO::GPIO_PIN_14_func(void)
 {
 	if (this->count <= 1 && this->allow) {
 			Gyro *gyro = new Gyro();
@@ -162,4 +162,4 @@ void GPIO::GPIO_PIN_14_func(void)
 			delete gyro;
 		}
 };
-void GPIO::GPIO_PIN_15_func(void){};
+void HGPIO::GPIO_PIN_15_func(void){};

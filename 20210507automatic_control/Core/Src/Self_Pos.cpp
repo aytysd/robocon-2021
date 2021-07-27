@@ -18,6 +18,7 @@
  */
 
 #include <General_command.hpp>
+#include <HGPIO.hpp>
 #include "main.h"
 #include "Self_Pos.hpp"
 #include "bno055.h"
@@ -28,7 +29,6 @@
 #include "PWM.hpp"
 #include "Gyro.hpp"
 #include "Function.hpp"
-#include "hGPIO.hpp"
 #include "adc.h"
 #include "i2c.h"
 #include "tim.h"
@@ -62,7 +62,8 @@ void Self_Pos::add_Self_Pos(int add_x, int add_y)
 
 void Self_Pos::set_initial_pos(E_robot_name robot)
 {
-	switch (robot) {
+	switch (robot)
+	{
 	case E_robot_name::A:
 
 		this->Self_Pos_X = -2643;
@@ -304,26 +305,26 @@ void Self_Pos::Self_Pos_correction(int pos_x) {
 	int low_angle = 280;
 	int high_angle = 440;
 	int tower[][2] = { { 1500, 750 }, { 1500, -750 } };
-	GPIO::plus = 1;
+	HGPIO::plus = 1;
 	if (pos_x <= 0) {
 		tower[0][0] *= -1;
 		tower[1][0] *= -1;
 		low_angle -= 180;
 		high_angle -= 180;
-		GPIO::plus = -1;
+		HGPIO::plus = -1;
 	}
 
 	int d = 0;
 	this->Spin(low_angle, false);
 	int a[2] = { high_angle, low_angle };
-	while (GPIO::count != 2) {
-		GPIO::count = 0;
+	while (HGPIO::count != 2) {
+		HGPIO::count = 0;
 		this->Spin(a[d], true);
 		d = -d + 1;
 	}
-	float a0 = tan(GPIO::angle[0]);
-	float a1 = tan(GPIO::angle[1]);
-	if (GPIO::plus * a0 <= 0) {
+	float a0 = tan(HGPIO::angle[0]);
+	float a1 = tan(HGPIO::angle[1]);
+	if (HGPIO::plus * a0 <= 0) {
 		int a = a0;
 		a0 = a1;
 		a1 = a;
@@ -363,7 +364,7 @@ void Self_Pos::Spin(int goal_angle, bool scan) {
 		hi = l;
 	}
 	if (scan) {
-		GPIO::allow = true;
+		HGPIO::allow = true;
 		int n0 =
 				(lo <= this->out_angle && this->out_angle <= hi) ? 1 :
 				(lo <= this->out_angle + 360 && this->out_angle + 360 <= hi) ?
@@ -373,7 +374,7 @@ void Self_Pos::Spin(int goal_angle, bool scan) {
 					speed, true);
 			HAL_Delay(1000 * k[n] / speed);
 			function->drive_motor_Rope(motor_number, 3, 0, true);
-			GPIO::allow = false;
+			HGPIO::allow = false;
 		} else {
 			int out_d = fabs(
 					now_angle + (n == 2) ?
@@ -385,20 +386,20 @@ void Self_Pos::Spin(int goal_angle, bool scan) {
 			HAL_Delay(1000 * out_d / speed);
 
 			function->drive_motor_Rope(motor_number, 3, 0, false);
-			GPIO::allow = false;
+			HGPIO::allow = false;
 			function->drive_motor_Rope(motor_number, (int) -0.5 * dire + 1.5,
 					speed, false);
 
 			HAL_Delay(1000 * 359 / speed);
 
 			function->drive_motor_Rope(motor_number, 3, 0, false);
-			GPIO::allow = true;
+			HGPIO::allow = true;
 			function->drive_motor_Rope(motor_number, (int) 0.5 * dire + 1.5,
 					speed, false);
 
 			HAL_Delay(1000 * (k[n] - out_d) / speed);
 			function->drive_motor_Rope(motor_number, 3, 0, false);
-			GPIO::allow = false;
+			HGPIO::allow = false;
 		}
 	} else {
 		int n0 =
