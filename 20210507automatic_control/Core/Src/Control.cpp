@@ -21,56 +21,203 @@
 #include "main.h"
 #include "General_command.hpp"
 #include "Init_Move.hpp"
-
+#include "Line.hpp"
+#include "Infinity_command.hpp"
+#include "Self_Pos.hpp"
 
 uint8_t Control::master_Rxdata[4] = { 0, 0, 0, 0 };
 
-void Control::control()
+void Control::control ( E_robot_name robot )
 {
 
-
-	if( Control::master_Rxdata[0] == (uint8_t)E_Flow::INIT_MOVE )
+	switch( robot )
 	{
-		Init_Move* init_move = new Init_Move();
-		init_move -> init_move( E_robot_name::A );
-		delete init_move;
-	}
-	if( Control::master_Rxdata[0] == (uint8_t)E_Flow::MOVE_INFINITY_INITIAL_POS )
+	case E_robot_name::A:
 	{
+		if( Control::master_Rxdata[0] == (uint8_t)E_Flow::MOVE_INFINITY_INITIAL_POS )
+		{
+			Line* line = new Line();
+			Self_Pos* self_pos = new Self_Pos();
 
+			line -> Line_driver( self_pos -> get_Self_Pos_X(), self_pos -> get_Self_Pos_Y(), ( int )Infinity::A_Pos::L_SPC_X, ( int )Infinity::A_Pos::L_SPC_Y, true );
+			while( Line::judge == E_Line_status::MOVING ){};
+
+			line -> Line_driver( self_pos -> get_Self_Pos_X(), self_pos -> get_Self_Pos_Y(), ( int )Infinity::A_Pos::LD_X, ( int )Infinity::A_Pos::LD_Y, false );
+			while( Line::judge == E_Line_status::MOVING ){};
+
+
+			delete line;
+			delete self_pos;
+		}
+		if( Control::master_Rxdata[0] == (uint8_t)E_Flow::MODE_INFINITY_JUMP )
+		{
+
+
+		}
+		if( Control::master_Rxdata[0] == (uint8_t)E_Flow::MODE_SELF_POS_COR )
+		{
+			Line* line = new Line();
+			Self_Pos* self_pos = new Self_Pos();
+
+			line -> Line_driver( self_pos -> get_Self_Pos_X(), self_pos -> get_Self_Pos_Y(), ( int )Infinity::A_Pos::START, ( int )Infinity::A_Pos::FINISH, true );
+			while( Line::judge == E_Line_status::MOVING ){};
+
+			line -> Line_driver( self_pos -> get_Self_Pos_X(), self_pos -> get_Self_Pos_Y(), ( int )Infinity::A_Pos::START, ( int )Infinity::A_Pos::FINISH, true );
+			while( Line::judge == E_Line_status::MOVING ){};
+
+
+			delete line;
+			delete self_pos;
+
+
+		}
+		if( Control::master_Rxdata[0] == (uint8_t)E_Flow::MOVE_DOUBLE_JUMP_INITIAL_POS )
+		{
+			Line* line = new Line();
+			Self_Pos* self_pos = new Self_Pos();
+
+			line -> Line_driver( self_pos -> get_Self_Pos_X(), self_pos -> get_Self_Pos_Y(), ( int )Infinity::A_Pos::START, ( int )Infinity::A_Pos::FINISH, true );
+			while( Line::judge == E_Line_status::MOVING ){};
+
+			line -> Line_driver( self_pos -> get_Self_Pos_X(), self_pos -> get_Self_Pos_Y(), ( int )Infinity::A_Pos::START, ( int )Infinity::A_Pos::FINISH, true );
+			while( Line::judge == E_Line_status::MOVING ){};
+
+
+			delete line;
+			delete self_pos;
+
+		}
+		if( Control::master_Rxdata[0] == (uint8_t)E_Flow::MODE_DOUBLE_JUMP )
+		{
+
+		}
+
+		break;
 	}
-	if( Control::master_Rxdata[0] == (uint8_t)E_Flow::MOVE_INFINITY_INITIAL_POS )
+	case E_robot_name::B:
 	{
+		if( Control::master_Rxdata[0] == (uint8_t)E_Flow::MOVE_INFINITY_INITIAL_POS )
+		{
+			Line* line = new Line();
+			Self_Pos* self_pos = new Self_Pos();
 
+			line -> Line_driver( self_pos -> get_Self_Pos_X(), self_pos -> get_Self_Pos_Y(), ( int )Infinity::A_Pos::START, ( int )Infinity::A_Pos::FINISH, true );
+			while( Line::judge == E_Line_status::MOVING ){};
+
+			line -> Line_driver( self_pos -> get_Self_Pos_X(), self_pos -> get_Self_Pos_Y(), ( int )Infinity::A_Pos::START, ( int )Infinity::A_Pos::FINISH, true );
+			while( Line::judge == E_Line_status::MOVING ){};
+
+
+			delete line;
+			delete self_pos;
+		}
+		if( Control::master_Rxdata[0] == (uint8_t)E_Flow::MODE_INFINITY_JUMP )
+		{
+
+		}
+		if( Control::master_Rxdata[0] == (uint8_t)E_Flow::MODE_SELF_POS_COR )
+		{
+			Line* line = new Line();
+			Self_Pos* self_pos = new Self_Pos();
+
+			line -> Line_driver( self_pos -> get_Self_Pos_X(), self_pos -> get_Self_Pos_Y(), ( int )Infinity::A_Pos::START, ( int )Infinity::A_Pos::FINISH, true );
+			while( Line::judge == E_Line_status::MOVING ){};
+
+			line -> Line_driver( self_pos -> get_Self_Pos_X(), self_pos -> get_Self_Pos_Y(), ( int )Infinity::A_Pos::START, ( int )Infinity::A_Pos::FINISH, true );
+			while( Line::judge == E_Line_status::MOVING ){};
+
+
+			delete line;
+			delete self_pos;
+
+
+		}
+		if( Control::master_Rxdata[0] == (uint8_t)E_Flow::MOVE_DOUBLE_JUMP_INITIAL_POS )
+		{
+			Line* line = new Line();
+			Self_Pos* self_pos = new Self_Pos();
+
+			line -> Line_driver( self_pos -> get_Self_Pos_X(), self_pos -> get_Self_Pos_Y(), ( int )Infinity::A_Pos::START, ( int )Infinity::A_Pos::FINISH, true );
+			while( Line::judge == E_Line_status::MOVING ){};
+
+			line -> Line_driver( self_pos -> get_Self_Pos_X(), self_pos -> get_Self_Pos_Y(), ( int )Infinity::A_Pos::START, ( int )Infinity::A_Pos::FINISH, true );
+			while( Line::judge == E_Line_status::MOVING ){};
+
+
+			delete line;
+			delete self_pos;
+
+		}
+		if( Control::master_Rxdata[0] == (uint8_t)E_Flow::MODE_DOUBLE_JUMP )
+		{
+
+		}
+
+		break;
 	}
-	if( Control::master_Rxdata[0] == (uint8_t)E_Flow::MODE_INFINITY_JUMP )
+	case E_robot_name::C:
 	{
+		if( Control::master_Rxdata[0] == (uint8_t)E_Flow::MOVE_INFINITY_INITIAL_POS )
+		{
+			Line* line = new Line();
+			Self_Pos* self_pos = new Self_Pos();
 
-	}
-	if( Control::master_Rxdata[0] == (uint8_t)E_Flow::MODE_SELF_POS_COR )
-	{
+			line -> Line_driver( self_pos -> get_Self_Pos_X(), self_pos -> get_Self_Pos_Y(), ( int )Infinity::A_Pos::START, ( int )Infinity::A_Pos::FINISH, true );
+			while( Line::judge == E_Line_status::MOVING ){};
 
-	}
-	if( Control::master_Rxdata[0] == (uint8_t)E_Flow::MOVE_DOUBLE_JUMP_INITIAL_POS )
-	{
+			line -> Line_driver( self_pos -> get_Self_Pos_X(), self_pos -> get_Self_Pos_Y(), ( int )Infinity::A_Pos::START, ( int )Infinity::A_Pos::FINISH, true );
+			while( Line::judge == E_Line_status::MOVING ){};
 
-	}
-	if( Control::master_Rxdata[0] == (uint8_t)E_Flow::MODE_DOUBLE_JUMP )
-	{
 
-	}
-	if( Control::master_Rxdata[0] == (uint8_t)E_Flow::MOVE_DOUBLE_JUMP_INITIAL_POS )
-	{
+			delete line;
+			delete self_pos;
+		}
+		if( Control::master_Rxdata[0] == (uint8_t)E_Flow::MODE_INFINITY_JUMP )
+		{
 
-	}
-	if( Control::master_Rxdata[0] == (uint8_t)E_Flow::MODE_DOUBLE_JUMP )
-	{
+		}
+		if( Control::master_Rxdata[0] == (uint8_t)E_Flow::MODE_SELF_POS_COR )
+		{
+			Line* line = new Line();
+			Self_Pos* self_pos = new Self_Pos();
 
-	}
-	if( Control::master_Rxdata[0] == (uint8_t)E_Flow::FINISH )
-	{
+			line -> Line_driver( self_pos -> get_Self_Pos_X(), self_pos -> get_Self_Pos_Y(), ( int )Infinity::A_Pos::START, ( int )Infinity::A_Pos::FINISH, true );
+			while( Line::judge == E_Line_status::MOVING ){};
 
+			line -> Line_driver( self_pos -> get_Self_Pos_X(), self_pos -> get_Self_Pos_Y(), ( int )Infinity::A_Pos::START, ( int )Infinity::A_Pos::FINISH, true );
+			while( Line::judge == E_Line_status::MOVING ){};
+
+
+			delete line;
+			delete self_pos;
+
+
+		}
+		if( Control::master_Rxdata[0] == (uint8_t)E_Flow::MOVE_DOUBLE_JUMP_INITIAL_POS )
+		{
+			Line* line = new Line();
+			Self_Pos* self_pos = new Self_Pos();
+
+			line -> Line_driver( self_pos -> get_Self_Pos_X(), self_pos -> get_Self_Pos_Y(), ( int )Infinity::A_Pos::START, ( int )Infinity::A_Pos::FINISH, true );
+			while( Line::judge == E_Line_status::MOVING ){};
+
+			line -> Line_driver( self_pos -> get_Self_Pos_X(), self_pos -> get_Self_Pos_Y(), ( int )Infinity::A_Pos::START, ( int )Infinity::A_Pos::FINISH, true );
+			while( Line::judge == E_Line_status::MOVING ){};
+
+
+			delete line;
+			delete self_pos;
+
+		}
+		if( Control::master_Rxdata[0] == (uint8_t)E_Flow::MODE_DOUBLE_JUMP )
+		{
+
+		}
+
+		break;
 	}
+	}
+
 
 
 

@@ -68,6 +68,6 @@ void Function::drive_motor_Rope( uint8_t motor_number, uint8_t direction, uint16
 
 	if( PID_Enabled == true ) motor[0] |= ( 0b01 << 6 );
 
-	HAL_UART_Transmit( &huart6, ( uint8_t* )motor, sizeof( motor ), 100);
+	HAL_UART_Transmit( &huart6, ( uint8_t* )motor, sizeof( motor ), 100 );
 }
 

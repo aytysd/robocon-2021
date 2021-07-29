@@ -42,39 +42,23 @@
 void Init_Move::init_move( E_robot_name robot )
 {
 
-	PWM* pwm = new PWM();
 	LED* led = new LED();
 
 	led -> LED_output( E_LED_status::Init );
 
-	switch( robot )
-	{
-	case E_robot_name::A:
-
-		while( ( HAL_GPIO_ReadPin( LIMIT_F_V2_GPIO_Port, LIMIT_F_V2_Pin ) == GPIO_PIN_RESET ) || ( HAL_GPIO_ReadPin( LIMIT_F_V3_GPIO_Port, LIMIT_F_V3_Pin ) == GPIO_PIN_RESET ) ){}
-		while( ( HAL_GPIO_ReadPin( LIMIT_L_V3_GPIO_Port, LIMIT_L_V3_Pin ) == GPIO_PIN_RESET ) || ( HAL_GPIO_ReadPin( LIMIT_L_V4_GPIO_Port, LIMIT_L_V4_Pin ) == GPIO_PIN_RESET ) ){}
-
-		break;
-	case E_robot_name::B:
-
-		while( ( HAL_GPIO_ReadPin( LIMIT_F_V2_GPIO_Port, LIMIT_F_V2_Pin ) == GPIO_PIN_RESET ) || ( HAL_GPIO_ReadPin( LIMIT_F_V3_GPIO_Port, LIMIT_F_V3_Pin ) == GPIO_PIN_RESET ) ){}
-		while( ( HAL_GPIO_ReadPin( LIMIT_L_V3_GPIO_Port, LIMIT_L_V3_Pin ) == GPIO_PIN_RESET ) || ( HAL_GPIO_ReadPin( LIMIT_L_V4_GPIO_Port, LIMIT_L_V4_Pin ) == GPIO_PIN_RESET ) ){}
-
-		break;
-	case E_robot_name::C:
-
-		while( ( HAL_GPIO_ReadPin( LIMIT_F_V2_GPIO_Port, LIMIT_F_V2_Pin ) == GPIO_PIN_RESET ) || ( HAL_GPIO_ReadPin( LIMIT_F_V3_GPIO_Port, LIMIT_F_V3_Pin ) == GPIO_PIN_RESET ) ){}
-		while( ( HAL_GPIO_ReadPin( LIMIT_L_V3_GPIO_Port, LIMIT_L_V3_Pin ) == GPIO_PIN_RESET ) || ( HAL_GPIO_ReadPin( LIMIT_L_V4_GPIO_Port, LIMIT_L_V4_Pin ) == GPIO_PIN_RESET ) ){}
-
-		break;
-	}
+	while( ( HAL_GPIO_ReadPin( LIMIT_F_V2_GPIO_Port, LIMIT_F_V2_Pin ) == GPIO_PIN_RESET ) || ( HAL_GPIO_ReadPin( LIMIT_F_V3_GPIO_Port, LIMIT_F_V3_Pin ) == GPIO_PIN_RESET ) ){}
+	while( ( HAL_GPIO_ReadPin( LIMIT_L_V3_GPIO_Port, LIMIT_L_V3_Pin ) == GPIO_PIN_RESET ) || ( HAL_GPIO_ReadPin( LIMIT_L_V4_GPIO_Port, LIMIT_L_V4_Pin ) == GPIO_PIN_RESET ) ){}
 
 	this -> Initialize( robot );
 
 	delete led;
-	delete pwm;
 
 	led -> LED_output( E_LED_status::Done );
+
+	if( robot == E_robot_name::A || robot == E_robot_name::B )
+	{
+
+	}
 
 }
 
@@ -86,11 +70,16 @@ void Init_Move::Initialize( E_robot_name robot )
 	  MPU6050* mpu6050 = new MPU6050();
 
 	  self_pos -> set_initial_pos( robot );
+/*
 	  gyro -> BNO055_Init_I2C( &hi2c1 );
 	  gyro -> BNO055_Init_I2C( &hi2c3 );
+*/
 	  gyro -> set_initial_direction( robot );
 
 	  mpu6050 -> MPU6050_Init( &hi2c1 );
+	  mpu6050 -> MPU6050_Init( &hi2c3 );
+
+	  mpu6050 -> set_initial_direction( robot );
 
 	  __HAL_UART_ENABLE_IT( &huart4, UART_IT_RXNE );
 	  __HAL_UART_ENABLE_IT( &huart3, UART_IT_RXNE );
