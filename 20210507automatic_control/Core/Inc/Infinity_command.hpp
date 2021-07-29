@@ -25,15 +25,33 @@ namespace Infinity
 enum class A_Pos
 {
 
-	START = 75,
+	LD_X = -1200,
+	LD_Y = -1200,
+
+	JUMP_X = 0,
+	JUMP_Y = 0,
+
+	RU_X = 1200,
+	RU_Y = 1200,
+
+	R_SPC_X = 2400,
+	R_SPC_Y = 0,
+
+	RD_X = 1200,
+	RD_Y = -1200,
+
+	LU_X = -1200,
+	LU_Y = 1200,
+
+	L_SPC_X = -2400,
+	L_SPC_Y = 0,
+
 	FINISH = 99,
 };
 
 enum class B_Pos
 {
 
-	START = 75,
-	FINISH = 99,
 };
 
 }

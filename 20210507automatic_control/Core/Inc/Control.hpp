@@ -20,6 +20,7 @@
 #define INC_CONTROL_HPP_
 
 #include "main.h"
+#include "General_command.hpp"
 
 enum class E_Flow
 {
@@ -43,7 +44,7 @@ public:
 	static uint8_t A_Rxdata[4];
 	static uint8_t B_Rxdata[4];
 
-	void control(void);
+	void control( E_robot_name robot );
 };
 
 
