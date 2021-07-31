@@ -36,7 +36,7 @@
 #include "tim.h"
 #include "usart.h"
 #include "gpio.h"
-
+#include "Time.hpp"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -73,6 +73,7 @@ PWM* pwm = new PWM();
 Jump* jump = new Jump();
 Line* line = new Line();
 MPU6050* mpu6050 = new MPU6050();
+Time* time = new Time();
 /* USER CODE END 0 */
 
 /* External variables --------------------------------------------------------*/
@@ -371,6 +372,8 @@ void TIM7_IRQHandler(void)
   /* USER CODE END TIM7_IRQn 0 */
   HAL_TIM_IRQHandler(&htim7);
   /* USER CODE BEGIN TIM7_IRQn 1 */
+
+
   /* USER CODE END TIM7_IRQn 1 */
 }
 

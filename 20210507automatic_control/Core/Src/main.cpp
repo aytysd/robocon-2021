@@ -42,6 +42,7 @@
 #include <string>
 #include "Debug.hpp"
 #include <cstring>
+#include "Time.hpp"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -134,6 +135,7 @@ int main(void)
   Gyro* gyro = new Gyro();
   Self_Pos* self_pos = new Self_Pos();
   Control* control = new Control();
+  Time* time = new Time();
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -172,7 +174,6 @@ int main(void)
   MX_ADC2_Init();
   /* USER CODE BEGIN 2 */
   init_move -> init_move( ROBOT );
-
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -180,10 +181,10 @@ int main(void)
   while (1)
   {
 
-
 	  control -> control_A();
 	  control -> control_B();
 	  control -> control_C();
+
 
 
     /* USER CODE END WHILE */

@@ -22,5 +22,12 @@
 #include "main.h"
 
 
+uint32_t Time::prev_time = 0;
 
+void Time::reset_timer( void ){ Time::prev_time = HAL_GetTick(); }
 
+uint32_t Time::calc_time_diff( void )
+{
+	uint32_t diff = HAL_GetTick() - Time::prev_time;
+	return diff / 1000;
+}
