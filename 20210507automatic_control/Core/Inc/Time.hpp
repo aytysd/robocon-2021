@@ -15,12 +15,17 @@
 #ifndef INC_TIME_HPP_
 #define INC_TIME_HPP_
 
+#include "main.h"
+
 
 class Time
 {
 public:
-	void wait();
+	uint32_t calc_time_diff( void );
+	void reset_timer( void );
 
+private:
+	static uint32_t prev_time;
 };
 
 

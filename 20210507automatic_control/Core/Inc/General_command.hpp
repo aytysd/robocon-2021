@@ -49,7 +49,7 @@ enum class E_Line_status{
 
 enum class E_data_type
 {
-	command,
+	command = 0x10,
 	done,
 };
 #define ROBOT E_robot_name::A

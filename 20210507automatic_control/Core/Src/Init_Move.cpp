@@ -76,6 +76,9 @@ void Init_Move::Initialize( E_robot_name robot )
 	  Gyro* gyro = new Gyro();
 	  Self_Pos* self_pos = new Self_Pos();
 	  MPU6050* mpu6050 = new MPU6050();
+	  Time* time = new Time();
+
+	  time -> reset_timer();
 
 	  self_pos -> set_initial_pos( robot );
 /*
@@ -118,7 +121,7 @@ void Init_Move::Initialize( E_robot_name robot )
 	  delete gyro;
 	  delete self_pos;
 	  delete mpu6050;
-
+	  delete time;
 
 
 }
