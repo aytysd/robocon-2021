@@ -131,11 +131,7 @@ int main(void)
 {
   /* USER CODE BEGIN 1 */
   Init_Move* init_move = new Init_Move();
-  PWM* pwm = new PWM();
-  Gyro* gyro = new Gyro();
-  Self_Pos* self_pos = new Self_Pos();
   Control* control = new Control();
-  Time* time = new Time();
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/

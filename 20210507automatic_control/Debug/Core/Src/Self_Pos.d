@@ -1,5 +1,5 @@
 Core/Src/Self_Pos.o: ../Core/Src/Self_Pos.cpp \
- ../Core/Inc/General_command.hpp ../Core/Inc/main.h \
+ ../Core/Inc/General_command.hpp ../Core/Inc/HGPIO.hpp ../Core/Inc/main.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h \
  ../Core/Inc/stm32f4xx_hal_conf.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h \
@@ -33,15 +33,16 @@ Core/Src/Self_Pos.o: ../Core/Src/Self_Pos.cpp \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h \
- ../Core/Inc/Self_Pos.hpp ../Core/Inc/main.h ../Core/Inc/ToF.hpp \
+ ../Core/Inc/main.h ../Core/Inc/Self_Pos.hpp ../Core/Inc/ToF.hpp \
  ../Core/Inc/Self_Pos.hpp ../Core/Inc/bno055.h \
  ../Core/Inc/Error_Handling.hpp ../Core/Inc/LED.hpp ../Core/Inc/PWM.hpp \
  ../Core/Inc/General_command.hpp ../Core/Inc/Gyro.hpp \
- ../Core/Inc/Function.hpp ../Core/Inc/hGPIO.hpp ../Core/Inc/adc.h \
- ../Core/Inc/i2c.h ../Core/Inc/tim.h ../Core/Inc/usart.h \
- ../Core/Inc/gpio.h
+ ../Core/Inc/Function.hpp ../Core/Inc/adc.h ../Core/Inc/i2c.h \
+ ../Core/Inc/tim.h ../Core/Inc/usart.h ../Core/Inc/gpio.h
 
 ../Core/Inc/General_command.hpp:
+
+../Core/Inc/HGPIO.hpp:
 
 ../Core/Inc/main.h:
 
@@ -111,9 +112,9 @@ Core/Src/Self_Pos.o: ../Core/Src/Self_Pos.cpp \
 
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h:
 
-../Core/Inc/Self_Pos.hpp:
-
 ../Core/Inc/main.h:
+
+../Core/Inc/Self_Pos.hpp:
 
 ../Core/Inc/ToF.hpp:
 
@@ -132,8 +133,6 @@ Core/Src/Self_Pos.o: ../Core/Src/Self_Pos.cpp \
 ../Core/Inc/Gyro.hpp:
 
 ../Core/Inc/Function.hpp:
-
-../Core/Inc/hGPIO.hpp:
 
 ../Core/Inc/adc.h:
 

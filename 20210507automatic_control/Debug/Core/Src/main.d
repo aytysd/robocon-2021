@@ -36,12 +36,12 @@ Core/Src/main.o: ../Core/Src/main.cpp ../Core/Inc/main.h \
  ../Core/Inc/usart.h ../Core/Inc/gpio.h ../Core/Inc/Function.hpp \
  ../Core/Inc/PWM.hpp ../Core/Inc/General_command.hpp \
  ../Core/Inc/Self_Pos.hpp ../Core/Inc/General_command.hpp \
- ../Core/Inc/ToF.hpp ../Core/Inc/Self_Pos.hpp \
- ../Core/Inc/Communication.hpp ../Core/Inc/hGPIO.hpp \
+ ../Core/Inc/ToF.hpp ../Core/Inc/Self_Pos.hpp ../Core/Inc/hGPIO.hpp \
  ../Core/Inc/Init_Move.hpp ../Core/Inc/LED.hpp \
  ../Core/Inc/Error_Handling.hpp ../Core/Inc/Controller.hpp \
  ../Core/Inc/PWM.hpp ../Core/Inc/Init_Move.hpp ../Core/Inc/Control.hpp \
- ../Core/Inc/Rope.hpp ../Core/Inc/Gyro.hpp ../Core/Inc/Debug.hpp
+ ../Core/Inc/Rope.hpp ../Core/Inc/Gyro.hpp ../Core/Inc/Debug.hpp \
+ ../Core/Inc/Time.hpp
 
 ../Core/Inc/main.h:
 
@@ -137,8 +137,6 @@ Core/Src/main.o: ../Core/Src/main.cpp ../Core/Inc/main.h \
 
 ../Core/Inc/Self_Pos.hpp:
 
-../Core/Inc/Communication.hpp:
-
 ../Core/Inc/hGPIO.hpp:
 
 ../Core/Inc/Init_Move.hpp:
@@ -160,3 +158,5 @@ Core/Src/main.o: ../Core/Src/main.cpp ../Core/Inc/main.h \
 ../Core/Inc/Gyro.hpp:
 
 ../Core/Inc/Debug.hpp:
+
+../Core/Inc/Time.hpp:

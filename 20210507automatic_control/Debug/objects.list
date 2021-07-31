@@ -1,5 +1,7 @@
-"Core/Src/Communication.o"
 "Core/Src/Control.o"
+"Core/Src/Control_A.o"
+"Core/Src/Control_B.o"
+"Core/Src/Control_C.o"
 "Core/Src/Controller.o"
 "Core/Src/Controller_MDC.o"
 "Core/Src/Controller_Majima.o"

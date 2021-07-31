@@ -1,4 +1,4 @@
-Core/Src/hGPIO.o: ../Core/Src/hGPIO.cpp ../Core/Inc/hGPIO.hpp \
+Core/Src/hGPIO.o: ../Core/Src/hGPIO.cpp ../Core/Inc/HGPIO.hpp \
  ../Core/Inc/main.h ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h \
  ../Core/Inc/stm32f4xx_hal_conf.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h \
@@ -38,7 +38,7 @@ Core/Src/hGPIO.o: ../Core/Src/hGPIO.cpp ../Core/Inc/hGPIO.hpp \
  ../Core/Inc/Function.hpp ../Core/Inc/PWM.hpp ../Core/Inc/gpio.h \
  ../Core/Inc/usart.h ../Core/Inc/i2c.h
 
-../Core/Inc/hGPIO.hpp:
+../Core/Inc/HGPIO.hpp:
 
 ../Core/Inc/main.h:
 

@@ -1,1 +1,1 @@
-Control.cpp:28:6:void Control::control()	24	static
+Control.cpp:34:6:void Control::send_command(E_robot_name, uint8_t*)	24	static
