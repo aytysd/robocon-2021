@@ -22,6 +22,9 @@
 namespace Infinity
 {
 
+int A_pos_X[ 6 ] = { -1200, 1200, 2400, 1200, -1200, -2400 };
+int A_pos_Y[ 6 ] = { -1200, 1200, 0, 1200, 1200, 0 };
+
 enum class A_Pos
 {
 
@@ -46,7 +49,6 @@ enum class A_Pos
 	L_SPC_X = -2400,
 	L_SPC_Y = 0,
 
-	FINISH = 99,
 };
 
 enum class B_Pos

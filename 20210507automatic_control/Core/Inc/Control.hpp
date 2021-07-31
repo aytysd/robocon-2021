@@ -24,15 +24,10 @@
 
 enum class E_Flow
 {
-	INIT_MOVE = 0x10,
 	MOVE_INFINITY_INITIAL_POS = 0x20,
 	MODE_INFINITY_JUMP = 0x30,
-	MODE_SELF_POS_COR = 0x40,
 	MOVE_DOUBLE_JUMP_INITIAL_POS = 0x50,
 	MODE_DOUBLE_JUMP = 0x60,
-	FINISH = 0x70,
-
-
 
 };
 
@@ -40,11 +35,15 @@ enum class E_Flow
 class Control
 {
 public:
-	static uint8_t master_Rxdata[4];
-	static uint8_t A_Rxdata[4];
-	static uint8_t B_Rxdata[4];
 
-	void control( E_robot_name robot );
+	static bool Is_busy;
+
+	void control_A( void );
+	void control_B( void );
+	void control_C( void );
+
+	void send_command( E_robot_name robot, uint8_t* data );
+
 };
 
 

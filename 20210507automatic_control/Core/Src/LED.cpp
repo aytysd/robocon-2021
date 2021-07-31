@@ -20,7 +20,6 @@
 #include "LED.hpp"
 #include "function.hpp"
 
-E_LED_status LED::old_LED_status = E_LED_status::None;
 
 void LED::LED_output(E_LED_status status)
 {
@@ -37,7 +36,6 @@ void LED::LED_output(E_LED_status status)
 		function -> drive_LED(2, 20);
 		function -> drive_LED(3, 20);
 
-		this -> old_LED_status = status;
 		break;
 
 	case E_LED_status::Done:
@@ -46,36 +44,33 @@ void LED::LED_output(E_LED_status status)
 		function -> drive_LED(3, 0);
 		function -> drive_LED(3, 20);
 
-		this -> old_LED_status = status;
 		break;
 
-	case E_LED_status::Wait:
+	case E_LED_status::NONE:
 		function -> drive_LED(1, 0);
 		function -> drive_LED(2, 0);
 		function -> drive_LED(3, 0);
 		function -> drive_LED(2, 20);
 
-		this -> old_LED_status = status;
 		break;
 
-	case E_LED_status::Error_Handler:
+	case E_LED_status::MOVE_INFINITY_INITIAL_POS:
 		function -> drive_LED(1, 0);
 		function -> drive_LED(2, 0);
 		function -> drive_LED(3, 0);
 		function -> drive_LED(1, 20);
 		break;
 
-	case E_LED_status::OPR_Mode:
+	case E_LED_status::SPC:
 		function -> drive_LED(1, 0);
 		function -> drive_LED(2, 0);
 		function -> drive_LED(3, 0);
 		function -> drive_LED(2, 20);
 		function -> drive_LED(3, 20);
 
-		this -> old_LED_status = status;
 		break;
 
-	case E_LED_status::Warning:
+	case E_LED_status::MOVE_DOUBLE_JUMP_INITIAL_POS:
 		function -> drive_LED(1, 0);
 		function -> drive_LED(2, 0);
 		function -> drive_LED(3, 0);
@@ -83,16 +78,15 @@ void LED::LED_output(E_LED_status status)
 		function -> drive_LED(2, 20);
 		break;
 
-	case E_LED_status::Measurement:
+	case E_LED_status::MODE_INIFINITY_JUMP:
 		function -> drive_LED(1, 0);
 		function -> drive_LED(2, 0);
 		function -> drive_LED(3, 0);
 		function -> drive_LED(1, 20);
 		function -> drive_LED(3, 20);
-		this -> old_LED_status = status;
 		break;
 
-	case E_LED_status::None:
+	case E_LED_status::MODE_DOUBLE_JUMP:
 		function -> drive_LED(1, 0);
 		function -> drive_LED(2, 0);
 		function -> drive_LED(3, 0);

@@ -29,12 +29,12 @@ enum class E_LED_status
 {
 	Done,
 	Init,
-	Measurement,
-	Error_Handler,
-	Warning,
-	Wait,
-	OPR_Mode,
-	None
+	SPC,
+	MOVE_INFINITY_INITIAL_POS,
+	MODE_INIFINITY_JUMP,
+	MOVE_DOUBLE_JUMP_INITIAL_POS,
+	MODE_DOUBLE_JUMP,
+	NONE
 
 };
 
@@ -42,7 +42,6 @@ class LED
 {
 public:
 	void LED_output(E_LED_status status);
-	static E_LED_status old_LED_status;
 };
 
 

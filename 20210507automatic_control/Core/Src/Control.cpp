@@ -11,7 +11,7 @@
  *
  *@Output(value)to(where)
  *
- *@Attention_(uint8_t Control::master_Rxdata[0] = Flow_command
+ *@Attention_(uint8_t Control::master_Rxdata = Flow_command
  *											[1] =
  *@Usertouch(functionname)&_(variable_name)
  *
@@ -24,17 +24,26 @@
 #include "Line.hpp"
 #include "Infinity_command.hpp"
 #include "Self_Pos.hpp"
+#include "Jump.hpp"
+#include "LED.hpp"
+#include "usart.h"
 
-uint8_t Control::master_Rxdata[4] = { 0, 0, 0, 0 };
 
-void Control::control ( E_robot_name robot )
+using namespace Infinity;
+
+bool Control::Is_busy = false;
+
+void Control::control_A (void)
 {
 
-	switch( robot )
+	if( C_data[0] == ( uint8_t )E_data_type::command )
 	{
-	case E_robot_name::A:
-	{
-		if( Control::master_Rxdata[0] == (uint8_t)E_Flow::MOVE_INFINITY_INITIAL_POS )
+
+		Control::Is_busy = true;
+
+		switch( C_data[1] )
+		{
+		case ( uint8_t )E_Flow::MOVE_INFINITY_INITIAL_POS:
 		{
 			Line* line = new Line();
 			Self_Pos* self_pos = new Self_Pos();
@@ -45,184 +54,123 @@ void Control::control ( E_robot_name robot )
 			line -> Line_driver( self_pos -> get_Self_Pos_X(), self_pos -> get_Self_Pos_Y(), ( int )Infinity::A_Pos::LD_X, ( int )Infinity::A_Pos::LD_Y, false );
 			while( Line::judge == E_Line_status::MOVING ){};
 
+			uint8_t data[4] = { ( uint8_t )E_data_type::done, 0, 0, 0 };
+			this -> send_command( E_robot_name::C, data );
 
 			delete line;
 			delete self_pos;
+
+			break;
+
 		}
-		if( Control::master_Rxdata[0] == (uint8_t)E_Flow::MODE_INFINITY_JUMP )
+
+		case ( uint8_t )E_Flow::MODE_INFINITY_JUMP:
 		{
+			Line* line = new Line();
 
+
+			for( int count = 0; count < 18; count++ )
+			{
+
+				bool through = true;
+
+				switch( ( count % 6 ) + 1 )
+				{
+				case 2:
+				case 5:
+					through = false;
+					break;
+				}
+
+				line -> Line_driver( Infinity::A_pos_X[ count % 6 ], Infinity::A_pos_Y[ count % 6 ], Infinity::A_pos_X[ ( count % 6 ) + 1 ], Infinity::A_pos_Y[ ( count % 6 ) + 1 ], through );
+				while( Line::judge == E_Line_status::MOVING )
+				{
+
+					switch( ( count % 6 ) + 1 )
+					{
+					case 1:
+					{
+						Jump* jump = new Jump();
+						delete jump;
+					}
+
+					}
+
+				};
+
+				switch( ( count % 6 ) + 1 )
+				{
+				case 2:
+				case 5:
+				{
+					Self_Pos* self_pos = new Self_Pos();
+					delete self_pos;
+					break;
+				}
+
+
+				}
+
+			}
+
+
+			delete line;
+			break;
 
 		}
-		if( Control::master_Rxdata[0] == (uint8_t)E_Flow::MODE_SELF_POS_COR )
+		case ( uint8_t )E_Flow::MOVE_DOUBLE_JUMP_INITIAL_POS:
 		{
 			Line* line = new Line();
 			Self_Pos* self_pos = new Self_Pos();
 
-			line -> Line_driver( self_pos -> get_Self_Pos_X(), self_pos -> get_Self_Pos_Y(), ( int )Infinity::A_Pos::START, ( int )Infinity::A_Pos::FINISH, true );
-			while( Line::judge == E_Line_status::MOVING ){};
-
-			line -> Line_driver( self_pos -> get_Self_Pos_X(), self_pos -> get_Self_Pos_Y(), ( int )Infinity::A_Pos::START, ( int )Infinity::A_Pos::FINISH, true );
-			while( Line::judge == E_Line_status::MOVING ){};
-
+			uint8_t data[4] = { ( uint8_t )E_data_type::done, 0, 0, 0 };
+			this -> send_command( E_robot_name::C, data );
 
 			delete line;
 			delete self_pos;
 
-
+			break;
 		}
-		if( Control::master_Rxdata[0] == (uint8_t)E_Flow::MOVE_DOUBLE_JUMP_INITIAL_POS )
+
+		case ( uint8_t )E_Flow::MODE_DOUBLE_JUMP:
 		{
-			Line* line = new Line();
-			Self_Pos* self_pos = new Self_Pos();
-
-			line -> Line_driver( self_pos -> get_Self_Pos_X(), self_pos -> get_Self_Pos_Y(), ( int )Infinity::A_Pos::START, ( int )Infinity::A_Pos::FINISH, true );
-			while( Line::judge == E_Line_status::MOVING ){};
-
-			line -> Line_driver( self_pos -> get_Self_Pos_X(), self_pos -> get_Self_Pos_Y(), ( int )Infinity::A_Pos::START, ( int )Infinity::A_Pos::FINISH, true );
-			while( Line::judge == E_Line_status::MOVING ){};
-
-
-			delete line;
-			delete self_pos;
-
+			break;
 		}
-		if( Control::master_Rxdata[0] == (uint8_t)E_Flow::MODE_DOUBLE_JUMP )
-		{
-
+		default:
+			Control::Is_busy = false;
+			break;
 		}
 
-		break;
 	}
+
+
+}
+
+void Control::control_B( void )
+{
+
+}
+
+void Control::control_C( void )
+{
+
+}
+
+void Control::send_command( E_robot_name robot, uint8_t* data )
+{
+
+	switch( robot )
+	{
+	case E_robot_name::A:
+		HAL_UART_Transmit( &huart1, ( uint8_t* )data, sizeof( data ), 100 );
+		break;
 	case E_robot_name::B:
-	{
-		if( Control::master_Rxdata[0] == (uint8_t)E_Flow::MOVE_INFINITY_INITIAL_POS )
-		{
-			Line* line = new Line();
-			Self_Pos* self_pos = new Self_Pos();
-
-			line -> Line_driver( self_pos -> get_Self_Pos_X(), self_pos -> get_Self_Pos_Y(), ( int )Infinity::A_Pos::START, ( int )Infinity::A_Pos::FINISH, true );
-			while( Line::judge == E_Line_status::MOVING ){};
-
-			line -> Line_driver( self_pos -> get_Self_Pos_X(), self_pos -> get_Self_Pos_Y(), ( int )Infinity::A_Pos::START, ( int )Infinity::A_Pos::FINISH, true );
-			while( Line::judge == E_Line_status::MOVING ){};
-
-
-			delete line;
-			delete self_pos;
-		}
-		if( Control::master_Rxdata[0] == (uint8_t)E_Flow::MODE_INFINITY_JUMP )
-		{
-
-		}
-		if( Control::master_Rxdata[0] == (uint8_t)E_Flow::MODE_SELF_POS_COR )
-		{
-			Line* line = new Line();
-			Self_Pos* self_pos = new Self_Pos();
-
-			line -> Line_driver( self_pos -> get_Self_Pos_X(), self_pos -> get_Self_Pos_Y(), ( int )Infinity::A_Pos::START, ( int )Infinity::A_Pos::FINISH, true );
-			while( Line::judge == E_Line_status::MOVING ){};
-
-			line -> Line_driver( self_pos -> get_Self_Pos_X(), self_pos -> get_Self_Pos_Y(), ( int )Infinity::A_Pos::START, ( int )Infinity::A_Pos::FINISH, true );
-			while( Line::judge == E_Line_status::MOVING ){};
-
-
-			delete line;
-			delete self_pos;
-
-
-		}
-		if( Control::master_Rxdata[0] == (uint8_t)E_Flow::MOVE_DOUBLE_JUMP_INITIAL_POS )
-		{
-			Line* line = new Line();
-			Self_Pos* self_pos = new Self_Pos();
-
-			line -> Line_driver( self_pos -> get_Self_Pos_X(), self_pos -> get_Self_Pos_Y(), ( int )Infinity::A_Pos::START, ( int )Infinity::A_Pos::FINISH, true );
-			while( Line::judge == E_Line_status::MOVING ){};
-
-			line -> Line_driver( self_pos -> get_Self_Pos_X(), self_pos -> get_Self_Pos_Y(), ( int )Infinity::A_Pos::START, ( int )Infinity::A_Pos::FINISH, true );
-			while( Line::judge == E_Line_status::MOVING ){};
-
-
-			delete line;
-			delete self_pos;
-
-		}
-		if( Control::master_Rxdata[0] == (uint8_t)E_Flow::MODE_DOUBLE_JUMP )
-		{
-
-		}
-
+		HAL_UART_Transmit( &huart4, ( uint8_t* )data, sizeof( data ), 100 );
 		break;
-	}
 	case E_robot_name::C:
-	{
-		if( Control::master_Rxdata[0] == (uint8_t)E_Flow::MOVE_INFINITY_INITIAL_POS )
-		{
-			Line* line = new Line();
-			Self_Pos* self_pos = new Self_Pos();
-
-			line -> Line_driver( self_pos -> get_Self_Pos_X(), self_pos -> get_Self_Pos_Y(), ( int )Infinity::A_Pos::START, ( int )Infinity::A_Pos::FINISH, true );
-			while( Line::judge == E_Line_status::MOVING ){};
-
-			line -> Line_driver( self_pos -> get_Self_Pos_X(), self_pos -> get_Self_Pos_Y(), ( int )Infinity::A_Pos::START, ( int )Infinity::A_Pos::FINISH, true );
-			while( Line::judge == E_Line_status::MOVING ){};
-
-
-			delete line;
-			delete self_pos;
-		}
-		if( Control::master_Rxdata[0] == (uint8_t)E_Flow::MODE_INFINITY_JUMP )
-		{
-
-		}
-		if( Control::master_Rxdata[0] == (uint8_t)E_Flow::MODE_SELF_POS_COR )
-		{
-			Line* line = new Line();
-			Self_Pos* self_pos = new Self_Pos();
-
-			line -> Line_driver( self_pos -> get_Self_Pos_X(), self_pos -> get_Self_Pos_Y(), ( int )Infinity::A_Pos::START, ( int )Infinity::A_Pos::FINISH, true );
-			while( Line::judge == E_Line_status::MOVING ){};
-
-			line -> Line_driver( self_pos -> get_Self_Pos_X(), self_pos -> get_Self_Pos_Y(), ( int )Infinity::A_Pos::START, ( int )Infinity::A_Pos::FINISH, true );
-			while( Line::judge == E_Line_status::MOVING ){};
-
-
-			delete line;
-			delete self_pos;
-
-
-		}
-		if( Control::master_Rxdata[0] == (uint8_t)E_Flow::MOVE_DOUBLE_JUMP_INITIAL_POS )
-		{
-			Line* line = new Line();
-			Self_Pos* self_pos = new Self_Pos();
-
-			line -> Line_driver( self_pos -> get_Self_Pos_X(), self_pos -> get_Self_Pos_Y(), ( int )Infinity::A_Pos::START, ( int )Infinity::A_Pos::FINISH, true );
-			while( Line::judge == E_Line_status::MOVING ){};
-
-			line -> Line_driver( self_pos -> get_Self_Pos_X(), self_pos -> get_Self_Pos_Y(), ( int )Infinity::A_Pos::START, ( int )Infinity::A_Pos::FINISH, true );
-			while( Line::judge == E_Line_status::MOVING ){};
-
-
-			delete line;
-			delete self_pos;
-
-		}
-		if( Control::master_Rxdata[0] == (uint8_t)E_Flow::MODE_DOUBLE_JUMP )
-		{
-
-		}
-
+		HAL_UART_Transmit( &huart3, ( uint8_t* )data, sizeof( data ), 100 );
 		break;
 	}
-	}
-
-
-
-
-
-
 
 }
 

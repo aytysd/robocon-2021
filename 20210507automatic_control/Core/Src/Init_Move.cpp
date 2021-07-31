@@ -27,7 +27,6 @@
 #include "hGPIO.hpp"
 #include "main.h"
 #include "stdio.h"
-#include "Communication.hpp"
 #include "LED.hpp"
 #include "Controller.hpp"
 #include "Gyro.hpp"
@@ -37,6 +36,7 @@
 #include "tim.h"
 #include "usart.h"
 #include "gpio.h"
+#include "Control.hpp"
 
 
 void Init_Move::init_move( E_robot_name robot )
@@ -51,14 +51,22 @@ void Init_Move::init_move( E_robot_name robot )
 
 	this -> Initialize( robot );
 
-	delete led;
-
 	led -> LED_output( E_LED_status::Done );
 
-	if( robot == E_robot_name::A || robot == E_robot_name::B )
+	if( robot == E_robot_name::C )
 	{
+		Control* control = new Control();
+
+		uint8_t data[4] = { ( uint8_t )E_data_type::command, ( uint8_t )E_Flow::MOVE_INFINITY_INITIAL_POS, 0, 0 };
+
+		control -> send_command( E_robot_name::A, data );
+		control -> send_command( E_robot_name::B, data );
+
+		delete control;
 
 	}
+
+	delete led;
 
 }
 
@@ -74,7 +82,7 @@ void Init_Move::Initialize( E_robot_name robot )
 	  gyro -> BNO055_Init_I2C( &hi2c1 );
 	  gyro -> BNO055_Init_I2C( &hi2c3 );
 */
-	  gyro -> set_initial_direction( robot );
+//	  gyro -> set_initial_direction( robot );
 
 	  mpu6050 -> MPU6050_Init( &hi2c1 );
 	  mpu6050 -> MPU6050_Init( &hi2c3 );
@@ -98,7 +106,7 @@ void Init_Move::Initialize( E_robot_name robot )
 
 
 	  HAL_TIM_Base_Start_IT( &htim6 );
-	  HAL_TIM_Base_Start_IT( &htim7 );
+//	  HAL_TIM_Base_Start_IT( &htim7 );
 	  HAL_TIM_Base_Start_IT( &htim3 );
 	  HAL_TIM_Base_Start_IT( &htim4 );
 
