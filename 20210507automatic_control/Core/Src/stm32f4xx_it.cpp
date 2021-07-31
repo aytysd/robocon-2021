@@ -28,7 +28,6 @@
 #include "hGPIO.hpp"
 #include "PWM.hpp"
 #include "Jump.hpp"
-#include "Communication.hpp"
 #include "Gyro.hpp"
 #include "Line.hpp"
 #include "MPU6050.hpp"
@@ -72,7 +71,6 @@ Self_Pos* self_pos = new Self_Pos();
 HGPIO* gpio = new HGPIO();
 PWM* pwm = new PWM();
 Jump* jump = new Jump();
-Communication* communication = new Communication();
 Line* line = new Line();
 MPU6050* mpu6050 = new MPU6050();
 /* USER CODE END 0 */
@@ -357,6 +355,7 @@ void TIM6_DAC_IRQHandler(void)
 //  gyro -> BNO055_update_gravity_direction(&hi2c3);
   self_pos -> update_self_pos();
   mpu6050 -> MPU6050_update_Gyro( &hi2c1 );
+  mpu6050 -> MPU6050_update_Gyro( &hi2c3 );
   line -> MoveLine(line -> BefX, line -> BefY, line -> AftX, line -> AftY, line -> through);
 
   /* USER CODE END TIM6_DAC_IRQn 1 */
@@ -372,7 +371,6 @@ void TIM7_IRQHandler(void)
   /* USER CODE END TIM7_IRQn 0 */
   HAL_TIM_IRQHandler(&htim7);
   /* USER CODE BEGIN TIM7_IRQn 1 */
-  communication -> send_data( E_data_type::CURRENT_DATA );
   /* USER CODE END TIM7_IRQn 1 */
 }
 

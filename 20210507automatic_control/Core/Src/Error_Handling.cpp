@@ -20,7 +20,6 @@
 #include <Error_Handling.hpp>
 #include "main.h"
 #include "Function.hpp"
-#include "Communication.hpp"
 #include "LED.hpp"
 
 void Error_Handling::TIM5_error_handling()
@@ -35,15 +34,12 @@ void Error_Handling::TIM5_error_handling()
 
 		 if( ( HAL_GetTick() - base_time ) >= 5000 )
 		 {
-			 Communication* communication = new Communication();
 			 this -> warning_line = __LINE__;
 			 this -> warning_func = const_cast<char*>(__func__);
 			 this -> set_flag(E_Errors::W_X_Encoder_Disconnection);
-			 communication -> send_data( E_data_type::WARNING_DATA );
-			 delete communication;
 
 			 LED* led = new LED();
-			 led -> LED_output(E_LED_status::Warning);
+//			 led -> LED_output(E_LED_status::Warning);
 			 delete led;
 		 }
 
@@ -52,7 +48,7 @@ void Error_Handling::TIM5_error_handling()
 	 else
 	 {
 		 LED* led = new LED();
-		 led -> LED_output(LED::old_LED_status);
+//		 led -> LED_output(LED::old_LED_status);
 		 delete led;
 
 		 flag = false;
@@ -72,17 +68,14 @@ void Error_Handling::TIM2_error_handling()
 
 		 if( ( HAL_GetTick() - base_time ) >= 5000 )
 		 {
-			 Communication* communication = new Communication();
 
 			 this -> warning_line = __LINE__;
 			 this -> warning_func = const_cast<char*>(__func__);
 			 this -> set_flag(E_Errors::W_Y_Encoder_Disconnection);
 
-			 communication -> send_data( E_data_type::WARNING_DATA );
-			 delete communication;
 
 			 LED* led = new LED();
-			 led -> LED_output(E_LED_status::Warning);
+//			 led -> LED_output(E_LED_status::Warning);
 			 delete led;
 
 
@@ -93,7 +86,7 @@ void Error_Handling::TIM2_error_handling()
 	 else
 	 {
 		 LED* led = new LED();
-		 led -> LED_output(LED::old_LED_status);
+//		 led -> LED_output(LED::old_LED_status);
 		 delete led;
 
 		 flag = false;
@@ -113,17 +106,14 @@ void Error_Handling::gyro_error_handling(uint16_t direction)
 
 		 if( ( HAL_GetTick() - base_time ) >= 5000 )
 		 {
-			 Communication* communication = new Communication();
 
 			 this -> warning_line = __LINE__;
 			 this -> warning_func = const_cast<char*>(__func__);
 			 this -> set_flag(E_Errors::W_gyro_Disconnection);
 
-			 communication -> send_data( E_data_type::WARNING_DATA );
-			 delete communication;
 
 			 LED* led = new LED();
-			 led -> LED_output(E_LED_status::Warning);
+//			 led -> LED_output(E_LED_status::Warning);
 			 delete led;
 
 
@@ -134,7 +124,7 @@ void Error_Handling::gyro_error_handling(uint16_t direction)
 	 else
 	 {
 		 LED* led = new LED();
-		 led -> LED_output(LED::old_LED_status);
+//		 led -> LED_output(LED::old_LED_status);
 		 delete led;
 
 		 flag = false;

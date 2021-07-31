@@ -47,14 +47,11 @@ enum class E_Line_status{
 	THROUGHING,
 };
 
-/*
-enum class E_Flow{
-	INIT_MOVE,
-	INFINITY,
-	DOUBLE_JUMP,
+enum class E_data_type
+{
+	command,
+	done,
 };
-*/
-
 #define ROBOT E_robot_name::A
 //#define ROBOT E_robot_name::B
 //#define ROBOT E_robot_name::C

@@ -31,7 +31,6 @@
 #include "PWM.hpp"
 #include "stdio.h"
 #include "Self_Pos.hpp"
-#include "Communication.hpp"
 #include "hGPIO.hpp"
 #include "Init_Move.hpp"
 #include "LED.hpp"
@@ -62,6 +61,9 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
+uint8_t A_data[4] = { 0, 0, 0, 0 };
+uint8_t B_data[4] = { 0, 0, 0, 0 };
+uint8_t C_data[4] = { 0, 0, 0, 0 };
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -74,7 +76,7 @@ void SystemClock_Config(void);
 void HAL_UART_RxCpltCallback( UART_HandleTypeDef* UartHandle )
 {
 
-	if( UartHandle == &huart4 )
+	if( UartHandle == &huart4 )// data from B robot
 	{
 		HAL_UART_Receive_IT(&huart4, (uint8_t*)Controller::controller_Rxdata, sizeof(Controller::controller_Rxdata));
 
@@ -83,21 +85,11 @@ void HAL_UART_RxCpltCallback( UART_HandleTypeDef* UartHandle )
 		delete controller;
 
 	}
-	else if( UartHandle == &huart1 )
-	{
-		HAL_UART_Receive_IT(&huart1, (uint8_t*)Communication::Rxdata, sizeof(Communication::Rxdata));
-		Communication* communication = new Communication();
-		delete communication;
+	else if( UartHandle == &huart1 )// data from A robot
+		HAL_UART_Receive_IT(&huart1, (uint8_t*)A_data, sizeof( A_data ));
+	else if( UartHandle == &huart3 )// data from C robot
+		HAL_UART_Receive_IT(&huart3, (uint8_t*)C_data, sizeof( C_data ));
 
-	}
-	else if( UartHandle == &huart3 )
-	{
-		HAL_UART_Receive_IT(&huart3, (uint8_t*)Communication::Rxdata, sizeof(Communication::Rxdata));
-
-		Communication* communication = new Communication();
-		delete communication;
-
-	}
 
 
 }
@@ -188,7 +180,12 @@ int main(void)
   while (1)
   {
 
-	  control -> control( ROBOT );
+
+	  control -> control_A();
+	  control -> control_B();
+	  control -> control_C();
+
+
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -252,13 +249,6 @@ void Error_Handler(void)
 {
   /* USER CODE BEGIN Error_Handler_Debug */
 
-	LED* led = new LED();
-	Communication* communication = new Communication();
-	Error_Handling* error_handling = new Error_Handling();
-
-	led -> LED_output(E_LED_status::Error_Handler);
-	error_handling -> Emergency_stop();
-	communication -> send_data( E_data_type::ERROR_DATA );
 
   /* User can add his own implementation to report the HAL error return state */
   __disable_irq();
