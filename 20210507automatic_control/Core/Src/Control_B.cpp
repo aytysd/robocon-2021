@@ -33,8 +33,8 @@ using namespace Infinity;
 
 void Control::control_B( void )
 {
-	for( int i = 0; i < 4; i++ )
-		C_data[ i ] = 0;
+	for( int i = 0; i < DATASIZE; i++ )
+		C_Rxdata[ i ] = 0;
 
 }
 

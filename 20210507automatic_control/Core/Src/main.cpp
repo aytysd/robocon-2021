@@ -62,9 +62,9 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-uint8_t A_data[4] = { 0, 0, 0, 0 };
-uint8_t B_data[4] = { 0, 0, 0, 0 };
-uint8_t C_data[4] = { 0, 0, 0, 0 };
+uint8_t A_Rxdata[ DATASIZE ] = { 0, 0, 0, 0 };
+uint8_t B_Rxdata[ DATASIZE ] = { 0, 0, 0, 0 };
+uint8_t C_Rxdata[ DATASIZE ] = { 0, 0, 0, 0 };
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -87,9 +87,23 @@ void HAL_UART_RxCpltCallback( UART_HandleTypeDef* UartHandle )
 
 	}
 	else if( UartHandle == &huart1 )// data from A robot
-		HAL_UART_Receive_IT(&huart1, (uint8_t*)A_data, sizeof( A_data ));
+		HAL_UART_Receive_IT(&huart1, (uint8_t*)A_Rxdata, sizeof( A_Rxdata ));
 	else if( UartHandle == &huart3 )// data from C robot
-		HAL_UART_Receive_IT(&huart3, (uint8_t*)C_data, sizeof( C_data ));
+	{
+		HAL_UART_Receive_IT(&huart3, (uint8_t*)C_Rxdata, sizeof( C_Rxdata ));
+
+		if( C_Rxdata[ 0 ] == ( uint8_t )E_data_type::command )
+		{
+			for( int i = 0; i < DATASIZE; i++ )
+				Control::C_command[ i ] = C_Rxdata[ i ];
+
+			if( Control::C_command[ 0 ] == ( uint8_t )E_data_type::stop )
+				Control::A_stop_flag = true;
+		}
+
+
+	}
+
 
 
 

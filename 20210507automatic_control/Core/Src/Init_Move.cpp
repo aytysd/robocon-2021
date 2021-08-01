@@ -57,7 +57,7 @@ void Init_Move::init_move( E_robot_name robot )
 	{
 		Control* control = new Control();
 
-		uint8_t data[4] = { ( uint8_t )E_data_type::command, ( uint8_t )E_Flow::MOVE_INFINITY_INITIAL_POS, 0, 0 };
+		uint8_t data[ DATASIZE ] = { ( uint8_t )E_data_type::command, ( uint8_t )E_Flow::MOVE_INFINITY_INITIAL_POS, 0, 0 };
 
 		control -> send_command( E_robot_name::A, data );
 		control -> send_command( E_robot_name::B, data );
