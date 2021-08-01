@@ -21,6 +21,11 @@
 
 
 
+#define ROBOT E_robot_name::A
+//#define ROBOT E_robot_name::B
+//#define ROBOT E_robot_name::C
+
+
 enum class E_robot_name
 {
 
@@ -41,7 +46,8 @@ enum class E_move_status
 };
 
 
-enum class E_Line_status{
+enum class E_Line_status
+{
 	MOVING,
 	STOP,
 	THROUGHING,
@@ -51,10 +57,9 @@ enum class E_data_type
 {
 	command = 0x10,
 	done,
+	stop,
 };
-#define ROBOT E_robot_name::A
-//#define ROBOT E_robot_name::B
-//#define ROBOT E_robot_name::C
+
 
 
 

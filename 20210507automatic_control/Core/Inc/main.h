@@ -137,9 +137,14 @@ void Error_Handler(void);
 #define Robot_Gyro_SDA_Pin GPIO_PIN_9
 #define Robot_Gyro_SDA_GPIO_Port GPIOB
 /* USER CODE BEGIN Private defines */
-extern uint8_t A_data[4];
-extern uint8_t B_data[4];
-extern uint8_t C_data[4];
+
+#define DATASIZE 4
+
+extern uint8_t A_Rxdata[ DATASIZE ];
+extern uint8_t B_Rxdata[ DATASIZE ];
+extern uint8_t C_Rxdata[ DATASIZE ];
+
+
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus

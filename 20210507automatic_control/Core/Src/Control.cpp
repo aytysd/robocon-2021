@@ -29,7 +29,7 @@
 #include "usart.h"
 
 
-bool Control::Is_busy = false;
+uint8_t Control::C_command[ DATASIZE ] = { 0, 0, 0, 0 };
 
 void Control::send_command( E_robot_name robot, uint8_t* data )
 {

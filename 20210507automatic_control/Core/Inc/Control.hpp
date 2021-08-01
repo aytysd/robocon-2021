@@ -36,7 +36,13 @@ class Control
 {
 public:
 
-	static bool Is_busy;
+	static bool A_stop_flag;
+	static bool A_Is_busy;
+
+	static bool B_stop_flag;
+	static bool B_Is_busy;
+
+	static uint8_t C_command[ DATASIZE ];
 
 	void control_A( void );
 	void control_B( void );

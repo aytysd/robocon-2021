@@ -17,6 +17,13 @@
 
 #include "main.h"
 
+enum class E_Time
+{
+	infinity = 45,
+	double_jump = 30,
+
+};
+
 
 class Time
 {

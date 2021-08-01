@@ -73,6 +73,7 @@ public:
 
 	void MoveLine(int befX, int befY, int tgX, int tgY, bool through);
 	void Line_driver(int bef, int befY, int tgX, int tgY, bool through);
+
 };
 
 
