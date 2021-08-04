@@ -23,8 +23,13 @@
 #include "main.h"
 #include "Self_Pos.hpp"
 #include "math.h"
+#include "function.hpp"
 
 E_move_status Jump::status = E_move_status::LANDING;
+
+bool Jump::PE_1 = false;
+bool Jump::PE_2 = false;
+bool Jump::PE_3 = false;
 
 void Jump::identify()
 {
@@ -94,16 +99,14 @@ void Jump::pre_calc()
 	delete self_pos;
 }
 
-void Jump::Jumping_PE_Sencor(void)
+void Jump::Jumping_PE_Sensor(void)
 {
-/*
-	GPIO* gpio = new GPIO();
-	if((gpio -> get_status(E_interrupt::PE_SENSOR_1) == true) || (gpio -> get_status(E_interrupt::PE_SENSOR_2) == true) || (gpio -> get_status(E_interrupt::PE_SENSOR_3) == true))
+	Function* function = new Function();
+	while( (PE_1 == true) || (PE_2 == true) || (PE_3 == true))
 	{
-
+	//	function -> drive_motor(5, CW, this -> speed_jump - 500, false, true);;
 	}
-	delete gpio;
-*/
+	delete function;
 }
 
 void Jump::Jumping_Rope(void)

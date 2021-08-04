@@ -348,7 +348,7 @@ void TIM6_DAC_IRQHandler(void)
   gyro -> BNO055_update_gravity_direction(&hi2c1);
 //  gyro -> BNO055_update_gravity_direction(&hi2c3);
   self_pos -> update_self_pos();
-//  line -> MoveLine(line -> BefX, line -> BefY, line -> AftX, line -> AftY, line -> through);
+  line -> MoveLine();
 
   /* USER CODE END TIM6_DAC_IRQn 1 */
 }

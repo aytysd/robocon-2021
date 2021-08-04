@@ -24,7 +24,7 @@
 #include "main.h"
 
 uint16_t Controller::speed = 700;
-uint16_t Controller::speed_jump = 1000;
+uint16_t Controller::speed_jump = 2400;
 
 
 //--------------------------------------------------
@@ -41,8 +41,7 @@ void Controller::NOP(void)
 
 //--------------------------------------------------
 //Jump
-void Controller::X(void)
-{}
+void Controller::X(void){}
 void Controller::Y(void){}
 void Controller::A(void){}
 void Controller::B(void){}
@@ -52,13 +51,26 @@ void Controller::LB(void)
 	Function* function = new Function();
 
 	function -> drive_motor(5, CW, this -> speed_jump, false, true);
+	while( HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_3) == 0 )
+	{
+
+	}
 	while( HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_3) == 1)
 	{
 
 	}
 	while( HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_3) == 0 )
 	{
-    
+
+	}
+	while( HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_3) == 1)
+	{
+
+	}
+	function -> drive_motor(5, CW, this -> speed_jump - 500, false, true);
+	while( HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_3) == 0 )
+	{
+
 	}
 	function -> drive_motor(5, BRAKE, 0, false, true);
 
@@ -95,7 +107,7 @@ void Controller::RB(void)
 }
 void Controller::RT(void)
 {
-	this -> speed_jump = 1000;
+	this -> speed_jump = 2000;
 }
 
 
@@ -225,9 +237,9 @@ void Controller::RSDL(void){}
 void Controller::LSU(void)
 {
 	this -> speed_jump += 50;
-	if(this -> speed_jump > 1200)
+	if(this -> speed_jump > 2200)
 	{
-		this -> speed_jump = 1200;
+		this -> speed_jump = 2200;
 	}
 }
 

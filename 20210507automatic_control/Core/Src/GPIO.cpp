@@ -18,6 +18,7 @@
  */
 #include <GPIO.hpp>
 #include "main.h"
+#include "Jump.hpp"
 
 void GPIO::identify(uint16_t GPIO_Pin){
 	switch(GPIO_Pin){
@@ -73,11 +74,19 @@ void GPIO::identify(uint16_t GPIO_Pin){
 	}
 }
 
-void GPIO::GPIO_PIN_0_func(void){};
+//PE_Sensor_1
+void GPIO::GPIO_PIN_0_func(void)
+{
+	Jump::PE_1 = true;
+}
 void GPIO::GPIO_PIN_1_func(void){};
 void GPIO::GPIO_PIN_2_func(void){};
 void GPIO::GPIO_PIN_3_func(void){};
-void GPIO::GPIO_PIN_4_func(void){};
+//PE_Sensor_3
+void GPIO::GPIO_PIN_4_func(void)
+{
+	Jump::PE_3 = true;
+}
 void GPIO::GPIO_PIN_5_func(void){};
 void GPIO::GPIO_PIN_6_func(void){};
 void GPIO::GPIO_PIN_7_func(void){};
@@ -85,7 +94,12 @@ void GPIO::GPIO_PIN_8_func(void){};
 void GPIO::GPIO_PIN_9_func(void){};
 void GPIO::GPIO_PIN_10_func(void){};
 void GPIO::GPIO_PIN_11_func(void){};
+//Photo
 void GPIO::GPIO_PIN_12_func(void){};
-void GPIO::GPIO_PIN_13_func(void){};
+//PE_Sensor_2
+void GPIO::GPIO_PIN_13_func(void)
+{
+	Jump::PE_2 = true;
+}
 void GPIO::GPIO_PIN_14_func(void){};
 void GPIO::GPIO_PIN_15_func(void){};
