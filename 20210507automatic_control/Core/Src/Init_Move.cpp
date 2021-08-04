@@ -97,11 +97,6 @@ void Init_Move::Initialize( E_robot_name robot )
 	  __HAL_UART_ENABLE_IT( &huart1, UART_IT_RXNE );
 
 /*
-	  __HAL_UART_DISABLE_IT( &huart3 , UART_IT_RXNE );
-	  __HAL_UART_DISABLE_IT( &huart4 , UART_IT_RXNE );
-	  __HAL_UART_DISABLE_IT( &huart1 , UART_IT_RXNE );
-*/
-/*
 	  HAL_UART_Receive_IT(&huart1, (uint8_t*)Communication::Rxdata, sizeof(Communication::Rxdata));
 	  HAL_UART_Receive_IT(&huart4, (uint8_t*)Controller::controller_Rxdata, sizeof(Controller::controller_Rxdata));
 	  HAL_UART_Receive_IT(&huart3, (uint8_t*)Communication::Rxdata, sizeof(Communication::Rxdata));

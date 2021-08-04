@@ -49,6 +49,8 @@ public:
 	void control_C( void );
 
 	void send_command( E_robot_name robot, uint8_t* data );
+	void send_self_pos( E_robot_name robot );
+	void decode_self_pos( int16_t* x, int16_t* y, uint8_t* received_data );
 
 };
 
