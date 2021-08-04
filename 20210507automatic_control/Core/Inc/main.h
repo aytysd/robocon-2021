@@ -138,7 +138,7 @@ void Error_Handler(void);
 #define Robot_Gyro_SDA_GPIO_Port GPIOB
 /* USER CODE BEGIN Private defines */
 
-#define DATASIZE 4
+#define DATASIZE 8
 
 extern uint8_t A_Rxdata[ DATASIZE ];
 extern uint8_t B_Rxdata[ DATASIZE ];

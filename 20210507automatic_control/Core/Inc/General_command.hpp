@@ -58,6 +58,7 @@ enum class E_data_type
 	command = 0x10,
 	done,
 	stop,
+	A_pos,
 };
 
 

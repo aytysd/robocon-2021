@@ -78,7 +78,7 @@ void LED::LED_output(E_LED_status status)
 		function -> drive_LED(2, 20);
 		break;
 
-	case E_LED_status::MODE_INIFINITY_JUMP:
+	case E_LED_status::MODE_INFINITY_JUMP:
 		function -> drive_LED(1, 0);
 		function -> drive_LED(2, 0);
 		function -> drive_LED(3, 0);

@@ -43,6 +43,8 @@
 #include "Debug.hpp"
 #include <cstring>
 #include "Time.hpp"
+#include "math.h"
+#include "Follow.hpp"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -65,6 +67,10 @@
 uint8_t A_Rxdata[ DATASIZE ] = { 0, 0, 0, 0 };
 uint8_t B_Rxdata[ DATASIZE ] = { 0, 0, 0, 0 };
 uint8_t C_Rxdata[ DATASIZE ] = { 0, 0, 0, 0 };
+
+
+uint8_t i = 2;
+uint8_t j = 200;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -87,19 +93,28 @@ void HAL_UART_RxCpltCallback( UART_HandleTypeDef* UartHandle )
 
 	}
 	else if( UartHandle == &huart1 )// data from A robot
-		HAL_UART_Receive_IT(&huart1, (uint8_t*)A_Rxdata, sizeof( A_Rxdata ));
+	{
+		HAL_UART_Receive_IT(&huart1, (uint8_t*)A_Rxdata, sizeof( A_Rxdata ) );
+		if( A_Rxdata[ 0 ] == ( uint8_t )E_data_type::A_pos )
+		{
+			Control* control = new Control();
+			control -> decode_self_pos( &Follow::A_pos_x, &Follow::A_pos_y, A_Rxdata );
+			delete control;
+		}
+
+
+	}
 	else if( UartHandle == &huart3 )// data from C robot
 	{
 		HAL_UART_Receive_IT(&huart3, (uint8_t*)C_Rxdata, sizeof( C_Rxdata ));
 
 		if( C_Rxdata[ 0 ] == ( uint8_t )E_data_type::command )
-		{
 			for( int i = 0; i < DATASIZE; i++ )
 				Control::C_command[ i ] = C_Rxdata[ i ];
 
-			if( Control::C_command[ 0 ] == ( uint8_t )E_data_type::stop )
-				Control::A_stop_flag = true;
-		}
+		else if( C_Rxdata[ 0 ] == ( uint8_t )E_data_type::stop )
+			Control::A_stop_flag = true;
+
 
 
 	}
@@ -190,11 +205,9 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-
 	  control -> control_A();
 	  control -> control_B();
 	  control -> control_C();
-
 
 
     /* USER CODE END WHILE */
