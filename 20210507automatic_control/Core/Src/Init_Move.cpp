@@ -90,15 +90,11 @@ void Init_Move::Initialize( E_robot_name robot )
 	  while(mpu6050 -> MPU6050_Init( &hi2c1 ) == true );
 	  mpu6050 -> set_initial_direction( robot );
 
-	  __HAL_UART_ENABLE_IT( &huart4, UART_IT_RXNE );
-	  __HAL_UART_ENABLE_IT( &huart3, UART_IT_RXNE );
-	  __HAL_UART_ENABLE_IT( &huart1, UART_IT_RXNE );
 
-/*
-	  HAL_UART_Receive_IT(&huart1, (uint8_t*)Communication::Rxdata, sizeof(Communication::Rxdata));
-	  HAL_UART_Receive_IT(&huart4, (uint8_t*)Controller::controller_Rxdata, sizeof(Controller::controller_Rxdata));
-	  HAL_UART_Receive_IT(&huart3, (uint8_t*)Communication::Rxdata, sizeof(Communication::Rxdata));
-*/
+	  HAL_UART_Receive_IT(&huart1, (uint8_t*)A_Rxdata, sizeof( A_Rxdata ) );
+	  HAL_UART_Receive_IT(&huart4, (uint8_t*)B_Rxdata, sizeof( B_Rxdata ) );
+	  HAL_UART_Receive_IT(&huart3, (uint8_t*)C_Rxdata, sizeof( C_Rxdata ) );
+
 
 
 	  HAL_TIM_Base_Start_IT( &htim6 );
