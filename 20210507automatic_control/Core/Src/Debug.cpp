@@ -92,6 +92,22 @@ void Debug::TTO_addr( int* var_address, string str, UART_HandleTypeDef* UART )
 }
 
 template <>
+void Debug::TTO_addr( int16_t* var_address, string str, UART_HandleTypeDef* UART )
+{
+	Debug* debug = new Debug();
+	debug -> str_output( str, &huart2 );
+	delete debug;
+
+
+	char output[ 10 ] = "0";
+
+	sprintf( output, "%d\r\n", *var_address );
+	HAL_UART_Transmit( UART, (uint8_t*)output, sizeof( output ), 100 );
+
+}
+
+
+template <>
 void Debug::TTO_addr( double* var_address, string str, UART_HandleTypeDef* UART )
 {
 	Debug* debug = new Debug();
@@ -151,6 +167,22 @@ void Debug::TTO_val( int value, string str, UART_HandleTypeDef* UART )
 	HAL_UART_Transmit( UART, (uint8_t*)output, sizeof( output ), 100 );
 
 }
+
+template<>
+void Debug::TTO_val( int16_t value, string str, UART_HandleTypeDef* UART )
+{
+	Debug* debug = new Debug();
+	debug -> str_output( str, &huart2 );
+	delete debug;
+
+
+	char output[ 10 ] = "0";
+
+	sprintf( output, "%d\r\n", value );
+	HAL_UART_Transmit( UART, (uint8_t*)output, sizeof( output ), 100 );
+
+}
+
 
 
 template<>

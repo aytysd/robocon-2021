@@ -65,11 +65,11 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-uint8_t A_Rxdata[ DATASIZE ] = { 0, 0, 0, 0 };
-uint8_t B_Rxdata[ DATASIZE ] = { 0, 0, 0, 0 };
-uint8_t C_Rxdata[ DATASIZE ] = { 0, 0, 0, 0 };
+uint8_t A_Rxdata[ DATASIZE ] = { 0, 0, 0, 0, 0, 0, 0, 0 };
+uint8_t B_Rxdata[ DATASIZE ] = { 0, 0, 0, 0, 0, 0, 0, 0 };
+uint8_t C_Rxdata[ DATASIZE ] = { 0, 0, 0, 0, 0, 0, 0, 0 };
 
-double j = 0;
+uint8_t rxdata = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -94,6 +94,7 @@ void HAL_UART_RxCpltCallback( UART_HandleTypeDef* UartHandle )
 	else if( UartHandle == &huart1 )// data from A robot
 	{
 		HAL_UART_Receive_IT(&huart1, (uint8_t*)A_Rxdata, sizeof( A_Rxdata ) );
+
 		if( A_Rxdata[ 0 ] == ( uint8_t )E_data_type::A_pos )
 		{
 			Control* control = new Control();
@@ -105,7 +106,10 @@ void HAL_UART_RxCpltCallback( UART_HandleTypeDef* UartHandle )
 	}
 	else if( UartHandle == &huart3 )// data from C robot
 	{
+
 		HAL_UART_Receive_IT(&huart3, (uint8_t*)C_Rxdata, sizeof( C_Rxdata ));
+
+
 
 		if( C_Rxdata[ 0 ] == ( uint8_t )E_data_type::command )
 			for( int i = 0; i < DATASIZE; i++ )
@@ -199,18 +203,22 @@ int main(void)
   MX_ADC2_Init();
   /* USER CODE BEGIN 2 */
   init_move -> init_move( ROBOT );
-
   /* USER CODE END 2 */
+
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
 
 
+	  if( ROBOT == E_robot_name::A )
+		  control -> control_A();
+	  else if( ROBOT == E_robot_name::B )
+		  control -> control_B();
+	  else if( ROBOT == E_robot_name::C )
+		  control -> control_C();
 
-	  control -> control_A();
-	  control -> control_B();
-	  control -> control_C();
+
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */

@@ -56,13 +56,14 @@ void Control::send_self_pos( E_robot_name robot )
 	int16_t x = self_pos -> get_Self_Pos_X();
 	int16_t y = self_pos -> get_Self_Pos_Y();
 
+
 	uint8_t self_pos_x_p = ( 0b1111111100000000 & x ) >> 8;
 	uint8_t self_pos_x_q = ( 0b0000000011111111 & x );
 
 	uint8_t self_pos_y_p = ( 0b1111111100000000 & y ) >> 8;
 	uint8_t self_pos_y_q = ( 0b0000000011111111 & y );
 
-	uint8_t data[ DATASIZE ] = { ( uint8_t )E_data_type::A_pos, self_pos_x_p, self_pos_x_q, self_pos_y_p, self_pos_y_q, 0, 0, 0 };
+	uint8_t data[ DATASIZE ] = { ( uint8_t )E_data_type::A_pos, self_pos_x_p, self_pos_x_q, self_pos_y_p, self_pos_y_q, NC, NC, NC };
 	this -> send_command( robot, data );
 
 
