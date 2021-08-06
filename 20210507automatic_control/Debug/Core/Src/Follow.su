@@ -1,0 +1,2 @@
+Follow.cpp:40:6:void Follow::follow()	40	static
+Follow.cpp:53:6:void Follow::target_calc()	64	static

@@ -10,6 +10,7 @@
 "Core/Src/Controller_Yoshida.o"
 "Core/Src/Debug.o"
 "Core/Src/Error_Handling.o"
+"Core/Src/Follow.o"
 "Core/Src/Function.o"
 "Core/Src/Gyro.o"
 "Core/Src/Init_Move.o"

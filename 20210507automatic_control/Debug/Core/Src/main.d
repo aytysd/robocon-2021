@@ -41,7 +41,9 @@ Core/Src/main.o: ../Core/Src/main.cpp ../Core/Inc/main.h \
  ../Core/Inc/Error_Handling.hpp ../Core/Inc/Controller.hpp \
  ../Core/Inc/PWM.hpp ../Core/Inc/Init_Move.hpp ../Core/Inc/Control.hpp \
  ../Core/Inc/Rope.hpp ../Core/Inc/Gyro.hpp ../Core/Inc/Debug.hpp \
- ../Core/Inc/Time.hpp
+ ../Core/Inc/Time.hpp ../Core/Inc/Follow.hpp ../Core/Inc/adc.h \
+ ../Core/Inc/i2c.h ../Core/Inc/tim.h ../Core/Inc/usart.h \
+ ../Core/Inc/gpio.h ../Core/Inc/MPU6050.hpp
 
 ../Core/Inc/main.h:
 
@@ -160,3 +162,17 @@ Core/Src/main.o: ../Core/Src/main.cpp ../Core/Inc/main.h \
 ../Core/Inc/Debug.hpp:
 
 ../Core/Inc/Time.hpp:
+
+../Core/Inc/Follow.hpp:
+
+../Core/Inc/adc.h:
+
+../Core/Inc/i2c.h:
+
+../Core/Inc/tim.h:
+
+../Core/Inc/usart.h:
+
+../Core/Inc/gpio.h:
+
+../Core/Inc/MPU6050.hpp:

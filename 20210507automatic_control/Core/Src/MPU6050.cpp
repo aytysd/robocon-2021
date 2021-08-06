@@ -82,7 +82,7 @@ void MPU6050::MPU6050_update_Gyro(I2C_HandleTypeDef *I2Cx )
 
 
     direction_G = Gyro_Z_RAW;
-    buff = Gyro_Z_RAW;
+    buff = Gyro_Z_RAW + 16.4;
     this -> robot_direction += 0.01 * buff / 16.4;
 
 //    Debug::TTO_val( this -> robot_direction, "Gyro", &huart2 );

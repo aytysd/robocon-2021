@@ -69,7 +69,7 @@ uint8_t A_Rxdata[ DATASIZE ] = { 0, 0, 0, 0 };
 uint8_t B_Rxdata[ DATASIZE ] = { 0, 0, 0, 0 };
 uint8_t C_Rxdata[ DATASIZE ] = { 0, 0, 0, 0 };
 
-
+double j = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -199,20 +199,18 @@ int main(void)
   MX_ADC2_Init();
   /* USER CODE BEGIN 2 */
   init_move -> init_move( ROBOT );
-  /* USER CODE END 2 */
 
+  /* USER CODE END 2 */
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
 
 
+
 	  control -> control_A();
 	  control -> control_B();
 	  control -> control_C();
-
-
-
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
