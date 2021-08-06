@@ -27,6 +27,8 @@ double MPU6050::robot_direction = 0;
 uint16_t MPU6050::robot_initial_direction = 0;
 double MPU6050::table_direction = 0;
 
+int16_t direction_G = 0;
+
 
 bool MPU6050::MPU6050_Init(I2C_HandleTypeDef *I2Cx)
 {
@@ -54,7 +56,7 @@ bool MPU6050::MPU6050_Init(I2C_HandleTypeDef *I2Cx)
 
         // Set Gyroscopic configuration in GYRO_CONFIG Register
         // XG_ST=0,YG_ST=0,ZG_ST=0, FS_SEL=0 -> � 250 �/s
-        Data = 0x00;
+        Data = 0x18;
         HAL_I2C_Mem_Write(I2Cx, MPU6050_ADDR, GYRO_CONFIG_REG, 1, &Data, 1, i2c_timeout);
         return false;
     }
@@ -67,23 +69,34 @@ void MPU6050::MPU6050_update_Gyro(I2C_HandleTypeDef *I2Cx )
 {
     uint8_t Rec_Data[6];
     int16_t Gyro_Z_RAW = 0;
+    double buff = 0;
     // Read 6 BYTES of data starting from GYRO_XOUT_H register
 
     HAL_I2C_Mem_Read(I2Cx, MPU6050_ADDR, GYRO_XOUT_H_REG, 1, Rec_Data, 6, i2c_timeout);
 
     Gyro_Z_RAW = (int16_t) (Rec_Data[4] << 8 | Rec_Data[5]);
-
     /*** convert the RAW values into dps (�/s)
          we have to divide according to the Full scale value set in FS_SEL
          I have configured FS_SEL = 0. So I am dividing by 131.0
          for more details check GYRO_CONFIG Register              ****/
 
-    this -> robot_direction = (double)Gyro_Z_RAW / (double)131.0;
 
-    Debug::TTO_val( this -> robot_direction, "Gyro", &huart2 );
+    direction_G = Gyro_Z_RAW;
+    buff = Gyro_Z_RAW;
+    this -> robot_direction += 0.01 * buff / 16.4;
+
+//    Debug::TTO_val( this -> robot_direction, "Gyro", &huart2 );
 }
 
-double MPU6050::get_direction( I2C_HandleTypeDef *I2Cx ){ return this -> robot_direction; }
+double MPU6050::get_direction( I2C_HandleTypeDef *I2Cx )
+{
+	if( this -> robot_direction > 360 )
+		this -> robot_direction -= 360;
+	else if( this -> robot_direction < 0 )
+		this -> robot_direction += 360;
+
+	return this -> robot_direction;
+}
 
 void MPU6050::set_initial_direction(E_robot_name robot)
 {

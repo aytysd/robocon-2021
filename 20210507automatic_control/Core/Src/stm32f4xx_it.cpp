@@ -37,6 +37,7 @@
 #include "usart.h"
 #include "gpio.h"
 #include "Time.hpp"
+#include "Control.hpp"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -56,7 +57,6 @@
 
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN PV */
-
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -74,6 +74,7 @@ Jump* jump = new Jump();
 Line* line = new Line();
 MPU6050* mpu6050 = new MPU6050();
 Time* time = new Time();
+Control* control = new Control();
 /* USER CODE END 0 */
 
 /* External variables --------------------------------------------------------*/
@@ -356,8 +357,9 @@ void TIM6_DAC_IRQHandler(void)
 //  gyro -> BNO055_update_gravity_direction(&hi2c3);
   self_pos -> update_self_pos();
   mpu6050 -> MPU6050_update_Gyro( &hi2c1 );
-  mpu6050 -> MPU6050_update_Gyro( &hi2c3 );
+//  mpu6050 -> MPU6050_update_Gyro( &hi2c3 );
   line -> MoveLine(line -> BefX, line -> BefY, line -> AftX, line -> AftY, line -> through);
+
 
   /* USER CODE END TIM6_DAC_IRQn 1 */
 }
@@ -372,7 +374,7 @@ void TIM7_IRQHandler(void)
   /* USER CODE END TIM7_IRQn 0 */
   HAL_TIM_IRQHandler(&htim7);
   /* USER CODE BEGIN TIM7_IRQn 1 */
-
+  control -> send_self_pos( E_robot_name::B );
 
   /* USER CODE END TIM7_IRQn 1 */
 }

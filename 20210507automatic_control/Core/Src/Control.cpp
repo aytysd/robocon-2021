@@ -29,7 +29,7 @@
 #include "usart.h"
 
 
-uint8_t Control::C_command[ DATASIZE ] = { 0, 0, 0, 0 };
+uint8_t Control::C_command[ DATASIZE ] = { 0, 0, 0, 0, 0, 0, 0, 0 };
 
 void Control::send_command( E_robot_name robot, uint8_t* data )
 {
@@ -81,7 +81,7 @@ void Control::decode_self_pos( int16_t* x, int16_t* y, uint8_t* received_data )
 	*x |= received_data[ 2 ];
 
 	*y = received_data[ 3 ] << 8;
-	*y = received_data[ 4 ];
+	*y |= received_data[ 4 ];
 
 }
 

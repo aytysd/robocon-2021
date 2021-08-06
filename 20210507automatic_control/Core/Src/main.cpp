@@ -45,6 +45,7 @@
 #include "Time.hpp"
 #include "math.h"
 #include "Follow.hpp"
+#include "MPU6050.hpp"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -69,8 +70,6 @@ uint8_t B_Rxdata[ DATASIZE ] = { 0, 0, 0, 0 };
 uint8_t C_Rxdata[ DATASIZE ] = { 0, 0, 0, 0 };
 
 
-uint8_t i = 2;
-uint8_t j = 200;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -161,6 +160,7 @@ int main(void)
   /* USER CODE BEGIN 1 */
   Init_Move* init_move = new Init_Move();
   Control* control = new Control();
+  MPU6050* mpu6050 = new MPU6050();
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -205,9 +205,12 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+
+
 	  control -> control_A();
 	  control -> control_B();
 	  control -> control_C();
+
 
 
     /* USER CODE END WHILE */
