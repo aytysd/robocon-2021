@@ -28,8 +28,11 @@ public:
 
 	void identify(void);
 	E_move_status get_status(void);
-	void Jumping_PE_Sencor(void);
+	void Jumping_PE_Sensor(void);
 	void Jumping_Rope(void);
+	static bool PE_1; //PC0
+	static bool PE_2; //PC13
+	static bool PE_3; //PA4
 private:
 
 	void pre_calc(void);
@@ -38,7 +41,6 @@ private:
 	double x_y_prop = 0;
 
 	static E_move_status status;
-
 };
 
 
