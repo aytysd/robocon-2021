@@ -87,9 +87,7 @@ void Init_Move::Initialize( E_robot_name robot )
 */
 //	  gyro -> set_initial_direction( robot );
 
-	  mpu6050 -> MPU6050_Init( &hi2c1 );
-	  mpu6050 -> MPU6050_Init( &hi2c3 );
-
+	  while(mpu6050 -> MPU6050_Init( &hi2c1 ) == true );
 	  mpu6050 -> set_initial_direction( robot );
 
 	  __HAL_UART_ENABLE_IT( &huart4, UART_IT_RXNE );
@@ -104,9 +102,11 @@ void Init_Move::Initialize( E_robot_name robot )
 
 
 	  HAL_TIM_Base_Start_IT( &htim6 );
-//	  HAL_TIM_Base_Start_IT( &htim7 );
 	  HAL_TIM_Base_Start_IT( &htim3 );
 	  HAL_TIM_Base_Start_IT( &htim4 );
+	  if( ROBOT == E_robot_name::A )
+		  HAL_TIM_Base_Start_IT( &htim7 );
+
 
 	  HAL_TIM_Encoder_Start( &htim5, TIM_CHANNEL_ALL );
 	  HAL_TIM_Encoder_Start( &htim2, TIM_CHANNEL_ALL );
