@@ -23,24 +23,35 @@
 #include "main.h"
 #include "Self_Pos.hpp"
 #include "math.h"
-#include "adc.h"
-#include "i2c.h"
-#include "tim.h"
-#include "usart.h"
-#include "gpio.h"
-
+#include "function.hpp"
 
 E_move_status Jump::status = E_move_status::LANDING;
+
+bool Jump::PE_1 = false;
+bool Jump::PE_2 = false;
+bool Jump::PE_3 = false;
 
 void Jump::identify()
 {
 	uint8_t count = 0;
 
-	if( GPIO_PIN_RESET == HAL_GPIO_ReadPin(Under_SW_V1_2_GPIO_Port, Under_SW_V1_2_Pin )) count++;
-	if( GPIO_PIN_RESET == HAL_GPIO_ReadPin(Under_SW_V3_4_GPIO_Port, Under_SW_V3_4_Pin ))count++;
+	if( GPIO_PIN_RESET == HAL_GPIO_ReadPin(Under_SW_V1_2_GPIO_Port, Under_SW_V1_2_Pin ))
+	{
+		count++;
+	}
+	if( GPIO_PIN_RESET == HAL_GPIO_ReadPin(Under_SW_V3_4_GPIO_Port, Under_SW_V3_4_Pin ))
+	{
+		count++;
+	}
 
-	if( count >= 3 ) this -> status = E_move_status::LANDING;
-	else this -> status = E_move_status::JUMPING;
+	if( count >= 3 )
+	{
+		this -> status = E_move_status::LANDING;
+	}
+	else
+	{
+		this -> status = E_move_status::JUMPING;
+	}
 
 }
 
@@ -88,19 +99,18 @@ void Jump::pre_calc()
 	delete self_pos;
 }
 
-void Jump::Jumping_PE_Sencor(void)
+void Jump::Jumping_PE_Sensor(void)
 {
-/*
-	GPIO* gpio = new GPIO();
-	if((gpio -> get_status(E_interrupt::PE_SENSOR_1) == true) || (gpio -> get_status(E_interrupt::PE_SENSOR_2) == true) || (gpio -> get_status(E_interrupt::PE_SENSOR_3) == true))
+	Function* function = new Function();
+	while( (PE_1 == true) || (PE_2 == true) || (PE_3 == true))
 	{
-
+	//	function -> drive_motor(5, CW, this -> speed_jump - 500, false, true);;
 	}
-	delete gpio;
-*/
+	delete function;
 }
 
 void Jump::Jumping_Rope(void)
 {
 
 }
+

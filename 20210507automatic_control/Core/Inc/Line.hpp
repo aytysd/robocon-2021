@@ -39,6 +39,7 @@
 #define INC_LINE_HPP_
 
 #include "main.h"
+#include "i2c.h"
 #include "General_command.hpp"
 
 class Line
@@ -57,23 +58,20 @@ private:
 	uint16_t now_r;
 	uint16_t TG_v;
 
-
 	void set(int befX, int befY, int tgX, int tgY);
 	double distance(int x, int y, int tgX, int tgY);
 	double TGdistance(int x, int y, int tgX, int tgY);
 
-
-public:
 	static int AftX;
 	static int AftY;
 	static int BefX;
 	static int BefY;
-	static E_Line_status judge;
 	static bool through;
 
-	void MoveLine(int befX, int befY, int tgX, int tgY, bool through);
+public:
 	void Line_driver(int bef, int befY, int tgX, int tgY, bool through);
-
+	void MoveLine(void);
+	static E_Line_status judge;
 };
 
 

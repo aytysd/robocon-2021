@@ -26,6 +26,7 @@
 #include "gpio.h"
 #include "usart.h"
 #include "i2c.h"
+#include "Jump.hpp"
 
 UART_HandleTypeDef* UART = &huart2;
 
@@ -106,11 +107,19 @@ void HGPIO::identify( uint16_t GPIO_Pin )
 	}
 }
 
-void HGPIO::GPIO_PIN_0_func(void){};
+//PE_Sensor_1
+void HGPIO::GPIO_PIN_0_func(void)
+{
+	Jump::PE_1 = true;
+}
 void HGPIO::GPIO_PIN_1_func(void){};
 void HGPIO::GPIO_PIN_2_func(void){};
 void HGPIO::GPIO_PIN_3_func(void){};
-void HGPIO::GPIO_PIN_4_func(void){};
+//PE_Sensor_3
+void HGPIO::GPIO_PIN_4_func(void)
+{
+	Jump::PE_3 = true;
+}
 void HGPIO::GPIO_PIN_5_func(void){};
 void HGPIO::GPIO_PIN_6_func(void){};
 void HGPIO::GPIO_PIN_7_func(void){};
@@ -143,7 +152,11 @@ void HGPIO::GPIO_PIN_12_func(void)
 
 	delete function;
 };
-void HGPIO::GPIO_PIN_13_func(void){};
+//PE_Sensor_2
+void HGPIO::GPIO_PIN_13_func(void)
+{
+	Jump::PE_2 = true;
+}
 void HGPIO::GPIO_PIN_14_func(void)
 {
 	if (this->count <= 1 && this->allow) {

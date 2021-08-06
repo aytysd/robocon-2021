@@ -23,12 +23,6 @@
 #include <stdio.h>
 #include "Gyro.hpp"
 #include "General_command.hpp"
-#include "adc.h"
-#include "i2c.h"
-#include "tim.h"
-#include "usart.h"
-#include "gpio.h"
-
 
 int Line::AftX = 0;
 int Line::AftY = 0;
@@ -68,9 +62,14 @@ double Line::TGdistance(int x, int y, int tgX, int tgY)
 	return ((-b*x) + (a*y) - (((-b)*tgX) + (a*tgY))) /(int) sqrtAABB;
 }
 
-void Line::MoveLine
-(int befX, int befY, int tgX, int tgY, bool through)
+void Line::MoveLine(void)
 {
+	int befX = Line::AftX;
+	int befY = Line::AftY;
+	int tgX = Line::BefX;
+	int tgY = Line::BefY;
+	bool through = Line::through;
+
 	this -> set(befX, befY, tgX, tgY);
 
 	Self_Pos* self_pos = new Self_Pos();
@@ -210,9 +209,9 @@ void Line::MoveLine
 
 void Line::Line_driver(int befX, int befY, int tgX, int tgY, bool through)
 {
-	this -> BefX = befX;
-	this -> BefY = befY;
-	this -> AftX = tgX;
-	this -> AftY = tgY;
-	this -> through = through;
+	Line::BefX = befX;
+	Line::BefY = befY;
+	Line::AftX = tgX;
+	Line::AftY = tgY;
+	Line::through = through;
 }
