@@ -128,6 +128,7 @@ void HGPIO::GPIO_PIN_9_func(void){};
 void HGPIO::GPIO_PIN_10_func(void){};
 void HGPIO::GPIO_PIN_11_func(void)
 {
+#ifdef M_Self_Pos
 	if (this->count <= 1 && this->allow) {
 			Gyro *gyro = new Gyro();
 
@@ -143,6 +144,9 @@ void HGPIO::GPIO_PIN_11_func(void)
 			}
 			delete gyro;
 		}
+#else
+	Self_Pos::Self_Pos_PE[0] = 1;
+#endif
 };
 void HGPIO::GPIO_PIN_12_func(void)
 {
@@ -159,6 +163,7 @@ void HGPIO::GPIO_PIN_13_func(void)
 }
 void HGPIO::GPIO_PIN_14_func(void)
 {
+#ifdef M_Self_Pos
 	if (this->count <= 1 && this->allow) {
 			Gyro *gyro = new Gyro();
 
@@ -174,5 +179,8 @@ void HGPIO::GPIO_PIN_14_func(void)
 			}
 			delete gyro;
 		}
+#else
+	Self_Pos::Self_Pos_PE[1] = 1;
+#endif
 };
 void HGPIO::GPIO_PIN_15_func(void){};
