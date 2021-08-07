@@ -40,6 +40,7 @@
 int16_t Self_Pos::Self_Pos_X = 0; //(mm)
 int16_t Self_Pos::Self_Pos_Y = 0; //(mm)
 
+int Self_Pos::Self_Pos_PE[2] = {0,0};
 int Self_Pos::out_angle = 0;
 //----------------------------------------------------------------------
 //Self_Pos* self_pos = new Self_Pos();
@@ -283,6 +284,7 @@ int Self_Pos::Self_Pos_config_Limit(void) {
 
 }
 
+#ifdef M_Self_Pos
 void Self_Pos::Self_Pos_correction(int pos_x) {
 	Gyro *gyro = new Gyro();
 
@@ -411,3 +413,54 @@ void Self_Pos::Spin(int goal_angle, bool scan) {
 	delete gyro;
 
 }
+#else
+
+void Self_Pos::Self_Pos_correction( int POLE_POSITION )
+{
+	Function* function = new Function();
+	Gyro* gyro = new Gyro();
+
+	function -> drive_motor( 6, CW, 300, false, false );
+	while( ( Self_Pos::Self_Pos_PE[0] == 0 ) && ( Self_Pos::Self_Pos_PE[1] == 0 ) ){}
+	function -> drive_motor( 6, BRAKE, 0, false, false );
+	double angle_1 = gyro -> get_direction( &hi2c3 );
+	if( angle_1 > 180 )
+	{
+		angle_1 -= 360;
+	}
+	Self_Pos::Self_Pos_PE[0] = 0;
+	Self_Pos::Self_Pos_PE[1] = 1;
+
+	function -> drive_motor( 6, CCW, 300, false, false );
+	while( ( Self_Pos::Self_Pos_PE[0] == 0 ) && (Self_Pos::Self_Pos_PE[1] == 0 ) ){}
+	function -> drive_motor( 6, BRAKE, 0, false, false );
+	double angle_2 = gyro -> get_direction( &hi2c3 );
+	if( angle_2 < 180 )
+	{
+		angle_2 -= 360;
+	}
+	Self_Pos::Self_Pos_PE[0] = 0;
+	Self_Pos::Self_Pos_PE[1] = 0;
+
+	double Pole_angle = (angle_2) - (angle_1);
+	if( Pole_angle == 0 )
+	{
+		Pole_angle = 1;
+	}
+	double Pole_Robot_distance = ( POLE_DISTANCE * sin( double( 90 - angle_2 ) ) ) / sin( Pole_angle );
+
+	if( POLE_POSITION == 1 )
+	{
+		this -> Self_Pos_X = 3000 - uint8_t( Pole_Robot_distance * cos( angle_1 ) );
+		this -> Self_Pos_Y = -1000 - uint8_t( Pole_Robot_distance * sin( angle_2 ) );
+	}
+	else if( POLE_POSITION == 2 )
+	{
+		this -> Self_Pos_X = -3000 - uint8_t( Pole_Robot_distance * cos( angle_1 ) );
+		this -> Self_Pos_Y = 1000 - uint8_t( Pole_Robot_distance * cos( angle_2 ) );
+	}
+
+	delete function;
+	delete gyro;
+}
+#endif

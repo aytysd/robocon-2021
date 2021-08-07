@@ -210,6 +210,7 @@ void Line::MoveLine(void)
 
 void Line::Line_driver(int befX, int befY, int tgX, int tgY, bool through)
 {
+	Line::judge = E_Line_status::MOVING;
 	Line::BefX = befX;
 	Line::BefY = befY;
 	Line::AftX = tgX;
