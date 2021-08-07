@@ -61,7 +61,7 @@ enum class E_data_type
 	A_pos,
 };
 
-#define NC 0xFF
+#define NC 0xFE
 
 
 

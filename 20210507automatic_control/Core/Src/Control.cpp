@@ -29,7 +29,9 @@
 #include "usart.h"
 
 
-uint8_t Control::C_command[ DATASIZE ] = { 0, 0, 0, 0, 0, 0, 0, 0 };
+uint8_t Control::command[ DATASIZE ] = { 0, 0, 0, 0, 0, 0, 0, 0 };
+
+bool Control::stop_flag = false;
 
 void Control::send_command( E_robot_name robot, uint8_t* data )
 {
@@ -86,3 +88,14 @@ void Control::decode_self_pos( int16_t* x, int16_t* y, uint8_t* received_data )
 
 }
 
+void Control::reset_data( void )
+{
+
+	this -> stop_flag = false;
+
+	this -> A_done_flag = false;
+	this -> B_done_flag = false;
+
+	for( int i = 0; i < DATASIZE; i++ )
+		this -> command[ i ] = 0;
+}

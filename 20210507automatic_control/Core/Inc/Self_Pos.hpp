@@ -42,8 +42,8 @@ public:
 	void set_initial_pos(E_robot_name robot);
 	void update_self_pos(void);
 
-	int get_Self_Pos_X(void);
-	int get_Self_Pos_Y(void);
+	int16_t get_Self_Pos_X(void);
+	int16_t get_Self_Pos_Y(void);
 
 	void add_Self_Pos( int add_x, int add_y );
 
@@ -61,8 +61,8 @@ private:
 	void Spin(int goal_angle , bool scan );
 	int calc_diff( int prev_x, int prev_y, int current_x, int current_y );
 
-	static int Self_Pos_X;
-	static int Self_Pos_Y;
+	static int16_t Self_Pos_X;
+	static int16_t Self_Pos_Y;
 
 
 };

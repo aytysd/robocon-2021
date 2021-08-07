@@ -30,7 +30,7 @@
 #include "tim.h"
 #include "usart.h"
 #include "gpio.h"
-
+#include "MPU6050.hpp"
 
 void PWM::V_output(uint16_t V, uint16_t fai, int16_t rotation_speed, uint16_t attitude_angle, E_move_status status)
 {
@@ -79,7 +79,7 @@ void PWM::V_output(uint16_t V, uint16_t fai, int16_t rotation_speed, uint16_t at
 bool PWM::rotate(uint16_t V, uint16_t target_angle)
 {
 
-	Gyro* gyro = new Gyro();
+	MPU6050* gyro = new MPU6050();
 
 	if( target_angle != gyro -> get_direction( &hi2c1 ) )
 	{

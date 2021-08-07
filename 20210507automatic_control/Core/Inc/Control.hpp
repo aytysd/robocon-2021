@@ -28,6 +28,7 @@ enum class E_Flow
 	MODE_INFINITY_JUMP = 0x30,
 	MOVE_DOUBLE_JUMP_INITIAL_POS = 0x50,
 	MODE_DOUBLE_JUMP = 0x60,
+	Follow = 0x70,
 
 };
 
@@ -36,13 +37,12 @@ class Control
 {
 public:
 
-	static bool A_stop_flag;
-	static bool A_Is_busy;
+	static bool stop_flag;
 
-	static bool B_stop_flag;
-	static bool B_Is_busy;
+	static bool A_done_flag;
+	static bool B_done_flag;
 
-	static uint8_t C_command[ DATASIZE ];
+	static uint8_t command[ DATASIZE ];
 
 	void control_A( void );
 	void control_B( void );
@@ -52,6 +52,7 @@ public:
 	void send_self_pos( E_robot_name robot );
 	void decode_self_pos( int16_t* x, int16_t* y, uint8_t* received_data );
 
+	void reset_data( void );
 };
 
 

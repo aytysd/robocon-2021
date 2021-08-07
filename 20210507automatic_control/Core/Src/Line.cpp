@@ -23,6 +23,7 @@
 #include <stdio.h>
 #include "Gyro.hpp"
 #include "General_command.hpp"
+#include "MPU6050.hpp"
 
 int Line::AftX = 0;
 int Line::AftY = 0;
@@ -114,7 +115,7 @@ void Line::MoveLine(void)
 		}
 	}
 
-	Gyro* gyro = new Gyro();
+	MPU6050* gyro = new MPU6050();
 	this -> now_r = (double)gyro -> get_direction( &hi2c1 );
 	delete gyro;
 

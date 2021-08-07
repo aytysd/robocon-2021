@@ -27,8 +27,6 @@ double MPU6050::robot_direction = 0;
 uint16_t MPU6050::robot_initial_direction = 0;
 double MPU6050::table_direction = 0;
 
-int16_t direction_G = 0;
-
 
 bool MPU6050::MPU6050_Init(I2C_HandleTypeDef *I2Cx)
 {
@@ -80,22 +78,43 @@ void MPU6050::MPU6050_update_Gyro(I2C_HandleTypeDef *I2Cx )
          I have configured FS_SEL = 0. So I am dividing by 131.0
          for more details check GYRO_CONFIG Register              ****/
 
+    if( I2Cx == &hi2c1 )
+    {
+        buff = Gyro_Z_RAW + 16.4;
+        this -> robot_direction += 0.01 * buff / 16.4;
 
-    direction_G = Gyro_Z_RAW;
-    buff = Gyro_Z_RAW + 16.4;
-    this -> robot_direction += 0.01 * buff / 16.4;
+    }
+    else if( I2Cx == &hi2c3 )
+    {
+        buff = Gyro_Z_RAW + 16.4;
+        this -> table_direction += 0.01 * buff / 16.4;
+
+    }
 
 //    Debug::TTO_val( this -> robot_direction, "Gyro", &huart2 );
 }
 
 double MPU6050::get_direction( I2C_HandleTypeDef *I2Cx )
 {
-	if( this -> robot_direction > 360 )
-		this -> robot_direction -= 360;
-	else if( this -> robot_direction < 0 )
-		this -> robot_direction += 360;
+	if( I2Cx == &hi2c1 )
+	{
+		while( this -> robot_direction > 360 )
+			this -> robot_direction -= 360;
+		while( this -> robot_direction < 0 )
+			this -> robot_direction += 360;
 
-	return this -> robot_direction;
+		return this -> robot_direction;
+	}
+	else if( I2Cx == &hi2c3 )
+	{
+		while( this -> table_direction > 360 )
+			this -> table_direction -= 360;
+		while( this -> table_direction < 0 )
+			this -> table_direction += 360;
+
+		return this -> table_direction;
+
+	}
 }
 
 void MPU6050::set_initial_direction(E_robot_name robot)

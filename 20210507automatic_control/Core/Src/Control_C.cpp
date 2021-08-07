@@ -34,6 +34,8 @@
 
 using namespace Infinity;
 
+bool Control::A_done_flag = false;
+bool Control::B_done_flag = false;
 
 void Control::control_C( void )
 {
@@ -51,7 +53,7 @@ void Control::control_C( void )
 	while( Line::judge == E_Line_status::MOVING ){};
 	pwm -> rotate( 300, 0 );
 
-	while( !( A_Rxdata[ 0 ] == ( uint8_t )E_data_type::done && B_Rxdata[ 0 ] == ( uint8_t )E_data_type::done ) ){};
+	while( !( Control::A_done_flag == true && Control::B_done_flag == true ) ){};
 
 /**************************************************************************/
 
@@ -78,7 +80,7 @@ void Control::control_C( void )
 	this -> send_command( E_robot_name::A, move_double_jump );
 	this -> send_command( E_robot_name::B, move_double_jump );
 
-	while( !( A_Rxdata[ 0 ] == ( uint8_t )E_data_type::done && B_Rxdata[ 0 ] == ( uint8_t )E_data_type::done ) ){};
+	while( !( Control::A_done_flag == true && Control::B_done_flag == true ) ){};
 
 /**************************************************************************/
 

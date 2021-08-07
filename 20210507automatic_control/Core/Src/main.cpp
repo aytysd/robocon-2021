@@ -65,11 +65,9 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-uint8_t A_Rxdata[ DATASIZE ] = { 0, 0, 0, 0, 0, 0, 0, 0 };
-uint8_t B_Rxdata[ DATASIZE ] = { 0, 0, 0, 0, 0, 0, 0, 0 };
-uint8_t C_Rxdata[ DATASIZE ] = { 0, 0, 0, 0, 0, 0, 0, 0 };
-
-uint8_t rxdata = 0;
+uint8_t A_Rxdata_buff[ DATASIZE ] = { 0, 0, 0, 0, 0, 0, 0, 0 };
+uint8_t B_Rxdata_buff[ DATASIZE ] = { 0, 0, 0, 0, 0, 0, 0, 0 };
+uint8_t C_Rxdata_buff[ DATASIZE ] = { 0, 0, 0, 0, 0, 0, 0, 0 };
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -84,44 +82,67 @@ void HAL_UART_RxCpltCallback( UART_HandleTypeDef* UartHandle )
 
 	if( UartHandle == &huart4 )// data from B robot
 	{
+/*
 		HAL_UART_Receive_IT(&huart4, (uint8_t*)Controller::controller_Rxdata, sizeof(Controller::controller_Rxdata));
 
 		Controller* controller = new Controller();
 		controller -> identify();
 		delete controller;
+*/
+
+		HAL_UART_Receive_IT( &huart4, ( uint8_t* )B_Rxdata_buff, sizeof( B_Rxdata_buff ) );
+
+		// C PSP
+		if( B_Rxdata_buff[ 0 ] == ( uint8_t )E_data_type::done )
+			Control::B_done_flag = true;
+
+
 
 	}
 	else if( UartHandle == &huart1 )// data from A robot
 	{
-		HAL_UART_Receive_IT(&huart1, (uint8_t*)A_Rxdata, sizeof( A_Rxdata ) );
+		HAL_UART_Receive_IT(&huart1, (uint8_t*)A_Rxdata_buff, sizeof( A_Rxdata_buff ) );
 
-		if( A_Rxdata[ 0 ] == ( uint8_t )E_data_type::A_pos )
+		//B PSP
+		if( A_Rxdata_buff[ 0 ] == ( uint8_t )E_data_type::A_pos )
 		{
 			Control* control = new Control();
-			control -> decode_self_pos( &Follow::A_pos_x, &Follow::A_pos_y, A_Rxdata );
+			control -> decode_self_pos( &Follow::A_pos_x, &Follow::A_pos_y, A_Rxdata_buff );
 			delete control;
 		}
+		//C PSP
+		else if( A_Rxdata_buff[ 0 ] == ( uint8_t )E_data_type::done )
+			Control::A_done_flag = true;
+
+
+
 
 
 	}
 	else if( UartHandle == &huart3 )// data from C robot
 	{
 
-		HAL_UART_Receive_IT(&huart3, (uint8_t*)C_Rxdata, sizeof( C_Rxdata ));
+		HAL_UART_Receive_IT(&huart3, (uint8_t*)C_Rxdata_buff, sizeof( C_Rxdata_buff ));
 
 
-
-		if( C_Rxdata[ 0 ] == ( uint8_t )E_data_type::command )
+		//A and B PSP
+		if( C_Rxdata_buff[ 0 ] == ( uint8_t )E_data_type::command )
 			for( int i = 0; i < DATASIZE; i++ )
-				Control::C_command[ i ] = C_Rxdata[ i ];
-
-		else if( C_Rxdata[ 0 ] == ( uint8_t )E_data_type::stop )
-			Control::A_stop_flag = true;
+				Control::command[ i ] = C_Rxdata_buff[ i ];
+		//A and B PSP
+		else if( C_Rxdata_buff[ 0 ] == ( uint8_t )E_data_type::stop )
+			Control::stop_flag = true;
 
 
 
 	}
 
+	for( int i = 0; i < DATASIZE; i++ )
+	{
+		A_Rxdata_buff[ i ] = 0;
+		B_Rxdata_buff[ i ] = 0;
+		C_Rxdata_buff[ i ] = 0;
+	}
 
 
 
@@ -164,7 +185,6 @@ int main(void)
   /* USER CODE BEGIN 1 */
   Init_Move* init_move = new Init_Move();
   Control* control = new Control();
-  MPU6050* mpu6050 = new MPU6050();
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -219,6 +239,7 @@ int main(void)
 		  control -> control_C();
 
 
+	  control -> reset_data();
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */

@@ -30,20 +30,16 @@
 
 
 
-int Infinity::A_pos_X[ 6 ] = { -1200, 1200, 2400, 1200, -1200, -2400 };
-int Infinity::A_pos_Y[ 6 ] = { -1200, 1200, 0, 1200, 1200, 0 };
 
 
-bool Control::A_Is_busy = false;
-bool Control::A_stop_flag = false;
+
 
 void Control::control_A (void)
 {
 
 
-	Control::A_Is_busy = true;
 
-	switch( Control::C_command[1] )
+	switch( Control::command[1] )
 	{
 	case ( uint8_t )E_Flow::MOVE_INFINITY_INITIAL_POS:
 	{
@@ -78,17 +74,17 @@ void Control::control_A (void)
 
 
 
-		while( Control::A_stop_flag == false )
+		while( Control::stop_flag == false )
 		{
 
 
 			led -> LED_output( E_LED_status::MODE_INFINITY_JUMP );
 
 			line -> Line_driver( ( int )Infinity::A_Pos::LD_X, ( int )Infinity::A_Pos::LD_Y, ( int )Infinity::A_Pos::RU_X, ( int )Infinity::A_Pos::RU_Y, true );
-			while( Line::judge == E_Line_status::MOVING && Control::A_stop_flag == false ){};
+			while( Line::judge == E_Line_status::MOVING && Control::stop_flag == false ){};
 
 			line -> Line_driver( ( int )Infinity::A_Pos::RU_X, ( int )Infinity::A_Pos::RU_Y, ( int )Infinity::A_Pos::R_SPC_X, ( int )Infinity::A_Pos::R_SPC_Y, false );
-			while( Line::judge == E_Line_status::MOVING && Control::A_stop_flag == false  ){};
+			while( Line::judge == E_Line_status::MOVING && Control::stop_flag == false  ){};
 
 			/******************************************************************************/ // self pos correction movement
 
@@ -100,13 +96,13 @@ void Control::control_A (void)
 			/******************************************************************************/
 
 			line -> Line_driver( ( int )Infinity::A_Pos::R_SPC_X, ( int )Infinity::A_Pos::R_SPC_Y, ( int )Infinity::A_Pos::RD_X, ( int )Infinity::A_Pos::RD_Y, true );
-			while( Line::judge == E_Line_status::MOVING && Control::A_stop_flag == false  ){};
+			while( Line::judge == E_Line_status::MOVING && Control::stop_flag == false  ){};
 
 			line -> Line_driver( ( int )Infinity::A_Pos::RD_X, ( int )Infinity::A_Pos::RD_Y, ( int )Infinity::A_Pos::LU_X, ( int )Infinity::A_Pos::LU_Y, true );
-			while( Line::judge == E_Line_status::MOVING && Control::A_stop_flag == false  ){};
+			while( Line::judge == E_Line_status::MOVING && Control::stop_flag == false  ){};
 
 			line -> Line_driver( ( int )Infinity::A_Pos::LU_X, ( int )Infinity::A_Pos::LU_Y, ( int )Infinity::A_Pos::L_SPC_X, ( int )Infinity::A_Pos::L_SPC_Y, false );
-			while( Line::judge == E_Line_status::MOVING && Control::A_stop_flag == false  ){};
+			while( Line::judge == E_Line_status::MOVING && Control::stop_flag == false  ){};
 
 			/******************************************************************************/ // self pos correction movement
 
@@ -120,12 +116,12 @@ void Control::control_A (void)
 			/******************************************************************************/
 
 			line -> Line_driver( ( int )Infinity::A_Pos::L_SPC_X, ( int )Infinity::A_Pos::L_SPC_Y, ( int )Infinity::A_Pos::LD_X, ( int )Infinity::A_Pos::LD_Y, true );
-			while( Line::judge == E_Line_status::MOVING && Control::A_stop_flag == false  ){};
+			while( Line::judge == E_Line_status::MOVING && Control::stop_flag == false  ){};
 
 		}
 
 
-		Control::A_stop_flag = false;
+		Control::stop_flag = false;
 
 		led -> LED_output( E_LED_status::Done );
 
@@ -160,7 +156,7 @@ void Control::control_A (void)
 
 		led -> LED_output( E_LED_status::MODE_DOUBLE_JUMP );
 
-		while( Control::A_stop_flag == false ){};
+		while( Control::stop_flag == false ){};
 
 		led -> LED_output( E_LED_status::Done );
 
@@ -175,10 +171,9 @@ void Control::control_A (void)
 	}
 
 
-	Control::A_Is_busy = false;
 
 	for( int i = 0; i < DATASIZE; i++ )
-		Control::C_command[ i ] = 0;
+		Control::command[ i ] = 0;
 
 
 }

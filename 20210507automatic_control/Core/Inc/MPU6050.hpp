@@ -35,10 +35,10 @@ const double Accel_Z_corrector = 14418.0;
 class MPU6050
 {
 public:
-	bool MPU6050_Init(I2C_HandleTypeDef *I2Cx);
-	void MPU6050_update_Gyro(I2C_HandleTypeDef *I2Cx);
+	bool MPU6050_Init( I2C_HandleTypeDef *I2Cx );
+	void MPU6050_update_Gyro (I2C_HandleTypeDef *I2Cx );
 
-	void set_initial_direction(E_robot_name robot);
+	void set_initial_direction( E_robot_name robot );
 	double get_direction( I2C_HandleTypeDef *I2Cx );
 private:
 
