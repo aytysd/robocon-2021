@@ -44,9 +44,9 @@ int Self_Pos::out_angle = 0;
 //----------------------------------------------------------------------
 //Self_Pos* self_pos = new Self_Pos();
 
-int16_t Self_Pos::get_Self_Pos_X() { return this ->Self_Pos_X; }
+int16_t Self_Pos::get_Self_Pos_X() { return this -> Self_Pos_X; }
 
-int16_t Self_Pos::get_Self_Pos_Y() { return this->Self_Pos_Y; }
+int16_t Self_Pos::get_Self_Pos_Y() { return this -> Self_Pos_Y; }
 
 void Self_Pos::add_Self_Pos(int add_x, int add_y)
 {
@@ -93,11 +93,11 @@ void Self_Pos::update_self_pos(void)
 {
 	MPU6050* gyro = new MPU6050();
 
-	int d1 = -2 * OD_RADIUS * M_PI * ( ( double )this->encoder_read_5() / ( double ) 2048); //encoder5_moving distance(mm) 55.5=wheel radius 2048=encoder resolution
-	int d2 = 2 * OD_RADIUS * M_PI * ( ( double )this->encoder_read_2() / ( double ) 2048); //encoder5_moving distance(mm) 55.5=wheel radius 2048=encoder resolution
+	int d1 = -2 * OD_RADIUS * M_PI * ( ( double )this -> encoder_read_5() / ( double ) 2048 ); //encoder5_moving distance(mm) 55.5=wheel radius 2048=encoder resolution
+	int d2 = 2 * OD_RADIUS * M_PI * ( ( double )this -> encoder_read_2() / ( double ) 2048 ); //encoder5_moving distance(mm) 55.5=wheel radius 2048=encoder resolution
 
-	this -> Self_Pos_X += d1 * cos( gyro -> get_direction( &hi2c1 ) * M_PI / ( double ) 180) - d2 * sin( gyro -> get_direction( &hi2c1 ) * M_PI / ( double ) 180); //X_coordinate
-	this -> Self_Pos_Y += d1 * sin( gyro -> get_direction( &hi2c1 ) * M_PI / ( double ) 180) + d2 * cos( gyro -> get_direction( &hi2c1 ) * M_PI / ( double ) 180); //Y_coordinate
+	this -> Self_Pos_X += d1 * cos( gyro -> get_direction( &hi2c1 ) * M_PI / ( double ) 180 ) - d2 * sin( gyro -> get_direction( &hi2c1 ) * M_PI / ( double ) 180 ); //X_coordinate
+	this -> Self_Pos_Y += d1 * sin( gyro -> get_direction( &hi2c1 ) * M_PI / ( double ) 180 ) + d2 * cos( gyro -> get_direction( &hi2c1 ) * M_PI / ( double ) 180 ); //Y_coordinate
 
 	delete gyro;
 }

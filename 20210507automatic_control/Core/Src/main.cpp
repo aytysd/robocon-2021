@@ -46,6 +46,7 @@
 #include "math.h"
 #include "Follow.hpp"
 #include "MPU6050.hpp"
+#include "Path.hpp"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -185,6 +186,7 @@ int main(void)
   /* USER CODE BEGIN 1 */
   Init_Move* init_move = new Init_Move();
   Control* control = new Control();
+  Path* path = new Path();
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -229,7 +231,6 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-
 
 	  if( ROBOT == E_robot_name::A )
 		  control -> control_A();
