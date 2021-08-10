@@ -36,7 +36,7 @@ Core/Src/hGPIO.o: ../Core/Src/hGPIO.cpp ../Core/Inc/HGPIO.hpp \
  ../Core/Inc/ToF.hpp ../Core/Inc/Self_Pos.hpp ../Core/Inc/Gyro.hpp \
  ../Core/Inc/General_command.hpp ../Core/Inc/main.h ../Core/Inc/Debug.hpp \
  ../Core/Inc/Function.hpp ../Core/Inc/PWM.hpp ../Core/Inc/gpio.h \
- ../Core/Inc/usart.h ../Core/Inc/i2c.h
+ ../Core/Inc/usart.h ../Core/Inc/i2c.h ../Core/Inc/Jump.hpp
 
 ../Core/Inc/HGPIO.hpp:
 
@@ -133,3 +133,5 @@ Core/Src/hGPIO.o: ../Core/Src/hGPIO.cpp ../Core/Inc/HGPIO.hpp \
 ../Core/Inc/usart.h:
 
 ../Core/Inc/i2c.h:
+
+../Core/Inc/Jump.hpp:

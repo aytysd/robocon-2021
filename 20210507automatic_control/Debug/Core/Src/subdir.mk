@@ -22,7 +22,6 @@ CPP_SRCS += \
 ../Core/Src/Control_C.cpp \
 ../Core/Src/Controller.cpp \
 ../Core/Src/Controller_MDC.cpp \
-../Core/Src/Controller_Majima.cpp \
 ../Core/Src/Controller_Nakakubo.cpp \
 ../Core/Src/Controller_Tomioka.cpp \
 ../Core/Src/Controller_Yoshida.cpp \
@@ -37,6 +36,7 @@ CPP_SRCS += \
 ../Core/Src/Line.cpp \
 ../Core/Src/MPU6050.cpp \
 ../Core/Src/PWM.cpp \
+../Core/Src/Path.cpp \
 ../Core/Src/Rope.cpp \
 ../Core/Src/Self_Pos.cpp \
 ../Core/Src/Time.cpp \
@@ -63,7 +63,6 @@ OBJS += \
 ./Core/Src/Control_C.o \
 ./Core/Src/Controller.o \
 ./Core/Src/Controller_MDC.o \
-./Core/Src/Controller_Majima.o \
 ./Core/Src/Controller_Nakakubo.o \
 ./Core/Src/Controller_Tomioka.o \
 ./Core/Src/Controller_Yoshida.o \
@@ -78,6 +77,7 @@ OBJS += \
 ./Core/Src/Line.o \
 ./Core/Src/MPU6050.o \
 ./Core/Src/PWM.o \
+./Core/Src/Path.o \
 ./Core/Src/Rope.o \
 ./Core/Src/Self_Pos.o \
 ./Core/Src/Time.o \
@@ -102,7 +102,6 @@ CPP_DEPS += \
 ./Core/Src/Control_C.d \
 ./Core/Src/Controller.d \
 ./Core/Src/Controller_MDC.d \
-./Core/Src/Controller_Majima.d \
 ./Core/Src/Controller_Nakakubo.d \
 ./Core/Src/Controller_Tomioka.d \
 ./Core/Src/Controller_Yoshida.d \
@@ -117,6 +116,7 @@ CPP_DEPS += \
 ./Core/Src/Line.d \
 ./Core/Src/MPU6050.d \
 ./Core/Src/PWM.d \
+./Core/Src/Path.d \
 ./Core/Src/Rope.d \
 ./Core/Src/Self_Pos.d \
 ./Core/Src/Time.d \
@@ -139,8 +139,6 @@ Core/Src/Controller.o: ../Core/Src/Controller.cpp Core/Src/subdir.mk
 	arm-none-eabi-g++ "$<" -mcpu=cortex-m4 -std=gnu++14 -g3 -DUSE_HAL_DRIVER -DSTM32F446xx -DDEBUG -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -MMD -MP -MF"Core/Src/Controller.d" -MT"$@" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "$@"
 Core/Src/Controller_MDC.o: ../Core/Src/Controller_MDC.cpp Core/Src/subdir.mk
 	arm-none-eabi-g++ "$<" -mcpu=cortex-m4 -std=gnu++14 -g3 -DUSE_HAL_DRIVER -DSTM32F446xx -DDEBUG -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -MMD -MP -MF"Core/Src/Controller_MDC.d" -MT"$@" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "$@"
-Core/Src/Controller_Majima.o: ../Core/Src/Controller_Majima.cpp Core/Src/subdir.mk
-	arm-none-eabi-g++ "$<" -mcpu=cortex-m4 -std=gnu++14 -g3 -DUSE_HAL_DRIVER -DSTM32F446xx -DDEBUG -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -MMD -MP -MF"Core/Src/Controller_Majima.d" -MT"$@" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "$@"
 Core/Src/Controller_Nakakubo.o: ../Core/Src/Controller_Nakakubo.cpp Core/Src/subdir.mk
 	arm-none-eabi-g++ "$<" -mcpu=cortex-m4 -std=gnu++14 -g3 -DUSE_HAL_DRIVER -DSTM32F446xx -DDEBUG -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -MMD -MP -MF"Core/Src/Controller_Nakakubo.d" -MT"$@" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "$@"
 Core/Src/Controller_Tomioka.o: ../Core/Src/Controller_Tomioka.cpp Core/Src/subdir.mk
@@ -169,6 +167,8 @@ Core/Src/MPU6050.o: ../Core/Src/MPU6050.cpp Core/Src/subdir.mk
 	arm-none-eabi-g++ "$<" -mcpu=cortex-m4 -std=gnu++14 -g3 -DUSE_HAL_DRIVER -DSTM32F446xx -DDEBUG -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -MMD -MP -MF"Core/Src/MPU6050.d" -MT"$@" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "$@"
 Core/Src/PWM.o: ../Core/Src/PWM.cpp Core/Src/subdir.mk
 	arm-none-eabi-g++ "$<" -mcpu=cortex-m4 -std=gnu++14 -g3 -DUSE_HAL_DRIVER -DSTM32F446xx -DDEBUG -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -MMD -MP -MF"Core/Src/PWM.d" -MT"$@" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "$@"
+Core/Src/Path.o: ../Core/Src/Path.cpp Core/Src/subdir.mk
+	arm-none-eabi-g++ "$<" -mcpu=cortex-m4 -std=gnu++14 -g3 -DUSE_HAL_DRIVER -DSTM32F446xx -DDEBUG -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -MMD -MP -MF"Core/Src/Path.d" -MT"$@" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "$@"
 Core/Src/Rope.o: ../Core/Src/Rope.cpp Core/Src/subdir.mk
 	arm-none-eabi-g++ "$<" -mcpu=cortex-m4 -std=gnu++14 -g3 -DUSE_HAL_DRIVER -DSTM32F446xx -DDEBUG -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -MMD -MP -MF"Core/Src/Rope.d" -MT"$@" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "$@"
 Core/Src/Self_Pos.o: ../Core/Src/Self_Pos.cpp Core/Src/subdir.mk

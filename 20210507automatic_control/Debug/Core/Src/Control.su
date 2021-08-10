@@ -1,3 +1,4 @@
-Control.cpp:34:6:void Control::send_command(E_robot_name, uint8_t*)	24	static
-Control.cpp:52:6:void Control::send_self_pos(E_robot_name)	40	static
-Control.cpp:74:6:void Control::decode_self_pos(int16_t*, int16_t*, uint8_t*)	24	static
+Control.cpp:36:6:void Control::send_command(E_robot_name, uint8_t*)	24	static
+Control.cpp:54:6:void Control::send_self_pos(E_robot_name)	40	static
+Control.cpp:77:6:void Control::decode_self_pos(int16_t*, int16_t*, uint8_t*)	24	static
+Control.cpp:91:6:void Control::reset_data()	24	static

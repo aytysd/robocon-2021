@@ -34,7 +34,7 @@ Core/Src/Control_C.o: ../Core/Src/Control_C.cpp ../Core/Inc/Control.hpp \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h \
  ../Core/Inc/General_command.hpp ../Core/Inc/main.h \
  ../Core/Inc/General_command.hpp ../Core/Inc/Init_Move.hpp \
- ../Core/Inc/Line.hpp ../Core/Inc/Infinity_command.hpp \
+ ../Core/Inc/Line.hpp ../Core/Inc/i2c.h ../Core/Inc/Infinity_command.hpp \
  ../Core/Inc/Self_Pos.hpp ../Core/Inc/ToF.hpp ../Core/Inc/Self_Pos.hpp \
  ../Core/Inc/Jump.hpp ../Core/Inc/LED.hpp ../Core/Inc/usart.h \
  ../Core/Inc/PWM.hpp ../Core/Inc/Rope.hpp ../Core/Inc/Time.hpp
@@ -118,6 +118,8 @@ Core/Src/Control_C.o: ../Core/Src/Control_C.cpp ../Core/Inc/Control.hpp \
 ../Core/Inc/Init_Move.hpp:
 
 ../Core/Inc/Line.hpp:
+
+../Core/Inc/i2c.h:
 
 ../Core/Inc/Infinity_command.hpp:
 

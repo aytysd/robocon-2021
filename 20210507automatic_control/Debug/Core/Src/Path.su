@@ -1,0 +1,6 @@
+gthr-default.h:229:1:int __gthread_key_delete(__gthread_key_t)	16	static
+Path.cpp:47:6:void Path::path_driver(int, int, int, int, bool)	24	static
+Path.cpp:56:6:void Path::movepath()	296	static
+Path.cpp:163:8:double Path::calc_t(vector, vector)	88	static
+Path.cpp:175:9:uint8_t Path::where_target_is(double, double)	32	static
+Path.cpp:196:8:double Path::get_distance(vector, vector)	72	static
