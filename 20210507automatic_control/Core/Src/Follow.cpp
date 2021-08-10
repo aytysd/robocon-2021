@@ -30,8 +30,8 @@
 #include "math.h"
 
 
-int16_t Follow::A_pos_x = 0;
-int16_t Follow::A_pos_y = 0;
+int16_t Follow::A_pos_x = -1200;
+int16_t Follow::A_pos_y = -1200;
 
 int Follow::target_X = 0;
 int Follow::target_Y = 0;
@@ -40,7 +40,7 @@ int Follow::target_Y = 0;
 void Follow::follow()
 {
 	Line* line = new Line();
-	Self_Pos* self_pos = new Self_Pos();\
+	Self_Pos* self_pos = new Self_Pos();
 
 	this -> target_calc();
 

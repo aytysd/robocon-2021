@@ -38,6 +38,7 @@
 #include "gpio.h"
 #include "Time.hpp"
 #include "Control.hpp"
+#include "Path.hpp"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -75,6 +76,7 @@ Line* line = new Line();
 MPU6050* mpu6050 = new MPU6050();
 Time* time = new Time();
 Control* control = new Control();
+Path* path = new Path();
 /* USER CODE END 0 */
 
 /* External variables --------------------------------------------------------*/
@@ -359,6 +361,7 @@ void TIM6_DAC_IRQHandler(void)
   mpu6050 -> MPU6050_update_Gyro( &hi2c1 );
   mpu6050 -> MPU6050_update_Gyro( &hi2c3 );
   line -> MoveLine();
+  path -> movepath();
 
 
   /* USER CODE END TIM6_DAC_IRQn 1 */
