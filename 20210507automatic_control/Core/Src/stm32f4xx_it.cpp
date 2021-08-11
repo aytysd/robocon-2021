@@ -359,8 +359,8 @@ void TIM6_DAC_IRQHandler(void)
 //  gyro -> BNO055_update_gravity_direction(&hi2c3);
   self_pos -> update_self_pos();
   mpu6050 -> MPU6050_update_Gyro( &hi2c1 );
-  mpu6050 -> MPU6050_update_Gyro( &hi2c3 );
-  line -> MoveLine();
+//  mpu6050 -> MPU6050_update_Gyro( &hi2c3 );
+//  line -> MoveLine();
   path -> movepath();
 
 

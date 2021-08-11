@@ -30,6 +30,7 @@
 #include "Debug.hpp"
 #include "usart.h"
 #include "i2c.h"
+#include "float.h"
 
 double Path::Ax = 0;
 double Path::Ay = 0;
@@ -40,9 +41,10 @@ double Path::direction = 0;
 double Path::speed = 0;
 
 bool Path::arrive = false;
-bool Path::through = true;
+bool Path::through = false;
 
 E_path_status Path::judge = E_path_status::MOVING;
+
 
 void Path::path_driver( int Ax, int Ay, int Bx, int By, bool through )
 {
@@ -51,6 +53,7 @@ void Path::path_driver( int Ax, int Ay, int Bx, int By, bool through )
 	Path::Bx = Bx;
 	Path::By = By;
 	Path::through = through;
+	Path::arrive = false;
 }
 
 void Path::movepath( void )
@@ -94,20 +97,11 @@ void Path::movepath( void )
 
 	double M_B_distance = this -> get_distance( self_pos, B_pos );
 
-
-	double target_speed = M_B_distance / TIME_NEEDED;
-
-	if( target_speed >= SPEED_LIMIT )
-		target_speed = SPEED_LIMIT;
-
-
-	if( target_speed >= Path::speed )
-		Path::speed += MAX_ACCEL;
-	else
-		Path::speed = target_speed;
-
-	if( M_B_distance <= 500 )
+	if( M_B_distance <= 200 )
 	{
+
+		Path::arrive = true;
+
 		if( Path::through == true )
 		{
 			Path::speed = 500;
@@ -130,11 +124,30 @@ void Path::movepath( void )
 
 	}
 
-	Path::direction = atan ( target.Y / target.X );
-	Path::direction = 180 * ( Path::direction / M_PI );
 
-	switch( this -> where_target_is( target.X, target.Y ) )
+	if( Path::arrive != true )
 	{
+
+		double target_speed = M_B_distance / TIME_NEEDED;
+
+		if( target_speed >= SPEED_LIMIT )
+			target_speed = SPEED_LIMIT;
+
+
+		if( target_speed > Path::speed )
+			Path::speed += MAX_ACCEL;
+		else
+			Path::speed = target_speed;
+
+
+		if( target.X == 0 )
+			target.X = 0.1;
+
+		Path::direction = atan( target.Y / target.X );
+		Path::direction = 180 * ( Path::direction / M_PI );
+
+		switch( this -> where_target_is( target.X, target.Y ) )
+		{
 		case 1:
 		case 4:
 			break;
@@ -143,18 +156,23 @@ void Path::movepath( void )
 			Path::direction += 180;
 			break;
 
+		}
+
+
+		target.X += self_pos.X;
+		target.Y += self_pos.Y;
+
+
+		pwm -> V_output( Path::speed, Path::direction, 0, gyro -> get_direction( &hi2c1 ), E_move_status::MOVE );
+
+		Path::judge = E_path_status::MOVING;
+
+		Debug::TTO_val( ( int )target.X, "X:", &huart2 );
+		Debug::TTO_val( ( int )target.Y, "Y:", &huart2 );
+		Debug::TTO_val( ( int )Path::direction, "direction:", &huart2 );
+		Debug::TTO_val( ( uint16_t )Path::speed, "speed:", &huart2 );
+
 	}
-
-
-	target.X += self_pos.X;
-	target.Y += self_pos.Y;
-
-	pwm -> V_output( Path::speed, Path::direction, 0, gyro -> get_direction( &hi2c1 ), E_move_status::MOVE );
-
-	Debug::TTO_val( ( int )target.X, "X:", &huart2 );
-	Debug::TTO_val( ( int )target.Y, "Y:", &huart2 );
-	Debug::TTO_val( ( int )Path::direction, "direction:", &huart2 );
-	Debug::TTO_val( ( uint16_t )Path::speed, "speed:", &huart2 );
 
 	delete gyro;
 	delete pwm;
@@ -163,6 +181,11 @@ void Path::movepath( void )
 double Path::calc_t( vector A, vector B )
 {
     double t;
+
+    if( B.X == A.X )
+    	A.X += 1;
+    if( B.Y == A.Y )
+    	A.Y += 1;
 
     double upper = ( A.Y / ( A.X - B.X ) ) - ( A.X / ( B.Y - A.Y ) );
     double lower = ( ( B.X - A.X ) / ( B.Y - A.Y ) ) - ( ( B.Y - A.Y ) / ( A.X - B.X ) );
