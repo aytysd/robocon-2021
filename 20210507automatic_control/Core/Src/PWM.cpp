@@ -68,7 +68,6 @@ void PWM::V_output(uint16_t V, uint16_t fai, int16_t rotation_speed, uint16_t at
 		function -> drive_motor(2, 3, 0, false, false);
 		function -> drive_motor(3, 3, 0, false, false);
 		function -> drive_motor(4, 3, 0, false, false);
-		function -> drive_motor(5, 3, 0, false, false);
 
 		delete function;
 
@@ -81,51 +80,36 @@ bool PWM::rotate(uint16_t V, uint16_t target_angle)
 
 	MPU6050* gyro = new MPU6050();
 
-	if( target_angle != gyro -> get_direction( &hi2c1 ) )
+	if( !( abs(  target_angle - ( uint16_t )gyro -> get_direction( &hi2c1 ) ) < 3 ) )
 	{
 
 		int16_t diff = target_angle - gyro -> get_direction( &hi2c1 );
+		while( diff < 0 )
+			diff += 360;
 
-		if( target_angle > gyro -> get_direction( &hi2c1 ) )
+		if( diff >= 180 )
 		{
-			if( abs(diff) <= 180 )
-			{
-				this -> V_output(0, 0, -V, 0, E_move_status::MOVE);
-				while( target_angle != gyro -> get_direction( &hi2c1 ) ){}
-				this -> V_output(0, 0, 0, 0, E_move_status::STOP);
-
-			}
-			else
-			{
-				this -> V_output(0, 0, V, 0, E_move_status::MOVE);
-				Debug::time_calc( &huart2 );
-				while( target_angle != gyro -> get_direction( &hi2c1 ) ){}
-				Debug::time_calc( &huart2 );
-				this -> V_output(0, 0, 0, 0, E_move_status::STOP);
-
-			}
+			this -> V_output(0, 0, V, 0, E_move_status::MOVE);
+			Debug::TTO_val(0, "180 to 360:", &huart2 );
+			Debug::time_calc( &huart2 );
+			while( !( abs(  target_angle - ( uint16_t )gyro -> get_direction( &hi2c1 ) ) < 1 ) );
+			Debug::time_calc( &huart2 );
+			this -> V_output(0, 0, 0, 0, E_move_status::STOP);
 
 		}
 		else
 		{
-
-			if( abs(diff) <= 180 )
-			{
-				this -> V_output(0, 0, V, 0, E_move_status::MOVE);
-				while( target_angle != gyro -> get_direction( &hi2c1 ) ){}
-				this -> V_output(0, 0, 0, 0, E_move_status::STOP);
-
-			}
-			else
-			{
-				this -> V_output(0, 0, -V, 0, E_move_status::MOVE);
-				while( target_angle != gyro -> get_direction( &hi2c1 ) ){}
-				this -> V_output(0, 0, 0, 0, E_move_status::STOP);
-
-			}
+			this -> V_output(0, 0, -V, 0, E_move_status::MOVE);
+			Debug::TTO_val(0, "0 to 180:", &huart2 );
+			Debug::time_calc( &huart2 );
+			while( !( abs(  target_angle - ( uint16_t )gyro -> get_direction( &hi2c1 ) ) < 1 ) ){}
+			Debug::time_calc( &huart2 );
+			this -> V_output(0, 0, 0, 0, E_move_status::STOP);
 
 		}
+
 	}
+
 
 	delete gyro;
 	return true;

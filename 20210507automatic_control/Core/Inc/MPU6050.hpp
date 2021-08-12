@@ -30,7 +30,7 @@
 const uint16_t i2c_timeout = 100;
 const double Accel_Z_corrector = 14418.0;
 
-
+#define IT_PERIOD 0.1
 
 class MPU6050
 {
