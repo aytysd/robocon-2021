@@ -1,5 +1,5 @@
 gthr-default.h:229:1:int __gthread_key_delete(__gthread_key_t)	16	static
 MPU6050.cpp:31:6:bool MPU6050::MPU6050_Init(I2C_HandleTypeDef*)	40	static
 MPU6050.cpp:66:6:void MPU6050::MPU6050_update_Gyro(I2C_HandleTypeDef*)	56	static
-MPU6050.cpp:97:8:double MPU6050::get_direction(I2C_HandleTypeDef*)	16	static
-MPU6050.cpp:120:6:void MPU6050::set_initial_direction(E_robot_name)	16	static
+MPU6050.cpp:98:8:double MPU6050::get_direction(I2C_HandleTypeDef*)	16	static
+MPU6050.cpp:121:6:void MPU6050::set_initial_direction(E_robot_name)	16	static

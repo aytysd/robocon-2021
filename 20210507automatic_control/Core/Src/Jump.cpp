@@ -31,55 +31,12 @@ bool Jump::PE_1 = false;
 bool Jump::PE_2 = false;
 bool Jump::PE_3 = false;
 
-void Jump::identify()
-{
-	uint8_t count = 0;
-
-}
 
 E_move_status Jump::get_status()
 {
 	return this -> status;
 }
 
-void Jump::calc_fly_distance()
-{
-	Self_Pos* self_pos = new Self_Pos();
-
-	uint32_t start_time = HAL_GetTick();
-	while( this -> get_status() == E_move_status::JUMPING );
-	uint32_t end_time = HAL_GetTick();
-
-	int distance = this -> jump_speed * ( end_time - start_time ) / 1000;
-
-	int add_y = ( distance / sqrt( pow( this -> x_y_prop, 2 ) + 1 ) );
-	int add_x = add_y * this -> x_y_prop;
-
-	self_pos -> add_Self_Pos( add_x, add_y );
-
-	this -> x_y_prop = 0;
-	this -> jump_speed = 0;
-	delete self_pos;
-}
-
-void Jump::pre_calc()
-{
-	Self_Pos* self_pos = new Self_Pos();
-
-	int prev_x = self_pos -> get_Self_Pos_X();
-	int prev_y = self_pos -> get_Self_Pos_Y();
-
-	HAL_Delay(100);
-
-	int current_x = self_pos -> get_Self_Pos_X();
-	int current_y = self_pos -> get_Self_Pos_Y();
-
-	this -> jump_speed = sqrt( pow( ( current_x - prev_x ), 2 ) + pow( ( current_y - prev_y ), 2 ) ) / DT;
-
-	this -> x_y_prop = ( current_x - prev_x ) / ( current_y - prev_y );
-
-	delete self_pos;
-}
 
 void Jump::Jumping_PE_Sensor(void)
 {
@@ -93,6 +50,19 @@ void Jump::Jumping_PE_Sensor(void)
 
 void Jump::Jumping_Rope(void)
 {
+
+}
+
+void Jump::jump( void )
+{
+	HAL_GPIO_WritePin( GPIOC, GPIO_PIN_1, GPIO_PIN_SET );
+	HAL_GPIO_WritePin( GPIOA, GPIO_PIN_12, GPIO_PIN_RESET );
+
+	while( HAL_GPIO_ReadPin( GPIOB, GPIO_PIN_12 ) == GPIO_PIN_SET );
+
+	HAL_GPIO_WritePin( GPIOC, GPIO_PIN_1, GPIO_PIN_SET );
+	HAL_GPIO_WritePin( GPIOA, GPIO_PIN_12, GPIO_PIN_SET );
+
 
 }
 

@@ -23,9 +23,11 @@
 #include "Rope.hpp"
 #include "main.h"
 
+/*
 bool CW_run = false;
 bool force_stop = false;
 int last_encoder_pos = 0;
+*/
 
 /*
 void Controller::NOP(void)

@@ -87,7 +87,7 @@ void MPU6050::MPU6050_update_Gyro(I2C_HandleTypeDef *I2Cx )
     }
     else if( I2Cx == &hi2c3 )
     {
-        buff = Gyro_Z_RAW + 16.4;
+        buff = Gyro_Z_RAW - 2.7915;
         this -> table_direction += IT_PERIOD * buff / 16.4;
 
     }

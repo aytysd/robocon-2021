@@ -26,7 +26,7 @@ class Jump
 {
 public:
 
-	void identify(void);
+	void jump( void );
 	E_move_status get_status(void);
 	void Jumping_PE_Sensor(void);
 	void Jumping_Rope(void);
@@ -34,11 +34,6 @@ public:
 	static bool PE_2; //PC13
 	static bool PE_3; //PA4
 private:
-
-	void pre_calc(void);
-	void calc_fly_distance(void);
-	uint16_t jump_speed = 0;
-	double x_y_prop = 0;
 
 	static E_move_status status;
 };

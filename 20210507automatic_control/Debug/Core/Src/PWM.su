@@ -1,8 +1,8 @@
 std_abs.h:71:3:constexpr double std::abs(double)	16	static
 gthr-default.h:229:1:int __gthread_key_delete(__gthread_key_t)	16	static
 PWM.cpp:35:6:void PWM::V_output(uint16_t, uint16_t, int16_t, uint16_t, E_move_status)	104	static
-PWM.cpp:79:6:bool PWM::rotate(uint16_t, uint16_t)	48	static
-PWM.cpp:137:9:uint8_t PWM::plus_minus(double)	24	static
-PWM.cpp:143:1:void __static_initialization_and_destruction_0(int, int)	16	static
-PWM.cpp:143:1:cpp)	8	static
-PWM.cpp:143:1:cpp)	8	static
+PWM.cpp:78:6:bool PWM::rotate(uint16_t, uint16_t)	96	static
+PWM.cpp:121:9:uint8_t PWM::plus_minus(double)	24	static
+PWM.cpp:127:1:void __static_initialization_and_destruction_0(int, int)	16	static
+PWM.cpp:127:1:cpp)	8	static
+PWM.cpp:127:1:cpp)	8	static
