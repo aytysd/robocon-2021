@@ -32,8 +32,6 @@
 #define OD_RADIUS 28.2
 #define DT 0.1
 #define POLE_DISTANCE 2000 //( 3000 , 1000) & ( 3000 , -1000 ) / ( -3000, 1000 ) & ( -3000 , -1000 )
-#define POLE_RIGHT 1
-#define POLE_LEFT 2
 
 #include <General_command.hpp>
 #include "main.h"
@@ -56,7 +54,7 @@ public:
 #ifdef M_Self_Pos
 	void Self_Pos_correction( int pos_x);
 #else
-	void Self_Pos_correction( int POLE_POSITION );
+	void Self_Pos_correction( void );
 #endif
 
 	static int Self_Pos_PE[2];

@@ -63,7 +63,6 @@ void Self_Pos::set_initial_pos(E_robot_name robot)
 
 		this->Self_Pos_X = -2643;
 		this->Self_Pos_Y = 2643;
-
 		break;
 	case E_robot_name::B:
 
@@ -415,7 +414,7 @@ void Self_Pos::Spin(int goal_angle, bool scan) {
 }
 #else
 
-void Self_Pos::Self_Pos_correction( int POLE_POSITION )
+void Self_Pos::Self_Pos_correction( void )
 {
 	Function* function = new Function();
 	Gyro* gyro = new Gyro();
@@ -424,10 +423,6 @@ void Self_Pos::Self_Pos_correction( int POLE_POSITION )
 	while( ( Self_Pos::Self_Pos_PE[0] == 0 ) && ( Self_Pos::Self_Pos_PE[1] == 0 ) ){}
 	function -> drive_motor( 6, BRAKE, 0, false, false );
 	double angle_1 = gyro -> get_direction( &hi2c3 );
-	if( angle_1 > 180 )
-	{
-		angle_1 -= 360;
-	}
 	Self_Pos::Self_Pos_PE[0] = 0;
 	Self_Pos::Self_Pos_PE[1] = 1;
 
@@ -435,29 +430,56 @@ void Self_Pos::Self_Pos_correction( int POLE_POSITION )
 	while( ( Self_Pos::Self_Pos_PE[0] == 0 ) && (Self_Pos::Self_Pos_PE[1] == 0 ) ){}
 	function -> drive_motor( 6, BRAKE, 0, false, false );
 	double angle_2 = gyro -> get_direction( &hi2c3 );
-	if( angle_2 < 180 )
-	{
-		angle_2 -= 360;
-	}
 	Self_Pos::Self_Pos_PE[0] = 0;
 	Self_Pos::Self_Pos_PE[1] = 0;
 
-	double Pole_angle = (angle_2) - (angle_1);
-	if( Pole_angle == 0 )
+	double Pole_angle = angle_2 - angle_1;
+	if( Pole_angle < 0 )
 	{
-		Pole_angle = 1;
+		angle_1 = angle_2;
+		angle_2 = angle_1 - Pole_angle;
 	}
-	double Pole_Robot_distance = ( POLE_DISTANCE * sin( double( 90 - angle_2 ) ) ) / sin( Pole_angle );
+	Pole_angle = angle_2 - angle_1;
+	if( sin( Pole_angle ) == 0 )
+	{
+		Pole_angle = 180;
+	}
 
-	if( POLE_POSITION == 1 )
+	double Pole_Robot_distance;
+	double X;
+	double Y;
+
+	if( ( angle_1 < 90 ) || ( angle_1 > 270 ) )
 	{
-		this -> Self_Pos_X = 3000 - uint8_t( Pole_Robot_distance * cos( angle_1 ) );
-		this -> Self_Pos_Y = -1000 - uint8_t( Pole_Robot_distance * sin( angle_2 ) );
+		if( ( angle_2 > 0 ) && ( angle_2 < 90 ) )
+		{
+			Pole_Robot_distance = ( POLE_DISTANCE * sin( double( 90 - angle_2 ) ) ) / sin( Pole_angle );
+		}
+		else if( ( angle_2 > 270 ) && ( angle_2 < 360 ) )
+		{
+			Pole_Robot_distance = ( POLE_DISTANCE * sin( double( 450 - angle_2 ) ) ) / sin( Pole_angle );
+		}
+
+		X = Pole_Robot_distance * cos( angle_1 );
+		Y =  Pole_Robot_distance * sin( angle_1 );
+		this -> Self_Pos_X = 3000 - ( uint8_t )X;
+		this -> Self_Pos_Y = -1000 - ( uint8_t )Y;
 	}
-	else if( POLE_POSITION == 2 )
+	else if( ( angle_1 > 90 ) && ( angle_1 < 270 ) )
 	{
-		this -> Self_Pos_X = -3000 - uint8_t( Pole_Robot_distance * cos( angle_1 ) );
-		this -> Self_Pos_Y = 1000 - uint8_t( Pole_Robot_distance * cos( angle_2 ) );
+		if( ( angle_2 > 90 ) && ( angle_2 < 180 ) )
+		{
+			Pole_Robot_distance = ( POLE_DISTANCE * sin( double( 270 - angle_2 ) ) ) / sin( Pole_angle );
+		}
+		else if( ( angle_2 > 180 ) && ( angle_2 < 270 ) )
+		{
+			Pole_Robot_distance = ( POLE_DISTANCE * sin( double( 270 - angle_2 ) ) ) / sin( Pole_angle );
+		}
+
+		X = Pole_Robot_distance * cos( angle_1 );
+		Y = Pole_Robot_distance * sin( angle_2 );
+		this -> Self_Pos_X = -3000 - ( uint8_t )X;
+		this -> Self_Pos_Y = 1000 - ( uint8_t )Y;
 	}
 
 	delete function;

@@ -55,6 +55,8 @@ private:
 	double devY;
 	long double devTG;
 	long double TG_r;
+	long double Line_r;
+	long double dev_r;
 	uint16_t now_r;
 	uint16_t TG_v;
 
