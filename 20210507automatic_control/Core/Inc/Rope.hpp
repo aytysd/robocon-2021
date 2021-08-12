@@ -26,12 +26,15 @@ public:
 	static int over_flow_cnt_4;
 	static int over_flow_cnt_5;
 
-	int encoder_read_5();
+	int encoder_read_3();
 
 private:
 
-	int encoder_read_3();
 	int encoder_read_4();
+	int encoder_read_5();
+
+	void stop_rope();
+	void rotate_rope();
 
 };
 
