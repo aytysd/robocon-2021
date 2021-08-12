@@ -65,10 +65,10 @@ double Line::TGdistance(int x, int y, int tgX, int tgY)
 
 void Line::MoveLine(void)
 {
-	int befX = Line::AftX;
-	int befY = Line::AftY;
-	int tgX = Line::BefX;
-	int tgY = Line::BefY;
+	int befX = Line::BefX;
+	int befY = Line::BefY;
+	int tgX = Line::AftX;
+	int tgY = Line::AftY;
 	bool through = Line::through;
 
 	this -> set(befX, befY, tgX, tgY);
@@ -114,6 +114,44 @@ void Line::MoveLine(void)
 			TG_r = TG_r - 360;
 		}
 	}
+
+	if(( befX == tgX ) && ( befY < tgY ))
+	{
+		TG_r = 90;
+	}
+	else if(( befX == tgX ) && ( befY > tgY ))
+	{
+		TG_r = 270;
+	}
+	else
+	{
+		if( ( tgX - befX ) == 0 )
+		{
+			tgX = 1;
+		}
+		this -> Line_r = atan(((long double)( tgY - befY ) / (long double)( tgX - befX )));
+		this -> Line_r = ((long double)Line_r * (long double)180) / M_PI;
+		if( tgX < befX )
+		{
+			Line_r = Line_r + 180;
+		}
+		else if(this -> Line_r < 0)
+		{
+			Line_r = Line_r + 360;
+		}
+		else if(this -> Line_r >= 360)
+		{
+			Line_r = Line_r - 360;
+		}
+	}
+
+	dev_r = Line_r - TG_r ;
+	if( ( 270 < dev_r ) && ( dev_r < 360 ) )
+	{
+		dev_r = dev_r - 360;
+	}
+	dev_r *= (long double)0.5;
+	TG_r = TG_r - dev_r;
 
 	MPU6050* gyro = new MPU6050();
 	this -> now_r = (double)gyro -> get_direction( &hi2c1 );
