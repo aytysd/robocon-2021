@@ -80,14 +80,15 @@ void MPU6050::MPU6050_update_Gyro(I2C_HandleTypeDef *I2Cx )
 
     if( I2Cx == &hi2c1 )
     {
-        buff = Gyro_Z_RAW + 16.4;
-        this -> robot_direction += 0.01 * buff / 16.4;
+        buff = Gyro_Z_RAW - 2.7915;
+        this -> robot_direction += IT_PERIOD * buff / 16.4;
+//        Debug::TTO_val( ( uint16_t )this -> robot_direction, "gyro:", &huart2 );
 
     }
     else if( I2Cx == &hi2c3 )
     {
         buff = Gyro_Z_RAW + 16.4;
-        this -> table_direction += 0.01 * buff / 16.4;
+        this -> table_direction += IT_PERIOD * buff / 16.4;
 
     }
 

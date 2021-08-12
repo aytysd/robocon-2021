@@ -29,7 +29,7 @@
 #ifndef INC_SELF_POS_HPP_
 #define INC_SELF_POS_HPP_
 
-#define OD_RADIUS 28.5
+#define OD_RADIUS 28.2
 #define DT 0.1
 #define POLE_DISTANCE 2000 //( 3000 , 1000) & ( 3000 , -1000 ) / ( -3000, 1000 ) & ( -3000 , -1000 )
 #define POLE_RIGHT 1

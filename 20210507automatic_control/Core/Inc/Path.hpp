@@ -25,7 +25,7 @@
 #define SPEED_LIMIT 700
 #define MIN_SPEED 500
 #define TIME_NEEDED 1
-#define MAX_ACCEL 5
+#define MAX_ACCEL 50
 
 
 typedef struct

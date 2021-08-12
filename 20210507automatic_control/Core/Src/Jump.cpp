@@ -35,24 +35,6 @@ void Jump::identify()
 {
 	uint8_t count = 0;
 
-	if( GPIO_PIN_RESET == HAL_GPIO_ReadPin(Under_SW_V1_2_GPIO_Port, Under_SW_V1_2_Pin ))
-	{
-		count++;
-	}
-	if( GPIO_PIN_RESET == HAL_GPIO_ReadPin(Under_SW_V3_4_GPIO_Port, Under_SW_V3_4_Pin ))
-	{
-		count++;
-	}
-
-	if( count >= 3 )
-	{
-		this -> status = E_move_status::LANDING;
-	}
-	else
-	{
-		this -> status = E_move_status::JUMPING;
-	}
-
 }
 
 E_move_status Jump::get_status()
