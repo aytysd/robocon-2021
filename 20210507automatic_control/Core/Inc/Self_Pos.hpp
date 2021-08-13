@@ -66,9 +66,10 @@ private:
 	void Spin(int goal_angle , bool scan );
 	int calc_diff( int prev_x, int prev_y, int current_x, int current_y );
 
+	double rad(double deg);
+
 	static int16_t Self_Pos_X;
 	static int16_t Self_Pos_Y;
-
 
 };
 
