@@ -186,9 +186,9 @@ void Line::MoveLine(void)
 
 
 	this -> TG_v = this -> devTG * 0.2;
-	if(this -> TG_v > 500)
+	if(this -> TG_v > 600)
 	{
-		this -> TG_v = 1000;
+		this -> TG_v = 600;
 	}
 	else if( this -> TG_v < 500 )
 	{
@@ -209,11 +209,12 @@ void Line::MoveLine(void)
 //		{
 //			this -> TG_v = 500;
 //		}
-		if( this -> TG_v > 200 )
+		this -> TG_v += 400;
+		if( this -> TG_v > 600 )
 		{
 			this  -> TG_v = 600;
 		}
-		else
+		else if( this -> TG_v < 500 )
 		{
 			this -> TG_v = 500;
 		}
