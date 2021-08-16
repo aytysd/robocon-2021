@@ -150,7 +150,7 @@ void Line::MoveLine(void)
 	{
 		dev_r = dev_r - 360;
 	}
-	dev_r *= (long double)0.5;
+	dev_r *= (long double)0.3;
 	TG_r = TG_r - dev_r;
 
 	MPU6050* gyro = new MPU6050();
@@ -186,22 +186,34 @@ void Line::MoveLine(void)
 
 
 	this -> TG_v = this -> devTG * 0.2;
-	if(this -> TG_v > 1000)
+	if(this -> TG_v > 500)
 	{
 		this -> TG_v = 1000;
+	}
+	else if( this -> TG_v < 500 )
+	{
+		this -> TG_v = 500;
 	}
   
 	if(through == true)
 	{
-		if(this -> devTG > 1500)
+//		if(this -> devTG > 1500)
+//		{
+//			this -> TG_v = 1000;
+//		}
+//		else if((this -> devTG > 1000) && (this -> devTG < 1500))
+//		{
+//			this -> TG_v = 750;
+//		}
+//		else if(this -> devTG < 1000)
+//		{
+//			this -> TG_v = 500;
+//		}
+		if( this -> TG_v > 200 )
 		{
-			this -> TG_v = 1000;
+			this  -> TG_v = 600;
 		}
-		else if((this -> devTG > 1000) && (this -> devTG < 1500))
-		{
-			this -> TG_v = 750;
-		}
-		else if(this -> devTG < 1000)
+		else
 		{
 			this -> TG_v = 500;
 		}
