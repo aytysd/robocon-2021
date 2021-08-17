@@ -280,7 +280,7 @@ void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
     PA9     ------> USART1_TX
     PA10     ------> USART1_RX
     */
-    GPIO_InitStruct.Pin = PC_TX_Pin|PC_RX_Pin;
+    GPIO_InitStruct.Pin = A_TX_Pin|A_RX_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
@@ -332,19 +332,19 @@ void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
     PC5     ------> USART3_RX
     PB10     ------> USART3_TX
     */
-    GPIO_InitStruct.Pin = A_RX_Pin;
+    GPIO_InitStruct.Pin = C_RX_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
     GPIO_InitStruct.Alternate = GPIO_AF7_USART3;
-    HAL_GPIO_Init(A_RX_GPIO_Port, &GPIO_InitStruct);
+    HAL_GPIO_Init(C_RX_GPIO_Port, &GPIO_InitStruct);
 
-    GPIO_InitStruct.Pin = A_TX_Pin;
+    GPIO_InitStruct.Pin = C_TX_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
     GPIO_InitStruct.Alternate = GPIO_AF7_USART3;
-    HAL_GPIO_Init(A_TX_GPIO_Port, &GPIO_InitStruct);
+    HAL_GPIO_Init(C_TX_GPIO_Port, &GPIO_InitStruct);
 
     /* USART3 interrupt Init */
     HAL_NVIC_SetPriority(USART3_IRQn, 1, 0);
@@ -434,7 +434,7 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle)
     PA9     ------> USART1_TX
     PA10     ------> USART1_RX
     */
-    HAL_GPIO_DeInit(GPIOA, PC_TX_Pin|PC_RX_Pin);
+    HAL_GPIO_DeInit(GPIOA, A_TX_Pin|A_RX_Pin);
 
     /* USART1 interrupt Deinit */
     HAL_NVIC_DisableIRQ(USART1_IRQn);
@@ -472,9 +472,9 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle)
     PC5     ------> USART3_RX
     PB10     ------> USART3_TX
     */
-    HAL_GPIO_DeInit(A_RX_GPIO_Port, A_RX_Pin);
+    HAL_GPIO_DeInit(C_RX_GPIO_Port, C_RX_Pin);
 
-    HAL_GPIO_DeInit(A_TX_GPIO_Port, A_TX_Pin);
+    HAL_GPIO_DeInit(C_TX_GPIO_Port, C_TX_Pin);
 
     /* USART3 interrupt Deinit */
     HAL_NVIC_DisableIRQ(USART3_IRQn);
