@@ -117,11 +117,11 @@ void Line::MoveLine(void)
 
 	if(( befX == tgX ) && ( befY < tgY ))
 	{
-		TG_r = 90;
+		Line_r = 90;
 	}
 	else if(( befX == tgX ) && ( befY > tgY ))
 	{
-		TG_r = 270;
+		Line_r = 270;
 	}
 	else
 	{
