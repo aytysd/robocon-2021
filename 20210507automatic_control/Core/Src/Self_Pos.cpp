@@ -100,8 +100,8 @@ void Self_Pos::update_self_pos(void)
 	{
 	case E_robot_name::A:
 	case E_robot_name::B:
-		d1 = 2 * 20 * M_PI * ( ( double )this -> encoder_read_2() / ( double ) 2048 ); //encoder5_moving distance(mm) 55.5=wheel radius 2048=encoder resolution
-		d2 = -2 * 20 * M_PI * ( ( double )this -> encoder_read_5() / ( double ) 8192 ); //encoder5_moving distance(mm) 55.5=wheel radius 2048=encoder resolution
+		d1 = 2 * 24 * M_PI * ( ( double )this -> encoder_read_2() / ( double ) 4096 ); //encoder5_moving distance(mm) 55.5=wheel radius 2048=encoder resolution
+		d2 = -2 * 24 * M_PI * ( ( double )this -> encoder_read_5() / ( double ) 8192 ); //encoder5_moving distance(mm) 55.5=wheel radius 2048=encoder resolution
 		break;
 	case E_robot_name::C:
 		d1 = -2 * 20.7 * M_PI * ( ( double )this -> encoder_read_5() / ( double ) 2048 ); //encoder5_moving distance(mm) 55.5=wheel radius 2048=encoder resolution
