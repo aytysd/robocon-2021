@@ -93,15 +93,25 @@ void Self_Pos::update_self_pos(void)
 {
 	MPU6050* gyro = new MPU6050();
 
-	int d1 = 2 * OD_RADIUS * M_PI * ( ( double )this -> encoder_read_2() / ( double ) OD_PPR ); //encoder5_moving distance(mm) 55.5=wheel radius 2048=encoder resolution
-	int d2 = -2 * OD_RADIUS * M_PI * ( ( double )this -> encoder_read_5() / ( double ) OD_PPR ); //encoder5_moving distance(mm) 55.5=wheel radius 2048=encoder resolution
+	int d1;
+	int d2;
 
+	switch( ROBOT )
+	{
+	case E_robot_name::A:
+	case E_robot_name::B:
+		d1 = 2 * 20 * M_PI * ( ( double )this -> encoder_read_2() / ( double ) 2048 ); //encoder5_moving distance(mm) 55.5=wheel radius 2048=encoder resolution
+		d2 = -2 * 20 * M_PI * ( ( double )this -> encoder_read_5() / ( double ) 8192 ); //encoder5_moving distance(mm) 55.5=wheel radius 2048=encoder resolution
+		break;
+	case E_robot_name::C:
+		d1 = -2 * 20.7 * M_PI * ( ( double )this -> encoder_read_5() / ( double ) 2048 ); //encoder5_moving distance(mm) 55.5=wheel radius 2048=encoder resolution
+		d2 = 2 * 20.7 * M_PI * ( ( double )this -> encoder_read_2() / ( double ) 2048 ); //encoder5_moving distance(mm) 55.5=wheel radius 2048=encoder resolution
+		break;
+	default:
+		break;
 
-/*
-	int d1 = -2 * OD_RADIUS * M_PI * ( ( double )this -> encoder_read_5() / ( double ) OD_PPR ); //encoder5_moving distance(mm) 55.5=wheel radius 2048=encoder resolution
-	int d2 = 2 * OD_RADIUS * M_PI * ( ( double )this -> encoder_read_2() / ( double ) OD_PPR ); //encoder5_moving distance(mm) 55.5=wheel radius 2048=encoder resolution
+	}
 
-*/
 	this -> Self_Pos_X += d1 * cos( gyro -> get_direction( &hi2c1 ) * M_PI / ( double ) 180 ) - d2 * sin( gyro -> get_direction( &hi2c1 ) * M_PI / ( double ) 180 ); //X_coordinate
 	this -> Self_Pos_Y += d1 * sin( gyro -> get_direction( &hi2c1 ) * M_PI / ( double ) 180 ) + d2 * cos( gyro -> get_direction( &hi2c1 ) * M_PI / ( double ) 180 ); //Y_coordinate
 

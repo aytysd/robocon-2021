@@ -187,6 +187,8 @@ int main(void)
   Init_Move* init_move = new Init_Move();
   Control* control = new Control();
   Path* path = new Path();
+  MPU6050* mpu6050 = new MPU6050();
+  Self_Pos* self_pos = new Self_Pos();
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -224,14 +226,26 @@ int main(void)
   MX_ADC1_Init();
   MX_ADC2_Init();
   /* USER CODE BEGIN 2 */
-  init_move -> init_move( ROBOT );
+//  init_move -> init_move( ROBOT );
+  HAL_TIM_Base_Start_IT( &htim6 );
+  while( mpu6050 -> MPU6050_Init( &hi2c1 ) == true );
+  HAL_TIM_Encoder_Start( &htim5, TIM_CHANNEL_ALL );
+  HAL_TIM_Encoder_Start( &htim2, TIM_CHANNEL_ALL );
+
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+	  Debug::TTO_val( TIM5 -> CNT, "TIM5:", &huart2 );
+	  Debug::TTO_val( TIM2 -> CNT, "TIM2:", &huart2 );
 
+	  Debug::TTO_val( self_pos -> get_Self_Pos_X(), "X:", &huart2 );
+	  Debug::TTO_val( self_pos -> get_Self_Pos_Y(), "Y:", &huart2 );
+	  HAL_Delay( 100 );
+/*
 	  if( ROBOT == E_robot_name::A )
 		  control -> control_A();
 	  else if( ROBOT == E_robot_name::B )
@@ -241,6 +255,7 @@ int main(void)
 
 
 	  control -> reset_data();
+*/
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
