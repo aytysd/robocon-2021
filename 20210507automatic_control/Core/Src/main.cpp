@@ -90,11 +90,18 @@ void HAL_UART_RxCpltCallback( UART_HandleTypeDef* UartHandle )
 		controller -> identify();
 		delete controller;
 */
-
+		//a or c PSP
 		HAL_UART_Receive_IT( &huart4, ( uint8_t* )B_Rxdata_buff, sizeof( B_Rxdata_buff ) );
 
+		if( B_Rxdata_buff[ 0 ] == ( uint8_t )E_data_type::B_pos )
+		{
+			Control* control = new Control();
+//			control -> decode_self_pos( &Follow::A_pos_x, &Follow::A_pos_y, A_Rxdata_buff );
+			delete control;
+		}
+
 		// C PSP
-		if( B_Rxdata_buff[ 0 ] == ( uint8_t )E_data_type::done )
+		else if( B_Rxdata_buff[ 0 ] == ( uint8_t )E_data_type::done )
 			Control::B_done_flag = true;
 
 
@@ -104,7 +111,7 @@ void HAL_UART_RxCpltCallback( UART_HandleTypeDef* UartHandle )
 	{
 		HAL_UART_Receive_IT(&huart1, (uint8_t*)A_Rxdata_buff, sizeof( A_Rxdata_buff ) );
 
-		//B PSP
+		//B or C PSP
 		if( A_Rxdata_buff[ 0 ] == ( uint8_t )E_data_type::A_pos )
 		{
 			Control* control = new Control();
@@ -186,7 +193,6 @@ int main(void)
   /* USER CODE BEGIN 1 */
   Init_Move* init_move = new Init_Move();
   Control* control = new Control();
-  Path* path = new Path();
   MPU6050* mpu6050 = new MPU6050();
   Self_Pos* self_pos = new Self_Pos();
   /* USER CODE END 1 */
@@ -226,26 +232,14 @@ int main(void)
   MX_ADC1_Init();
   MX_ADC2_Init();
   /* USER CODE BEGIN 2 */
-//  init_move -> init_move( ROBOT );
-  HAL_TIM_Base_Start_IT( &htim6 );
-  while( mpu6050 -> MPU6050_Init( &hi2c1 ) == true );
-  HAL_TIM_Encoder_Start( &htim5, TIM_CHANNEL_ALL );
-  HAL_TIM_Encoder_Start( &htim2, TIM_CHANNEL_ALL );
-
-
+  init_move -> init_move( ROBOT );
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  Debug::TTO_val( TIM5 -> CNT, "TIM5:", &huart2 );
-	  Debug::TTO_val( TIM2 -> CNT, "TIM2:", &huart2 );
 
-	  Debug::TTO_val( self_pos -> get_Self_Pos_X(), "X:", &huart2 );
-	  Debug::TTO_val( self_pos -> get_Self_Pos_Y(), "Y:", &huart2 );
-	  HAL_Delay( 100 );
-/*
 	  if( ROBOT == E_robot_name::A )
 		  control -> control_A();
 	  else if( ROBOT == E_robot_name::B )
@@ -255,7 +249,7 @@ int main(void)
 
 
 	  control -> reset_data();
-*/
+
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
