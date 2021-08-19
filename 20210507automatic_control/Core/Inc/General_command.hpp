@@ -59,6 +59,8 @@ enum class E_data_type
 	done,
 	stop,
 	A_pos,
+	B_pos,
+	C_pos,
 };
 
 #define NC 0xFE

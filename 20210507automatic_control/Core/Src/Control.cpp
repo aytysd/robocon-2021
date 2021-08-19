@@ -65,7 +65,24 @@ void Control::send_self_pos( E_robot_name robot )
 	uint8_t self_pos_y_p = ( 0b1111111100000000 & y ) >> 8;
 	uint8_t self_pos_y_q = ( 0b0000000011111111 & y );
 
-	uint8_t data[ DATASIZE ] = { ( uint8_t )E_data_type::A_pos, self_pos_x_p, self_pos_x_q, self_pos_y_p, self_pos_y_q, NC, NC, NC };
+	uint8_t data[ DATASIZE ] = { 0, self_pos_x_p, self_pos_x_q, self_pos_y_p, self_pos_y_q, NC, NC, NC };
+
+	switch( ROBOT )
+	{
+	case E_robot_name::A:
+		data[ 0 ] = ( uint8_t )E_data_type::A_pos;
+		break;
+	case E_robot_name::B:
+		data[ 0 ] = ( uint8_t )E_data_type::B_pos;
+		break;
+	case E_robot_name::C:
+		data[ 0 ] = ( uint8_t )E_data_type::C_pos;
+		break;
+	default:
+		break;
+
+	}
+
 	this -> send_command( robot, data );
 
 
