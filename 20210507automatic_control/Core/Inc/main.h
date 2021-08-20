@@ -139,9 +139,9 @@ void Error_Handler(void);
 
 #define DATASIZE 8
 
-extern uint8_t A_Rxdata_buff[ DATASIZE ];
-extern uint8_t B_Rxdata_buff[ DATASIZE ];
-extern uint8_t C_Rxdata_buff[ DATASIZE ];
+extern uint8_t A_Rxdata_buff[ 4 ];
+extern uint8_t B_Rxdata_buff[ 4 ];
+extern uint8_t C_Rxdata_buff[ 4 ];
 
 
 /* USER CODE END Private defines */

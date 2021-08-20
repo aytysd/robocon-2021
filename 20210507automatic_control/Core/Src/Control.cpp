@@ -36,16 +36,36 @@ bool Control::stop_flag = false;
 void Control::send_command( E_robot_name robot, uint8_t* data )
 {
 
+	uint8_t data_a[ 4 ];
+	uint8_t data_b[ 4 ];
+
+	for( int i = 0; i < 4; i++ )
+		data_a[ i ] = data[ i ];
+
+	for( int i = 0; i < 4; i++ )
+		data_b[ i ] = data[ i + 4 ];
+
+	data_a[ 0 ] |= ( 0x01 << 7 );
+	data_b[ 3 ] |= ( 0x01 << 7 );
+
 	switch( robot )
 	{
 	case E_robot_name::A:
-		HAL_UART_Transmit( &huart1, ( uint8_t* )data, sizeof( data ), 100 );
+		while( HAL_UART_Transmit( &huart1, ( uint8_t* )data_a, sizeof( data_a ), 100 ) != HAL_OK );
+		HAL_UART_Transmit( &huart1, ( uint8_t* )data_b, sizeof( data_b ), 100 );
+
 		break;
 	case E_robot_name::B:
-		HAL_UART_Transmit( &huart4, ( uint8_t* )data, sizeof( data ), 100 );
+		HAL_UART_Transmit( &huart4, ( uint8_t* )data_a, sizeof( data_a ), 100 );
+		HAL_UART_Transmit( &huart4, ( uint8_t* )data_b, sizeof( data_b ), 100 );
+
 		break;
 	case E_robot_name::C:
-		HAL_UART_Transmit( &huart3, ( uint8_t* )data, sizeof( data ), 100 );
+		while( HAL_UART_Transmit( &huart3, ( uint8_t* )data_a, sizeof( data_a ), 100 ) != HAL_OK );
+		while( HAL_UART_Transmit( &huart3, ( uint8_t* )data_b, sizeof( data_b ), 100 ) != HAL_OK );
+
+		break;
+	default:
 		break;
 	}
 
