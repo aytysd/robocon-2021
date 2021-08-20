@@ -66,9 +66,13 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-uint8_t A_Rxdata_buff[ DATASIZE ] = { 0, 0, 0, 0, 0, 0, 0, 0 };
-uint8_t B_Rxdata_buff[ DATASIZE ] = { 0, 0, 0, 0, 0, 0, 0, 0 };
-uint8_t C_Rxdata_buff[ DATASIZE ] = { 0, 0, 0, 0, 0, 0, 0, 0 };
+uint8_t A_Rxdata_buff[ 4 ] = { 0, 0, 0, 0 };
+uint8_t B_Rxdata_buff[ 4 ] = { 0, 0, 0, 0 };
+
+
+
+uint8_t C_Rxdata_buff[ 4 ] = { 0, 0, 0, 0 };
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -80,6 +84,16 @@ void SystemClock_Config(void);
 /* USER CODE BEGIN 0 */
 void HAL_UART_RxCpltCallback( UART_HandleTypeDef* UartHandle )
 {
+
+	static uint8_t A_data_a[ 4 ] = { 0, 0, 0, 0 };
+	static uint8_t B_data_a[ 4 ] = { 0, 0, 0, 0 };
+	static uint8_t C_data_a[ 4 ] = { 0, 0, 0, 0 };
+
+
+	uint8_t A_Rxdata[ DATASIZE ] = { 0, 0, 0, 0, 0, 0, 0, 0 };
+	uint8_t B_Rxdata[ DATASIZE ] = { 0, 0, 0, 0, 0, 0, 0, 0 };
+	uint8_t C_Rxdata[ DATASIZE ] = { 0, 0, 0, 0, 0, 0, 0, 0 };
+
 
 	if( UartHandle == &huart4 )// data from B robot
 	{
@@ -93,23 +107,72 @@ void HAL_UART_RxCpltCallback( UART_HandleTypeDef* UartHandle )
 		//a or c PSP
 		HAL_UART_Receive_IT( &huart4, ( uint8_t* )B_Rxdata_buff, sizeof( B_Rxdata_buff ) );
 
-		if( B_Rxdata_buff[ 0 ] == ( uint8_t )E_data_type::B_pos )
+
+		if( ( ( B_Rxdata_buff[ 0 ] & 0b10000000 ) >> 7 ) == true )
+		{
+			for( int i = 0; i < 4; i++ )
+				B_data_a[ i ] = B_Rxdata_buff[ i ];
+
+			B_data_a[ 0 ] -= 0b10000000;
+			return;
+
+		}
+		else if( ( ( B_Rxdata_buff[ 3 ] & 0b10000000 ) >> 7 )== true )
+		{
+
+			for( int i = 0; i < 4; i++ )
+			{
+				B_Rxdata[ i ] = B_data_a[ i ];
+				B_Rxdata[ i + 4 ] = B_Rxdata_buff[ i ];
+			}
+
+			B_Rxdata[ 7 ] -= 0b10000000;
+		}
+
+
+
+		if( B_Rxdata[ 0 ] == ( uint8_t )E_data_type::B_pos )
 		{
 			Control* control = new Control();
-//			control -> decode_self_pos( &Follow::A_pos_x, &Follow::A_pos_y, A_Rxdata_buff );
 			delete control;
 		}
 
 		// C PSP
-		else if( B_Rxdata_buff[ 0 ] == ( uint8_t )E_data_type::done )
+		else if( B_Rxdata[ 0 ] == ( uint8_t )E_data_type::done )
 			Control::B_done_flag = true;
 
 
 
+
+		for( int i = 0; i < DATASIZE; i++ )
+			Debug::TTO_val( B_Rxdata[ i ], "B_data:", &huart2 );
+
 	}
 	else if( UartHandle == &huart1 )// data from A robot
 	{
-		HAL_UART_Receive_IT(&huart1, (uint8_t*)A_Rxdata_buff, sizeof( A_Rxdata_buff ) );
+		HAL_UART_Receive_IT( &huart1, (uint8_t*)A_Rxdata_buff, sizeof( A_Rxdata_buff ) );
+
+		if( ( ( A_Rxdata_buff[ 0 ] & 0b10000000 ) >> 7 ) == true )
+		{
+			for( int i = 0; i < 4; i++ )
+				A_data_a[ i ] = A_Rxdata_buff[ i ];
+
+			A_data_a[ 0 ] -= 0b10000000;
+			return;
+
+		}
+		else if( ( ( A_Rxdata_buff[ 3 ] & 0b10000000 ) >> 7 )== true )
+		{
+
+			for( int i = 0; i < 4; i++ )
+			{
+				A_Rxdata[ i ] = A_data_a[ i ];
+				A_Rxdata[ i + 4 ] = A_Rxdata_buff[ i ];
+			}
+
+			A_Rxdata[ 7 ] -= 0b10000000;
+		}
+
 
 		//B or C PSP
 		if( A_Rxdata_buff[ 0 ] == ( uint8_t )E_data_type::A_pos )
@@ -124,6 +187,8 @@ void HAL_UART_RxCpltCallback( UART_HandleTypeDef* UartHandle )
 
 
 
+		for( int i = 0; i < DATASIZE; i++ )
+			Debug::TTO_val( A_Rxdata[ i ], "A_data:", &huart2 );
 
 
 	}
@@ -131,6 +196,27 @@ void HAL_UART_RxCpltCallback( UART_HandleTypeDef* UartHandle )
 	{
 
 		HAL_UART_Receive_IT(&huart3, (uint8_t*)C_Rxdata_buff, sizeof( C_Rxdata_buff ));
+
+		if( ( ( C_Rxdata_buff[ 0 ] & 0b10000000 ) >> 7 ) == true )
+		{
+			for( int i = 0; i < 4; i++ )
+				C_data_a[ i ] = C_Rxdata_buff[ i ];
+
+			C_data_a[ 0 ] -= 0b10000000;
+			return;
+
+		}
+		else if( ( ( C_Rxdata_buff[ 3 ] & 0b10000000 ) >> 7 )== true )
+		{
+
+			for( int i = 0; i < 4; i++ )
+			{
+				C_Rxdata[ i ] = C_data_a[ i ];
+				C_Rxdata[ i + 4 ] = C_Rxdata_buff[ i ];
+			}
+
+			C_Rxdata[ 7 ] -= 0b10000000;
+		}
 
 
 		//A and B PSP
@@ -141,16 +227,12 @@ void HAL_UART_RxCpltCallback( UART_HandleTypeDef* UartHandle )
 		else if( C_Rxdata_buff[ 0 ] == ( uint8_t )E_data_type::stop )
 			Control::stop_flag = true;
 
+		for( int i = 0; i < DATASIZE; i++ )
+			Debug::TTO_val( C_Rxdata[ i ], "C_data:", &huart2 );
 
 
 	}
 
-	for( int i = 0; i < DATASIZE; i++ )
-	{
-		A_Rxdata_buff[ i ] = 0;
-		B_Rxdata_buff[ i ] = 0;
-		C_Rxdata_buff[ i ] = 0;
-	}
 
 
 
@@ -191,7 +273,8 @@ void HAL_TIM_PeriodElapsedCallback( TIM_HandleTypeDef* htim )
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-  Init_Move* init_move = new Init_Move();
+
+	Init_Move* init_move = new Init_Move();
   Control* control = new Control();
   MPU6050* mpu6050 = new MPU6050();
   Self_Pos* self_pos = new Self_Pos();
@@ -249,6 +332,7 @@ int main(void)
 
 
 	  control -> reset_data();
+
 
     /* USER CODE END WHILE */
 
