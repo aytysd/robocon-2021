@@ -97,7 +97,7 @@ void Path::movepath( void )
 
 	double M_B_distance = this -> get_distance( self_pos, B_pos );
 
-	if( M_B_distance <= 200 )
+	if( M_B_distance <= 500 )
 	{
 
 		Path::arrive = true;

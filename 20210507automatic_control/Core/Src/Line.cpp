@@ -36,6 +36,8 @@ bool Line::through = false;
 
 uint16_t direction = 0;
 
+bool Line::Enable_line = true;
+
 void Line::set(int befX, int befY, int tgX, int tgY)
 {
 	this -> a = -(tgY - befY);
