@@ -37,7 +37,7 @@ Core/Src/Control_A.o: ../Core/Src/Control_A.cpp ../Core/Inc/Control.hpp \
  ../Core/Inc/Line.hpp ../Core/Inc/i2c.h ../Core/Inc/Infinity_command.hpp \
  ../Core/Inc/Self_Pos.hpp ../Core/Inc/ToF.hpp ../Core/Inc/Self_Pos.hpp \
  ../Core/Inc/Jump.hpp ../Core/Inc/LED.hpp ../Core/Inc/usart.h \
- ../Core/Inc/tim.h
+ ../Core/Inc/tim.h ../Core/Inc/Debug.hpp
 
 ../Core/Inc/Control.hpp:
 
@@ -136,3 +136,5 @@ Core/Src/Control_A.o: ../Core/Src/Control_A.cpp ../Core/Inc/Control.hpp \
 ../Core/Inc/usart.h:
 
 ../Core/Inc/tim.h:
+
+../Core/Inc/Debug.hpp:

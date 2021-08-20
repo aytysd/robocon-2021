@@ -1,1 +1,2 @@
+gthr-default.h:229:1:int __gthread_key_delete(__gthread_key_t)	16	static
 Control_A.cpp:37:6:void Control::control_A()	88	static

@@ -66,8 +66,6 @@ void Error_Handler(void);
 #define PE_Sensor_1_Pin GPIO_PIN_0
 #define PE_Sensor_1_GPIO_Port GPIOC
 #define PE_Sensor_1_EXTI_IRQn EXTI0_IRQn
-#define SIG1_Pin GPIO_PIN_1
-#define SIG1_GPIO_Port GPIOC
 #define LIMIT_F_V3_Pin GPIO_PIN_2
 #define LIMIT_F_V3_GPIO_Port GPIOC
 #define LIMIT_L_V3_Pin GPIO_PIN_3
@@ -112,11 +110,8 @@ void Error_Handler(void);
 #define A_TX_GPIO_Port GPIOA
 #define A_RX_Pin GPIO_PIN_10
 #define A_RX_GPIO_Port GPIOA
-#define Self_Pos_PE_2_Pin GPIO_PIN_11
-#define Self_Pos_PE_2_GPIO_Port GPIOA
-#define Self_Pos_PE_2_EXTI_IRQn EXTI15_10_IRQn
-#define SIG2_Pin GPIO_PIN_12
-#define SIG2_GPIO_Port GPIOA
+#define SIG_Pin GPIO_PIN_11
+#define SIG_GPIO_Port GPIOA
 #define Y_OD_Pin GPIO_PIN_15
 #define Y_OD_GPIO_Port GPIOA
 #define B_TX_Pin GPIO_PIN_10
