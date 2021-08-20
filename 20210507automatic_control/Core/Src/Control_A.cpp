@@ -28,7 +28,7 @@
 #include "LED.hpp"
 #include "usart.h"
 #include "tim.h"
-
+#include "Debug.hpp"
 
 
 
@@ -43,6 +43,10 @@ void Control::control_A (void)
 	{
 	case ( uint8_t )E_Flow::MOVE_INFINITY_INITIAL_POS:
 	{
+
+
+
+
 		Line* line = new Line();
 		Self_Pos* self_pos = new Self_Pos();
 		LED* led = new LED();

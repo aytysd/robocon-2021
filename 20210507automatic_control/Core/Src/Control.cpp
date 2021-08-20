@@ -39,6 +39,8 @@ void Control::send_command( E_robot_name robot, uint8_t* data )
 	uint8_t data_a[ 4 ];
 	uint8_t data_b[ 4 ];
 
+	data[ 7 ] = 0;
+
 	for( int i = 0; i < 4; i++ )
 		data_a[ i ] = data[ i ];
 
@@ -52,12 +54,12 @@ void Control::send_command( E_robot_name robot, uint8_t* data )
 	{
 	case E_robot_name::A:
 		while( HAL_UART_Transmit( &huart1, ( uint8_t* )data_a, sizeof( data_a ), 100 ) != HAL_OK );
-		HAL_UART_Transmit( &huart1, ( uint8_t* )data_b, sizeof( data_b ), 100 );
+		while( HAL_UART_Transmit( &huart1, ( uint8_t* )data_b, sizeof( data_b ), 100 ) != HAL_OK );
 
 		break;
 	case E_robot_name::B:
-		HAL_UART_Transmit( &huart4, ( uint8_t* )data_a, sizeof( data_a ), 100 );
-		HAL_UART_Transmit( &huart4, ( uint8_t* )data_b, sizeof( data_b ), 100 );
+		while( HAL_UART_Transmit( &huart4, ( uint8_t* )data_a, sizeof( data_a ), 100 ) != HAL_OK );
+		while( HAL_UART_Transmit( &huart4, ( uint8_t* )data_b, sizeof( data_b ), 100 ) != HAL_OK );
 
 		break;
 	case E_robot_name::C:
@@ -78,14 +80,13 @@ void Control::send_self_pos( E_robot_name robot )
 	int16_t x = self_pos -> get_Self_Pos_X();
 	int16_t y = self_pos -> get_Self_Pos_Y();
 
-
 	uint8_t self_pos_x_p = ( 0b1111111100000000 & x ) >> 8;
 	uint8_t self_pos_x_q = ( 0b0000000011111111 & x );
 
 	uint8_t self_pos_y_p = ( 0b1111111100000000 & y ) >> 8;
 	uint8_t self_pos_y_q = ( 0b0000000011111111 & y );
 
-	uint8_t data[ DATASIZE ] = { 0, self_pos_x_p, self_pos_x_q, self_pos_y_p, self_pos_y_q, NC, NC, NC };
+	uint8_t data[ DATASIZE ] = { 0, self_pos_x_p, self_pos_x_q, self_pos_y_p, self_pos_y_q, 0, 0, 0 };
 
 	switch( ROBOT )
 	{
