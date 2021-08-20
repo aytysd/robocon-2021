@@ -342,7 +342,7 @@ int main(void)
 		  break;
 	  }
 
-//	  control -> reset_data();
+	  control -> reset_data();
 
 
 

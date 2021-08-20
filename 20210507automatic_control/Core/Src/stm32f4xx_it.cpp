@@ -359,7 +359,10 @@ void TIM6_DAC_IRQHandler(void)
   self_pos -> update_self_pos();
   mpu6050 -> MPU6050_update_Gyro( &hi2c1 );
 //  mpu6050 -> MPU6050_update_Gyro( &hi2c3 );
-  line -> MoveLine();
+
+  if( Line::Enable_line == true )
+	  line -> MoveLine();
+
 //  path -> movepath();
 
 

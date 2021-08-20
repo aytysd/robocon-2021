@@ -28,6 +28,7 @@
 #include "Self_Pos.hpp"
 #include "Line.hpp"
 #include "math.h"
+#include "Path.hpp"
 
 
 int16_t Follow::A_pos_x = -1200;

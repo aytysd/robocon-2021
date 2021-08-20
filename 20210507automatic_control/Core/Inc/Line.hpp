@@ -74,6 +74,8 @@ public:
 	void Line_driver(int bef, int befY, int tgX, int tgY, bool through);
 	void MoveLine(void);
 	static E_Line_status judge;
+
+	static bool Enable_line;
 };
 
 

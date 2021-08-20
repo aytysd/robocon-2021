@@ -126,14 +126,4 @@ void Control::decode_self_pos( int16_t* x, int16_t* y, uint8_t* received_data )
 
 }
 
-void Control::reset_data( void )
-{
-
-	this -> stop_flag = false;
-
-	this -> A_done_flag = false;
-	this -> B_done_flag = false;
-
-	for( int i = 0; i < DATASIZE; i++ )
-		this -> command[ i ] = 0;
-}
+void Control::reset_data( void ){ this -> stop_flag = false; }

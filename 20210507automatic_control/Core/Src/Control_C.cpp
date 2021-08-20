@@ -55,6 +55,9 @@ void Control::control_C( void )
 
 	while( !( Control::A_done_flag == true && Control::B_done_flag == true ) ){};
 
+	Control::A_done_flag = false;
+	Control::B_done_flag = false;
+
 /**************************************************************************/
 
 	time -> reset_timer();
@@ -81,6 +84,10 @@ void Control::control_C( void )
 	this -> send_command( E_robot_name::B, move_double_jump );
 
 	while( !( Control::A_done_flag == true && Control::B_done_flag == true ) ){};
+
+	Control::A_done_flag = false;
+	Control::B_done_flag = false;
+
 
 /**************************************************************************/
 
