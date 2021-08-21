@@ -76,14 +76,17 @@ void Control::control_A (void)
 		Line* line = new Line();
 		LED* led = new LED();
 
+		led -> LED_output( E_LED_status::MODE_INFINITY_JUMP );
+
+#ifndef WITHOUT_B
+		HAL_TIM_Base_Start_IT( &htim7 );
+#endif
 
 
 		while( Control::stop_flag == false )
 		{
 
 
-			led -> LED_output( E_LED_status::MODE_INFINITY_JUMP );
-			HAL_TIM_Base_Start_IT( &htim7 );
 
 			line -> Line_driver( ( int )Infinity::A_Pos::LD_X, ( int )Infinity::A_Pos::LD_Y, ( int )Infinity::A_Pos::RU_X, ( int )Infinity::A_Pos::RU_Y, true );
 			while( Line::judge == E_Line_status::MOVING && Control::stop_flag == false ){};

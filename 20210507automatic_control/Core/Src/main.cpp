@@ -86,7 +86,6 @@ void HAL_UART_RxCpltCallback( UART_HandleTypeDef* UartHandle )
 	static uint8_t B_data_a[ 4 ] = { 0, 0, 0, 0 };
 	static uint8_t C_data_a[ 4 ] = { 0, 0, 0, 0 };
 
-
 	uint8_t A_Rxdata[ DATASIZE ] = { 0, 0, 0, 0, 0, 0, 0, 0 };
 	uint8_t B_Rxdata[ DATASIZE ] = { 0, 0, 0, 0, 0, 0, 0, 0 };
 	uint8_t C_Rxdata[ DATASIZE ] = { 0, 0, 0, 0, 0, 0, 0, 0 };
