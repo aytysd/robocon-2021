@@ -29,67 +29,30 @@ void LED::LED_output(E_LED_status status)
 	switch(status)
 	{
 	case E_LED_status::Init:
-		function -> drive_LED(1, 0);
-		function -> drive_LED(2, 0);
-		function -> drive_LED(3, 0);
-		function -> drive_LED(1, 20);
-		function -> drive_LED(2, 20);
-		function -> drive_LED(3, 20);
-
+		function -> drive_LED( BR, BR, BR, 0 );
 		break;
 
 	case E_LED_status::Done:
-		function -> drive_LED(1, 0);
-		function -> drive_LED(2, 0);
-		function -> drive_LED(3, 0);
-		function -> drive_LED(3, 20);
-
+		function -> drive_LED( 0, 0, BR, 0 );
 		break;
-
-	case E_LED_status::NONE:
-		function -> drive_LED(1, 0);
-		function -> drive_LED(2, 0);
-		function -> drive_LED(3, 0);
-		function -> drive_LED(2, 20);
-
-		break;
-
 	case E_LED_status::MOVE_INFINITY_INITIAL_POS:
-		function -> drive_LED(1, 0);
-		function -> drive_LED(2, 0);
-		function -> drive_LED(3, 0);
-		function -> drive_LED(1, 20);
+		function -> drive_LED( 0, BR, 0, 0 );
 		break;
 
 	case E_LED_status::SPC:
-		function -> drive_LED(1, 0);
-		function -> drive_LED(2, 0);
-		function -> drive_LED(3, 0);
-		function -> drive_LED(2, 20);
-		function -> drive_LED(3, 20);
-
+		function -> drive_LED( BR, 0, BR, 0 );
 		break;
 
 	case E_LED_status::MOVE_DOUBLE_JUMP_INITIAL_POS:
-		function -> drive_LED(1, 0);
-		function -> drive_LED(2, 0);
-		function -> drive_LED(3, 0);
-		function -> drive_LED(1, 20);
-		function -> drive_LED(2, 20);
+		function -> drive_LED( BR, BR, 0, 0 );
 		break;
 
 	case E_LED_status::MODE_INFINITY_JUMP:
-		function -> drive_LED(1, 0);
-		function -> drive_LED(2, 0);
-		function -> drive_LED(3, 0);
-		function -> drive_LED(1, 20);
-		function -> drive_LED(3, 20);
+		function -> drive_LED( 0, BR, BR, 0 );
 		break;
 
 	case E_LED_status::MODE_DOUBLE_JUMP:
-		function -> drive_LED(1, 0);
-		function -> drive_LED(2, 0);
-		function -> drive_LED(3, 0);
+		function -> drive_LED( BR, 0, 0, 0 );
 		break;
 
 	}

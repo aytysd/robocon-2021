@@ -34,9 +34,10 @@ enum class E_LED_status
 	MODE_INFINITY_JUMP,
 	MOVE_DOUBLE_JUMP_INITIAL_POS,
 	MODE_DOUBLE_JUMP,
-	NONE
 
 };
+
+#define BR 20
 
 class LED
 {

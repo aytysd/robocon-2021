@@ -327,6 +327,7 @@ int main(void)
   while (1)
   {
 
+
 	  switch( ROBOT )
 	  {
 	  case E_robot_name::A:
@@ -343,6 +344,7 @@ int main(void)
 	  }
 
 	  control -> reset_data();
+
 
 
 

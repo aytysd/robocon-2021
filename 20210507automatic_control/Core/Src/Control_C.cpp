@@ -44,23 +44,32 @@ void Control::control_C( void )
 	PWM* pwm = new PWM();
 	Rope* rope = new Rope();
 	Time* time = new Time();
-
+	LED* led = new LED();
 
 
 /**************************************************************************/
 
+	led -> LED_output( E_LED_status::MOVE_INFINITY_INITIAL_POS );
 	line -> Line_driver( 2643, -2643, -80, 0, false );
 	while( Line::judge == E_Line_status::MOVING ){};
 	pwm -> rotate( 300, 0 );
+
+	Line::Enable_line = false;
 
 	while( !( Control::A_done_flag == true && Control::B_done_flag == true ) ){};
 
 	Control::A_done_flag = false;
 	Control::B_done_flag = false;
 
+	led -> LED_output( E_LED_status::Done );
+
+	HAL_Delay( 3000 );
+
 /**************************************************************************/
 
 	time -> reset_timer();
+
+	led -> LED_output( E_LED_status::MODE_INFINITY_JUMP );
 
 	uint8_t infinity_start_data[ DATASIZE ] = { ( uint8_t )E_data_type::command, ( uint8_t )E_Flow::MODE_INFINITY_JUMP, 0, 0 };
 
@@ -73,6 +82,8 @@ void Control::control_C( void )
 
 	this -> send_command( E_robot_name::A, infinity_finish_data );
 	this -> send_command( E_robot_name::B, infinity_finish_data );
+
+	led -> LED_output( E_LED_status::MOVE_DOUBLE_JUMP_INITIAL_POS );
 
 /**************************************************************************/
 
@@ -88,11 +99,16 @@ void Control::control_C( void )
 	Control::A_done_flag = false;
 	Control::B_done_flag = false;
 
+	led -> LED_output( E_LED_status::Done );
+	HAL_Delay( 3000 );
+
 
 /**************************************************************************/
 
 
 	time -> reset_timer();
+
+	led -> LED_output( E_LED_status::MODE_DOUBLE_JUMP );
 
 	uint8_t double_jump_start_data[ DATASIZE ] = { ( uint8_t )E_data_type::command, ( uint8_t )E_Flow::MODE_DOUBLE_JUMP, 0, 0 };
 
@@ -106,9 +122,11 @@ void Control::control_C( void )
 	this -> send_command( E_robot_name::A, double_jump_finish_data );
 	this -> send_command( E_robot_name::B, double_jump_finish_data );
 
+	led -> LED_output( E_LED_status::Done );
+
 /**************************************************************************/
 
-
+	delete led;
 	delete time;
 	delete rope;
 	delete line;
