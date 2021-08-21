@@ -19,9 +19,6 @@ Core/Src/stm32f4xx_it.o: ../Core/Src/stm32f4xx_it.cpp ../Core/Inc/main.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma_ex.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cortex.h \
- ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_adc.h \
- ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_adc.h \
- ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_adc_ex.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ex.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ramfunc.h \
@@ -38,10 +35,9 @@ Core/Src/stm32f4xx_it.o: ../Core/Src/stm32f4xx_it.cpp ../Core/Inc/main.h \
  ../Core/Inc/General_command.hpp ../Core/Inc/PWM.hpp \
  ../Core/Inc/Init_Move.hpp ../Core/Inc/hGPIO.hpp ../Core/Inc/PWM.hpp \
  ../Core/Inc/Jump.hpp ../Core/Inc/Gyro.hpp ../Core/Inc/Line.hpp \
- ../Core/Inc/i2c.h ../Core/Inc/MPU6050.hpp ../Core/Inc/adc.h \
- ../Core/Inc/i2c.h ../Core/Inc/tim.h ../Core/Inc/usart.h \
- ../Core/Inc/gpio.h ../Core/Inc/Time.hpp ../Core/Inc/Control.hpp \
- ../Core/Inc/Path.hpp
+ ../Core/Inc/i2c.h ../Core/Inc/MPU6050.hpp ../Core/Inc/i2c.h \
+ ../Core/Inc/tim.h ../Core/Inc/usart.h ../Core/Inc/gpio.h \
+ ../Core/Inc/Time.hpp ../Core/Inc/Control.hpp ../Core/Inc/Path.hpp
 
 ../Core/Inc/main.h:
 
@@ -84,12 +80,6 @@ Core/Src/stm32f4xx_it.o: ../Core/Src/stm32f4xx_it.cpp ../Core/Inc/main.h \
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma_ex.h:
 
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cortex.h:
-
-../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_adc.h:
-
-../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_adc.h:
-
-../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_adc_ex.h:
 
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash.h:
 
@@ -144,8 +134,6 @@ Core/Src/stm32f4xx_it.o: ../Core/Src/stm32f4xx_it.cpp ../Core/Inc/main.h \
 ../Core/Inc/i2c.h:
 
 ../Core/Inc/MPU6050.hpp:
-
-../Core/Inc/adc.h:
 
 ../Core/Inc/i2c.h:
 

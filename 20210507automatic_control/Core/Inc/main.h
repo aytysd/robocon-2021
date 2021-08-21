@@ -60,9 +60,6 @@ void Error_Handler(void);
 #define PE_Sensor_2_Pin GPIO_PIN_13
 #define PE_Sensor_2_GPIO_Port GPIOC
 #define PE_Sensor_2_EXTI_IRQn EXTI15_10_IRQn
-#define SPARE_Pin GPIO_PIN_15
-#define SPARE_GPIO_Port GPIOC
-#define SPARE_EXTI_IRQn EXTI15_10_IRQn
 #define PE_Sensor_1_Pin GPIO_PIN_0
 #define PE_Sensor_1_GPIO_Port GPIOC
 #define PE_Sensor_1_EXTI_IRQn EXTI0_IRQn
@@ -83,10 +80,8 @@ void Error_Handler(void);
 #define ROPEA7_GPIO_Port GPIOA
 #define C_RX_Pin GPIO_PIN_5
 #define C_RX_GPIO_Port GPIOC
-#define Line_Sensor_L_Pin GPIO_PIN_0
-#define Line_Sensor_L_GPIO_Port GPIOB
-#define Line_Sensor_R_Pin GPIO_PIN_1
-#define Line_Sensor_R_GPIO_Port GPIOB
+#define Self_Pos_PE_2_Pin GPIO_PIN_1
+#define Self_Pos_PE_2_GPIO_Port GPIOB
 #define C_TX_Pin GPIO_PIN_10
 #define C_TX_GPIO_Port GPIOB
 #define Photo_Interrupt_Pin GPIO_PIN_12

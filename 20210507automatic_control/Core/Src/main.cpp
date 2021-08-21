@@ -19,7 +19,6 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-#include "adc.h"
 #include "i2c.h"
 #include "tim.h"
 #include "usart.h"
@@ -275,8 +274,7 @@ void HAL_TIM_PeriodElapsedCallback( TIM_HandleTypeDef* htim )
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-
-	Init_Move* init_move = new Init_Move();
+  Init_Move* init_move = new Init_Move();
   Control* control = new Control();
   MPU6050* mpu6050 = new MPU6050();
   Self_Pos* self_pos = new Self_Pos();
@@ -314,18 +312,14 @@ int main(void)
   MX_I2C3_Init();
   MX_UART4_Init();
   MX_TIM7_Init();
-  MX_ADC1_Init();
-  MX_ADC2_Init();
   /* USER CODE BEGIN 2 */
   init_move -> init_move( ROBOT );
-
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-
 
 	  switch( ROBOT )
 	  {
@@ -343,9 +337,6 @@ int main(void)
 	  }
 
 	  control -> reset_data();
-
-
-
 
 
     /* USER CODE END WHILE */

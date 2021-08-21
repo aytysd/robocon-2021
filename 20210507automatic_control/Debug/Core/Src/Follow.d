@@ -19,9 +19,6 @@ Core/Src/Follow.o: ../Core/Src/Follow.cpp ../Core/Inc/main.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma_ex.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cortex.h \
- ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_adc.h \
- ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_adc.h \
- ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_adc_ex.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ex.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ramfunc.h \
@@ -32,10 +29,10 @@ Core/Src/Follow.o: ../Core/Src/Follow.cpp ../Core/Inc/main.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h \
- ../Core/Inc/adc.h ../Core/Inc/main.h ../Core/Inc/i2c.h ../Core/Inc/tim.h \
+ ../Core/Inc/i2c.h ../Core/Inc/main.h ../Core/Inc/tim.h \
  ../Core/Inc/usart.h ../Core/Inc/gpio.h ../Core/Inc/Follow.hpp \
- ../Core/Inc/adc.h ../Core/Inc/i2c.h ../Core/Inc/tim.h \
- ../Core/Inc/usart.h ../Core/Inc/gpio.h ../Core/Inc/Self_Pos.hpp \
+ ../Core/Inc/i2c.h ../Core/Inc/tim.h ../Core/Inc/usart.h \
+ ../Core/Inc/gpio.h ../Core/Inc/Self_Pos.hpp \
  ../Core/Inc/General_command.hpp ../Core/Inc/ToF.hpp \
  ../Core/Inc/Self_Pos.hpp ../Core/Inc/Line.hpp \
  ../Core/Inc/General_command.hpp ../Core/Inc/Path.hpp
@@ -82,12 +79,6 @@ Core/Src/Follow.o: ../Core/Src/Follow.cpp ../Core/Inc/main.h \
 
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cortex.h:
 
-../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_adc.h:
-
-../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_adc.h:
-
-../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_adc_ex.h:
-
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash.h:
 
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ex.h:
@@ -108,11 +99,9 @@ Core/Src/Follow.o: ../Core/Src/Follow.cpp ../Core/Inc/main.h \
 
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h:
 
-../Core/Inc/adc.h:
+../Core/Inc/i2c.h:
 
 ../Core/Inc/main.h:
-
-../Core/Inc/i2c.h:
 
 ../Core/Inc/tim.h:
 
@@ -121,8 +110,6 @@ Core/Src/Follow.o: ../Core/Src/Follow.cpp ../Core/Inc/main.h \
 ../Core/Inc/gpio.h:
 
 ../Core/Inc/Follow.hpp:
-
-../Core/Inc/adc.h:
 
 ../Core/Inc/i2c.h:
 

@@ -29,7 +29,6 @@
 #include "PWM.hpp"
 #include "Gyro.hpp"
 #include "Function.hpp"
-#include "adc.h"
 #include "i2c.h"
 #include "tim.h"
 #include "usart.h"

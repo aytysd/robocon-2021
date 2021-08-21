@@ -22,7 +22,6 @@
 #include "main.h"
 #include "stdio.h"
 #include "math.h"
-#include "adc.h"
 #include "i2c.h"
 #include "tim.h"
 #include "usart.h"

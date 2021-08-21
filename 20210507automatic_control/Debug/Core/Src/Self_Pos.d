@@ -20,9 +20,6 @@ Core/Src/Self_Pos.o: ../Core/Src/Self_Pos.cpp \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma_ex.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cortex.h \
- ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_adc.h \
- ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_adc.h \
- ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_adc_ex.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ex.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ramfunc.h \
@@ -37,9 +34,8 @@ Core/Src/Self_Pos.o: ../Core/Src/Self_Pos.cpp \
  ../Core/Inc/Self_Pos.hpp ../Core/Inc/bno055.h \
  ../Core/Inc/Error_Handling.hpp ../Core/Inc/LED.hpp ../Core/Inc/PWM.hpp \
  ../Core/Inc/General_command.hpp ../Core/Inc/Gyro.hpp \
- ../Core/Inc/Function.hpp ../Core/Inc/adc.h ../Core/Inc/i2c.h \
- ../Core/Inc/tim.h ../Core/Inc/usart.h ../Core/Inc/gpio.h \
- ../Core/Inc/MPU6050.hpp
+ ../Core/Inc/Function.hpp ../Core/Inc/i2c.h ../Core/Inc/tim.h \
+ ../Core/Inc/usart.h ../Core/Inc/gpio.h ../Core/Inc/MPU6050.hpp
 
 ../Core/Inc/General_command.hpp:
 
@@ -87,12 +83,6 @@ Core/Src/Self_Pos.o: ../Core/Src/Self_Pos.cpp \
 
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cortex.h:
 
-../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_adc.h:
-
-../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_adc.h:
-
-../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_adc_ex.h:
-
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash.h:
 
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ex.h:
@@ -134,8 +124,6 @@ Core/Src/Self_Pos.o: ../Core/Src/Self_Pos.cpp \
 ../Core/Inc/Gyro.hpp:
 
 ../Core/Inc/Function.hpp:
-
-../Core/Inc/adc.h:
 
 ../Core/Inc/i2c.h:
 

@@ -31,7 +31,6 @@
 #include "Controller.hpp"
 #include "Gyro.hpp"
 #include "MPU6050.hpp"
-#include "adc.h"
 #include "i2c.h"
 #include "tim.h"
 #include "usart.h"
@@ -72,7 +71,7 @@ void Init_Move::init_move( E_robot_name robot )
 		control -> send_command( E_robot_name::A, data );
 		control -> send_command( E_robot_name::B, data );
 #else
-		while( Control::A_done_flag == true ){}
+		while( !( Control::A_done_flag == true ) ){}
 
 		Control::A_done_flag = false;
 

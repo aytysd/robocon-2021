@@ -20,7 +20,6 @@
 #define INC_FOLLOW_HPP_
 
 #include "main.h"
-#include "adc.h"
 #include "i2c.h"
 #include "tim.h"
 #include "usart.h"

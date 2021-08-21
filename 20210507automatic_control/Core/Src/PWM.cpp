@@ -25,7 +25,6 @@
 #include "Gyro.hpp"
 #include "Time.hpp"
 #include "Debug.hpp"
-#include "adc.h"
 #include "i2c.h"
 #include "tim.h"
 #include "usart.h"

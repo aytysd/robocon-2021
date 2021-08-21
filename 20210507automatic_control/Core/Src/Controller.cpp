@@ -22,7 +22,6 @@
 #include "Function.hpp"
 #include "PWM.hpp"
 #include "stdio.h"
-#include "adc.h"
 #include "i2c.h"
 #include "tim.h"
 #include "usart.h"

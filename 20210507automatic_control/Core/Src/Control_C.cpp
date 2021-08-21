@@ -62,18 +62,14 @@ void Control::control_C( void )
 	Control::A_done_flag = false;
 	Control::B_done_flag = false;
 
-	led -> LED_output( E_LED_status::Done );
 #else
 	while( !( Control::A_done_flag == true ) ){};
 
 	Control::A_done_flag = false;
 
-	led -> LED_output( E_LED_status::Done );
 #endif
 
-
-
-
+	led -> LED_output( E_LED_status::Done );
 	HAL_Delay( 3000 );
 
 /**************************************************************************/
@@ -118,15 +114,14 @@ void Control::control_C( void )
 	Control::A_done_flag = false;
 	Control::B_done_flag = false;
 
-	led -> LED_output( E_LED_status::Done );
+
 #else
 	while( !( Control::A_done_flag == true ) ){};
-
 	Control::A_done_flag = false;
 
-	led -> LED_output( E_LED_status::Done );
 #endif
 
+	led -> LED_output( E_LED_status::Done );
 	HAL_Delay( 3000 );
 
 /**************************************************************************/
