@@ -43,6 +43,8 @@ void Init_Move::init_move( E_robot_name robot )
 {
 
 	LED* led = new LED();
+	Control* control = new Control();
+
 
 	led -> LED_output( E_LED_status::Init );
 
@@ -51,22 +53,37 @@ void Init_Move::init_move( E_robot_name robot )
 
 	this -> Initialize( robot );
 
-	led -> LED_output( E_LED_status::Done );
+
 
 	if( robot == E_robot_name::C )
 	{
-		Control* control = new Control();
+
+
+		while( !( Control::A_done_flag == true && Control::B_done_flag == true ) ){}
+
+		Control::A_done_flag = false;
+		Control::B_done_flag = false;
+
+		led -> LED_output( E_LED_status::Done );
+
 
 		uint8_t data[ DATASIZE ] = { ( uint8_t )E_data_type::command, ( uint8_t )E_Flow::MOVE_INFINITY_INITIAL_POS, 0, 0 };
 
 		control -> send_command( E_robot_name::A, data );
 		control -> send_command( E_robot_name::B, data );
 
-		delete control;
 
 	}
+	else
+	{
+		uint8_t data[ DATASIZE ] = { ( uint8_t )E_data_type::done };
+		control -> send_command( E_robot_name::C, data );
+	}
+
 
 	delete led;
+	delete control;
+
 
 }
 
@@ -88,7 +105,7 @@ void Init_Move::Initialize( E_robot_name robot )
 //	  gyro -> set_initial_direction( robot );
 
 	  while( mpu6050 -> MPU6050_Init( &hi2c1 ) == true );
-//	  while( mpu6050 -> MPU6050_Init( &hi2c3 ) == true );
+	  while( mpu6050 -> MPU6050_Init( &hi2c3 ) == true );
 	  mpu6050 -> set_initial_direction( robot );
 
 

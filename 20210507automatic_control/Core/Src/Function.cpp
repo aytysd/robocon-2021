@@ -49,10 +49,10 @@ void Function::drive_solenoid_valve( uint8_t port_number, uint8_t ON_OFF )
 	HAL_UART_Transmit( &huart3, ( uint8_t* )&solenoid_valve, sizeof( solenoid_valve ), 100 );
 }
 
-void Function::drive_LED( uint8_t color, uint8_t brightness )
+void Function::drive_LED( uint8_t g, uint8_t r, uint8_t b, uint8_t w )
 {
-	uint8_t LED = ( color << 6 ) | brightness;
-	HAL_UART_Transmit( &huart5, &LED, sizeof( LED ), 3000 );
+	uint8_t LED[ 4 ] = { g, r, b, w };
+	HAL_UART_Transmit( &huart5, ( uint8_t* )LED, sizeof( LED ), 100 );
 }
 
 void Function::drive_motor_Rope( uint8_t motor_number, uint8_t direction, uint16_t angular_velocity, bool PID_Enabled )
