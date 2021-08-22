@@ -22,6 +22,7 @@
 #include "Debug.hpp"
 #include "Function.hpp"
 #include "PWM.hpp"
+#include "adc.h"
 #include "i2c.h"
 #include "tim.h"
 #include "usart.h"
@@ -34,12 +35,12 @@ int Rope::over_flow_cnt_5 = -1;
 
 bool run = false;
 bool force_stop = false;
-int last_encoder_pos = 0;
+//int last_encoder_pos = 0;
 
 int Rope::encoder_read_3()
 {
 	int enc_buff = this -> over_flow_cnt_3 * 0x10000 + TIM3 -> CNT;
-	return enc_buff;
+	return enc_buff % 2048;
 }
 
 int Rope::encoder_read_4()
@@ -55,14 +56,14 @@ int Rope::encoder_read_5()
 }
 
 //rotate_rope(5, CW, 1040, 520);
-void rotate_rope(uint8_t motor_number, uint8_t direction, uint16_t down_speed, uint16_t up_speed)
+void Rope::rotate_rope(uint8_t motor_number, uint8_t direction, uint16_t down_speed, uint16_t up_speed)
 {
 	if( run == true ) return;
 
 	Function* function = new Function();
 	Rope* rope = new Rope();
 
-	if( run == false && rope -> encoder_read_3() != last_encoder_pos ) run = true;
+	if( run == false /*&& rope -> encoder_read_3() != last_encoder_pos*/) run = true;
 
 	while( run == true )
 	{
@@ -93,7 +94,7 @@ void rotate_rope(uint8_t motor_number, uint8_t direction, uint16_t down_speed, u
 }
 
 //stop_rotate(5);
-void stop_rope(uint8_t motor_number)
+void Rope::stop_rope(uint8_t motor_number)
 {
 	Function* function = new Function();
 	Rope* rope = new Rope();
@@ -101,7 +102,7 @@ void stop_rope(uint8_t motor_number)
 	run = false;
 	force_stop = true;
 	function -> drive_motor_Rope(motor_number, BRAKE, 0, true);
-	last_encoder_pos = rope -> encoder_read_3();
+	//last_encoder_pos = rope -> encoder_read_3();
 
 	delete function;
 	delete rope;
