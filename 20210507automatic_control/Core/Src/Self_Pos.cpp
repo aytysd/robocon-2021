@@ -435,15 +435,15 @@ void Self_Pos::Self_Pos_correction( void )
 	Function* function = new Function();
 	Gyro* gyro = new Gyro();
 
-	function -> drive_motor( 6, CW, 300, false, false );
+	function -> drive_motor( 6, CW, 700, false, false );
 	while( ( Self_Pos::Self_Pos_PE[0] == 0 ) && ( Self_Pos::Self_Pos_PE[1] == 0 ) ){}
 	function -> drive_motor( 6, BRAKE, 0, false, false );
 	double angle_1 = gyro -> get_direction( &hi2c3 );
 	Self_Pos::Self_Pos_PE[0] = 0;
 	Self_Pos::Self_Pos_PE[1] = 0;
 
-	function -> drive_motor( 6, CCW, 300, false, false );
-	while( ( Self_Pos::Self_Pos_PE[0] == 0 ) && (Self_Pos::Self_Pos_PE[1] == 0 ) ){}
+	function -> drive_motor( 6, CCW, 700, false, false );
+	while( ( Self_Pos::Self_Pos_PE[0] == 0 ) && ( Self_Pos::Self_Pos_PE[1] == 0 ) ){}
 	function -> drive_motor( 6, BRAKE, 0, false, false );
 	double angle_2 = gyro -> get_direction( &hi2c3 );
 	Self_Pos::Self_Pos_PE[0] = 0;

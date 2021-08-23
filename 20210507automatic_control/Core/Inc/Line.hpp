@@ -57,7 +57,7 @@ private:
 	long double TG_r;
 	long double Line_r;
 	long double dev_r;
-	uint16_t now_r;
+	double now_r;
 	uint16_t TG_v;
 
 	void set(int befX, int befY, int tgX, int tgY);
