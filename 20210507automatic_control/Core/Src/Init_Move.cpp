@@ -122,18 +122,12 @@ void Init_Move::Initialize( E_robot_name robot )
 	  HAL_UART_Receive_IT( &huart3, ( uint8_t* )C_Rxdata_buff, sizeof( C_Rxdata_buff ) );
 //	  HAL_UART_Receive_IT( &huart4, ( uint8_t* )Controller::controller_Rxdata, sizeof( Controller::controller_Rxdata ) );
 
-
-
 	  HAL_TIM_Base_Start_IT( &htim6 );
 	  HAL_TIM_Base_Start_IT( &htim3 );
-	  HAL_TIM_Base_Start_IT( &htim4 );
-
-
 
 	  HAL_TIM_Encoder_Start( &htim5, TIM_CHANNEL_ALL );
 	  HAL_TIM_Encoder_Start( &htim2, TIM_CHANNEL_ALL );
 	  HAL_TIM_Encoder_Start( &htim3, TIM_CHANNEL_ALL );
-	  HAL_TIM_Encoder_Start( &htim4, TIM_CHANNEL_ALL );
 
 	  delete gyro;
 	  delete self_pos;

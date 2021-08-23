@@ -27,6 +27,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "Function.hpp"
+#include "Infinity_command.hpp"
 #include "PWM.hpp"
 #include "stdio.h"
 #include "Self_Pos.hpp"
@@ -92,14 +93,15 @@ void HAL_UART_RxCpltCallback( UART_HandleTypeDef* UartHandle )
 
 	if( UartHandle == &huart4 )// data from B robot
 	{
-/*
+
 		HAL_UART_Receive_IT(&huart4, (uint8_t*)Controller::controller_Rxdata, sizeof(Controller::controller_Rxdata));
 
 		Controller* controller = new Controller();
 		controller -> identify();
 		delete controller;
-*/
 
+
+/*
 		HAL_UART_Receive_IT( &huart4, ( uint8_t* )B_Rxdata_buff, sizeof( B_Rxdata_buff ) );
 
 
@@ -147,6 +149,7 @@ void HAL_UART_RxCpltCallback( UART_HandleTypeDef* UartHandle )
 
 		for( int i = 0; i < DATASIZE; i++ )
 			Debug::TTO_val( B_Rxdata[ i ], "B_data:", &huart2 );
+*/
 
 	}
 	else if( UartHandle == &huart1 )// data from A robot
@@ -176,14 +179,19 @@ void HAL_UART_RxCpltCallback( UART_HandleTypeDef* UartHandle )
 
 
 		//B or C PSP
-		if( A_Rxdata_buff[ 0 ] == ( uint8_t )E_data_type::A_pos )
+		if( A_Rxdata[ 0 ] == ( uint8_t )E_data_type::A_pos )
 		{
 			Control* control = new Control();
-			control -> decode_self_pos( &Follow::A_pos_x, &Follow::A_pos_y, A_Rxdata_buff );
+			Follow* follow = new Follow();
+
+			control -> decode_self_pos( &Follow::A_pos_x, &Follow::A_pos_y, A_Rxdata );
+			follow -> follow();
+
 			delete control;
+			delete follow;
 		}
 		//C PSP
-		else if( A_Rxdata_buff[ 0 ] == ( uint8_t )E_data_type::done )
+		else if( A_Rxdata[ 0 ] == ( uint8_t )E_data_type::done )
 			Control::A_done_flag = true;
 
 
@@ -255,12 +263,6 @@ void HAL_TIM_PeriodElapsedCallback( TIM_HandleTypeDef* htim )
         if(__HAL_TIM_IS_TIM_COUNTING_DOWN(&htim3)) Rope::over_flow_cnt_3--;
         else Rope::over_flow_cnt_3++;
     }
-    else if( htim -> Instance == TIM4 )
-    {
-        __HAL_TIM_CLEAR_FLAG( &htim4, TIM_IT_UPDATE );
-        if( __HAL_TIM_IS_TIM_COUNTING_DOWN( &htim4 ) ) Rope::over_flow_cnt_4--;
-        else Rope::over_flow_cnt_4++;
-    }
 
 
 }
@@ -278,6 +280,8 @@ int main(void)
   Control* control = new Control();
   MPU6050* mpu6050 = new MPU6050();
   Self_Pos* self_pos = new Self_Pos();
+  PWM* pwm = new PWM();
+  Path* line = new Path();
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -306,7 +310,6 @@ int main(void)
   MX_UART5_Init();
   MX_USART1_UART_Init();
   MX_TIM2_Init();
-  MX_TIM4_Init();
   MX_TIM3_Init();
   MX_USART2_UART_Init();
   MX_I2C3_Init();
@@ -314,12 +317,14 @@ int main(void)
   MX_TIM7_Init();
   /* USER CODE BEGIN 2 */
   init_move -> init_move( ROBOT );
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+
 
 	  switch( ROBOT )
 	  {
@@ -337,7 +342,6 @@ int main(void)
 	  }
 
 	  control -> reset_data();
-
 
     /* USER CODE END WHILE */
 

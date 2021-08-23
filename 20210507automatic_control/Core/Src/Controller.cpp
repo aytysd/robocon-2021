@@ -42,7 +42,7 @@ void Controller::check_array(void)
 
 void Controller::identify()
 {
-//	this -> check_array();
+	this -> check_array();
 	if( this -> identify_NOP() == false )
 	{
 
@@ -452,6 +452,7 @@ void Controller::identify_CS()
 
 
 
+/*
 void Controller::NOP(void){}
 
 void Controller::X(void){}
@@ -496,3 +497,4 @@ void Controller::RSL(void){}
 
 
 
+*/

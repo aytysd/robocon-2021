@@ -31,11 +31,17 @@
 #include "gpio.h"
 #include "MPU6050.hpp"
 #include "Line.hpp"
+#include "Debug.hpp"
 
 void PWM::V_output(uint16_t V, uint16_t fai, int16_t rotation_speed, uint16_t attitude_angle, E_move_status status)
 {
 	if( status == E_move_status::MOVE )
 	{
+
+		if( rotation_speed < 0 )
+			Debug::TTO_val( 2, "left", &huart2 );
+		else
+			Debug::TTO_val(3, "right", &huart2 );
 
 		Function* function = new Function();
 
@@ -62,6 +68,9 @@ void PWM::V_output(uint16_t V, uint16_t fai, int16_t rotation_speed, uint16_t at
 	}
 	else if( status == E_move_status::STOP )
 	{
+
+		Debug::TTO_val( 1, "stop", &huart2 );
+
 		Function* function = new Function();
 
 		function -> drive_motor(1, 3, 0, false, false);
@@ -93,7 +102,7 @@ bool PWM::rotate(uint16_t V, uint16_t target_angle)
 			this -> V_output(0, 0, V, 0, E_move_status::MOVE);
 			Debug::TTO_val(0, "180 to 360:", &huart2 );
 			Debug::time_calc( &huart2 );
-			while( !( abs(  target_angle - ( uint16_t )gyro -> get_direction( &hi2c1 ) ) < 1 ) );
+			while( !( abs(  target_angle - ( uint16_t )gyro -> get_direction( &hi2c1 ) ) < 3 ) );
 			Debug::time_calc( &huart2 );
 			this -> V_output(0, 0, 0, 0, E_move_status::STOP);
 			Line::Enable_line = true;
@@ -105,7 +114,7 @@ bool PWM::rotate(uint16_t V, uint16_t target_angle)
 			this -> V_output(0, 0, -V, 0, E_move_status::MOVE);
 			Debug::TTO_val(0, "0 to 180:", &huart2 );
 			Debug::time_calc( &huart2 );
-			while( !( abs(  target_angle - ( uint16_t )gyro -> get_direction( &hi2c1 ) ) < 1 ) ){}
+			while( !( abs(  target_angle - ( uint16_t )gyro -> get_direction( &hi2c1 ) ) < 3 ) ){}
 			Debug::time_calc( &huart2 );
 			this -> V_output(0, 0, 0, 0, E_move_status::STOP);
 			Line::Enable_line = true;

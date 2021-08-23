@@ -31,6 +31,8 @@ const uint16_t i2c_timeout = 100;
 const double Accel_Z_corrector = 14418.0;
 
 #define IT_PERIOD 0.1
+#define SAMPLING_PERIOD 5
+#define TESTING_PERIOD 1
 
 class MPU6050
 {
@@ -40,11 +42,18 @@ public:
 
 	void set_initial_direction( E_robot_name robot );
 	double get_direction( I2C_HandleTypeDef *I2Cx );
+
+	void sort_data( double* x, int n );
+
+	double calc_mode( int* array, int size );
 private:
 
 	static double robot_direction;
 	static uint16_t robot_initial_direction;
 	static double table_direction;
+
+	static bool testing;
+	static bool sampling;
 
 
 };
