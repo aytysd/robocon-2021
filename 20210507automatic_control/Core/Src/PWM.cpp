@@ -99,7 +99,7 @@ bool PWM::rotate(uint16_t V, uint16_t target_angle)
 		if( diff >= 180 )
 		{
 			Line::Enable_line = false;
-			this -> V_output(0, 0, V, 0, E_move_status::MOVE);
+			this -> V_output(0, 0, -V, 0, E_move_status::MOVE);
 			Debug::TTO_val(0, "180 to 360:", &huart2 );
 			Debug::time_calc( &huart2 );
 			while( !( abs(  target_angle - ( uint16_t )gyro -> get_direction( &hi2c1 ) ) < 3 ) );
@@ -111,7 +111,7 @@ bool PWM::rotate(uint16_t V, uint16_t target_angle)
 		else
 		{
 			Line::Enable_line = false;
-			this -> V_output(0, 0, -V, 0, E_move_status::MOVE);
+			this -> V_output(0, 0, +V, 0, E_move_status::MOVE);
 			Debug::TTO_val(0, "0 to 180:", &huart2 );
 			Debug::time_calc( &huart2 );
 			while( !( abs(  target_angle - ( uint16_t )gyro -> get_direction( &hi2c1 ) ) < 3 ) ){}
