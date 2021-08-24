@@ -91,7 +91,7 @@ void HAL_UART_RxCpltCallback( UART_HandleTypeDef* UartHandle )
 	uint8_t C_Rxdata[ DATASIZE ] = { 0, 0, 0, 0, 0, 0, 0, 0 };
 
 
-	if( UartHandle == &huart4 )// data from B robot
+	if( UartHandle == &huart4 )//data from controller
 	{
 
 		HAL_UART_Receive_IT(&huart4, (uint8_t*)Controller::controller_Rxdata, sizeof(Controller::controller_Rxdata));
@@ -101,8 +101,12 @@ void HAL_UART_RxCpltCallback( UART_HandleTypeDef* UartHandle )
 		delete controller;
 
 
-/*
-		HAL_UART_Receive_IT( &huart4, ( uint8_t* )B_Rxdata_buff, sizeof( B_Rxdata_buff ) );
+
+	}
+	else if( UartHandle == &huart5 )// data from B robot
+	{
+
+		HAL_UART_Receive_IT( &huart5, ( uint8_t* )B_Rxdata_buff, sizeof( B_Rxdata_buff ) );
 
 
 		if( ( ( B_Rxdata_buff[ 0 ] & 0b10000000 ) >> 7 ) == true )
@@ -149,7 +153,6 @@ void HAL_UART_RxCpltCallback( UART_HandleTypeDef* UartHandle )
 
 		for( int i = 0; i < DATASIZE; i++ )
 			Debug::TTO_val( B_Rxdata[ i ], "B_data:", &huart2 );
-*/
 
 	}
 	else if( UartHandle == &huart1 )// data from A robot
