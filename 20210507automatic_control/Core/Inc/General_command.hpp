@@ -25,7 +25,7 @@
 //#define ROBOT E_robot_name::B
 //#define ROBOT E_robot_name::C
 
-#define WITHOUT_B 1
+//#define WITHOUT_B 1
 
 
 enum class E_robot_name
@@ -63,6 +63,14 @@ enum class E_data_type
 	A_pos,
 	B_pos,
 	C_pos,
+};
+
+enum class E_Self_Pos_status
+{
+	First_Quadrant = 1,
+	Second_Quadrant,
+	Third_Quadrant,
+	Fourth_Quadrant,
 };
 
 #define NC 0xFE

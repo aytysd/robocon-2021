@@ -99,12 +99,12 @@ void Self_Pos::update_self_pos(void)
 	{
 	case E_robot_name::A:
 	case E_robot_name::B:
-		d1 = 2 * 20 * M_PI * ( ( double )this -> encoder_read_2() / ( double ) 4096 ); //encoder5_moving distance(mm) 55.5=wheel radius 2048=encoder resolution
-		d2 = -2 * 20 * M_PI * ( ( double )this -> encoder_read_5() / ( double ) 8192 ); //encoder5_moving distance(mm) 55.5=wheel radius 2048=encoder resolution
+		d1 = 2 * 28* M_PI * ( ( double )this -> encoder_read_2() / ( double ) 2048 ); //encoder5_moving distance(mm) 55.5=wheel radius 2048=encoder resolution
+		d2 = -2 * 28 * M_PI * ( ( double )this -> encoder_read_5() / ( double ) 2048 ); //encoder5_moving distance(mm) 55.5=wheel radius 2048=encoder resolution
 		break;
 	case E_robot_name::C:
-		d1 = -2 * 20.7 * M_PI * ( ( double )this -> encoder_read_5() / ( double ) 2048 ); //encoder5_moving distance(mm) 55.5=wheel radius 2048=encoder resolution
-		d2 = 2 * 20.7 * M_PI * ( ( double )this -> encoder_read_2() / ( double ) 2048 ); //encoder5_moving distance(mm) 55.5=wheel radius 2048=encoder resolution
+		d2 = 2 * 20.7 * M_PI * ( ( double )this -> encoder_read_5() / ( double )2048 ); //encoder5_moving distance(mm) 55.5=wheel radius 2048=encoder resolution
+		d1 = -2 * 20.7 * M_PI * ( ( double )this -> encoder_read_2() / ( double )2048 ); //encoder5_moving distance(mm) 55.5=wheel radius 2048=encoder resolution
 		break;
 	default:
 		break;
@@ -513,4 +513,25 @@ void Self_Pos::Self_Pos_correction( void )
 double Self_Pos::rad(double deg)
 {
 	return ( ( deg ) / ( double )180 ) * ( double )M_PI;
+}
+
+E_Self_Pos_status Self_Pos::Judge_Self_Pos(void)
+{
+	if(( this -> Self_Pos_X >= 0 ) && ( this -> Self_Pos_Y <= 0 ))
+	{
+		return E_Self_Pos_status::First_Quadrant;
+	}
+	else if((this -> Self_Pos_X < 0 ) && ( this -> Self_Pos_Y < 0))
+	{
+		return E_Self_Pos_status::Second_Quadrant;
+	}
+	else if(( this -> Self_Pos_X <= 0 ) && (this -> Self_Pos_Y >= 0 ))
+	{
+		return E_Self_Pos_status::Third_Quadrant;
+	}
+	else if(( this -> Self_Pos_X > 0 ) && ( this -> Self_Pos_Y < 0 ))
+	{
+		return E_Self_Pos_status::Fourth_Quadrant;
+	}
+
 }
