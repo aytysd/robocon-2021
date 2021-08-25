@@ -24,6 +24,8 @@
 #include "Gyro.hpp"
 #include "General_command.hpp"
 #include "MPU6050.hpp"
+#include "Debug.hpp"
+#include "usart.h"
 
 int Line::AftX = 0;
 int Line::AftY = 0;
@@ -86,6 +88,10 @@ void Line::MoveLine(void)
 		this -> devY = this -> TGdistance(this -> now_X, this -> now_Y, tgX, tgY);
 		this -> devX = fabs(devX);
 		this -> devY = fabs(devY);
+
+		Debug* debug = new Debug();
+		debug -> TTO_val( devY, "Y:", &huart2);
+		delete debug;
 
 		this -> devTG = sqrt((long double)(this -> devX*this -> devX + this -> devY*this -> devY));
 
@@ -173,7 +179,7 @@ void Line::MoveLine(void)
 				arrive = true;
 			}
 		}
-		else
+		else if( through = false )
 		{
 			bool inX = abs(tgX - now_X) <= 100;
 			bool inY = abs(tgY - now_Y) <= 100;
@@ -190,29 +196,19 @@ void Line::MoveLine(void)
 
 
 		this -> TG_v = this -> devTG * 0.2;
-		if(this -> TG_v > 600)
+		if( through != true )
 		{
-			this -> TG_v = 600;
+			if(this -> TG_v > 600)
+			{
+				this -> TG_v = 600;
+			}
+			else if( this -> TG_v < 500 )
+			{
+				this -> TG_v = 500;
+			}
 		}
-		else if( this -> TG_v < 500 )
-		{
-			this -> TG_v = 500;
-		}
-
 		if(through == true)
 		{
-	//		if(this -> devTG > 1500)
-	//		{
-	//			this -> TG_v = 1000;
-	//		}
-	//		else if((this -> devTG > 1000) && (this -> devTG < 1500))
-	//		{
-	//			this -> TG_v = 750;
-	//		}
-	//		else if(this -> devTG < 1000)
-	//		{
-	//			this -> TG_v = 500;
-	//		}
 			this -> TG_v += 400;
 			if( this -> TG_v > 600 )
 			{
@@ -230,14 +226,8 @@ void Line::MoveLine(void)
 			{
 				PWM* pwm = new PWM();
 
-	//			this -> TG_r = this -> TG_r + 180;
-	//			if(this -> TG_r > 360)
-	//			{
-	//				this -> TG_r = this -> TG_r -360;
-	//			}
-
-				pwm -> V_output(600, (uint16_t)this -> TG_r, 0, (uint16_t)this -> now_r, E_move_status::MOVE);
-			  //pwm -> V_output(600, (uint16_t)this -> TG_r, direction, (uint16_t)this -> now_r, E_move_status::MOVE);
+			    pwm -> V_output(600, (uint16_t)this -> TG_r, 0, (uint16_t)this -> now_r, E_move_status::MOVE);
+			    //pwm -> V_output(600, (uint16_t)this -> TG_r, direction, (uint16_t)this -> now_r, E_move_status::MOVE);
 				judge = E_Line_status::THROUGHING;
 
 				delete pwm;
@@ -247,19 +237,19 @@ void Line::MoveLine(void)
 			{
 				PWM* pwm = new PWM();
 
-				pwm -> V_output(this -> TG_v, (uint16_t)this -> TG_r, 0, (uint16_t)this -> now_r, E_move_status::STOP);
-			  //pwm -> V_output(this -> TG_v, (uint16_t)this -> TG_r, direction, (uint16_t)this -> now_r, E_move_status::STOP);
+			    pwm -> V_output(this -> TG_v, (uint16_t)this -> TG_r, 0, (uint16_t)this -> now_r, E_move_status::STOP);
+			   // pwm -> V_output(this -> TG_v, (uint16_t)this -> TG_r, direction, (uint16_t)this -> now_r, E_move_status::STOP);
 				judge = E_Line_status::STOP;
 
 				delete pwm;
 			}
 		}
-		else
+		else if( arrive == false )
 		{
 			PWM* pwm = new PWM();
 
-			pwm -> V_output(this -> TG_v, (uint16_t)this -> TG_r, 0, (uint16_t)this -> now_r, E_move_status::MOVE);
-		  //pwm -> V_output(this -> TG_v, (uint16_t)this -> TG_r, direction, (uint16_t)this -> now_r, E_move_status::MOVE);
+		    pwm -> V_output(this -> TG_v, (uint16_t)this -> TG_r, 0, (uint16_t)this -> now_r, E_move_status::MOVE);
+		    //pwm -> V_output(this -> TG_v, (uint16_t)this -> TG_r, direction, (uint16_t)this -> now_r, E_move_status::MOVE);
 			judge = E_Line_status::MOVING;
 
 			delete pwm;
