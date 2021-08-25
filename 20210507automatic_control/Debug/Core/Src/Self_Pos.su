@@ -7,7 +7,7 @@ Self_Pos.cpp:121:6:void Self_Pos::update_self_pos_ToF()	24	static
 Self_Pos.cpp:129:5:int Self_Pos::encoder_read_5()	32	static
 Self_Pos.cpp:152:5:int Self_Pos::encoder_read_2()	32	static
 Self_Pos.cpp:176:5:int Self_Pos::calc_diff(int, int, int, int)	48	static
-Self_Pos.cpp:186:5:int Self_Pos::Self_Pos_config_Limit()	88	static
-Self_Pos.cpp:432:6:void Self_Pos::Self_Pos_correction()	88	static
-Self_Pos.cpp:513:8:double Self_Pos::rad(double)	24	static
+Self_Pos.cpp:186:5:int Self_Pos::Self_Pos_config_Limit()	16	static
+Self_Pos.cpp:321:6:void Self_Pos::Self_Pos_correction()	88	static
+Self_Pos.cpp:402:8:double Self_Pos::rad(double)	24	static
 cmath:415:5:constexpr typename __gnu_cxx::__promote_2<_Tp, _Up>::__type std::pow(_Tp, _Up) [with _Tp = int; _Up = int]	24	static

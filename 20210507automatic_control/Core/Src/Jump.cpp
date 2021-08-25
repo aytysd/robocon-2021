@@ -55,11 +55,11 @@ void Jump::Jumping_Rope(void)
 
 void Jump::jump( void )
 {
-	HAL_GPIO_WritePin( GPIOA, GPIO_PIN_11, GPIO_PIN_SET );
+	HAL_GPIO_WritePin( GPIOC, GPIO_PIN_2, GPIO_PIN_SET );
 
 	while( HAL_GPIO_ReadPin( GPIOB, GPIO_PIN_12 ) == GPIO_PIN_SET );
 
-	HAL_GPIO_WritePin( GPIOA, GPIO_PIN_11, GPIO_PIN_RESET );
+	HAL_GPIO_WritePin( GPIOC, GPIO_PIN_2, GPIO_PIN_RESET );
 
 
 }

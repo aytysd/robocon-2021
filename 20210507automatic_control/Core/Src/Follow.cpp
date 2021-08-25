@@ -28,10 +28,10 @@
 #include "Line.hpp"
 #include "math.h"
 #include "Path.hpp"
+#include "Debug.hpp"
 
-
-int16_t Follow::A_pos_x = -1200;
-int16_t Follow::A_pos_y = -1200;
+int16_t Follow::A_pos_x = 0;
+int16_t Follow::A_pos_y = 0;
 
 int Follow::target_X = 0;
 int Follow::target_Y = 0;
@@ -75,12 +75,19 @@ void Follow::target_calc()
         	Follow::target_X = target_x_1;
         	Follow::target_Y = target_y_1;
 
+        	Debug::TTO_val( ( int )target_x_1, "x;", &huart2 );
+        	Debug::TTO_val( ( int )target_y_1, "y:", &huart2 );
+
         }
         else
         {
 
         	Follow::target_X = target_x_2;
         	Follow::target_Y = target_y_2;
+
+        	Debug::TTO_val( ( int )target_x_2, "x;", &huart2 );
+        	Debug::TTO_val( ( int )target_y_2, "y:", &huart2 );
+
         }
 
 

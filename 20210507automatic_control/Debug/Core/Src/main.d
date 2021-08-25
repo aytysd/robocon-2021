@@ -31,16 +31,16 @@ Core/Src/main.o: ../Core/Src/main.cpp ../Core/Inc/main.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h \
  ../Core/Inc/i2c.h ../Core/Inc/main.h ../Core/Inc/tim.h \
  ../Core/Inc/usart.h ../Core/Inc/gpio.h ../Core/Inc/Function.hpp \
- ../Core/Inc/PWM.hpp ../Core/Inc/General_command.hpp \
- ../Core/Inc/Self_Pos.hpp ../Core/Inc/General_command.hpp \
- ../Core/Inc/ToF.hpp ../Core/Inc/Self_Pos.hpp ../Core/Inc/hGPIO.hpp \
- ../Core/Inc/Init_Move.hpp ../Core/Inc/LED.hpp \
- ../Core/Inc/Error_Handling.hpp ../Core/Inc/Controller.hpp \
- ../Core/Inc/PWM.hpp ../Core/Inc/Init_Move.hpp ../Core/Inc/Control.hpp \
- ../Core/Inc/Rope.hpp ../Core/Inc/Gyro.hpp ../Core/Inc/Debug.hpp \
- ../Core/Inc/Time.hpp ../Core/Inc/Follow.hpp ../Core/Inc/i2c.h \
- ../Core/Inc/tim.h ../Core/Inc/usart.h ../Core/Inc/gpio.h \
- ../Core/Inc/MPU6050.hpp ../Core/Inc/Path.hpp
+ ../Core/Inc/Infinity_command.hpp ../Core/Inc/PWM.hpp \
+ ../Core/Inc/General_command.hpp ../Core/Inc/Self_Pos.hpp \
+ ../Core/Inc/General_command.hpp ../Core/Inc/ToF.hpp \
+ ../Core/Inc/Self_Pos.hpp ../Core/Inc/hGPIO.hpp ../Core/Inc/Init_Move.hpp \
+ ../Core/Inc/LED.hpp ../Core/Inc/Error_Handling.hpp \
+ ../Core/Inc/Controller.hpp ../Core/Inc/PWM.hpp ../Core/Inc/Init_Move.hpp \
+ ../Core/Inc/Control.hpp ../Core/Inc/Rope.hpp ../Core/Inc/Gyro.hpp \
+ ../Core/Inc/Debug.hpp ../Core/Inc/Time.hpp ../Core/Inc/Follow.hpp \
+ ../Core/Inc/i2c.h ../Core/Inc/tim.h ../Core/Inc/usart.h \
+ ../Core/Inc/gpio.h ../Core/Inc/MPU6050.hpp ../Core/Inc/Path.hpp
 
 ../Core/Inc/main.h:
 
@@ -115,6 +115,8 @@ Core/Src/main.o: ../Core/Src/main.cpp ../Core/Inc/main.h \
 ../Core/Inc/gpio.h:
 
 ../Core/Inc/Function.hpp:
+
+../Core/Inc/Infinity_command.hpp:
 
 ../Core/Inc/PWM.hpp:
 
