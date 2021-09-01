@@ -451,7 +451,7 @@ void Controller::identify_CS()
 
 
 
-
+/*
 void Controller::NOP(void){}
 
 void Controller::X(void){}
@@ -493,6 +493,6 @@ void Controller::RSDR(void){}
 void Controller::RSD(void){}
 void Controller::RSDL(void){}
 void Controller::RSL(void){}
-
+*/
 
 

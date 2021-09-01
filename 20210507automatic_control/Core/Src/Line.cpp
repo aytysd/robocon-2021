@@ -89,10 +89,6 @@ void Line::MoveLine(void)
 		this -> devX = fabs(devX);
 		this -> devY = fabs(devY);
 
-		Debug* debug = new Debug();
-		debug -> TTO_val( devY, "Y:", &huart2);
-		delete debug;
-
 		this -> devTG = sqrt((long double)(this -> devX*this -> devX + this -> devY*this -> devY));
 
 		if((tgX == now_X) && (tgY > now_Y))
@@ -167,8 +163,8 @@ void Line::MoveLine(void)
 		this -> now_r = (double)gyro -> get_direction( &hi2c1 );
 		delete gyro;
 
-		direction = this -> now_r;
-		direction = TG_r - direction;
+//		direction = this -> now_r;
+//		direction = TG_r - direction; //+ -> 3,4 down  //- -> 1,2 down
 
 		bool arrive = false;
 
@@ -179,7 +175,7 @@ void Line::MoveLine(void)
 				arrive = true;
 			}
 		}
-		else if( through = false )
+		else if( through == false )
 		{
 			bool inX = abs(tgX - now_X) <= 100;
 			bool inY = abs(tgY - now_Y) <= 100;
@@ -226,8 +222,8 @@ void Line::MoveLine(void)
 			{
 				PWM* pwm = new PWM();
 
+//			    pwm -> VC_output(600, (uint16_t)this -> TG_r, 0, (uint16_t)this -> now_r, (int16_t)direction, E_move_status::MOVE);
 			    pwm -> V_output(600, (uint16_t)this -> TG_r, 0, (uint16_t)this -> now_r, E_move_status::MOVE);
-			    //pwm -> V_output(600, (uint16_t)this -> TG_r, direction, (uint16_t)this -> now_r, E_move_status::MOVE);
 				judge = E_Line_status::THROUGHING;
 
 				delete pwm;
@@ -237,8 +233,8 @@ void Line::MoveLine(void)
 			{
 				PWM* pwm = new PWM();
 
+//			    pwm -> VC_output(this -> TG_v, (uint16_t)this -> TG_r, 0, (uint16_t)this -> now_r, (int16_t)direction, E_move_status::STOP);
 			    pwm -> V_output(this -> TG_v, (uint16_t)this -> TG_r, 0, (uint16_t)this -> now_r, E_move_status::STOP);
-			   // pwm -> V_output(this -> TG_v, (uint16_t)this -> TG_r, direction, (uint16_t)this -> now_r, E_move_status::STOP);
 				judge = E_Line_status::STOP;
 
 				delete pwm;
@@ -248,8 +244,8 @@ void Line::MoveLine(void)
 		{
 			PWM* pwm = new PWM();
 
+//		    pwm -> VC_output(this -> TG_v, (uint16_t)this -> TG_r, 0, (uint16_t)this -> now_r, (int16_t)direction, E_move_status::MOVE);
 		    pwm -> V_output(this -> TG_v, (uint16_t)this -> TG_r, 0, (uint16_t)this -> now_r, E_move_status::MOVE);
-		    //pwm -> V_output(this -> TG_v, (uint16_t)this -> TG_r, direction, (uint16_t)this -> now_r, E_move_status::MOVE);
 			judge = E_Line_status::MOVING;
 
 			delete pwm;

@@ -22,20 +22,26 @@
 #include "Init_move.hpp"
 #include "hGPIO.hpp"
 #include "main.h"
+#include "Jump.hpp"
 
-uint16_t Controller::speed = 700;
+uint16_t Controller::speed = 600;
 uint16_t Controller::speed_jump = 1000;
 
 
 //--------------------------------------------------
 //init
-/*
+
 void Controller::NOP(void)
 {
 	PWM* pwm = new PWM();
+	Jump* jump = new Jump();
+
+//	jump -> jump();
+//	HAL_GPIO_WritePin( GPIOC, GPIO_PIN_2, GPIO_PIN_RESET );
 
 	pwm -> V_output( 0, 0, 0, 0, E_move_status::STOP );
 
+	delete jump;
 	delete pwm;
 }
 
@@ -43,23 +49,18 @@ void Controller::NOP(void)
 //--------------------------------------------------
 //Jump
 void Controller::X(void)
-{}
+{
+	Jump* jump = new Jump();
+//	HAL_GPIO_WritePin( GPIOC, GPIO_PIN_2, GPIO_PIN_SET );
+
+	jump -> jump();
+	delete jump;
+}
 void Controller::Y(void){}
 void Controller::A(void){}
 void Controller::B(void){}
 
-void Controller::LB(void)
-{
-	Function* function = new Function();
-
-	function -> drive_motor(5, CW, this -> speed_jump, false, true);
-//	while( HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_3) == 1){}
-//	while( HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_3) == 0 ){}
-//	function -> drive_motor(5, BRAKE, 0, false, true);
-
-	delete function;
-
-}
+void Controller::LB(void){}
 
 
 //--------------------------------------------------
@@ -225,4 +226,4 @@ void Controller::LSUL(void){}
 void Controller::LSUR(void){}
 void Controller::LSDR(void){}
 void Controller::LSDL(void){}
-*/
+

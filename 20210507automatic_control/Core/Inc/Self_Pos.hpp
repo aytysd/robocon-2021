@@ -56,7 +56,7 @@ public:
 	void Self_Pos_correction( void );
 #endif
 
-	E_Self_Pos_status Judge_Self_Pos(void);
+	static E_Self_Pos_status Judge_Self_Pos(void);
 
 	static int Self_Pos_PE[2];
 	static int out_angle;

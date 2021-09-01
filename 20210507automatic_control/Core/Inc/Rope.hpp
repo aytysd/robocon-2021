@@ -29,9 +29,11 @@ public:
 	int encoder_read_3();
 	void stop_rope(uint8_t motor_number);
 	void rotate_rope(uint8_t motor_number, uint8_t direction, uint16_t down_speed, uint16_t up_speed);
+	void Encoder_val_TX( void );
 
 private:
 
+	static bool run_C;
 	int encoder_read_4();
 	int encoder_read_5();
 

@@ -112,22 +112,9 @@ void HGPIO::GPIO_PIN_0_func(void)
 {
 	Jump::PE_1 = true;
 }
-void HGPIO::GPIO_PIN_1_func(void){};
-void HGPIO::GPIO_PIN_2_func(void){};
-void HGPIO::GPIO_PIN_3_func(void){};
-//PE_Sensor_3
-void HGPIO::GPIO_PIN_4_func(void)
+void HGPIO::GPIO_PIN_1_func(void)
 {
-	Jump::PE_3 = true;
-}
-void HGPIO::GPIO_PIN_5_func(void){};
-void HGPIO::GPIO_PIN_6_func(void){};
-void HGPIO::GPIO_PIN_7_func(void){};
-void HGPIO::GPIO_PIN_8_func(void){};
-void HGPIO::GPIO_PIN_9_func(void){};
-void HGPIO::GPIO_PIN_10_func(void){};
-void HGPIO::GPIO_PIN_11_func(void)
-{
+
 #ifdef M_Self_Pos
 	if (this->count <= 1 && this->allow) {
 			Gyro *gyro = new Gyro();
@@ -148,6 +135,21 @@ void HGPIO::GPIO_PIN_11_func(void)
 	Self_Pos::Self_Pos_PE[0] = 1;
 #endif
 };
+void HGPIO::GPIO_PIN_2_func(void){};
+void HGPIO::GPIO_PIN_3_func(void){};
+//PE_Sensor_3
+void HGPIO::GPIO_PIN_4_func(void)
+{
+	Jump::PE_3 = true;
+}
+void HGPIO::GPIO_PIN_5_func(void){};
+void HGPIO::GPIO_PIN_6_func(void){};
+void HGPIO::GPIO_PIN_7_func(void){};
+void HGPIO::GPIO_PIN_8_func(void){};
+void HGPIO::GPIO_PIN_9_func(void){};
+void HGPIO::GPIO_PIN_10_func(void){};
+void HGPIO::GPIO_PIN_11_func(void)
+{};
 void HGPIO::GPIO_PIN_12_func(void)
 {
 	Function* function = new Function();
@@ -162,6 +164,8 @@ void HGPIO::GPIO_PIN_13_func(void)
 	Jump::PE_2 = true;
 }
 void HGPIO::GPIO_PIN_14_func(void)
+{};
+void HGPIO::GPIO_PIN_15_func(void)
 {
 #ifdef M_Self_Pos
 	if (this->count <= 1 && this->allow) {
@@ -183,4 +187,3 @@ void HGPIO::GPIO_PIN_14_func(void)
 	Self_Pos::Self_Pos_PE[1] = 1;
 #endif
 };
-void HGPIO::GPIO_PIN_15_func(void){};
