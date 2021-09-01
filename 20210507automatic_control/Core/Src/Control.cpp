@@ -63,8 +63,8 @@ void Control::send_command( E_robot_name robot, uint8_t* data )
 
 		break;
 	case E_robot_name::C:
-		while( HAL_UART_Transmit( &huart5, ( uint8_t* )data_a, sizeof( data_a ), 100 ) != HAL_OK );
-		while( HAL_UART_Transmit( &huart5, ( uint8_t* )data_b, sizeof( data_b ), 100 ) != HAL_OK );
+		while( HAL_UART_Transmit( &huart3, ( uint8_t* )data_a, sizeof( data_a ), 100 ) != HAL_OK );
+		while( HAL_UART_Transmit( &huart3, ( uint8_t* )data_b, sizeof( data_b ), 100 ) != HAL_OK );
 
 		break;
 	default:
