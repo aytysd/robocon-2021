@@ -25,7 +25,7 @@
 #include "usart.h"
 #include "gpio.h"
 
-#define FOLLOW_RADIUS 700
+#define FOLLOW_RADIUS 50
 
 class Follow
 {

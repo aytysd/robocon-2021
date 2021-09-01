@@ -38,10 +38,6 @@ void PWM::V_output(uint16_t V, uint16_t fai, int16_t rotation_speed, uint16_t at
 	if( status == E_move_status::MOVE )
 	{
 
-		if( rotation_speed < 0 )
-			Debug::TTO_val( 2, "left", &huart2 );
-		else
-			Debug::TTO_val(3, "right", &huart2 );
 
 		Function* function = new Function();
 
@@ -69,7 +65,6 @@ void PWM::V_output(uint16_t V, uint16_t fai, int16_t rotation_speed, uint16_t at
 	else if( status == E_move_status::STOP )
 	{
 
-		Debug::TTO_val( 1, "stop", &huart2 );
 
 		Function* function = new Function();
 

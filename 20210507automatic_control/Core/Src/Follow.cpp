@@ -44,7 +44,12 @@ void Follow::follow()
 
 	this -> target_calc();
 
+	Debug::TTO_val( Follow::target_X, "targetX:", &huart2 );
+	Debug::TTO_val( Follow::target_Y, "targetY:", &huart2 );
+
+
 	line -> Line_driver( self_pos -> get_Self_Pos_X(), self_pos -> get_Self_Pos_Y(), Follow::target_X, Follow::target_Y, false );
+	while( Line::judge == E_Line_status::MOVING ){}
 
 	delete line;
 	delete self_pos;
@@ -60,7 +65,7 @@ void Follow::target_calc()
     int y_diff = Follow::A_pos_y - self_pos -> get_Self_Pos_Y();
 
 
-    if( !( ( x_diff == 0 ) || ( y_diff == 0 ) ) )
+    if( !( ( x_diff == 0 ) && ( y_diff == 0 ) ) )
     {
         double degree_B_to_A = atan( ( double )y_diff / ( double )x_diff );
 
@@ -75,18 +80,12 @@ void Follow::target_calc()
         	Follow::target_X = target_x_1;
         	Follow::target_Y = target_y_1;
 
-        	Debug::TTO_val( ( int )target_x_1, "x;", &huart2 );
-        	Debug::TTO_val( ( int )target_y_1, "y:", &huart2 );
-
         }
         else
         {
 
         	Follow::target_X = target_x_2;
         	Follow::target_Y = target_y_2;
-
-        	Debug::TTO_val( ( int )target_x_2, "x;", &huart2 );
-        	Debug::TTO_val( ( int )target_y_2, "y:", &huart2 );
 
         }
 
