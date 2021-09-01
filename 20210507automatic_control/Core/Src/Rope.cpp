@@ -26,20 +26,29 @@
 #include "tim.h"
 #include "usart.h"
 #include "gpio.h"
+#include "Control.hpp"
 
 
 int Rope::over_flow_cnt_3 = -1;
 int Rope::over_flow_cnt_4 = -1;
 int Rope::over_flow_cnt_5 = -1;
 
-bool run = false;
+bool Rope::run_C = false;
 bool force_stop = false;
 //int last_encoder_pos = 0;
 
 int Rope::encoder_read_3()
 {
 	int enc_buff = this -> over_flow_cnt_3 * 0x10000 + TIM3 -> CNT;
-	return enc_buff % 2048;
+	while( enc_buff > 2048 )
+	{
+		enc_buff -= 2048;
+	}
+	while( enc_buff < 0 )
+	{
+		enc_buff += 2048;
+	}
+	return enc_buff;
 }
 
 int Rope::encoder_read_4()
@@ -55,54 +64,97 @@ int Rope::encoder_read_5()
 }
 
 //rotate_rope(5, CW, 1040, 520);
+//void Rope::rotate_rope(uint8_t motor_number, uint8_t direction, uint16_t down_speed, uint16_t up_speed)
+//{
+//	if( Rope::run_C == true ) return;
+//
+//	Function* function = new Function();
+//	Rope* rope = new Rope();
+//
+//	if( Rope::run_C == false /*&& rope -> encoder_read_3() != last_encoder_pos*/) Rope::run_C = true;
+//
+//	while( run_C == true )
+//	{
+//		if( rope -> encoder_read_3() > 1024 )
+//		{
+//			function -> drive_motor_Rope(motor_number, direction, up_speed, false);
+//
+//			for(int i=0;i<100;++i)
+//			{
+//				HAL_Delay(1);
+//				if( force_stop == true ) return;
+//			}
+//		}
+//		else
+//		{
+//			function -> drive_motor_Rope(motor_number, direction, down_speed, false);
+//
+//			for(int i = 0; i < 100; ++i)
+//			{
+//				HAL_Delay(1);
+//				if( force_stop == true ) return;
+//			}
+//		}
+//		Debug::TTO_val( encoder_read_3(), "encoder:", &huart2);
+//	}
+//
+//	delete function;
+//	delete rope;
+//}
+
 void Rope::rotate_rope(uint8_t motor_number, uint8_t direction, uint16_t down_speed, uint16_t up_speed)
 {
-	if( run == true ) return;
+	if( Rope::run_C == true )
+		return;
 
 	Function* function = new Function();
-	Rope* rope = new Rope();
 
-	if( run == false /*&& rope -> encoder_read_3() != last_encoder_pos*/) run = true;
+	if( Rope::run_C == false /*&& rope -> encoder_read_3() != last_encoder_pos*/)
+		Rope::run_C = true;
 
-	while( run == true )
+	function -> drive_motor_Rope( motor_number, direction, 1000, false);
+	while( this -> encoder_read_3() < 1024){}
+
+	while( Rope::run_C == true )
 	{
-		if( rope -> encoder_read_3() > 1024 )
+		if(( this -> encoder_read_3() > 1536 ) || (this -> encoder_read_3() < 512 ))
+		{
+			function -> drive_motor_Rope( motor_number, direction, down_speed, false);
+		}
+		else if(( this -> encoder_read_3() > 512 ) && (this -> encoder_read_3() < 1536))
 		{
 			function -> drive_motor_Rope(motor_number, direction, up_speed, false);
-
-			for(int i=0;i<100;++i)
-			{
-				HAL_Delay(1);
-				if( force_stop == true ) return;
-			}
 		}
-		else
-		{
-			function -> drive_motor_Rope(motor_number, direction, down_speed, false);
-
-			for(int i = 0; i < 100; ++i)
-			{
-				HAL_Delay(1);
-				if( force_stop == true ) return;
-			}
-		}
+		Debug::TTO_val( encoder_read_3(), "encoder:", &huart2);
 	}
 
 	delete function;
-	delete rope;
 }
 
 //stop_rotate(5);
 void Rope::stop_rope(uint8_t motor_number)
 {
 	Function* function = new Function();
-	Rope* rope = new Rope();
 
-	run = false;
+	this ->
+	Rope::run_C = false;
 	force_stop = true;
 	function -> drive_motor_Rope(motor_number, BRAKE, 0, true);
 	//last_encoder_pos = rope -> encoder_read_3();
 
 	delete function;
-	delete rope;
+}
+
+void Rope::Encoder_val_TX( void )
+{
+	Control* control = new Control();
+
+	uint8_t TXdate_rope[8];
+	TXdate_rope[1] = this -> encoder_read_3();
+
+	control -> send_command( E_robot_name::A, ( uint8_t* )TXdate_rope );
+	control -> send_command( E_robot_name::B, ( uint8_t* )TXdate_rope );
+
+	delete control;
+
 }

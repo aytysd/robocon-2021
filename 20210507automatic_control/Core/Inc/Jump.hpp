@@ -33,6 +33,7 @@ public:
 	static bool PE_1; //PC0
 	static bool PE_2; //PC13
 	static bool PE_3; //PA4
+	static uint8_t encoder_val_rope[8];
 private:
 
 	static E_move_status status;

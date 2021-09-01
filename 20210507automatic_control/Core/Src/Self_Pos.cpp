@@ -406,19 +406,19 @@ double Self_Pos::rad(double deg)
 
 E_Self_Pos_status Self_Pos::Judge_Self_Pos(void)
 {
-	if(( this -> Self_Pos_X >= 0 ) && ( this -> Self_Pos_Y <= 0 ))
+	if(( Self_Pos::Self_Pos_X >= 0 ) && ( Self_Pos::Self_Pos_Y <= 0 ))
 	{
 		return E_Self_Pos_status::First_Quadrant;
 	}
-	else if((this -> Self_Pos_X < 0 ) && ( this -> Self_Pos_Y < 0))
+	else if((Self_Pos::Self_Pos_X < 0 ) && ( Self_Pos::Self_Pos_Y < 0))
 	{
 		return E_Self_Pos_status::Second_Quadrant;
 	}
-	else if(( this -> Self_Pos_X <= 0 ) && (this -> Self_Pos_Y >= 0 ))
+	else if(( Self_Pos::Self_Pos_X <= 0 ) && ( Self_Pos::Self_Pos_Y >= 0 ))
 	{
 		return E_Self_Pos_status::Third_Quadrant;
 	}
-	else if(( this -> Self_Pos_X > 0 ) && ( this -> Self_Pos_Y < 0 ))
+	else if(( Self_Pos::Self_Pos_X > 0 ) && ( Self_Pos:: Self_Pos_Y < 0 ))
 	{
 		return E_Self_Pos_status::Fourth_Quadrant;
 	}
