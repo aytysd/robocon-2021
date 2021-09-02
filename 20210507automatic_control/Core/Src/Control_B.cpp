@@ -70,14 +70,11 @@ void Control::control_B( void )
 		while( Control::stop_flag == false )
 		{
 
-			led -> LED_output( E_LED_status::MODE_INFINITY_JUMP );
+			line -> Line_driver( ( int )Infinity::A_Pos::LD_X, ( int )Infinity::A_Pos::LD_Y, ( int )Infinity::A_Pos::RU_X, ( int )Infinity::A_Pos::RU_Y, true );
+			while( Line::judge == E_Line_status::MOVING && Control::stop_flag == false ){};
 
-			Follow* follow = new Follow();
-			follow -> follow();
-			delete follow;
-
-
-
+			line -> Line_driver( ( int )Infinity::A_Pos::RU_X, ( int )Infinity::A_Pos::RU_Y, ( int )Infinity::A_Pos::R_SPC_X, ( int )Infinity::A_Pos::R_SPC_Y, false );
+			while( Line::judge == E_Line_status::MOVING && Control::stop_flag == false  ){};
 
 			/******************************************************************************/ // self pos correction movement
 
@@ -88,6 +85,14 @@ void Control::control_B( void )
 
 			/******************************************************************************/
 
+			line -> Line_driver( ( int )Infinity::A_Pos::R_SPC_X, ( int )Infinity::A_Pos::R_SPC_Y, ( int )Infinity::A_Pos::RD_X, ( int )Infinity::A_Pos::RD_Y, true );
+			while( Line::judge == E_Line_status::MOVING && Control::stop_flag == false  ){};
+
+			line -> Line_driver( ( int )Infinity::A_Pos::RD_X, ( int )Infinity::A_Pos::RD_Y, ( int )Infinity::A_Pos::LU_X, ( int )Infinity::A_Pos::LU_Y, true );
+			while( Line::judge == E_Line_status::MOVING && Control::stop_flag == false  ){};
+
+			line -> Line_driver( ( int )Infinity::A_Pos::LU_X, ( int )Infinity::A_Pos::LU_Y, ( int )Infinity::A_Pos::L_SPC_X, ( int )Infinity::A_Pos::L_SPC_Y, false );
+			while( Line::judge == E_Line_status::MOVING && Control::stop_flag == false  ){};
 
 			/******************************************************************************/ // self pos correction movement
 
@@ -99,6 +104,9 @@ void Control::control_B( void )
 
 
 			/******************************************************************************/
+
+			line -> Line_driver( ( int )Infinity::A_Pos::L_SPC_X, ( int )Infinity::A_Pos::L_SPC_Y, ( int )Infinity::A_Pos::LD_X, ( int )Infinity::A_Pos::LD_Y, true );
+			while( Line::judge == E_Line_status::MOVING && Control::stop_flag == false  ){};
 
 
 		}

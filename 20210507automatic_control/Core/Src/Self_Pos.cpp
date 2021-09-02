@@ -36,8 +36,8 @@
 #include "MPU6050.hpp"
 
 
-int16_t Self_Pos::Self_Pos_X = 0; //(mm)
-int16_t Self_Pos::Self_Pos_Y = 0; //(mm)
+int16_t Self_Pos::Self_Pos_X = -2643; //(mm)
+int16_t Self_Pos::Self_Pos_Y = -2643; //(mm)
 
 int Self_Pos::Self_Pos_PE[2] = {0,0};
 int Self_Pos::out_angle = 0;
@@ -103,8 +103,8 @@ void Self_Pos::update_self_pos(void)
 		break;
 
 	case E_robot_name::B:
-		d1 = -2 * 28 * M_PI * ( ( double )this -> encoder_read_5() / ( double ) 2048 ); //encoder5_moving distance(mm) 55.5=wheel radius 2048=encoder resolution
-		d2 = 2 * 28 * M_PI * ( ( double )this -> encoder_read_2() / ( double ) 2048 ); //encoder5_moving distance(mm) 55.5=wheel radius 2048=encoder resolution
+		d1 = -2 * 25 * M_PI * ( ( double )this -> encoder_read_5() / ( double ) 2048 ); //encoder5_moving distance(mm) 55.5=wheel radius 2048=encoder resolution
+		d2 = 2 * 25 * M_PI * ( ( double )this -> encoder_read_2() / ( double ) 2048 ); //encoder5_moving distance(mm) 55.5=wheel radius 2048=encoder resolution
 		break;
 
 	case E_robot_name::C:

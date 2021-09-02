@@ -185,13 +185,8 @@ void HAL_UART_RxCpltCallback( UART_HandleTypeDef* UartHandle )
 		if( A_Rxdata[ 0 ] == ( uint8_t )E_data_type::A_pos )
 		{
 			Control* control = new Control();
-			Follow* follow = new Follow();
-
-			control -> decode_self_pos( &Follow::A_pos_x, &Follow::A_pos_y, A_Rxdata );
-			follow -> follow();
-
+			control -> decode_self_pos( &Line::A_pos_x, &Line::A_pos_y, A_Rxdata );
 			delete control;
-			delete follow;
 		}
 		//C PSP
 		else if( A_Rxdata[ 0 ] == ( uint8_t )E_data_type::done )
@@ -285,6 +280,7 @@ int main(void)
   Self_Pos* self_pos = new Self_Pos();
   PWM* pwm = new PWM();
   Path* line = new Path();
+  Function* function = new Function();
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -320,14 +316,12 @@ int main(void)
   MX_TIM7_Init();
   /* USER CODE BEGIN 2 */
   init_move -> init_move( ROBOT );
-
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-
 
 	  switch( ROBOT )
 	  {
