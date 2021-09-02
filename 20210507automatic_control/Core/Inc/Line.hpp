@@ -41,6 +41,8 @@
 #include "main.h"
 #include "i2c.h"
 #include "General_command.hpp"
+#include "Path.hpp"
+
 
 class Line
 {
@@ -62,6 +64,7 @@ private:
 
 	void set(int befX, int befY, int tgX, int tgY);
 	double distance(int x, int y, int tgX, int tgY);
+	double get_distance( vector A, vector B );
 	double TGdistance(int x, int y, int tgX, int tgY);
 
 	static int AftX;
@@ -70,12 +73,26 @@ private:
 	static int BefY;
 	static bool through;
 
+	double speed_PID( vector robot_A, vector self_pos );
+	double P( vector robot_A, vector self_pos );
+	double I( vector robot_A, vector self_pos );
+	double D( vector robot_A, vector self_pos );
+
+
+
+	static double integral_diff;
+
+
 public:
 	void Line_driver(int bef, int befY, int tgX, int tgY, bool through);
 	void MoveLine(void);
 	static E_Line_status judge;
 
 	static bool Enable_line;
+
+	static int16_t A_pos_x;
+	static int16_t A_pos_y;
+
 };
 
 

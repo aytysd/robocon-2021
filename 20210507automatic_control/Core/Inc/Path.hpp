@@ -22,11 +22,16 @@
 
 #include "main.h"
 
-#define SPEED_LIMIT 700
-#define MIN_SPEED 500
-#define TIME_NEEDED 1
-#define MAX_ACCEL 50
+#define SPEED_LIMIT 500
+#define MIN_SPEED 0
+#define MAX_ACCEL 1
 
+#define FR 600
+#define TR 600
+
+#define Kp 0.2
+#define Ki 0.01
+#define Kd 0.01
 
 typedef struct
 {
@@ -48,6 +53,9 @@ public:
 	void movepath( void );
 	static E_path_status judge;
 
+	static int16_t A_pos_x;
+	static int16_t A_pos_y;
+
 private:
 	uint8_t where_target_is( double x, double y );
 	double calc_t( vector A, vector B );
@@ -64,6 +72,13 @@ private:
 
 	static bool through;
 	static bool arrive;
+
+	double speed_PID( vector robot_A, vector self_pos );
+	double P( vector robot_A, vector self_pos );
+	double I( vector robot_A, vector self_pos );
+	double D( vector robot_A, vector self_pos );
+
+	static double integral_diff;
 
 };
 

@@ -27,6 +27,11 @@
 #include "Debug.hpp"
 #include "usart.h"
 
+double Line::integral_diff = 0;
+
+int16_t Line::A_pos_x = 0;
+int16_t Line::A_pos_y = 0;
+
 int Line::AftX = 0;
 int Line::AftY = 0;
 
@@ -261,4 +266,46 @@ void Line::Line_driver(int befX, int befY, int tgX, int tgY, bool through)
 	Line::AftX = tgX;
 	Line::AftY = tgY;
 	Line::through = through;
+
+	Line::integral_diff = 0;
 }
+
+double Line::speed_PID( vector robot_A, vector self_pos )
+{
+	return this -> P( robot_A, self_pos ) + this -> I( robot_A, self_pos ) - this -> D( robot_A, self_pos );
+}
+
+double Line::P( vector robot_A, vector self_pos )
+{
+	return Kp * this -> get_distance( robot_A, self_pos );
+}
+
+double Line::I( vector robot_A, vector self_pos )
+{
+
+		Line::integral_diff += this -> get_distance( robot_A, self_pos );
+		return Ki * Line::integral_diff;
+
+
+}
+
+double Line::D( vector robot_A, vector self_pos )
+{
+	static double prev_diff;
+
+	double dev = this -> get_distance( robot_A, self_pos ) - prev_diff;
+	prev_diff = this -> get_distance( robot_A, self_pos );
+
+	return Kd * dev;
+
+}
+
+double Line::get_distance( vector A, vector B )
+{
+
+    double distance = sqrt( ( ( A.X - B.X ) *  ( A.X - B.X ) ) + ( ( A.Y - B.Y ) * ( A.Y - B.Y ) ) );
+    return distance;
+
+}
+
+

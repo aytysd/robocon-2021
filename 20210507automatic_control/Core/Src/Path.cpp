@@ -32,6 +32,11 @@
 #include "i2c.h"
 #include "float.h"
 
+int16_t Path::A_pos_x = 2643;
+int16_t Path::A_pos_y = 2643;
+
+double Path::integral_diff = 0;
+
 double Path::Ax = 0;
 double Path::Ay = 0;
 double Path::Bx = 0;
@@ -62,14 +67,26 @@ void Path::movepath( void )
 	PWM* pwm = new PWM();
 	MPU6050* gyro = new MPU6050();
 
+
+	vector robot_A;
+	vector self_pos;
+
 	vector A_pos;
 	vector B_pos;
-	vector self_pos;
 
 	vector MA_vector;
 	vector MB_vector;
 	vector MD_vector;
 	vector target;
+
+	robot_A.X = Path::A_pos_x;
+	robot_A.Y = Path::A_pos_y;
+
+	Self_Pos* sp = new Self_Pos();
+	self_pos.X = sp -> get_Self_Pos_X();
+	self_pos.Y = sp -> get_Self_Pos_Y();
+	delete sp;
+
 
 	A_pos.X = Path::Ax;
 	A_pos.Y = Path::Ay;
@@ -77,10 +94,6 @@ void Path::movepath( void )
 	B_pos.X = Path::Bx;
 	B_pos.Y = Path::By;
 
-	Self_Pos* sp = new Self_Pos();
-	self_pos.X = sp -> get_Self_Pos_X();
-	self_pos.Y = sp -> get_Self_Pos_Y();
-	delete sp;
 
 	MA_vector.X = A_pos.X - self_pos.X;
 	MA_vector.Y = A_pos.Y - self_pos.Y;
@@ -95,87 +108,106 @@ void Path::movepath( void )
 	target.Y = ( MD_vector.Y + MB_vector.Y ) / 2;
 
 
-	double M_B_distance = this -> get_distance( self_pos, B_pos );
 
-	if( M_B_distance <= 500 )
+
+	if( this -> get_distance( robot_A, self_pos ) <= FR )
 	{
+		PWM* pwm = new PWM();
 
-		Path::arrive = true;
+		Path::speed = 0;
+		pwm -> V_output( 0, 0, 0, 0, E_move_status::STOP );
 
-		if( Path::through == true )
+		delete pwm;
+	}
+	else
+	{
+		if( this -> get_distance( B_pos, self_pos ) < TR )
 		{
-			Path::speed = 500;
-			pwm -> V_output( Path::speed, Path::direction, 0, gyro -> get_direction( &hi2c1 ), E_move_status::MOVE );
-			Path::judge = E_path_status::REACHING;
-			delete pwm;
-			delete gyro;
-			return;
+			Path::arrive = true;
+
+			if( Path::through == true )
+			{
+				Path::speed = 500;
+				pwm -> V_output( Path::speed, Path::direction, 0, gyro -> get_direction( &hi2c1 ), E_move_status::MOVE );
+				Path::judge = E_path_status::REACHING;
+				delete pwm;
+				delete gyro;
+				return;
+
+			}
+			else
+			{
+				Path::speed = 0;
+				Path::judge = E_path_status::STOP;
+				pwm -> V_output( 0, 0, 0, 0, E_move_status::STOP );
+				delete pwm;
+				delete gyro;
+				return;
+			}
 
 		}
 		else
 		{
-			Path::speed = 0;
-			Path::judge = E_path_status::STOP;
-			pwm -> V_output( 0, 0, 0, 0, E_move_status::STOP );
-			delete pwm;
-			delete gyro;
-			return;
+			double target_speed = this -> speed_PID( robot_A, self_pos );
+
+			if( target_speed >= SPEED_LIMIT )
+				target_speed = SPEED_LIMIT;
+
+
+			if( target_speed > Path::speed )
+				Path::speed += MAX_ACCEL;
+			else
+				Path::speed = target_speed;
+
+
+			if( target.X == 0 )
+				target.X = 0.1;
+
+			Path::direction = atan( target.Y / target.X );
+			Path::direction = 180 * ( Path::direction / M_PI );
+
+			switch( this -> where_target_is( target.X, target.Y ) )
+			{
+			case 1:
+			case 4:
+				break;
+			case 3:
+			case 2:
+				Path::direction += 180;
+				break;
+
+			}
+
+			while( Path::direction <= 0 )
+				Path::direction += 360;
+
+
+			target.X += self_pos.X;
+			target.Y += self_pos.Y;
+
+
+			Path::speed = 300;
+			pwm -> V_output( ( uint16_t )Path::speed, ( uint16_t )Path::direction, 0, ( uint16_t )gyro -> get_direction( &hi2c1 ), E_move_status::MOVE );
+
+			Path::judge = E_path_status::MOVING;
+
+/*
+			Debug::TTO_val( ( int )target.X, "X:", &huart2 );
+			Debug::TTO_val( ( int )target.Y, "Y:", &huart2 );
+*/
+			Debug::TTO_val( ( int )Path::direction, "direction:", &huart2 );
+//			Debug::TTO_val( ( uint16_t )Path::speed, "speed:", &huart2 );
+//			Debug::TTO_val( ( int )target_speed, "target_speed", &huart2 );
+
 		}
+
+		delete gyro;
+		delete pwm;
 
 	}
 
 
-	if( Path::arrive != true )
-	{
 
-		double target_speed = M_B_distance / TIME_NEEDED;
-
-		if( target_speed >= SPEED_LIMIT )
-			target_speed = SPEED_LIMIT;
-
-
-		if( target_speed > Path::speed )
-			Path::speed += MAX_ACCEL;
-		else
-			Path::speed = target_speed;
-
-
-		if( target.X == 0 )
-			target.X = 0.1;
-
-		Path::direction = atan( target.Y / target.X );
-		Path::direction = 180 * ( Path::direction / M_PI );
-
-		switch( this -> where_target_is( target.X, target.Y ) )
-		{
-		case 1:
-		case 4:
-			break;
-		case 3:
-		case 2:
-			Path::direction += 180;
-			break;
-
-		}
-
-
-		target.X += self_pos.X;
-		target.Y += self_pos.Y;
-
-
-		pwm -> V_output( Path::speed, Path::direction, 0, gyro -> get_direction( &hi2c1 ), E_move_status::MOVE );
-
-		Path::judge = E_path_status::MOVING;
-
-		Debug::TTO_val( ( int )target.X, "X:", &huart2 );
-		Debug::TTO_val( ( int )target.Y, "Y:", &huart2 );
-		Debug::TTO_val( ( int )Path::direction, "direction:", &huart2 );
-		Debug::TTO_val( ( uint16_t )Path::speed, "speed:", &huart2 );
-
-	}
-
-	delete gyro;
-	delete pwm;
 }
 
 double Path::calc_t( vector A, vector B )
@@ -221,5 +253,43 @@ double Path::get_distance( vector A, vector B )
 
     double distance = sqrt( ( ( A.X - B.X ) *  ( A.X - B.X ) ) + ( ( A.Y - B.Y ) * ( A.Y - B.Y ) ) );
     return distance;
+
+}
+
+double Path::speed_PID( vector robot_A, vector self_pos )
+{
+	return this -> P( robot_A, self_pos ) + this -> I( robot_A, self_pos ) - this -> D( robot_A, self_pos );
+}
+
+double Path::P( vector robot_A, vector self_pos )
+{
+	return Kp * this -> get_distance( robot_A, self_pos );
+}
+
+double Path::I( vector robot_A, vector self_pos )
+{
+
+	if( Path::arrive == true )
+	{
+		Path::integral_diff = 0;
+		return 0;
+	}
+	else
+	{
+		Path::integral_diff += this -> get_distance( robot_A, self_pos );
+		return Ki * Path::integral_diff;
+	}
+
+
+}
+
+double Path::D( vector robot_A, vector self_pos )
+{
+	static double prev_diff;
+
+	double dev = this -> get_distance( robot_A, self_pos ) - prev_diff;
+	prev_diff = this -> get_distance( robot_A, self_pos );
+
+	return Kd * dev;
 
 }
