@@ -222,8 +222,8 @@ void Line::MoveLine(void)
 			{
 				PWM* pwm = new PWM();
 
-//			    pwm -> VC_output(600, (uint16_t)this -> TG_r, 0, (uint16_t)this -> now_r, (int16_t)direction, E_move_status::MOVE);
-			    pwm -> V_output(600, (uint16_t)this -> TG_r, 0, (uint16_t)this -> now_r, E_move_status::MOVE);
+				pwm -> Front_Move( 600, (uint16_t)this -> TG_r, (uint16_t)this -> now_r, E_move_status::MOVE );
+//			    pwm -> V_output(600, (uint16_t)this -> TG_r, 0, (uint16_t)this -> now_r, E_move_status::MOVE);
 				judge = E_Line_status::THROUGHING;
 
 				delete pwm;
@@ -233,8 +233,8 @@ void Line::MoveLine(void)
 			{
 				PWM* pwm = new PWM();
 
-//			    pwm -> VC_output(this -> TG_v, (uint16_t)this -> TG_r, 0, (uint16_t)this -> now_r, (int16_t)direction, E_move_status::STOP);
-			    pwm -> V_output(this -> TG_v, (uint16_t)this -> TG_r, 0, (uint16_t)this -> now_r, E_move_status::STOP);
+				pwm -> Front_Move( this -> TG_v, (uint16_t)this -> TG_r, (uint16_t)this -> now_r, E_move_status::STOP);
+//			    pwm -> V_output(this -> TG_v, (uint16_t)this -> TG_r, 0, (uint16_t)this -> now_r, E_move_status::STOP);
 				judge = E_Line_status::STOP;
 
 				delete pwm;
@@ -244,8 +244,8 @@ void Line::MoveLine(void)
 		{
 			PWM* pwm = new PWM();
 
-//		    pwm -> VC_output(this -> TG_v, (uint16_t)this -> TG_r, 0, (uint16_t)this -> now_r, (int16_t)direction, E_move_status::MOVE);
-		    pwm -> V_output(this -> TG_v, (uint16_t)this -> TG_r, 0, (uint16_t)this -> now_r, E_move_status::MOVE);
+			pwm -> Front_Move( this -> TG_v, (uint16_t)this -> TG_r, (uint16_t)this -> now_r, E_move_status::MOVE);
+//			pwm -> V_output(this -> TG_v, (uint16_t)this -> TG_r, 0, (uint16_t)this -> now_r, E_move_status::MOVE);
 			judge = E_Line_status::MOVING;
 
 			delete pwm;
