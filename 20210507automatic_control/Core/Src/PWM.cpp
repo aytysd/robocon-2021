@@ -78,6 +78,74 @@ void PWM::V_output(uint16_t V, uint16_t fai, int16_t rotation_speed, uint16_t at
 	}
 }
 
+void PWM::Front_Move( uint16_t V, uint16_t fai, uint16_t attitude_angle, E_move_status status)
+{
+	if( status == E_move_status::MOVE)
+	{
+		int16_t dis_angle = fai - attitude_angle;
+		if( dis_angle > 180 )
+		{
+			dis_angle = dis_angle - 360;
+		}
+		else if( dis_angle < -180 )
+		{
+			dis_angle = 360 + dis_angle;
+		}
+
+		dis_angle *= 5;
+		if( dis_angle < 25 )
+		{
+			dis_angle = 25;
+		}
+
+/*
+ *        3         Front        2
+ *          --------------------
+ *          |                  |
+ *          |                  |
+ *          |                  |
+ *          |                  |
+ *          |				   |
+ *          |				   |
+ *          | 				   |
+ *          |                  |
+ *          --------------------
+ *        4                      1
+ */
+
+#ifdef PARALLEL
+
+		double V_2_1 = ( double )V + ( double )dis_angle;
+		double V_3_4 = ( double )V - ( double )dis_angle;
+
+#else
+
+		double V_2_4;
+		double V_3_1;
+
+#endif
+
+		Function* function = new Function();
+
+		function -> drive_motor( 1,  CW, V_2_1, true, false );
+		function -> drive_motor( 2,  CW, V_2_1, true, false );
+		function -> drive_motor( 3, CCW, V_3_4, true, false );
+		function -> drive_motor( 4, CCW, V_3_4, true, false );
+
+		delete function;
+	}
+	else
+	{
+		Function* function = new Function();
+
+		function -> drive_motor( 1, BRAKE, 0, false, false );
+		function -> drive_motor( 2, BRAKE, 0, false, false );
+		function -> drive_motor( 3, BRAKE, 0, false, false );
+		function -> drive_motor( 4, BRAKE, 0, false, false );
+
+		delete function;
+	}
+ }
 
 bool PWM::rotate(uint16_t V, uint16_t target_angle)
 {

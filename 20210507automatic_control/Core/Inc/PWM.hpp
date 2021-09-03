@@ -32,11 +32,13 @@
 #define CCW 2
 #define BRAKE 3
 
+#define PARALLEL
 
 class PWM
 {
 public:
 	void V_output(uint16_t V, uint16_t fai, int16_t rotation_speed, uint16_t attitude_angle, E_move_status status);
+	void Front_Move( uint16_t V, uint16_t fai, uint16_t attitude_angle, E_move_status status);
 	bool rotate(uint16_t V, uint16_t target_angle);
 
 private:
