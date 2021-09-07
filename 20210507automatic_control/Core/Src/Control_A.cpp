@@ -44,7 +44,7 @@ void Control::control_A (void)
 	case ( uint8_t )E_Flow::MOVE_INFINITY_INITIAL_POS:
 	{
 
-
+		HAL_GPIO_WritePin( GPIOA, GPIO_PIN_5, GPIO_PIN_RESET );
 
 
 		Line* line = new Line();

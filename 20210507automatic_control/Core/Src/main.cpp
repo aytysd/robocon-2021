@@ -47,6 +47,7 @@
 #include "Follow.hpp"
 #include "MPU6050.hpp"
 #include "Path.hpp"
+#include "Line.hpp"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -94,19 +95,15 @@ void HAL_UART_RxCpltCallback( UART_HandleTypeDef* UartHandle )
 	if( UartHandle == &huart4 )//data from controller
 	{
 
+/*
 		HAL_UART_Receive_IT(&huart4, (uint8_t*)Controller::controller_Rxdata, sizeof(Controller::controller_Rxdata));
 
 		Controller* controller = new Controller();
 		controller -> identify();
 		delete controller;
+*/
 
-
-
-	}
-	else if( UartHandle == &huart5 )// data from B robot
-	{
-
-		HAL_UART_Receive_IT( &huart5, ( uint8_t* )B_Rxdata_buff, sizeof( B_Rxdata_buff ) );
+		HAL_UART_Receive_IT( &huart4, ( uint8_t* )B_Rxdata_buff, sizeof( B_Rxdata_buff ) );
 
 
 		if( ( ( B_Rxdata_buff[ 0 ] & 0b10000000 ) >> 7 ) == true )
@@ -153,6 +150,9 @@ void HAL_UART_RxCpltCallback( UART_HandleTypeDef* UartHandle )
 
 		for( int i = 0; i < DATASIZE; i++ )
 			Debug::TTO_val( B_Rxdata[ i ], "B_data:", &huart2 );
+
+
+
 
 	}
 	else if( UartHandle == &huart1 )// data from A robot
@@ -233,6 +233,18 @@ void HAL_UART_RxCpltCallback( UART_HandleTypeDef* UartHandle )
 		//A and B PSP
 		else if( C_Rxdata[ 0 ] == ( uint8_t )E_data_type::stop )
 			Control::stop_flag = true;
+		//A and B PSP
+		else if( C_Rxdata[ 0 ] == ( uint8_t )E_data_type::test )
+		{
+			uint8_t count = 0;
+
+			for( int i = 1; i < DATASIZE - 1; i++ )
+				if( C_Rxdata[ i ] == ( i * 10 ) )
+					count++;
+			if( count == 6 )
+				Init_Move::SBDBT_OK = true;
+
+		}
 
 		for( int i = 0; i < DATASIZE; i++ )
 			Debug::TTO_val( C_Rxdata[ i ], "C_data:", &huart2 );
@@ -338,7 +350,7 @@ int main(void)
 		  break;
 	  }
 
-	  control -> reset_data();
+//	  control -> reset_data();
 
     /* USER CODE END WHILE */
 
