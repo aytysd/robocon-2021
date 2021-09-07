@@ -25,7 +25,7 @@
 //#define ROBOT E_robot_name::B
 //#define ROBOT E_robot_name::C
 
-//#define WITHOUT_B 1
+#define WITHOUT_B
 
 
 enum class E_robot_name
@@ -60,6 +60,7 @@ enum class E_data_type
 	command = 0x10,
 	done,
 	stop,
+	test,
 	A_pos,
 	B_pos,
 	C_pos,

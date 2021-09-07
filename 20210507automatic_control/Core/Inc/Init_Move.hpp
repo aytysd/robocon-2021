@@ -24,7 +24,11 @@
 class Init_Move{
 public:
 	void init_move(E_robot_name robot);
+
+	static bool SBDBT_OK;
+
 private:
+	void SBDBT_Init( E_robot_name robot );
 	void Initialize(E_robot_name robot);
 };
 
