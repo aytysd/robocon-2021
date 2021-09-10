@@ -38,6 +38,22 @@ void Control::control_B( void )
 
 	switch( Control::command[ 1 ] )
 	{
+	case ( uint8_t )E_Flow::MOVE_STAY_JUMP_POS:
+	{
+		break;
+	}
+	case ( uint8_t )E_Flow::MODE_STAY_JUMP:
+	{
+		break;
+	}
+	case ( uint8_t )E_Flow::MOVE_CROSS_JUMP_INITIAL_POS:
+	{
+		break;
+	}
+	case ( uint8_t )E_Flow::MODE_CROSS_JUMP:
+	{
+		break;
+	}
 	case ( uint8_t )E_Flow::MOVE_INFINITY_INITIAL_POS:
 	{
 		Line* line = new Line();
@@ -120,41 +136,6 @@ void Control::control_B( void )
 		delete line;
 		break;
 
-	}
-	case ( uint8_t )E_Flow::MOVE_DOUBLE_JUMP_INITIAL_POS:
-	{
-		Line* line = new Line();
-		Self_Pos* self_pos = new Self_Pos();
-		LED* led = new LED();
-
-		led -> LED_output( E_LED_status::MOVE_DOUBLE_JUMP_INITIAL_POS );
-
-
-		uint8_t data[ DATASIZE ] = { ( uint8_t )E_data_type::done, 0, 0, 0 };
-		this -> send_command( E_robot_name::C, data );
-
-		led -> LED_output( E_LED_status::Done );
-
-		delete led;
-		delete line;
-		delete self_pos;
-
-		break;
-	}
-	case ( uint8_t )E_Flow::MODE_DOUBLE_JUMP:
-	{
-		LED* led = new LED();
-
-		led -> LED_output( E_LED_status::MODE_DOUBLE_JUMP );
-
-		while( Control::stop_flag == false ){};
-
-		led -> LED_output( E_LED_status::Done );
-
-
-		delete led;
-
-		break;
 	}
 	default:
 
