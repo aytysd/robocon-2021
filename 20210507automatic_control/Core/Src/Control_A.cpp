@@ -138,41 +138,6 @@ void Control::control_A (void)
 		break;
 
 	}
-	case ( uint8_t )E_Flow::MOVE_DOUBLE_JUMP_INITIAL_POS:
-	{
-		Line* line = new Line();
-		Self_Pos* self_pos = new Self_Pos();
-		LED* led = new LED();
-
-		led -> LED_output( E_LED_status::MOVE_DOUBLE_JUMP_INITIAL_POS );
-
-
-		uint8_t data[ DATASIZE ] = { ( uint8_t )E_data_type::done, 0, 0, 0 };
-		this -> send_command( E_robot_name::C, data );
-
-		led -> LED_output( E_LED_status::Done );
-
-		delete led;
-		delete line;
-		delete self_pos;
-
-		break;
-	}
-	case ( uint8_t )E_Flow::MODE_DOUBLE_JUMP:
-	{
-		LED* led = new LED();
-
-		led -> LED_output( E_LED_status::MODE_DOUBLE_JUMP );
-
-		while( Control::stop_flag == false ){};
-
-		led -> LED_output( E_LED_status::Done );
-
-
-		delete led;
-
-		break;
-	}
 	default:
 
 		break;

@@ -43,7 +43,7 @@ bool Line::through = false;
 
 double direction = 0;
 
-bool Line::Enable_line = true;
+bool Line::Enable_line = false;
 
 void Line::set(int befX, int befY, int tgX, int tgY)
 {

@@ -62,10 +62,34 @@ void Init_Move::init_move( E_robot_name robot )
 	if( robot == E_robot_name::C )
 	{
 
-#ifndef WITHOUT_B
-		while( !( Control::A_done_flag == true && Control::B_done_flag == true ) ){}
-//		while( Control::B_done_flag == false ){}
+#ifdef WITHOUT_B
 
+		while( Control::A_done_flag == false ){}
+
+		Control::A_done_flag = false;
+
+		led -> LED_output( E_LED_status::Done );
+
+		uint8_t data[ DATASIZE ] = { ( uint8_t )E_data_type::command, ( uint8_t )E_Flow::MOVE_INFINITY_INITIAL_POS, 0, 0, 0, 0, 0, 0 };
+		control -> send_command( E_robot_name::A, data );
+
+#elif WITHOUT_A
+
+		while( Control::B_done_flag == false ){}
+
+		Control::B_done_flag = false;
+
+		led -> LED_output( E_LED_status::Done );
+
+
+		uint8_t data[ DATASIZE ] = { ( uint8_t )E_data_type::command, ( uint8_t )E_Flow::MOVE_INFINITY_INITIAL_POS, 0, 0 };
+
+		control -> send_command( E_robot_name::A, data );
+		control -> send_command( E_robot_name::B, data );
+
+#else
+
+		while( !( Control::A_done_flag == true && Control::B_done_flag == true ) ){}
 		Control::A_done_flag = false;
 		Control::B_done_flag = false;
 
@@ -76,15 +100,8 @@ void Init_Move::init_move( E_robot_name robot )
 
 		control -> send_command( E_robot_name::A, data );
 		control -> send_command( E_robot_name::B, data );
-#else
-		while( Control::A_done_flag == false ){}
 
-		Control::A_done_flag = false;
 
-		led -> LED_output( E_LED_status::Done );
-
-		uint8_t data[ DATASIZE ] = { ( uint8_t )E_data_type::command, ( uint8_t )E_Flow::MOVE_INFINITY_INITIAL_POS, 0, 0, 0, 0, 0, 0 };
-		control -> send_command( E_robot_name::A, data );
 #endif
 
 	}
