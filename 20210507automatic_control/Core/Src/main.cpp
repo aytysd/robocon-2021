@@ -71,6 +71,8 @@ uint8_t A_Rxdata_buff[ 4 ] = { 0, 0, 0, 0 };
 uint8_t B_Rxdata_buff[ 4 ] = { 0, 0, 0, 0 };
 uint8_t C_Rxdata_buff[ 4 ] = { 0, 0, 0, 0 };
 
+
+int j = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -91,18 +93,15 @@ void HAL_UART_RxCpltCallback( UART_HandleTypeDef* UartHandle )
 	uint8_t B_Rxdata[ DATASIZE ] = { 0, 0, 0, 0, 0, 0, 0, 0 };
 	uint8_t C_Rxdata[ DATASIZE ] = { 0, 0, 0, 0, 0, 0, 0, 0 };
 
-
-	if( UartHandle == &huart4 )//data from controller
+	if( UartHandle == &huart4 )
 	{
-
-/*
 		HAL_UART_Receive_IT(&huart4, (uint8_t*)Controller::controller_Rxdata, sizeof(Controller::controller_Rxdata));
 
 		Controller* controller = new Controller();
 		controller -> identify();
 		delete controller;
-*/
 
+/*
 		HAL_UART_Receive_IT( &huart4, ( uint8_t* )B_Rxdata_buff, sizeof( B_Rxdata_buff ) );
 
 
@@ -151,7 +150,61 @@ void HAL_UART_RxCpltCallback( UART_HandleTypeDef* UartHandle )
 		for( int i = 0; i < DATASIZE; i++ )
 			Debug::TTO_val( B_Rxdata[ i ], "B_data:", &huart2 );
 
+*/
 
+
+	}
+	else if( UartHandle == &huart5 )//data from controller
+	{
+
+
+		HAL_UART_Receive_IT( &huart5, ( uint8_t* )B_Rxdata_buff, sizeof( B_Rxdata_buff ) );
+
+
+		if( ( ( B_Rxdata_buff[ 0 ] & 0b10000000 ) >> 7 ) == true )
+		{
+			for( int i = 0; i < 4; i++ )
+				B_data_a[ i ] = B_Rxdata_buff[ i ];
+
+			B_data_a[ 0 ] -= 0b10000000;
+			return;
+
+		}
+		else if( ( ( B_Rxdata_buff[ 3 ] & 0b10000000 ) >> 7 )== true )
+		{
+
+			for( int i = 0; i < 4; i++ )
+			{
+				B_Rxdata[ i ] = B_data_a[ i ];
+				B_Rxdata[ i + 4 ] = B_Rxdata_buff[ i ];
+			}
+
+			B_Rxdata[ 7 ] -= 0b10000000;
+		}
+
+
+		//a or c PSP
+		if( B_Rxdata[ 0 ] == ( uint8_t )E_data_type::B_pos )
+		{
+			Control* control = new Control();
+
+			int16_t x;
+			int16_t y;
+
+			control -> decode_self_pos( &x, &y, B_Rxdata );
+
+			delete control;
+		}
+
+		// C PSP
+		else if( B_Rxdata[ 0 ] == ( uint8_t )E_data_type::done )
+			Control::B_done_flag = true;
+
+
+
+
+		for( int i = 0; i < DATASIZE; i++ )
+			Debug::TTO_val( B_Rxdata[ i ], "B_data:", &huart2 );
 
 
 	}
@@ -290,7 +343,6 @@ int main(void)
   Control* control = new Control();
   MPU6050* mpu6050 = new MPU6050();
   Self_Pos* self_pos = new Self_Pos();
-  PWM* pwm = new PWM();
   Path* line = new Path();
   Function* function = new Function();
   /* USER CODE END 1 */
@@ -328,6 +380,7 @@ int main(void)
   MX_TIM7_Init();
   /* USER CODE BEGIN 2 */
   init_move -> init_move( ROBOT );
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -350,8 +403,7 @@ int main(void)
 		  break;
 	  }
 
-//	  control -> reset_data();
-
+	  control -> reset_data();
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */

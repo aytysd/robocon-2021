@@ -49,7 +49,7 @@ void Init_Move::init_move( E_robot_name robot )
 
 	this -> Initialize( robot );
 	led -> LED_output( E_LED_status::Init );
-	HAL_Delay( 3000 );
+	HAL_Delay( 10000 );
 	this -> SBDBT_Init( robot );
 
 /*
@@ -64,6 +64,7 @@ void Init_Move::init_move( E_robot_name robot )
 
 #ifndef WITHOUT_B
 		while( !( Control::A_done_flag == true && Control::B_done_flag == true ) ){}
+//		while( Control::B_done_flag == false ){}
 
 		Control::A_done_flag = false;
 		Control::B_done_flag = false;
@@ -113,22 +114,19 @@ void Init_Move::Initialize( E_robot_name robot )
 	  self_pos -> set_initial_pos( robot );
 /*
 	  gyro -> BNO055_Init_I2C( &hi2c1 );
-	  gyro -> BNO055_Init_I2C( &hi2c3 );
 */
 //	  gyro -> set_initial_direction( robot );
 
-	  while( mpu6050 -> MPU6050_Init( &hi2c1 ) == true );
+	  if( robot != E_robot_name::C )
+		  while( mpu6050 -> MPU6050_Init( &hi2c1 ) == true );
 	  mpu6050 -> set_initial_direction( robot );
 
-	  if( ROBOT != E_robot_name::C )
-		  while( mpu6050 -> MPU6050_Init( &hi2c3 ) == true );
-
 	  HAL_UART_Receive_IT( &huart1, ( uint8_t* )A_Rxdata_buff, sizeof( A_Rxdata_buff ) );
-	  HAL_UART_Receive_IT( &huart4, ( uint8_t* )B_Rxdata_buff, sizeof( B_Rxdata_buff ) );
+	  HAL_UART_Receive_IT( &huart5, ( uint8_t* )B_Rxdata_buff, sizeof( B_Rxdata_buff ) );
 	  HAL_UART_Receive_IT( &huart3, ( uint8_t* )C_Rxdata_buff, sizeof( C_Rxdata_buff ) );
-//	  HAL_UART_Receive_IT( &huart4, ( uint8_t* )Controller::controller_Rxdata, sizeof( Controller::controller_Rxdata ) );
+	  HAL_UART_Receive_IT( &huart4, ( uint8_t* )Controller::controller_Rxdata, sizeof( Controller::controller_Rxdata ) );
 
-//	  HAL_TIM_Base_Start_IT( &htim6 );
+	  HAL_TIM_Base_Start_IT( &htim6 );
 	  HAL_TIM_Base_Start_IT( &htim3 );
 
 	  HAL_TIM_Encoder_Start( &htim5, TIM_CHANNEL_ALL );
