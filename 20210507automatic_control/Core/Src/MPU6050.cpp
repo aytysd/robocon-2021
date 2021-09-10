@@ -29,6 +29,8 @@ double MPU6050::table_direction = 0;
 bool MPU6050::sampling = false;
 bool MPU6050::testing = false;
 
+double gy_data = 0;
+
 bool MPU6050::MPU6050_Init(I2C_HandleTypeDef *I2Cx)
 {
     uint8_t check;
@@ -139,7 +141,7 @@ void MPU6050::MPU6050_update_Gyro(I2C_HandleTypeDef *I2Cx )
 
     	if( MPU6050::sampling == true )
     	{
-    		buff_3[ count_1 ] = Gyro_Z_RAW / 16.4;
+    		buff_3[ count_3 ] = Gyro_Z_RAW / 16.4;
     		count_3++;
             return;
     	}
@@ -162,6 +164,7 @@ void MPU6050::MPU6050_update_Gyro(I2C_HandleTypeDef *I2Cx )
     	}
 //        Debug::TTO_val( med, "med:", &huart2 );
 
+    	gy_data = Gyro_Z_RAW / 16.4;
         this -> table_direction += IT_PERIOD * ( ( Gyro_Z_RAW / 16.4 ) + ( -1.005 * med_3 ) + ( -1 * diff_per_IT_3 ) );
 
     }
@@ -177,7 +180,7 @@ double MPU6050::get_direction( I2C_HandleTypeDef *I2Cx )
 		while( this -> robot_direction < 0 )
 			this -> robot_direction += 360;
 
-		return this -> robot_direction;
+		return this -> robot_direction + this -> robot_initial_direction;
 	}
 	else if( I2Cx == &hi2c3 )
 	{

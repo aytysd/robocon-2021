@@ -28,25 +28,25 @@ extern int A_pos_Y[ 6 ];
 enum class A_Pos
 {
 
-	LD_X = -1200,
-	LD_Y = -2000,
+	LD_X = -768,
+	LD_Y = -1280,
 
 	JUMP_X = 0,
 	JUMP_Y = 0,
 
-	RU_X = 1200,
-	RU_Y = 2000,
+	RU_X = 768,
+	RU_Y = 1280,
 
-	R_SPC_X = 2400,
+	R_SPC_X = 1536,
 	R_SPC_Y = 0,
 
-	RD_X = 1200,
-	RD_Y = -2000,
+	RD_X = 768,
+	RD_Y = -1280,
 
-	LU_X = -1200,
-	LU_Y = 2000,
+	LU_X = -768,
+	LU_Y = 1280,
 
-	L_SPC_X = -2400,
+	L_SPC_X = -1536,
 	L_SPC_Y = 0,
 
 };

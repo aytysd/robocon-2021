@@ -26,6 +26,7 @@
 #include "Self_Pos.hpp"
 #include "Controller.hpp"
 #include "hGPIO.hpp"
+#include "Debug.hpp"
 #include "PWM.hpp"
 #include "Jump.hpp"
 #include "Gyro.hpp"
@@ -323,7 +324,6 @@ void TIM6_DAC_IRQHandler(void)
   HAL_TIM_IRQHandler(&htim6);
   /* USER CODE BEGIN TIM6_DAC_IRQn 1 */
   mpu6050 -> MPU6050_update_Gyro( &hi2c1 );
-  mpu6050 -> MPU6050_update_Gyro( &hi2c3 );
   self_pos -> update_self_pos();
 
   if( Line::Enable_line == true )
@@ -343,7 +343,7 @@ void TIM7_IRQHandler(void)
   /* USER CODE END TIM7_IRQn 0 */
   HAL_TIM_IRQHandler(&htim7);
   /* USER CODE BEGIN TIM7_IRQn 1 */
-  control -> send_self_pos( E_robot_name::C );
+  control -> send_self_pos( E_robot_name::B );
   /* USER CODE END TIM7_IRQn 1 */
 }
 
