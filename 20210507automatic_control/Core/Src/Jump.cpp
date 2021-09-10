@@ -30,7 +30,6 @@ E_move_status Jump::status = E_move_status::LANDING;
 bool Jump::PE_1 = false;
 bool Jump::PE_2 = false;
 bool Jump::PE_3 = false;
-uint8_t Jump::encoder_val_rope[8] = { 0, 0, 0, 0, 0, 0, 0, 0 };
 
 
 E_move_status Jump::get_status()
@@ -64,11 +63,17 @@ void Jump::jump( void )
 	while( HAL_GPIO_ReadPin( GPIOB, GPIO_PIN_12 ) == GPIO_PIN_RESET );
 	while( HAL_GPIO_ReadPin( GPIOB, GPIO_PIN_12 ) == GPIO_PIN_SET );
 	while( HAL_GPIO_ReadPin( GPIOB, GPIO_PIN_12 ) == GPIO_PIN_RESET );
-	while( HAL_GPIO_ReadPin( GPIOB, GPIO_PIN_12 ) == GPIO_PIN_SET );
-	while( HAL_GPIO_ReadPin( GPIOB, GPIO_PIN_12 ) == GPIO_PIN_RESET );
+//	while( HAL_GPIO_ReadPin( GPIOB, GPIO_PIN_12 ) == GPIO_PIN_SET );
+//	while( HAL_GPIO_ReadPin( GPIOB, GPIO_PIN_12 ) == GPIO_PIN_RESET );
+//	while( HAL_GPIO_ReadPin( GPIOB, GPIO_PIN_12 ) == GPIO_PIN_SET );
+//	while( HAL_GPIO_ReadPin( GPIOB, GPIO_PIN_12 ) == GPIO_PIN_RESET );
 
 	HAL_GPIO_WritePin( GPIOC, GPIO_PIN_2, GPIO_PIN_RESET );
 
 
 }
 
+void Jump::get_Rope_Pos( uint8_t Rxdata )
+{
+
+}

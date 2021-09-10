@@ -37,9 +37,11 @@ bool Rope::run_C = false;
 bool force_stop = false;
 //int last_encoder_pos = 0;
 
-int Rope::encoder_read_3()
+int Rope::encoder_read_3( bool rope )
 {
 	int enc_buff = this -> over_flow_cnt_3 * 0x10000 + TIM3 -> CNT;
+	Debug::TTO_val(enc_buff, "enc:", &huart2);
+
 	while( enc_buff > 2048 )
 	{
 		enc_buff -= 2048;
@@ -47,6 +49,13 @@ int Rope::encoder_read_3()
 	while( enc_buff < 0 )
 	{
 		enc_buff += 2048;
+	}
+	if( rope == true){}
+	else if( rope == false )
+	{
+		enc_buff *= 0.17578;
+		enc_buff = 360 -enc_buff;
+		if( enc_buff == 0 ){ enc_buff = 360; }
 	}
 	return enc_buff;
 }
@@ -113,19 +122,19 @@ void Rope::rotate_rope(uint8_t motor_number, uint8_t direction, uint16_t down_sp
 		Rope::run_C = true;
 
 	function -> drive_motor_Rope( motor_number, direction, 1000, false);
-	while( this -> encoder_read_3() < 1024){}
+	while( this -> encoder_read_3( true ) < 1024){}
 
 	while( Rope::run_C == true )
 	{
-		if(( this -> encoder_read_3() > 1536 ) || (this -> encoder_read_3() < 512 ))
+		if(( this -> encoder_read_3( true ) > 1536 ) || (this -> encoder_read_3( true ) < 512 ))
 		{
 			function -> drive_motor_Rope( motor_number, direction, down_speed, false);
 		}
-		else if(( this -> encoder_read_3() > 512 ) && (this -> encoder_read_3() < 1536))
+		else if(( this -> encoder_read_3( true ) > 512 ) && (this -> encoder_read_3( true ) < 1536))
 		{
 			function -> drive_motor_Rope(motor_number, direction, up_speed, false);
 		}
-		Debug::TTO_val( encoder_read_3(), "encoder:", &huart2);
+		Debug::TTO_val( encoder_read_3( true ), "encoder:", &huart2);
 	}
 
 	delete function;
@@ -150,7 +159,7 @@ void Rope::Encoder_val_TX( void )
 	Control* control = new Control();
 
 	uint8_t TXdate_rope[8];
-	TXdate_rope[1] = this -> encoder_read_3();
+	TXdate_rope[1] = this -> encoder_read_3( true );
 
 	control -> send_command( E_robot_name::A, ( uint8_t* )TXdate_rope );
 	control -> send_command( E_robot_name::B, ( uint8_t* )TXdate_rope );

@@ -48,7 +48,7 @@ void Follow::follow()
 	Debug::TTO_val( Follow::target_Y, "targetY:", &huart2 );
 
 
-	line -> Line_driver( self_pos -> get_Self_Pos_X(), self_pos -> get_Self_Pos_Y(), Follow::target_X, Follow::target_Y, false );
+	line -> Line_driver( self_pos -> get_Self_Pos_X(), self_pos -> get_Self_Pos_Y(), Follow::target_X, Follow::target_Y, false, true );
 	while( Line::judge == E_Line_status::MOVING ){}
 
 	delete line;

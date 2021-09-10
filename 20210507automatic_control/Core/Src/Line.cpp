@@ -40,6 +40,7 @@ int Line::BefY = 0;
 
 E_Line_status Line::judge = E_Line_status::STOP;
 bool Line::through = false;
+bool Line::Follow = false;
 
 double direction = 0;
 
@@ -90,6 +91,10 @@ void Line::MoveLine(void)
 		delete self_pos;
 
 		this -> devX = this -> distance(this -> now_X, this -> now_Y, tgX, tgY);
+		double FM_devX;
+		FM_devX = this -> distance(this -> now_X, this -> now_Y, tgX, tgY);
+		FM_devX *= -1;
+//		Debug::TTO_val((int16_t)devX, "devX:", &huart2);
 		this -> devY = this -> TGdistance(this -> now_X, this -> now_Y, tgX, tgY);
 		this -> devX = fabs(devX);
 		this -> devY = fabs(devY);
@@ -156,13 +161,13 @@ void Line::MoveLine(void)
 			}
 		}
 
-		dev_r = Line_r - TG_r ;
-		if( ( 270 < dev_r ) && ( dev_r < 360 ) )
-		{
-			dev_r = dev_r - 360;
-		}
-		dev_r *= (long double)0.3;
-		TG_r = TG_r - dev_r;
+//		dev_r = Line_r - TG_r ;
+//		if( ( 270 < dev_r ) && ( dev_r < 360 ) )
+//		{
+//			dev_r = dev_r - 360;
+//		}
+//		dev_r *= (long double)0.3;
+//		TG_r = TG_r - dev_r;
 
 		MPU6050* gyro = new MPU6050();
 		this -> now_r = (double)gyro -> get_direction( &hi2c1 );
@@ -196,30 +201,48 @@ void Line::MoveLine(void)
 		}
 
 
-		this -> TG_v = this -> devTG * 0.2;
-		if( through != true )
+		if( Line::Follow == false )
 		{
-			if(this -> TG_v > 600)
+			this -> TG_v = this -> devTG * 0.2;
+			if( through != true )
 			{
-				this -> TG_v = 600;
+				if(this -> TG_v > 600)
+				{
+					this -> TG_v = 600;
+				}
+				else if( this -> TG_v < 500 )
+				{
+					this -> TG_v = 500;
+				}
 			}
-			else if( this -> TG_v < 500 )
+			if(through == true)
 			{
-				this -> TG_v = 500;
+				this -> TG_v += 400;
+				if( this -> TG_v > 600 )
+				{
+					this  -> TG_v = 600;
+				}
+				else if( this -> TG_v < 500 )
+				{
+					this -> TG_v = 500;
+				}
 			}
 		}
-		if(through == true)
+		else if( Line::Follow == true )
 		{
-			this -> TG_v += 400;
-			if( this -> TG_v > 600 )
-			{
-				this  -> TG_v = 600;
-			}
-			else if( this -> TG_v < 500 )
-			{
-				this -> TG_v = 500;
-			}
+			vector Self_Pos;
+			vector A_Robot;
+
+			Self_Pos.X = ( double )now_X;
+			Self_Pos.Y = ( double )now_Y;
+
+			A_Robot.X = Line::A_pos_x;
+			A_Robot.Y = Line::A_pos_y;
+
+			TG_r = this -> speed_PID( A_Robot, Self_Pos );
 		}
+
+		//Debug::TTO_val((uint16_t)TG_r, "TG_r", &huart2);
 
 		if(arrive == true)
 		{
@@ -227,7 +250,7 @@ void Line::MoveLine(void)
 			{
 				PWM* pwm = new PWM();
 
-				pwm -> Front_Move( 600, (uint16_t)this -> TG_r, (uint16_t)this -> now_r, E_move_status::MOVE );
+				pwm -> Front_Move( 600, (uint16_t)this -> TG_r, (uint16_t)this -> now_r, FM_devX, E_move_status::MOVE );
 //			    pwm -> V_output(600, (uint16_t)this -> TG_r, 0, (uint16_t)this -> now_r, E_move_status::MOVE);
 				judge = E_Line_status::THROUGHING;
 
@@ -238,7 +261,7 @@ void Line::MoveLine(void)
 			{
 				PWM* pwm = new PWM();
 
-				pwm -> Front_Move( this -> TG_v, (uint16_t)this -> TG_r, (uint16_t)this -> now_r, E_move_status::STOP);
+				pwm -> Front_Move( this -> TG_v, (uint16_t)this -> TG_r, (uint16_t)this -> now_r, FM_devX, E_move_status::STOP);
 //			    pwm -> V_output(this -> TG_v, (uint16_t)this -> TG_r, 0, (uint16_t)this -> now_r, E_move_status::STOP);
 				judge = E_Line_status::STOP;
 
@@ -249,7 +272,7 @@ void Line::MoveLine(void)
 		{
 			PWM* pwm = new PWM();
 
-			pwm -> Front_Move( this -> TG_v, (uint16_t)this -> TG_r, (uint16_t)this -> now_r, E_move_status::MOVE);
+			pwm -> Front_Move( this -> TG_v, (uint16_t)this -> TG_r, (uint16_t)this -> now_r, FM_devX, E_move_status::MOVE);
 //			pwm -> V_output(this -> TG_v, (uint16_t)this -> TG_r, 0, (uint16_t)this -> now_r, E_move_status::MOVE);
 			judge = E_Line_status::MOVING;
 
@@ -258,7 +281,7 @@ void Line::MoveLine(void)
 //	}
 }
 
-void Line::Line_driver(int befX, int befY, int tgX, int tgY, bool through)
+void Line::Line_driver(int befX, int befY, int tgX, int tgY, bool through, bool follow)
 {
 	Line::judge = E_Line_status::MOVING;
 	Line::BefX = befX;
@@ -266,6 +289,7 @@ void Line::Line_driver(int befX, int befY, int tgX, int tgY, bool through)
 	Line::AftX = tgX;
 	Line::AftY = tgY;
 	Line::through = through;
+	Line::Follow = follow;
 
 	Line::integral_diff = 0;
 }
