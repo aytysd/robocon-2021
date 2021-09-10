@@ -34,6 +34,7 @@
 #include "usart.h"
 #include "gpio.h"
 #include "MPU6050.hpp"
+#include "Rope.hpp"
 
 
 int16_t Self_Pos::Self_Pos_X = -2643; //(mm)
@@ -326,19 +327,24 @@ void Self_Pos::Spin(int goal_angle, bool scan) {
 void Self_Pos::Self_Pos_correction( void )
 {
 	Function* function = new Function();
+	Rope* rope = new Rope();
 	Gyro* gyro = new Gyro();
 
 	function -> drive_motor( 6, CW, 700, false, false );
 	while( ( Self_Pos::Self_Pos_PE[0] == 0 ) && ( Self_Pos::Self_Pos_PE[1] == 0 ) ){}
 	function -> drive_motor( 6, BRAKE, 0, false, false );
-	double angle_1 = gyro -> get_direction( &hi2c3 );
+	double angle_1 = rope -> encoder_read_3( false ) + gyro -> get_direction( &hi2c1 );
+	while( angle_1 > 360 ){ angle_1 -= 360; }
+	while( angle_1 < 1 ){ angle_1 += 360; }
 	Self_Pos::Self_Pos_PE[0] = 0;
 	Self_Pos::Self_Pos_PE[1] = 0;
 
-	function -> drive_motor( 6, CCW, 700, false, false );
+	function -> drive_motor( 6, CCW, 700, true, false );
 	while( ( Self_Pos::Self_Pos_PE[0] == 0 ) && ( Self_Pos::Self_Pos_PE[1] == 0 ) ){}
 	function -> drive_motor( 6, BRAKE, 0, false, false );
-	double angle_2 = gyro -> get_direction( &hi2c3 );
+	double angle_2 = rope -> encoder_read_3( false ) + gyro -> get_direction( &hi2c1 );
+	while( angle_2 > 360 ){ angle_1 -= 360; }
+	while( angle_2 < 1 ){ angle_1 += 360; }
 	Self_Pos::Self_Pos_PE[0] = 0;
 	Self_Pos::Self_Pos_PE[1] = 0;
 
@@ -400,6 +406,7 @@ void Self_Pos::Self_Pos_correction( void )
 	}
 
 	delete function;
+	delete rope;
 	delete gyro;
 }
 #endif

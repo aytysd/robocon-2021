@@ -72,6 +72,7 @@ private:
 	static int BefX;
 	static int BefY;
 	static bool through;
+	static bool Follow;
 
 	double speed_PID( vector robot_A, vector self_pos );
 	double P( vector robot_A, vector self_pos );
@@ -84,7 +85,7 @@ private:
 
 
 public:
-	void Line_driver(int bef, int befY, int tgX, int tgY, bool through);
+	void Line_driver(int bef, int befY, int tgX, int tgY, bool through, bool follow);
 	void MoveLine(void);
 	static E_Line_status judge;
 

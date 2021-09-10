@@ -50,7 +50,7 @@ void Control::control_C( void )
 /**************************************************************************/
 
 	led -> LED_output( E_LED_status::MOVE_INFINITY_INITIAL_POS );
-	line -> Line_driver( 2643, -2643, -80, 0, false );
+	line -> Line_driver( 2643, -2643, -80, 0, false, false );
 	while( Line::judge == E_Line_status::MOVING ){};
 	pwm -> rotate( 300, 0 );
 

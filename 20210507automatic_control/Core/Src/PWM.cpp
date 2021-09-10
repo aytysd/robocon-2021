@@ -33,6 +33,9 @@
 #include "Line.hpp"
 #include "Debug.hpp"
 
+int16_t PWM::pre_dis_diff = 0;
+int16_t PWM::pre_ang_diff = 0;
+
 void PWM::V_output(uint16_t V, uint16_t fai, int16_t rotation_speed, uint16_t attitude_angle, E_move_status status)
 {
 	if( status == E_move_status::MOVE )
@@ -78,7 +81,7 @@ void PWM::V_output(uint16_t V, uint16_t fai, int16_t rotation_speed, uint16_t at
 	}
 }
 
-void PWM::Front_Move( uint16_t V, uint16_t fai, uint16_t attitude_angle, E_move_status status)
+void PWM::Front_Move( uint16_t V, uint16_t fai, uint16_t attitude_angle, double Line_dis_diff, E_move_status status)
 {
 	if( status == E_move_status::MOVE)
 	{
@@ -92,11 +95,14 @@ void PWM::Front_Move( uint16_t V, uint16_t fai, uint16_t attitude_angle, E_move_
 			dis_angle = 360 + dis_angle;
 		}
 
-		dis_angle *= 5;
-		if( dis_angle < 25 )
-		{
-			dis_angle = 25;
-		}
+		int16_t dev_dis =  ( int16_t )Line_dis_diff - pre_dis_diff;
+		pre_dis_diff = ( int16_t )Line_dis_diff;
+
+		int16_t ang_dis = ( int16_t )dis_angle - pre_dis_diff;
+		pre_dis_diff = ( int16_t )dis_angle;
+
+		int16_t delta_V =  ( int16_t )Line_dis_diff * dis_diff_Kp/* + dev_dis * dis_diff_Kd + dis_angle * ang_diff_Kp + ang_dis * ang_diff_Kd*/;
+
 
 /*
  *        3         Front        2
@@ -113,28 +119,57 @@ void PWM::Front_Move( uint16_t V, uint16_t fai, uint16_t attitude_angle, E_move_
  *        4                      1
  */
 
-#ifdef PARALLEL
 
-		double V_2_1 = ( double )V + ( double )dis_angle;
-		double V_3_4 = ( double )V - ( double )dis_angle;
+		int16_t V_2_1 = ( int16_t )V + delta_V;
+		int16_t V_3_4 = ( int16_t )V - delta_V;
 
-#else
 
-		double V_2_4;
-		double V_3_1;
 
-#endif
+		if( V_2_1 < 0)
+		{
+			Function* function = new Function();
 
-		Function* function = new Function();
+			function -> drive_motor( 1, CCW, abs( V_2_1 ), true, false );
+			function -> drive_motor( 2, CCW, abs( V_2_1 ), true, false );
+			function -> drive_motor( 3, CCW, V_3_4, true, false );
+			function -> drive_motor( 4, CCW, V_3_4, true, false );
 
-		function -> drive_motor( 1,  CW, V_2_1, true, false );
-		function -> drive_motor( 2,  CW, V_2_1, true, false );
-		function -> drive_motor( 3, CCW, V_3_4, true, false );
-		function -> drive_motor( 4, CCW, V_3_4, true, false );
+			delete function;
+		}
+		else if( V_3_4 < 0 )
+		{
+			Function* function = new Function();
 
-		delete function;
+			function -> drive_motor( 1,  CW, V_2_1, true, false );
+			function -> drive_motor( 2,  CW, V_2_1, true, false );
+			function -> drive_motor( 3,  CW, abs( V_3_4 ), true, false );
+			function -> drive_motor( 4,  CW, abs( V_3_4 ), true, false );
+
+			delete function;
+		}
+		else
+		{
+			Function* function = new Function();
+
+
+			function -> drive_motor( 1,  CW, V_2_1, true, false );
+			function -> drive_motor( 2,  CW, V_2_1, true, false );
+			function -> drive_motor( 3, CCW, V_3_4, true, false );
+			function -> drive_motor( 4, CCW, V_3_4, true, false );
+
+//			function -> drive_motor( 1,  CW, 500, true, false );
+//			function -> drive_motor( 2,  CW, 500, true, false );
+//			function -> drive_motor( 3, CCW, 500, true, false );
+//			function -> drive_motor( 4, CCW, 500, true, false );
+
+		Debug::TTO_val((int16_t)Line_dis_diff, "FM_devLine:", &huart2);
+		Debug::TTO_val(V_2_1, "V_2_1:", &huart2);
+		Debug::TTO_val(V_3_4, "V_3_4:", &huart2);
+
+			delete function;
+		}
 	}
-	else
+	else if( status == E_move_status::STOP)
 	{
 		Function* function = new Function();
 

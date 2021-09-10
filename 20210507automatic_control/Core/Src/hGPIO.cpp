@@ -158,13 +158,13 @@ void HGPIO::GPIO_PIN_12_func(void)
 
 	delete function;
 };
-//PE_Sensor_2
 void HGPIO::GPIO_PIN_13_func(void)
+{}
+//PE_Sensor_2
+void HGPIO::GPIO_PIN_14_func(void)
 {
 	Jump::PE_2 = true;
-}
-void HGPIO::GPIO_PIN_14_func(void)
-{};
+};
 void HGPIO::GPIO_PIN_15_func(void)
 {
 #ifdef M_Self_Pos
