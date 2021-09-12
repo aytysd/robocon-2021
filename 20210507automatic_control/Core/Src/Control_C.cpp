@@ -62,7 +62,7 @@ void Control::control_C( void )
 
 	Control::A_done_flag = false;
 
-#elif WITHOUT_A
+#elif defined ( WITHOUT_A )
 
 	while( !( Control::B_done_flag == true ) ){};
 
@@ -92,7 +92,7 @@ void Control::control_C( void )
 
 #ifndef WITHOUT_A
 	this -> send_command( E_robot_name::A, infinity_start_data );
-#elif WITHOUT_B
+#elif defined ( WITHOUT_B )
 	this -> send_command( E_robot_name::B, infinity_start_data );
 #endif
 
@@ -102,7 +102,7 @@ void Control::control_C( void )
 
 #ifndef WITHOUT_A
 	this -> send_command( E_robot_name::A, infinity_finish_data );
-#elif WITHOUT_B
+#elif defined ( WITHOUT_B )
 	this -> send_command( E_robot_name::B, infinity_finish_data );
 #endif
 

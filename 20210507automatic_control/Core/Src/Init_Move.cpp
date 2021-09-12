@@ -73,23 +73,27 @@ void Init_Move::init_move( E_robot_name robot )
 		uint8_t data[ DATASIZE ] = { ( uint8_t )E_data_type::command, ( uint8_t )E_Flow::MOVE_INFINITY_INITIAL_POS, 0, 0, 0, 0, 0, 0 };
 		control -> send_command( E_robot_name::A, data );
 
-#elif WITHOUT_A
+#elif defined ( WITHOUT_A )
 
 		while( Control::B_done_flag == false ){}
 
 		Control::B_done_flag = false;
+
+		HAL_GPIO_WritePin( GPIOA, GPIO_PIN_5, GPIO_PIN_SET );
 
 		led -> LED_output( E_LED_status::Done );
 
 
 		uint8_t data[ DATASIZE ] = { ( uint8_t )E_data_type::command, ( uint8_t )E_Flow::MOVE_INFINITY_INITIAL_POS, 0, 0 };
 
-		control -> send_command( E_robot_name::A, data );
 		control -> send_command( E_robot_name::B, data );
 
 #else
 
 		while( !( Control::A_done_flag == true && Control::B_done_flag == true ) ){}
+
+		HAL_GPIO_WritePin( GPIOA, GPIO_PIN_5, GPIO_PIN_SET );
+
 		Control::A_done_flag = false;
 		Control::B_done_flag = false;
 
@@ -134,13 +138,15 @@ void Init_Move::Initialize( E_robot_name robot )
 */
 //	  gyro -> set_initial_direction( robot );
 
+/*
 	  if( robot != E_robot_name::C )
 		  while( mpu6050 -> MPU6050_Init( &hi2c1 ) == true );
 	  mpu6050 -> set_initial_direction( robot );
+*/
 
-	  HAL_UART_Receive_IT( &huart1, ( uint8_t* )A_Rxdata_buff, sizeof( A_Rxdata_buff ) );
-	  HAL_UART_Receive_IT( &huart5, ( uint8_t* )B_Rxdata_buff, sizeof( B_Rxdata_buff ) );
-	  HAL_UART_Receive_IT( &huart3, ( uint8_t* )C_Rxdata_buff, sizeof( C_Rxdata_buff ) );
+	  HAL_UART_Receive_IT( &huart1, ( uint8_t* )&A_Rxdata_buff, sizeof( A_Rxdata_buff ) );
+	  HAL_UART_Receive_IT( &huart5, ( uint8_t* )&B_Rxdata_buff, sizeof( B_Rxdata_buff ) );
+	  HAL_UART_Receive_IT( &huart3, ( uint8_t* )&C_Rxdata_buff, sizeof( C_Rxdata_buff ) );
 	  HAL_UART_Receive_IT( &huart4, ( uint8_t* )Controller::controller_Rxdata, sizeof( Controller::controller_Rxdata ) );
 
 	  HAL_TIM_Base_Start_IT( &htim6 );
@@ -161,7 +167,7 @@ void Init_Move::Initialize( E_robot_name robot )
 void Init_Move::SBDBT_Init( E_robot_name robot )
 {
 
-	uint8_t test_data[ DATASIZE ] = { ( uint8_t )E_data_type::test, 10, 20, 30, 40, 50, 60, 0 };
+	uint8_t test_data[ DATASIZE ] = { ( uint8_t )E_data_type::test, 10 };
 	Control* control = new Control();
 
 	switch( robot )
@@ -171,8 +177,14 @@ void Init_Move::SBDBT_Init( E_robot_name robot )
 		while( Init_Move::SBDBT_OK == false ){}
 		break;
 	case E_robot_name::C:
-		control -> send_command( E_robot_name::A, test_data );
-		control -> send_command( E_robot_name::B, test_data );
+
+		uint32_t start_time = HAL_GetTick();
+		while( ( HAL_GetTick() - start_time ) < 10000 )
+		{
+ 			control -> send_command( E_robot_name::A, test_data );
+			control -> send_command( E_robot_name::B, test_data );
+			HAL_Delay( 1000 );
+		}
 		break;
 	}
 

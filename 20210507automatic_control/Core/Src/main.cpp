@@ -67,12 +67,12 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-uint8_t A_Rxdata_buff[ 4 ] = { 0, 0, 0, 0 };
-uint8_t B_Rxdata_buff[ 4 ] = { 0, 0, 0, 0 };
-uint8_t C_Rxdata_buff[ 4 ] = { 0, 0, 0, 0 };
+uint8_t A_Rxdata_buff = 0;
+uint8_t B_Rxdata_buff = 0;
+uint8_t C_Rxdata_buff = 0;
 
-
-int j = 0;
+static uint8_t B_Rxdata[ DATASIZE ] = { 0, 0, 0, 0, 0, 0, 0, 0 };
+static uint8_t C_Rxdata[ DATASIZE ] = { 0, 0, 0, 0, 0, 0, 0, 0 };
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -85,13 +85,17 @@ void SystemClock_Config(void);
 void HAL_UART_RxCpltCallback( UART_HandleTypeDef* UartHandle )
 {
 
-	static uint8_t A_data_a[ 4 ] = { 0, 0, 0, 0 };
-	static uint8_t B_data_a[ 4 ] = { 0, 0, 0, 0 };
-	static uint8_t C_data_a[ 4 ] = { 0, 0, 0, 0 };
+	static uint8_t A_Rxdata[ DATASIZE ] = { 0, 0, 0, 0, 0, 0, 0, 0 };
 
-	uint8_t A_Rxdata[ DATASIZE ] = { 0, 0, 0, 0, 0, 0, 0, 0 };
-	uint8_t B_Rxdata[ DATASIZE ] = { 0, 0, 0, 0, 0, 0, 0, 0 };
-	uint8_t C_Rxdata[ DATASIZE ] = { 0, 0, 0, 0, 0, 0, 0, 0 };
+
+	static bool A_Is_receiving = false;
+	static bool B_Is_receiving = false;
+	static bool C_Is_receiving = false;
+
+	static uint8_t A_count = 0;
+	static uint8_t B_count = 0;
+	static uint8_t C_count = 0;
+
 
 	if( UartHandle == &huart4 )
 	{
@@ -101,86 +105,50 @@ void HAL_UART_RxCpltCallback( UART_HandleTypeDef* UartHandle )
 		controller -> identify();
 		delete controller;
 
-/*
-		HAL_UART_Receive_IT( &huart4, ( uint8_t* )B_Rxdata_buff, sizeof( B_Rxdata_buff ) );
-
-
-		if( ( ( B_Rxdata_buff[ 0 ] & 0b10000000 ) >> 7 ) == true )
-		{
-			for( int i = 0; i < 4; i++ )
-				B_data_a[ i ] = B_Rxdata_buff[ i ];
-
-			B_data_a[ 0 ] -= 0b10000000;
-			return;
-
-		}
-		else if( ( ( B_Rxdata_buff[ 3 ] & 0b10000000 ) >> 7 )== true )
-		{
-
-			for( int i = 0; i < 4; i++ )
-			{
-				B_Rxdata[ i ] = B_data_a[ i ];
-				B_Rxdata[ i + 4 ] = B_Rxdata_buff[ i ];
-			}
-
-			B_Rxdata[ 7 ] -= 0b10000000;
-		}
-
-
-		//a or c PSP
-		if( B_Rxdata[ 0 ] == ( uint8_t )E_data_type::B_pos )
-		{
-			Control* control = new Control();
-
-			int16_t x;
-			int16_t y;
-
-			control -> decode_self_pos( &x, &y, B_Rxdata );
-
-			delete control;
-		}
-
-		// C PSP
-		else if( B_Rxdata[ 0 ] == ( uint8_t )E_data_type::done )
-			Control::B_done_flag = true;
-
-
-
-
-		for( int i = 0; i < DATASIZE; i++ )
-			Debug::TTO_val( B_Rxdata[ i ], "B_data:", &huart2 );
-
-*/
 
 
 	}
-	else if( UartHandle == &huart5 )//data from controller
+	else if( UartHandle == &huart5 )//data from B
 	{
 
+		HAL_UART_Receive_IT( &huart5, ( uint8_t* )&B_Rxdata_buff, sizeof( B_Rxdata_buff ) );
 
-		HAL_UART_Receive_IT( &huart5, ( uint8_t* )B_Rxdata_buff, sizeof( B_Rxdata_buff ) );
 
-
-		if( ( ( B_Rxdata_buff[ 0 ] & 0b10000000 ) >> 7 ) == true )
+		if( ( ( B_Rxdata_buff & 0b10000000 ) >> 7 ) == true )
 		{
-			for( int i = 0; i < 4; i++ )
-				B_data_a[ i ] = B_Rxdata_buff[ i ];
+			for( int i = 0; i < DATASIZE; i++ )
+				B_Rxdata[ i ] = 0;
 
-			B_data_a[ 0 ] -= 0b10000000;
+			B_Rxdata_buff -= 0b10000000;
+			B_Rxdata[ 0 ] = B_Rxdata_buff;
+
+			B_Is_receiving = true;
+			B_count = 1;
+
 			return;
 
 		}
-		else if( ( ( B_Rxdata_buff[ 3 ] & 0b10000000 ) >> 7 )== true )
+		else if( ( ( B_Rxdata_buff & 0b01000000 ) >> 6 )== true )
 		{
+			B_Rxdata_buff -= 0b01000000;
+			B_Rxdata[ 7 ] = B_Rxdata_buff;
 
-			for( int i = 0; i < 4; i++ )
-			{
-				B_Rxdata[ i ] = B_data_a[ i ];
-				B_Rxdata[ i + 4 ] = B_Rxdata_buff[ i ];
-			}
+			B_Is_receiving = false;
+			B_count = 0;
 
-			B_Rxdata[ 7 ] -= 0b10000000;
+
 		}
+		else if( B_Is_receiving == true )
+		{
+			B_Rxdata[ B_count ] = B_Rxdata_buff;
+			B_count++;
+
+			return;
+
+		}
+
+
+
 
 
 		//a or c PSP
@@ -202,36 +170,48 @@ void HAL_UART_RxCpltCallback( UART_HandleTypeDef* UartHandle )
 
 
 
-
 		for( int i = 0; i < DATASIZE; i++ )
 			Debug::TTO_val( B_Rxdata[ i ], "B_data:", &huart2 );
-
 
 	}
 	else if( UartHandle == &huart1 )// data from A robot
 	{
-		HAL_UART_Receive_IT( &huart1, (uint8_t*)A_Rxdata_buff, sizeof( A_Rxdata_buff ) );
+		HAL_UART_Receive_IT( &huart1, (uint8_t*)&A_Rxdata_buff, sizeof( A_Rxdata_buff ) );
 
-		if( ( ( A_Rxdata_buff[ 0 ] & 0b10000000 ) >> 7 ) == true )
+		if( ( ( A_Rxdata_buff & 0b10000000 ) >> 7 ) == true )
 		{
-			for( int i = 0; i < 4; i++ )
-				A_data_a[ i ] = A_Rxdata_buff[ i ];
+			for( int i = 0; i < DATASIZE; i++ )
+				A_Rxdata[ i ] = 0;
 
-			A_data_a[ 0 ] -= 0b10000000;
+			A_Rxdata_buff -= 0b10000000;
+			A_Rxdata[ 0 ] = A_Rxdata_buff;
+
+			A_Is_receiving = true;
+			A_count = 1;
+
 			return;
 
 		}
-		else if( ( ( A_Rxdata_buff[ 3 ] & 0b10000000 ) >> 7 )== true )
+		else if( ( ( A_Rxdata_buff & 0b01000000 ) >> 6 )== true )
 		{
+			A_Rxdata_buff -= 0b01000000;
+			A_Rxdata[ 7 ] = A_Rxdata_buff;
 
-			for( int i = 0; i < 4; i++ )
-			{
-				A_Rxdata[ i ] = A_data_a[ i ];
-				A_Rxdata[ i + 4 ] = A_Rxdata_buff[ i ];
-			}
+			A_Is_receiving = false;
+			A_count = 0;
 
-			A_Rxdata[ 7 ] -= 0b10000000;
+
 		}
+		else if( A_Is_receiving == true )
+		{
+			A_Rxdata[ A_count ] = A_Rxdata_buff;
+			A_count++;
+
+			return;
+
+		}
+
+
 
 
 		//B or C PSP
@@ -255,33 +235,44 @@ void HAL_UART_RxCpltCallback( UART_HandleTypeDef* UartHandle )
 	else if( UartHandle == &huart3 )// data from C robot
 	{
 
-		HAL_UART_Receive_IT(&huart3, (uint8_t*)C_Rxdata_buff, sizeof( C_Rxdata_buff ));
+		HAL_UART_Receive_IT(&huart3, (uint8_t*)&C_Rxdata_buff, sizeof( C_Rxdata_buff ));
 
-		if( ( ( C_Rxdata_buff[ 0 ] & 0b10000000 ) >> 7 ) == true )
+		if( ( ( C_Rxdata_buff & 0b10000000 ) >> 7 ) == true )
 		{
-			for( int i = 0; i < 4; i++ )
-				C_data_a[ i ] = C_Rxdata_buff[ i ];
+			for( int i = 0; i < DATASIZE; i++ )
+				C_Rxdata[ i ] = 0;
 
-			C_data_a[ 0 ] -= 0b10000000;
+			C_Rxdata_buff -= 0b10000000;
+			C_Rxdata[ 0 ] = C_Rxdata_buff;
+
+			C_Is_receiving = true;
+			C_count = 1;
+
 			return;
 
 		}
-		else if( ( ( C_Rxdata_buff[ 3 ] & 0b10000000 ) >> 7 )== true )
+		else if( ( ( C_Rxdata_buff & 0b01000000 ) >> 6 ) == true )
 		{
+			C_Rxdata_buff -= 0b01000000;
+			C_Rxdata[ 7 ] = C_Rxdata_buff;
 
-			for( int i = 0; i < 4; i++ )
-			{
-				C_Rxdata[ i ] = C_data_a[ i ];
-				C_Rxdata[ i + 4 ] = C_Rxdata_buff[ i ];
-			}
+			C_Is_receiving = false;
+			C_count = 0;
 
-			C_Rxdata[ 7 ] -= 0b10000000;
+
 		}
+		else if( C_Is_receiving == true )
+		{
+			C_Rxdata[ C_count ] = C_Rxdata_buff;
+			C_count++;
 
+			return;
+
+		}
 
 		//A and B PSP
 		if( C_Rxdata[ 0 ] == ( uint8_t )E_data_type::command )
-			for( int i = 0; i < DATASIZE; i++ )
+			for( int i = 0; i < 2; i++ )
 				Control::command[ i ] = C_Rxdata[ i ];
 		//A and B PSP
 		else if( C_Rxdata[ 0 ] == ( uint8_t )E_data_type::stop )
@@ -289,13 +280,10 @@ void HAL_UART_RxCpltCallback( UART_HandleTypeDef* UartHandle )
 		//A and B PSP
 		else if( C_Rxdata[ 0 ] == ( uint8_t )E_data_type::test )
 		{
-			uint8_t count = 0;
 
-			for( int i = 1; i < DATASIZE - 1; i++ )
-				if( C_Rxdata[ i ] == ( i * 10 ) )
-					count++;
-			if( count == 6 )
+			if( C_Rxdata[ 1 ] == 10 )
 				Init_Move::SBDBT_OK = true;
+
 
 		}
 
@@ -380,14 +368,12 @@ int main(void)
   MX_TIM7_Init();
   /* USER CODE BEGIN 2 */
   init_move -> init_move( ROBOT );
-
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-
 	  switch( ROBOT )
 	  {
 	  case E_robot_name::A:
