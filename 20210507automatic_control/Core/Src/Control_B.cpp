@@ -59,6 +59,8 @@ void Control::control_B( void )
 		Line* line = new Line();
 		LED* led = new LED();
 
+		HAL_GPIO_WritePin( GPIOA, GPIO_PIN_5, GPIO_PIN_SET );
+
 		led -> LED_output( E_LED_status::MOVE_INFINITY_INITIAL_POS );
 
 		line -> Line_driver( -2643, -2643, -1700, -1700, false, false );
