@@ -29,6 +29,7 @@
 #include "usart.h"
 #include "tim.h"
 #include "Debug.hpp"
+#include "Stay_Jump.hpp"
 
 
 
@@ -36,6 +37,9 @@
 
 void Control::control_A (void)
 {
+
+	Line* line = new Line();
+	Self_Pos* self_pos = new Self_Pos();
 
 #ifdef WITHOUT_C
 
@@ -74,6 +78,10 @@ void Control::control_A (void)
 	{
 	case ( uint8_t )E_Flow::MOVE_STAY_JUMP_POS:
 	{
+
+		line -> Line_driver( self_pos -> get_Self_Pos_X(), self_pos -> get_Self_Pos_Y(), ( int )SJ::A_pos::JUMP_POS_X, ( int )SJ::A_pos::JUMP_POS_Y, false, false );
+		while( Line::judge == E_Line_status::MOVING ){}
+
 		break;
 	}
 	case ( uint8_t )E_Flow::MODE_STAY_JUMP:
@@ -82,10 +90,59 @@ void Control::control_A (void)
 	}
 	case ( uint8_t )E_Flow::MOVE_CROSS_JUMP_INITIAL_POS:
 	{
+		line -> Line_driver( 0, 0, ( int )Infinity::A_Pos::LD_X, ( int )Infinity::A_Pos::LD_Y, false, false );
+		while( Line::judge == E_Line_status::MOVING ){};
+
 		break;
 	}
 	case ( uint8_t )E_Flow::MODE_CROSS_JUMP:
 	{
+
+#ifndef WITHOUT_C
+
+		while( Control::stop_flag == false )
+		{
+
+#else
+		for( int i = 0; i < 8; i++ )
+		{
+
+#endif
+
+			line -> Line_driver( ( int )Infinity::A_Pos::LD_X, ( int )Infinity::A_Pos::LD_Y, ( int )Infinity::A_Pos::RU_X, ( int )Infinity::A_Pos::RU_Y, true, false );
+			while( Line::judge == E_Line_status::MOVING && Control::stop_flag == false ){};
+
+			line -> Line_driver( ( int )Infinity::A_Pos::RU_X, ( int )Infinity::A_Pos::RU_Y, ( int )Infinity::A_Pos::R_SPC_X, ( int )Infinity::A_Pos::R_SPC_Y, false, false );
+			while( Line::judge == E_Line_status::MOVING && Control::stop_flag == false  ){};
+
+			/******************************************************************************/ // self pos correction movement
+
+
+			/******************************************************************************/
+
+			line -> Line_driver( ( int )Infinity::A_Pos::R_SPC_X, ( int )Infinity::A_Pos::R_SPC_Y, ( int )Infinity::A_Pos::RD_X, ( int )Infinity::A_Pos::RD_Y, true, false );
+			while( Line::judge == E_Line_status::MOVING && Control::stop_flag == false  ){};
+
+			line -> Line_driver( ( int )Infinity::A_Pos::RD_X, ( int )Infinity::A_Pos::RD_Y, ( int )Infinity::A_Pos::LU_X, ( int )Infinity::A_Pos::LU_Y, true, false );
+			while( Line::judge == E_Line_status::MOVING && Control::stop_flag == false  ){};
+
+			line -> Line_driver( ( int )Infinity::A_Pos::LU_X, ( int )Infinity::A_Pos::LU_Y, ( int )Infinity::A_Pos::L_SPC_X, ( int )Infinity::A_Pos::L_SPC_Y, false, false );
+			while( Line::judge == E_Line_status::MOVING && Control::stop_flag == false  ){};
+
+			/******************************************************************************/ // self pos correction movement
+
+
+
+			/******************************************************************************/
+
+			line -> Line_driver( ( int )Infinity::A_Pos::L_SPC_X, ( int )Infinity::A_Pos::L_SPC_Y, ( int )Infinity::A_Pos::LD_X, ( int )Infinity::A_Pos::LD_Y, true, false );
+			while( Line::judge == E_Line_status::MOVING && Control::stop_flag == false  ){};
+
+		}
+
+
+		Control::stop_flag = false;
+
 		break;
 	}
 	case ( uint8_t )E_Flow::MOVE_INFINITY_INITIAL_POS:
@@ -93,12 +150,6 @@ void Control::control_A (void)
 
 		HAL_GPIO_WritePin( GPIOA, GPIO_PIN_5, GPIO_PIN_SET );
 
-
-		Line* line = new Line();
-		Self_Pos* self_pos = new Self_Pos();
-		LED* led = new LED();
-
-		led -> LED_output( E_LED_status::MOVE_INFINITY_INITIAL_POS );
 
 		line -> Line_driver( -2643, 2643, ( int )Infinity::A_Pos::L_SPC_X, ( int )Infinity::A_Pos::L_SPC_Y, true, false );
 		while( Line::judge == E_Line_status::MOVING ){};
@@ -109,11 +160,7 @@ void Control::control_A (void)
 		uint8_t data[ DATASIZE ] = { ( uint8_t )E_data_type::done, 0, 0, 0 };
 		this -> send_command( E_robot_name::C, data );
 
-		led -> LED_output( E_LED_status::Done );
 
-		delete led;
-		delete line;
-		delete self_pos;
 
 		break;
 
@@ -129,12 +176,14 @@ void Control::control_A (void)
 		HAL_TIM_Base_Start_IT( &htim7 );
 #endif
 
-
+#ifndef WITHOUT_C
 		while( Control::stop_flag == false )
 		{
+#else
+		for( int i = 0; i < 8; i++ )
+		{
 
-
-
+#endif
 			line -> Line_driver( ( int )Infinity::A_Pos::LD_X, ( int )Infinity::A_Pos::LD_Y, ( int )Infinity::A_Pos::RU_X, ( int )Infinity::A_Pos::RU_Y, true, false );
 			while( Line::judge == E_Line_status::MOVING && Control::stop_flag == false ){};
 
@@ -180,15 +229,15 @@ void Control::control_A (void)
 
 		led -> LED_output( E_LED_status::Done );
 
-		delete led;
-		delete line;
-		break;
 
 	}
 	default:
 
 		break;
 	}
+
+	delete self_pos;
+	delete line;
 
 
 

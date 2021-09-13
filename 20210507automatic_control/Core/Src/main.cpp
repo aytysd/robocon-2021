@@ -71,8 +71,6 @@ uint8_t A_Rxdata_buff = 0;
 uint8_t B_Rxdata_buff = 0;
 uint8_t C_Rxdata_buff = 0;
 
-static uint8_t B_Rxdata[ DATASIZE ] = { 0, 0, 0, 0, 0, 0, 0, 0 };
-static uint8_t C_Rxdata[ DATASIZE ] = { 0, 0, 0, 0, 0, 0, 0, 0 };
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -86,7 +84,8 @@ void HAL_UART_RxCpltCallback( UART_HandleTypeDef* UartHandle )
 {
 
 	static uint8_t A_Rxdata[ DATASIZE ] = { 0, 0, 0, 0, 0, 0, 0, 0 };
-
+	static uint8_t B_Rxdata[ DATASIZE ] = { 0, 0, 0, 0, 0, 0, 0, 0 };
+	static uint8_t C_Rxdata[ DATASIZE ] = { 0, 0, 0, 0, 0, 0, 0, 0 };
 
 	static bool A_Is_receiving = false;
 	static bool B_Is_receiving = false;
@@ -114,7 +113,7 @@ void HAL_UART_RxCpltCallback( UART_HandleTypeDef* UartHandle )
 		HAL_UART_Receive_IT( &huart5, ( uint8_t* )&B_Rxdata_buff, sizeof( B_Rxdata_buff ) );
 
 
-		if( ( ( B_Rxdata_buff & 0b10000000 ) >> 7 ) == true )
+		if( ( ( B_Rxdata_buff & 0b10000000 ) >> 7 ) == true && B_Is_receiving == false )
 		{
 			for( int i = 0; i < DATASIZE; i++ )
 				B_Rxdata[ i ] = 0;
@@ -128,12 +127,11 @@ void HAL_UART_RxCpltCallback( UART_HandleTypeDef* UartHandle )
 			return;
 
 		}
-		else if( ( ( B_Rxdata_buff & 0b01000000 ) >> 6 )== true )
+		else if( ( ( B_Rxdata_buff & 0b01000000 ) >> 6 )== true && B_Is_receiving == false )
 		{
 			B_Rxdata_buff -= 0b01000000;
 			B_Rxdata[ 7 ] = B_Rxdata_buff;
 
-			B_Is_receiving = false;
 			B_count = 0;
 
 
@@ -142,6 +140,9 @@ void HAL_UART_RxCpltCallback( UART_HandleTypeDef* UartHandle )
 		{
 			B_Rxdata[ B_count ] = B_Rxdata_buff;
 			B_count++;
+
+			if( B_count == 7 )
+				B_Is_receiving = false;
 
 			return;
 
@@ -161,6 +162,9 @@ void HAL_UART_RxCpltCallback( UART_HandleTypeDef* UartHandle )
 
 			control -> decode_self_pos( &x, &y, B_Rxdata );
 
+			Debug::TTO_val( x, "X:", &huart2 );
+			Debug::TTO_val( y, "Y:", &huart2 );
+
 			delete control;
 		}
 
@@ -176,9 +180,10 @@ void HAL_UART_RxCpltCallback( UART_HandleTypeDef* UartHandle )
 	}
 	else if( UartHandle == &huart1 )// data from A robot
 	{
-		HAL_UART_Receive_IT( &huart1, (uint8_t*)&A_Rxdata_buff, sizeof( A_Rxdata_buff ) );
+		HAL_UART_Receive_IT( &huart1, ( uint8_t* )&A_Rxdata_buff, sizeof( A_Rxdata_buff ) );
 
-		if( ( ( A_Rxdata_buff & 0b10000000 ) >> 7 ) == true )
+
+		if( ( ( ( A_Rxdata_buff & 0b10000000 ) >> 7 ) == true ) && ( A_Is_receiving == false ) )
 		{
 			for( int i = 0; i < DATASIZE; i++ )
 				A_Rxdata[ i ] = 0;
@@ -192,12 +197,11 @@ void HAL_UART_RxCpltCallback( UART_HandleTypeDef* UartHandle )
 			return;
 
 		}
-		else if( ( ( A_Rxdata_buff & 0b01000000 ) >> 6 )== true )
+		else if( ( ( A_Rxdata_buff & 0b01000000 ) >> 6 )== true && A_Is_receiving == false )
 		{
 			A_Rxdata_buff -= 0b01000000;
 			A_Rxdata[ 7 ] = A_Rxdata_buff;
 
-			A_Is_receiving = false;
 			A_count = 0;
 
 
@@ -206,6 +210,9 @@ void HAL_UART_RxCpltCallback( UART_HandleTypeDef* UartHandle )
 		{
 			A_Rxdata[ A_count ] = A_Rxdata_buff;
 			A_count++;
+
+			if( A_count ==  7 )
+				A_Is_receiving = false;
 
 			return;
 
@@ -219,6 +226,10 @@ void HAL_UART_RxCpltCallback( UART_HandleTypeDef* UartHandle )
 		{
 			Control* control = new Control();
 			control -> decode_self_pos( &Line::A_pos_x, &Line::A_pos_y, A_Rxdata );
+
+			Debug::TTO_val( Line::A_pos_x, "X:", &huart2 );
+			Debug::TTO_val( Line::A_pos_y, "Y:", &huart2 );
+
 			delete control;
 		}
 		//C PSP
@@ -237,7 +248,7 @@ void HAL_UART_RxCpltCallback( UART_HandleTypeDef* UartHandle )
 
 		HAL_UART_Receive_IT(&huart3, (uint8_t*)&C_Rxdata_buff, sizeof( C_Rxdata_buff ));
 
-		if( ( ( C_Rxdata_buff & 0b10000000 ) >> 7 ) == true )
+		if( ( ( C_Rxdata_buff & 0b10000000 ) >> 7 ) == true && C_Is_receiving == false )
 		{
 			for( int i = 0; i < DATASIZE; i++ )
 				C_Rxdata[ i ] = 0;
@@ -251,7 +262,7 @@ void HAL_UART_RxCpltCallback( UART_HandleTypeDef* UartHandle )
 			return;
 
 		}
-		else if( ( ( C_Rxdata_buff & 0b01000000 ) >> 6 ) == true )
+		else if( ( ( C_Rxdata_buff & 0b01000000 ) >> 6 ) == true && C_Is_receiving )
 		{
 			C_Rxdata_buff -= 0b01000000;
 			C_Rxdata[ 7 ] = C_Rxdata_buff;
@@ -374,6 +385,7 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+
 	  switch( ROBOT )
 	  {
 	  case E_robot_name::A:
