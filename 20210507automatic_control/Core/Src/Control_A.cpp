@@ -37,10 +37,57 @@
 void Control::control_A (void)
 {
 
+#ifdef WITHOUT_C
+
+	static uint8_t count;
+	count++;
+	switch( count )
+	{
+	case 1:
+		Control::command[ 1 ] = ( uint8_t )E_Flow::MOVE_STAY_JUMP_POS;
+		break;
+	case 2:
+		Control::command[ 1 ] = ( uint8_t )E_Flow::MODE_STAY_JUMP;
+		break;
+	case 3:
+		Control::command[ 1 ] = ( uint8_t )E_Flow::MOVE_CROSS_JUMP_INITIAL_POS;
+		break;
+	case 4:
+		Control::command[ 1 ] = ( uint8_t )E_Flow::MODE_CROSS_JUMP;
+		break;
+	case 5:
+		Control::command[ 1 ] = ( uint8_t )E_Flow::MOVE_INFINITY_INITIAL_POS;
+		break;
+	case 6:
+		Control::command[ 1 ] = ( uint8_t )E_Flow::MODE_INFINITY_JUMP;
+		break;
+
+
+
+	}
+
+#endif
+
 
 
 	switch( Control::command[1] )
 	{
+	case ( uint8_t )E_Flow::MOVE_STAY_JUMP_POS:
+	{
+		break;
+	}
+	case ( uint8_t )E_Flow::MODE_STAY_JUMP:
+	{
+		break;
+	}
+	case ( uint8_t )E_Flow::MOVE_CROSS_JUMP_INITIAL_POS:
+	{
+		break;
+	}
+	case ( uint8_t )E_Flow::MODE_CROSS_JUMP:
+	{
+		break;
+	}
 	case ( uint8_t )E_Flow::MOVE_INFINITY_INITIAL_POS:
 	{
 
