@@ -35,6 +35,37 @@ using namespace Infinity;
 void Control::control_B( void )
 {
 
+#ifdef WITHOUT_C
+
+	static uint8_t count;
+	count++;
+	switch( count )
+	{
+	case 1:
+		Control::command[ 1 ] = ( uint8_t )E_Flow::MOVE_STAY_JUMP_POS;
+		break;
+	case 2:
+		Control::command[ 1 ] = ( uint8_t )E_Flow::MODE_STAY_JUMP;
+		break;
+	case 3:
+		Control::command[ 1 ] = ( uint8_t )E_Flow::MOVE_CROSS_JUMP_INITIAL_POS;
+		break;
+	case 4:
+		Control::command[ 1 ] = ( uint8_t )E_Flow::MODE_CROSS_JUMP;
+		break;
+	case 5:
+		Control::command[ 1 ] = ( uint8_t )E_Flow::MOVE_INFINITY_INITIAL_POS;
+		break;
+	case 6:
+		Control::command[ 1 ] = ( uint8_t )E_Flow::MODE_INFINITY_JUMP;
+		break;
+
+
+
+	}
+#endif
+
+
 
 	switch( Control::command[ 1 ] )
 	{
@@ -56,6 +87,10 @@ void Control::control_B( void )
 	}
 	case ( uint8_t )E_Flow::MOVE_INFINITY_INITIAL_POS:
 	{
+
+		HAL_GPIO_WritePin( GPIOA, GPIO_PIN_5, GPIO_PIN_SET );
+
+
 		Line* line = new Line();
 		LED* led = new LED();
 
@@ -88,10 +123,10 @@ void Control::control_B( void )
 		while( Control::stop_flag == false )
 		{
 
-			line -> Line_driver( ( int )Infinity::A_Pos::LD_X, ( int )Infinity::A_Pos::LD_Y, ( int )Infinity::A_Pos::RU_X, ( int )Infinity::A_Pos::RU_Y, true, false );
+			line -> Line_driver( ( int )Infinity::A_Pos::LD_X, ( int )Infinity::A_Pos::LD_Y, ( int )Infinity::A_Pos::RU_X, ( int )Infinity::A_Pos::RU_Y, true, true );
 			while( Line::judge == E_Line_status::MOVING && Control::stop_flag == false ){};
 
-			line -> Line_driver( ( int )Infinity::A_Pos::RU_X, ( int )Infinity::A_Pos::RU_Y, ( int )Infinity::A_Pos::R_SPC_X, ( int )Infinity::A_Pos::R_SPC_Y, false, false );
+			line -> Line_driver( ( int )Infinity::A_Pos::RU_X, ( int )Infinity::A_Pos::RU_Y, ( int )Infinity::A_Pos::R_SPC_X, ( int )Infinity::A_Pos::R_SPC_Y, false, true );
 			while( Line::judge == E_Line_status::MOVING && Control::stop_flag == false  ){};
 
 			/******************************************************************************/ // self pos correction movement
@@ -103,13 +138,13 @@ void Control::control_B( void )
 
 			/******************************************************************************/
 
-			line -> Line_driver( ( int )Infinity::A_Pos::R_SPC_X, ( int )Infinity::A_Pos::R_SPC_Y, ( int )Infinity::A_Pos::RD_X, ( int )Infinity::A_Pos::RD_Y, true, false );
+			line -> Line_driver( ( int )Infinity::A_Pos::R_SPC_X, ( int )Infinity::A_Pos::R_SPC_Y, ( int )Infinity::A_Pos::RD_X, ( int )Infinity::A_Pos::RD_Y, true, true);
 			while( Line::judge == E_Line_status::MOVING && Control::stop_flag == false  ){};
 
-			line -> Line_driver( ( int )Infinity::A_Pos::RD_X, ( int )Infinity::A_Pos::RD_Y, ( int )Infinity::A_Pos::LU_X, ( int )Infinity::A_Pos::LU_Y, true, false );
+			line -> Line_driver( ( int )Infinity::A_Pos::RD_X, ( int )Infinity::A_Pos::RD_Y, ( int )Infinity::A_Pos::LU_X, ( int )Infinity::A_Pos::LU_Y, true, true );
 			while( Line::judge == E_Line_status::MOVING && Control::stop_flag == false  ){};
 
-			line -> Line_driver( ( int )Infinity::A_Pos::LU_X, ( int )Infinity::A_Pos::LU_Y, ( int )Infinity::A_Pos::L_SPC_X, ( int )Infinity::A_Pos::L_SPC_Y, false, false );
+			line -> Line_driver( ( int )Infinity::A_Pos::LU_X, ( int )Infinity::A_Pos::LU_Y, ( int )Infinity::A_Pos::L_SPC_X, ( int )Infinity::A_Pos::L_SPC_Y, false, true );
 			while( Line::judge == E_Line_status::MOVING && Control::stop_flag == false  ){};
 
 			/******************************************************************************/ // self pos correction movement
@@ -123,7 +158,7 @@ void Control::control_B( void )
 
 			/******************************************************************************/
 
-			line -> Line_driver( ( int )Infinity::A_Pos::L_SPC_X, ( int )Infinity::A_Pos::L_SPC_Y, ( int )Infinity::A_Pos::LD_X, ( int )Infinity::A_Pos::LD_Y, true, false );
+			line -> Line_driver( ( int )Infinity::A_Pos::L_SPC_X, ( int )Infinity::A_Pos::L_SPC_Y, ( int )Infinity::A_Pos::LD_X, ( int )Infinity::A_Pos::LD_Y, true, true );
 			while( Line::judge == E_Line_status::MOVING && Control::stop_flag == false  ){};
 
 

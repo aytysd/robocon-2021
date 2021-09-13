@@ -25,8 +25,11 @@
 //#define ROBOT E_robot_name::B
 //#define ROBOT E_robot_name::C
 
-//#define WITHOUT_B
 //#define WITHOUT_A
+//#define WITHOUT_B
+//#define WITHOUT_C
+
+
 
 
 enum class E_robot_name
