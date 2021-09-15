@@ -37,8 +37,8 @@
 #include "Rope.hpp"
 
 
-int16_t Self_Pos::Self_Pos_X = -2643; //(mm)
-int16_t Self_Pos::Self_Pos_Y = -2643; //(mm)
+int16_t Self_Pos::Self_Pos_X = 0; //(mm)
+int16_t Self_Pos::Self_Pos_Y = 0; //(mm)
 
 int Self_Pos::Self_Pos_PE[2] = {0,0};
 int Self_Pos::out_angle = 0;

@@ -24,6 +24,7 @@
 #include "Self_Pos.hpp"
 #include "math.h"
 #include "function.hpp"
+#include "Self_Pos.hpp"
 
 E_move_status Jump::status = E_move_status::LANDING;
 
@@ -31,6 +32,7 @@ bool Jump::PE_1 = false;
 bool Jump::PE_2 = false;
 bool Jump::PE_3 = false;
 
+int Jump::rope = 0;
 
 E_move_status Jump::get_status()
 {
@@ -75,5 +77,19 @@ void Jump::jump( void )
 
 void Jump::get_Rope_Pos( uint8_t Rxdata )
 {
+
+}
+
+bool Jump::Is_centre( void )
+{
+
+	Self_Pos* self_pos = new Self_Pos();
+
+	double distance = sqrt( ( self_pos -> get_Self_Pos_X() ^ 2 ) + ( self_pos -> get_Self_Pos_Y() ^ 2 ) );
+
+	if( distance < 300 )
+		return true;
+	else
+		return false;
 
 }

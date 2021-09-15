@@ -40,7 +40,7 @@ int Line::BefY = 0;
 
 E_Line_status Line::judge = E_Line_status::STOP;
 bool Line::through = false;
-bool Line::Follow = false;
+bool Line::Jump = false;
 
 double direction = 0;
 
@@ -200,47 +200,34 @@ void Line::MoveLine(void)
 			}
 		}
 
-
-		if( Line::Follow == false )
+		this -> TG_v = this -> devTG * 0.2;
+		if( through != true )
 		{
-			this -> TG_v = this -> devTG * 0.2;
-			if( through != true )
+			if(this -> TG_v > 600)
 			{
-				if(this -> TG_v > 600)
-				{
-					this -> TG_v = 600;
-				}
-				else if( this -> TG_v < 500 )
-				{
-					this -> TG_v = 500;
-				}
+				this -> TG_v = 600;
 			}
-			if(through == true)
+			else if( this -> TG_v < 500 )
 			{
-				this -> TG_v += 400;
-				if( this -> TG_v > 600 )
-				{
-					this  -> TG_v = 600;
-				}
-				else if( this -> TG_v < 500 )
-				{
-					this -> TG_v = 500;
-				}
+				this -> TG_v = 500;
 			}
 		}
-		else if( Line::Follow == true )
+		if(through == true)
 		{
-			vector Self_Pos;
-			vector A_Robot;
-
-			Self_Pos.X = ( double )now_X;
-			Self_Pos.Y = ( double )now_Y;
-
-			A_Robot.X = Line::A_pos_x;
-			A_Robot.Y = Line::A_pos_y;
-
-			TG_r = this -> speed_PID( A_Robot, Self_Pos );
+			this -> TG_v += 400;
+			if( this -> TG_v > 600 )
+			{
+				this  -> TG_v = 600;
+			}
+			else if( this -> TG_v < 500 )
+			{
+				this -> TG_v = 500;
+			}
 		}
+
+
+		if( Line::Jump == true )
+			Line::TG_r = 1000;
 
 		//Debug::TTO_val((uint16_t)TG_r, "TG_r", &huart2);
 
@@ -261,8 +248,8 @@ void Line::MoveLine(void)
 			{
 				PWM* pwm = new PWM();
 
-				pwm -> Front_Move( this -> TG_v, (uint16_t)this -> TG_r, (uint16_t)this -> now_r, FM_devX, E_move_status::STOP);
-//			    pwm -> V_output(this -> TG_v, (uint16_t)this -> TG_r, 0, (uint16_t)this -> now_r, E_move_status::STOP);
+//				pwm -> Front_Move( this -> TG_v, (uint16_t)this -> TG_r, (uint16_t)this -> now_r, FM_devX, E_move_status::STOP);
+			    pwm -> V_output(this -> TG_v, (uint16_t)this -> TG_r, 0, (uint16_t)this -> now_r, E_move_status::STOP);
 				judge = E_Line_status::STOP;
 
 				delete pwm;
@@ -272,8 +259,8 @@ void Line::MoveLine(void)
 		{
 			PWM* pwm = new PWM();
 
-			pwm -> Front_Move( this -> TG_v, (uint16_t)this -> TG_r, (uint16_t)this -> now_r, FM_devX, E_move_status::MOVE);
-//			pwm -> V_output(this -> TG_v, (uint16_t)this -> TG_r, 0, (uint16_t)this -> now_r, E_move_status::MOVE);
+//			pwm -> Front_Move( this -> TG_v, (uint16_t)this -> TG_r, (uint16_t)this -> now_r, FM_devX, E_move_status::MOVE);
+			pwm -> V_output(this -> TG_v, (uint16_t)this -> TG_r, 0, (uint16_t)this -> now_r, E_move_status::MOVE);
 			judge = E_Line_status::MOVING;
 
 			delete pwm;
@@ -281,7 +268,7 @@ void Line::MoveLine(void)
 //	}
 }
 
-void Line::Line_driver(int befX, int befY, int tgX, int tgY, bool through, bool follow)
+void Line::Line_driver(int befX, int befY, int tgX, int tgY, bool through, bool Jump )
 {
 	Line::judge = E_Line_status::MOVING;
 	Line::BefX = befX;
@@ -289,7 +276,7 @@ void Line::Line_driver(int befX, int befY, int tgX, int tgY, bool through, bool 
 	Line::AftX = tgX;
 	Line::AftY = tgY;
 	Line::through = through;
-	Line::Follow = follow;
+	Line::Jump = Jump;
 
 	Line::integral_diff = 0;
 }

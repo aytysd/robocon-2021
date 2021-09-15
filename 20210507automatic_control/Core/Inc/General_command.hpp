@@ -27,7 +27,7 @@
 
 //#define WITHOUT_A
 //#define WITHOUT_B
-//#define WITHOUT_C
+#define WITHOUT_C
 
 
 
@@ -62,7 +62,10 @@ enum class E_Line_status
 enum class E_data_type
 {
 	command = 0x10,
-	done,
+	ready,
+	rope,
+	A_start,
+	B_start,
 	stop,
 	test,
 	A_pos,

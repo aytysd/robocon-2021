@@ -19,8 +19,9 @@
 
 enum class E_Time
 {
+	stay_jump = 20,
+	cross_jump = 40,
 	infinity = 45,
-	double_jump = 30,
 
 };
 
