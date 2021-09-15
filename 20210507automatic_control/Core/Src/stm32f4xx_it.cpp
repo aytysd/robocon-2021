@@ -38,6 +38,7 @@
 #include "gpio.h"
 #include "Time.hpp"
 #include "Control.hpp"
+#include "Rope.hpp"
 #include "Path.hpp"
 /* USER CODE END Includes */
 
@@ -69,14 +70,13 @@
 /* USER CODE BEGIN 0 */
 Gyro* gyro = new Gyro();
 Self_Pos* self_pos = new Self_Pos();
-HGPIO* gpio = new HGPIO();
 PWM* pwm = new PWM();
 Jump* jump = new Jump();
 Line* line = new Line();
 MPU6050* mpu6050 = new MPU6050();
 Time* time = new Time();
 Control* control = new Control();
-Path* path = new Path();
+Rope* rope = new Rope();
 /* USER CODE END 0 */
 
 /* External variables --------------------------------------------------------*/
@@ -323,12 +323,16 @@ void TIM6_DAC_IRQHandler(void)
   /* USER CODE END TIM6_DAC_IRQn 0 */
   HAL_TIM_IRQHandler(&htim6);
   /* USER CODE BEGIN TIM6_DAC_IRQn 1 */
-  mpu6050 -> MPU6050_update_Gyro( &hi2c1 );
-  self_pos -> update_self_pos();
 
-  if( Line::Enable_line == true )
-	  line -> MoveLine();
+  if( ROBOT != E_robot_name::C )
+  {
+	  mpu6050 -> MPU6050_update_Gyro( &hi2c1 );
+	  self_pos -> update_self_pos();
 
+	  if( Line::Enable_line == true )
+		  line -> MoveLine();
+
+  }
 
   /* USER CODE END TIM6_DAC_IRQn 1 */
 }
@@ -343,7 +347,10 @@ void TIM7_IRQHandler(void)
   /* USER CODE END TIM7_IRQn 0 */
   HAL_TIM_IRQHandler(&htim7);
   /* USER CODE BEGIN TIM7_IRQn 1 */
-  control -> send_self_pos( E_robot_name::B );
+
+  if( ROBOT == E_robot_name::C )
+	  rope -> Encoder_val_TX();
+
   /* USER CODE END TIM7_IRQn 1 */
 }
 

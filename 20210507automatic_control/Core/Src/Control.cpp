@@ -31,6 +31,7 @@
 
 uint8_t Control::command[ DATASIZE ] = { 0, 0, 0, 0, 0, 0, 0, 0 };
 
+
 bool Control::stop_flag = false;
 
 void Control::send_command( E_robot_name robot, uint8_t* data )
@@ -47,7 +48,7 @@ void Control::send_command( E_robot_name robot, uint8_t* data )
 		for( int i = 0; i < DATASIZE; i++ )
 		{
 			while( HAL_UART_Transmit( &huart1, ( uint8_t* )&data[ i ], sizeof( data[ i ] ), 100 ) != HAL_OK );
-			HAL_Delay( 100 );
+			HAL_Delay( 10 );
 		}
 
 		break;
@@ -56,7 +57,7 @@ void Control::send_command( E_robot_name robot, uint8_t* data )
 		for( int i = 0; i < DATASIZE; i++ )
 		{
 			while( HAL_UART_Transmit( &huart5, ( uint8_t* )&data[ i ], sizeof( data[ i ] ), 100 ) != HAL_OK );
-			HAL_Delay( 100 );
+			HAL_Delay( 10 );
 
 		}
 

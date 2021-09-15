@@ -36,6 +36,7 @@
 #include "usart.h"
 #include "gpio.h"
 #include "Control.hpp"
+#include "Control_C.hpp"
 
 bool Init_Move::SBDBT_OK = false;
 
@@ -44,12 +45,12 @@ void Init_Move::init_move( E_robot_name robot )
 
 	LED* led = new LED();
 	Control* control = new Control();
-
+	Control_C* C = new Control_C();
 
 
 	this -> Initialize( robot );
 	led -> LED_output( E_LED_status::Init );
-	HAL_Delay( 10000 );
+	HAL_Delay( 5000 );
 	this -> SBDBT_Init( robot );
 
 /*
@@ -60,65 +61,17 @@ void Init_Move::init_move( E_robot_name robot )
 	while( HAL_GPIO_ReadPin( GPIOC, GPIO_PIN_13 ) == GPIO_PIN_SET );
 
 	if( robot == E_robot_name::C )
-	{
-
-#ifdef WITHOUT_B
-
-		while( Control::A_done_flag == false ){}
-
-		Control::A_done_flag = false;
-
-		led -> LED_output( E_LED_status::Done );
-
-		uint8_t data[ DATASIZE ] = { ( uint8_t )E_data_type::command, ( uint8_t )E_Flow::MOVE_INFINITY_INITIAL_POS, 0, 0, 0, 0, 0, 0 };
-		control -> send_command( E_robot_name::A, data );
-
-#elif defined ( WITHOUT_A )
-
-		while( Control::B_done_flag == false ){}
-
-		Control::B_done_flag = false;
-
-		HAL_GPIO_WritePin( GPIOA, GPIO_PIN_5, GPIO_PIN_SET );
-
-		led -> LED_output( E_LED_status::Done );
-
-
-		uint8_t data[ DATASIZE ] = { ( uint8_t )E_data_type::command, ( uint8_t )E_Flow::MOVE_INFINITY_INITIAL_POS, 0, 0 };
-
-		control -> send_command( E_robot_name::B, data );
-
-#else
-
-		while( !( Control::A_done_flag == true && Control::B_done_flag == true ) ){}
-
-		HAL_GPIO_WritePin( GPIOA, GPIO_PIN_5, GPIO_PIN_SET );
-
-		Control::A_done_flag = false;
-		Control::B_done_flag = false;
-
-		led -> LED_output( E_LED_status::Done );
-
-
-		uint8_t data[ DATASIZE ] = { ( uint8_t )E_data_type::command, ( uint8_t )E_Flow::MOVE_INFINITY_INITIAL_POS, 0, 0 };
-
-		control -> send_command( E_robot_name::A, data );
-		control -> send_command( E_robot_name::B, data );
-
-
-#endif
-
-	}
+		C -> wait_for_ab();
 	else
 	{
-		uint8_t data[ DATASIZE ] = { ( uint8_t )E_data_type::done, 0, 0, 0, 0, 0, 0, 0 };
+		uint8_t data[ DATASIZE ] = { ( uint8_t )E_data_type::ready };
 		control -> send_command( E_robot_name::C, data );
 	}
 
 
 	delete led;
 	delete control;
-
+	delete C;
 
 }
 

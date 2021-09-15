@@ -30,8 +30,6 @@
 
 
 int Rope::over_flow_cnt_3 = -1;
-int Rope::over_flow_cnt_4 = -1;
-int Rope::over_flow_cnt_5 = -1;
 
 bool Rope::run_C = false;
 bool force_stop = false;
@@ -43,13 +41,10 @@ int Rope::encoder_read_3( bool rope )
 	Debug::TTO_val(enc_buff, "enc:", &huart2);
 
 	while( enc_buff > 2048 )
-	{
 		enc_buff -= 2048;
-	}
 	while( enc_buff < 0 )
-	{
 		enc_buff += 2048;
-	}
+
 	if( rope == true){}
 	else if( rope == false )
 	{
@@ -60,17 +55,6 @@ int Rope::encoder_read_3( bool rope )
 	return enc_buff;
 }
 
-int Rope::encoder_read_4()
-{
-	int enc_buff = this -> over_flow_cnt_4 * 0x10000 + TIM4 -> CNT;
-	return enc_buff;
-}
-
-int Rope::encoder_read_5()
-{
-	int enc_buff = TIM5 -> CNT % 2048;
-	return enc_buff;
-}
 
 //rotate_rope(5, CW, 1040, 520);
 //void Rope::rotate_rope(uint8_t motor_number, uint8_t direction, uint16_t down_speed, uint16_t up_speed)
@@ -158,12 +142,23 @@ void Rope::Encoder_val_TX( void )
 {
 	Control* control = new Control();
 
-	uint8_t TXdate_rope[8];
-	TXdate_rope[1] = this -> encoder_read_3( true );
+	uint8_t en_1 = ( 0b1111111100000000 & this -> encoder_read_3( true ) );
+	uint8_t en_2 = ( 0b0000000011111111 & this -> encoder_read_3( true ) );
 
-	control -> send_command( E_robot_name::A, ( uint8_t* )TXdate_rope );
-	control -> send_command( E_robot_name::B, ( uint8_t* )TXdate_rope );
+	uint8_t TXdata_rope[8] = { ( uint8_t )E_data_type::rope, en_1, en_2 };
+
+	control -> send_command( E_robot_name::A, TXdata_rope );
+	control -> send_command( E_robot_name::B, TXdata_rope );
 
 	delete control;
+
+}
+
+void Rope::Encoder_val_RX( int* rope, uint8_t* received_data )
+{
+	*rope = 0;
+
+	*rope = received_data[ 1 ] << 8;
+	*rope |= received_data[ 2 ];
 
 }

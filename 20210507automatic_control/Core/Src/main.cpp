@@ -48,6 +48,10 @@
 #include "MPU6050.hpp"
 #include "Path.hpp"
 #include "Line.hpp"
+#include "Jump.hpp"
+#include "Control_C.hpp"
+#include "Control_A.hpp"
+#include "Control_B.hpp"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -169,8 +173,8 @@ void HAL_UART_RxCpltCallback( UART_HandleTypeDef* UartHandle )
 		}
 
 		// C PSP
-		else if( B_Rxdata[ 0 ] == ( uint8_t )E_data_type::done )
-			Control::B_done_flag = true;
+		else if( B_Rxdata[ 0 ] == ( uint8_t )E_data_type::ready )
+			Control_C::B_ready_flag = true;
 
 
 
@@ -233,8 +237,8 @@ void HAL_UART_RxCpltCallback( UART_HandleTypeDef* UartHandle )
 			delete control;
 		}
 		//C PSP
-		else if( A_Rxdata[ 0 ] == ( uint8_t )E_data_type::done )
-			Control::A_done_flag = true;
+		else if( A_Rxdata[ 0 ] == ( uint8_t )E_data_type::ready )
+			Control_C::A_ready_flag = true;
 
 
 
@@ -246,7 +250,7 @@ void HAL_UART_RxCpltCallback( UART_HandleTypeDef* UartHandle )
 	else if( UartHandle == &huart3 )// data from C robot
 	{
 
-		HAL_UART_Receive_IT(&huart3, (uint8_t*)&C_Rxdata_buff, sizeof( C_Rxdata_buff ));
+		HAL_UART_Receive_IT( &huart3, (uint8_t*)&C_Rxdata_buff, sizeof( C_Rxdata_buff ) );
 
 		if( ( ( C_Rxdata_buff & 0b10000000 ) >> 7 ) == true && C_Is_receiving == false )
 		{
@@ -288,14 +292,20 @@ void HAL_UART_RxCpltCallback( UART_HandleTypeDef* UartHandle )
 		//A and B PSP
 		else if( C_Rxdata[ 0 ] == ( uint8_t )E_data_type::stop )
 			Control::stop_flag = true;
-		//A and B PSP
-		else if( C_Rxdata[ 0 ] == ( uint8_t )E_data_type::test )
+		else if( C_Rxdata[ 0 ] == ( uint8_t )E_data_type::A_start )
+			Control_A::start_flag = true;
+		else if( C_Rxdata[ 0 ] == ( uint8_t )E_data_type::B_start )
+			Control_B::start_flag = true;
+		else if( C_Rxdata[ 0 ] == ( uint8_t )E_data_type::test )//A and B PSP
 		{
-
 			if( C_Rxdata[ 1 ] == 10 )
 				Init_Move::SBDBT_OK = true;
-
-
+		}
+		else if( C_Rxdata[ 0 ] == ( uint8_t )E_data_type::rope )
+		{
+			Rope* rope = new Rope();
+			rope -> Encoder_val_RX( &Jump::rope, C_Rxdata );
+			delete rope;
 		}
 
 		for( int i = 0; i < DATASIZE; i++ )
@@ -340,6 +350,9 @@ int main(void)
   /* USER CODE BEGIN 1 */
   Init_Move* init_move = new Init_Move();
   Control* control = new Control();
+  Control_A* A = new Control_A();
+  Control_B* B = new Control_B();
+  Control_C* C = new Control_C();
   MPU6050* mpu6050 = new MPU6050();
   Self_Pos* self_pos = new Self_Pos();
   Path* line = new Path();
@@ -389,13 +402,13 @@ int main(void)
 	  switch( ROBOT )
 	  {
 	  case E_robot_name::A:
-		  control -> control_A();
+		  A -> control_A();
 		  break;
 	  case E_robot_name::B:
-		  control -> control_B();
+		  B -> control_B();
 		  break;
 	  case E_robot_name::C:
-		  control -> control_C();
+		  C -> control_C();
 		  break;
 	  default:
 		  break;

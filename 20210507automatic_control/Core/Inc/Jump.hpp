@@ -34,6 +34,11 @@ public:
 	static bool PE_2; //PC13
 	static bool PE_3; //PA4
 	static void get_Rope_Pos( uint8_t Rxdata );
+
+	bool Is_centre( void );
+
+	static int rope;
+
 private:
 
 	static E_move_status status;
