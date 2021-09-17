@@ -38,7 +38,7 @@ bool force_stop = false;
 int Rope::encoder_read_3( bool rope )
 {
 	int enc_buff = this -> over_flow_cnt_3 * 0x10000 + TIM3 -> CNT;
-	Debug::TTO_val(enc_buff, "enc:", &huart2);
+	Debug::TTO_val(enc_buff, "enc:" );
 
 	while( enc_buff > 2048 )
 		enc_buff -= 2048;
@@ -118,7 +118,7 @@ void Rope::rotate_rope(uint8_t motor_number, uint8_t direction, uint16_t down_sp
 		{
 			function -> drive_motor_Rope(motor_number, direction, up_speed, false);
 		}
-		Debug::TTO_val( encoder_read_3( true ), "encoder:", &huart2);
+		Debug::TTO_val( encoder_read_3( true ), "encoder:" );
 	}
 
 	delete function;
@@ -142,7 +142,7 @@ void Rope::Encoder_val_TX( void )
 {
 	Control* control = new Control();
 
-	uint8_t en_1 = ( 0b1111111100000000 & this -> encoder_read_3( true ) );
+	uint8_t en_1 = ( 0b1111111100000000 & this -> encoder_read_3( true ) ) >> 8;
 	uint8_t en_2 = ( 0b0000000011111111 & this -> encoder_read_3( true ) );
 
 	uint8_t TXdata_rope[8] = { ( uint8_t )E_data_type::rope, en_1, en_2 };

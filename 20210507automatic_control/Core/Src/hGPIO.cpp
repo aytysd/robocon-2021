@@ -28,7 +28,6 @@
 #include "i2c.h"
 #include "Jump.hpp"
 
-UART_HandleTypeDef* UART = &huart2;
 
 int HGPIO::count = 0;
 bool HGPIO::allow = false;
@@ -40,67 +39,67 @@ void HGPIO::identify( uint16_t GPIO_Pin )
 	switch( GPIO_Pin )
 	{
 	case GPIO_PIN_0:
-		Debug::TTO_addr( &GPIO_Pin, "GPIO0", UART );
+		Debug::TTO_addr( &GPIO_Pin, "GPIO0" );
 		this -> GPIO_PIN_0_func();
 		break;
 	case GPIO_PIN_1:
-		Debug::TTO_addr( &GPIO_Pin, "GPIO1", UART );
+		Debug::TTO_addr( &GPIO_Pin, "GPIO1" );
 		this -> GPIO_PIN_1_func();
 		break;
 	case GPIO_PIN_2:
-		Debug::TTO_addr( &GPIO_Pin, "GPIO2", UART );
+		Debug::TTO_addr( &GPIO_Pin, "GPIO2" );
 		this -> GPIO_PIN_2_func();
 		break;
 	case GPIO_PIN_3:
-		Debug::TTO_addr( &GPIO_Pin, "GPIO3", UART );
+		Debug::TTO_addr( &GPIO_Pin, "GPIO3" );
 		this -> GPIO_PIN_3_func();
 		break;
 	case GPIO_PIN_4:
-		Debug::TTO_addr( &GPIO_Pin, "GPIO4", UART );
+		Debug::TTO_addr( &GPIO_Pin, "GPIO4" );
 		this -> GPIO_PIN_4_func();
 		break;
 	case GPIO_PIN_5:
-		Debug::TTO_addr( &GPIO_Pin, "GPIO5", UART );
+		Debug::TTO_addr( &GPIO_Pin, "GPIO5" );
 		this -> GPIO_PIN_5_func();
 		break;
 	case GPIO_PIN_6:
-		Debug::TTO_addr( &GPIO_Pin, "GPIO6", UART );
+		Debug::TTO_addr( &GPIO_Pin, "GPIO6" );
 		this -> GPIO_PIN_6_func();
 		break;
 	case GPIO_PIN_7:
-		Debug::TTO_addr( &GPIO_Pin, "GPIO7", UART );
+		Debug::TTO_addr( &GPIO_Pin, "GPIO7" );
 		this -> GPIO_PIN_7_func();
 		break;
 	case GPIO_PIN_8:
-		Debug::TTO_addr( &GPIO_Pin, "GPIO8", UART );
+		Debug::TTO_addr( &GPIO_Pin, "GPIO8" );
 		this -> GPIO_PIN_8_func();
 		break;
 	case GPIO_PIN_9:
-		Debug::TTO_addr( &GPIO_Pin, "GPIO9", UART );
+		Debug::TTO_addr( &GPIO_Pin, "GPIO9" );
 		this -> GPIO_PIN_9_func();
 		break;
 	case GPIO_PIN_10:
-		Debug::TTO_addr( &GPIO_Pin, "GPIO10", UART );
+		Debug::TTO_addr( &GPIO_Pin, "GPIO10" );
 		this -> GPIO_PIN_10_func();
 		break;
 	case GPIO_PIN_11:
-		Debug::TTO_addr( &GPIO_Pin, "GPIO11", UART );
+		Debug::TTO_addr( &GPIO_Pin, "GPIO11" );
 		this -> GPIO_PIN_11_func();
 		break;
 	case GPIO_PIN_12:
-		Debug::TTO_addr( &GPIO_Pin, "GPIO12", UART );
+		Debug::TTO_addr( &GPIO_Pin, "GPIO12" );
 		this -> GPIO_PIN_12_func();
 		break;
 	case GPIO_PIN_13:
-		Debug::TTO_addr( &GPIO_Pin, "GPIO13", UART );
+		Debug::TTO_addr( &GPIO_Pin, "GPIO13" );
 		this -> GPIO_PIN_13_func();
 		break;
 	case GPIO_PIN_14:
-		Debug::TTO_addr( &GPIO_Pin, "GPIO14", UART );
+		Debug::TTO_addr( &GPIO_Pin, "GPIO14" );
 		this -> GPIO_PIN_14_func();
 		break;
 	case GPIO_PIN_15:
-		Debug::TTO_addr( &GPIO_Pin, "GPIO15", UART );
+		Debug::TTO_addr( &GPIO_Pin, "GPIO15" );
 		this -> GPIO_PIN_15_func();
 		break;
 

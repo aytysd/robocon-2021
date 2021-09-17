@@ -227,7 +227,7 @@ void Line::MoveLine(void)
 
 
 		if( Line::Jump == true )
-			Line::TG_r = 1000;
+			Line::TG_v = 1000;
 
 		//Debug::TTO_val((uint16_t)TG_r, "TG_r", &huart2);
 
@@ -237,8 +237,8 @@ void Line::MoveLine(void)
 			{
 				PWM* pwm = new PWM();
 
-				pwm -> Front_Move( 600, (uint16_t)this -> TG_r, (uint16_t)this -> now_r, FM_devX, E_move_status::MOVE );
-//			    pwm -> V_output(600, (uint16_t)this -> TG_r, 0, (uint16_t)this -> now_r, E_move_status::MOVE);
+//				pwm -> Front_Move( 600, (uint16_t)this -> TG_r, (uint16_t)this -> now_r, FM_devX, E_move_status::MOVE );
+			    pwm -> V_output(600, (uint16_t)this -> TG_r, 0, (uint16_t)this -> now_r, E_move_status::MOVE);
 				judge = E_Line_status::THROUGHING;
 
 				delete pwm;
@@ -277,6 +277,8 @@ void Line::Line_driver(int befX, int befY, int tgX, int tgY, bool through, bool 
 	Line::AftY = tgY;
 	Line::through = through;
 	Line::Jump = Jump;
+
+	Line::Enable_line = true;
 
 	Line::integral_diff = 0;
 }

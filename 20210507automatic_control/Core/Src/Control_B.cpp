@@ -31,6 +31,7 @@
 #include "Control_B.hpp"
 #include "Time.hpp"
 #include "Jump.hpp"
+#include "PWM.hpp"
 
 using namespace Infinity;
 
@@ -93,6 +94,7 @@ void Control_B::cross_jump( void )
 	Line* line = new Line();
 	Self_Pos* self_pos = new Self_Pos();
 	Jump* jump = new Jump();
+	PWM* pwm = new PWM();
 
 	line -> Line_driver( self_pos -> get_Self_Pos_X(), self_pos -> get_Self_Pos_Y(), ( int )Infinity::A_Pos::RD_X, ( int )Infinity::A_Pos::RD_Y, false, false );
 	while( Line::judge == E_Line_status::MOVING ){}
@@ -164,10 +166,12 @@ void Control_B::cross_jump( void )
 
 	}
 
+	pwm -> V_output( 0, 0, 0, 0, E_move_status::STOP );
+
 	Control_B::start_flag = false;
 	Control::stop_flag = false;
 
-
+	delete pwm;
 	delete line;
 	delete control;
 	delete self_pos;
@@ -180,6 +184,7 @@ void Control_B::infinity_jump( void )
 	Control* control = new Control();
 	Line* line = new Line();
 	Jump* jump = new Jump();
+	PWM* pwm = new PWM();
 
 	HAL_GPIO_WritePin( GPIOA, GPIO_PIN_5, GPIO_PIN_SET );
 
@@ -248,14 +253,17 @@ void Control_B::infinity_jump( void )
 		line -> Line_driver( ( int )Infinity::A_Pos::L_SPC_X, ( int )Infinity::A_Pos::L_SPC_Y, ( int )Infinity::A_Pos::LD_X, ( int )Infinity::A_Pos::LD_Y, true, false );
 		while( Line::judge == E_Line_status::MOVING && Control::stop_flag == false  ){};
 
-		Control::stop_flag = false;
 
 
 	}
 
+	pwm -> V_output( 0, 0, 0, 0, E_move_status::STOP );
+
 	Control_B::start_flag = false;
 	Control::stop_flag = false;
 
+
+	delete pwm;
 	delete jump;
 	delete line;
 	delete control;

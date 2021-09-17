@@ -26,6 +26,7 @@
 #include "Self_Pos.hpp"
 #include "Jump.hpp"
 #include "LED.hpp"
+#include "PWM.hpp"
 #include "usart.h"
 #include "tim.h"
 #include "Debug.hpp"
@@ -99,9 +100,12 @@ void Control_A::stay_jump( void )
 	uint8_t data[ DATASIZE ] = { ( uint8_t )E_data_type::ready };
 	control -> send_command( E_robot_name::C, data );
 
+#ifndef WITHOUT_C
 	while( Control_A::start_flag == false ){};
+#endif
 
 	Control::stop_flag = false;
+	Control_A::start_flag = false;
 
 	delete line;
 	delete self_pos;
@@ -117,6 +121,7 @@ void Control_A::cross_jump( void )
 	Line* line = new Line();
 	Jump* jump = new Jump();
 	Self_Pos* self_pos = new Self_Pos();
+	PWM* pwm = new PWM();
 
 	line -> Line_driver( 0, 0, ( int )Infinity::A_Pos::LD_X, ( int )Infinity::A_Pos::LD_Y, false, false );
 	while( Line::judge == E_Line_status::MOVING ){};
@@ -191,8 +196,14 @@ void Control_A::cross_jump( void )
 
 	}
 
+	pwm -> V_output( 0, 0, 0, 0, E_move_status::STOP );
+
+	Control_A::start_flag = false;
+	Control::stop_flag = false;
+
 
 	delete line;
+	delete pwm;
 	delete jump;
 	delete self_pos;
 	delete control;
@@ -204,6 +215,7 @@ void Control_A::infinity_jump( void )
 	Line* line = new Line();
 	Jump* jump = new Jump();
 	Self_Pos* self_pos = new Self_Pos();
+	PWM* pwm = new PWM();
 
 	HAL_GPIO_WritePin( GPIOA, GPIO_PIN_5, GPIO_PIN_SET );
 
@@ -283,11 +295,14 @@ void Control_A::infinity_jump( void )
 
 	}
 
+	pwm -> V_output( 0, 0, 0, 0, E_move_status::STOP );
+
 
 	Control::stop_flag = false;
+	Control_A::start_flag = false;
 
 
-
+	delete pwm;
 	delete line;
 	delete self_pos;
 	delete jump;

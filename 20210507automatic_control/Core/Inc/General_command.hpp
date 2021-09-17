@@ -21,13 +21,15 @@
 
 
 
-#define ROBOT E_robot_name::A
-//#define ROBOT E_robot_name::B
+//#define ROBOT E_robot_name::A
+#define ROBOT E_robot_name::B
 //#define ROBOT E_robot_name::C
 
-//#define WITHOUT_A
+#define WITHOUT_A
 //#define WITHOUT_B
-#define WITHOUT_C
+//#define WITHOUT_C
+
+#define AUTO
 
 
 
