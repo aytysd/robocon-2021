@@ -75,8 +75,8 @@ double Line::TGdistance(int x, int y, int tgX, int tgY)
 
 void Line::MoveLine(void)
 {
-//	if( Line::judge != E_Line_status::STOP)
-//	{
+	if( Line::judge != E_Line_status::STOP)
+	{
 		int befX = Line::BefX;
 		int befY = Line::BefY;
 		int tgX = Line::AftX;
@@ -92,8 +92,8 @@ void Line::MoveLine(void)
 
 		this -> devX = this -> distance(this -> now_X, this -> now_Y, tgX, tgY);
 		double FM_devX;
-		FM_devX = this -> distance(this -> now_X, this -> now_Y, tgX, tgY);
-		FM_devX *= -1;
+//		FM_devX = this -> distance(this -> now_X, this -> now_Y, tgX, tgY);
+//		FM_devX *= -1;
 //		Debug::TTO_val((int16_t)devX, "devX:", &huart2);
 		this -> devY = this -> TGdistance(this -> now_X, this -> now_Y, tgX, tgY);
 		this -> devX = fabs(devX);
@@ -227,9 +227,9 @@ void Line::MoveLine(void)
 
 
 		if( Line::Jump == true )
-			Line::TG_r = 1000;
+			Line::TG_v = 1000;
 
-		//Debug::TTO_val((uint16_t)TG_r, "TG_r", &huart2);
+//		Debug::TTO_val((uint16_t)TG_r, "TG_r", &huart2);
 
 		if(arrive == true)
 		{
@@ -237,9 +237,10 @@ void Line::MoveLine(void)
 			{
 				PWM* pwm = new PWM();
 
-				pwm -> Front_Move( 600, (uint16_t)this -> TG_r, (uint16_t)this -> now_r, FM_devX, E_move_status::MOVE );
-//			    pwm -> V_output(600, (uint16_t)this -> TG_r, 0, (uint16_t)this -> now_r, E_move_status::MOVE);
+//				pwm -> Front_Move( 600, (uint16_t)this -> TG_r, (uint16_t)this -> now_r, FM_devX, E_move_status::MOVE );
+			    pwm -> V_output(600, (uint16_t)this -> TG_r, 0, (uint16_t)this -> now_r, E_move_status::MOVE);
 				judge = E_Line_status::THROUGHING;
+//				Line::Enable_line = false;
 
 				delete pwm;
 
@@ -251,6 +252,7 @@ void Line::MoveLine(void)
 //				pwm -> Front_Move( this -> TG_v, (uint16_t)this -> TG_r, (uint16_t)this -> now_r, FM_devX, E_move_status::STOP);
 			    pwm -> V_output(this -> TG_v, (uint16_t)this -> TG_r, 0, (uint16_t)this -> now_r, E_move_status::STOP);
 				judge = E_Line_status::STOP;
+//				Line::Enable_line = false;
 
 				delete pwm;
 			}
@@ -265,7 +267,7 @@ void Line::MoveLine(void)
 
 			delete pwm;
 		}
-//	}
+	}
 }
 
 void Line::Line_driver(int befX, int befY, int tgX, int tgY, bool through, bool Jump )
@@ -277,8 +279,21 @@ void Line::Line_driver(int befX, int befY, int tgX, int tgY, bool through, bool 
 	Line::AftY = tgY;
 	Line::through = through;
 	Line::Jump = Jump;
+	Line::Enable_line = true;
 
 	Line::integral_diff = 0;
+}
+
+void Line::Line_init(int init_pos_X, int init_pos_Y)
+{
+	Line::BefX = init_pos_X;
+	Line::BefY = init_pos_Y;
+	Line::AftX = init_pos_X;
+	Line::AftY = init_pos_Y;
+	Line::judge = E_Line_status::STOP;
+	Line::Jump = false;
+	Line::through = false;
+	Line::Enable_line = true;
 }
 
 double Line::speed_PID( vector robot_A, vector self_pos )

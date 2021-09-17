@@ -60,7 +60,17 @@ void Controller::Y(void){}
 void Controller::A(void){}
 void Controller::B(void){}
 
-void Controller::LB(void){}
+void Controller::LB(void)
+{
+	  if(this -> speed < 1000)
+	  {
+		  this  -> speed = 1000;
+	  }
+	  else if(this -> speed >= 1000)
+	  {
+		  this -> speed = 600;
+	  }
+}
 
 
 //--------------------------------------------------
@@ -83,7 +93,7 @@ void Controller::LT(void)
 //reset
 void Controller::RB(void)
 {
-	this -> speed = 500;
+	this -> speed = 600;
 }
 void Controller::RT(void)
 {
@@ -170,13 +180,13 @@ void Controller::CSDR(void)
 //speed up and down
 void Controller::RSU(void)
 {
-	this -> speed += 50;
-	if(this -> speed > 1300) this -> speed = 1300;
+	this -> speed += 100;
+	if(this -> speed > 1200) this -> speed = 1200;
 }
 void Controller::RSD(void)
 {
-	this -> speed -= 50;
-	if(this -> speed < 700) this -> speed = 700;
+	this -> speed -= 100;
+	if(this -> speed < 500) this -> speed = 500;
 }
 
 
@@ -210,13 +220,13 @@ void Controller::RSDL(void){}
 //speed_jump up and down
 void Controller::LSU(void)
 {
-	this -> speed_jump += 50;
+	this -> speed_jump += 100;
 	if(this -> speed_jump > 1200) this -> speed_jump = 1200;
 }
 
 void Controller::LSD(void)
 {
-	this -> speed_jump -= 50;
+	this -> speed_jump -= 100;
 	if(this -> speed_jump < 800) this -> speed_jump = 800;
 }
 
