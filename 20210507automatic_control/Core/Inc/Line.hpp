@@ -87,6 +87,8 @@ private:
 public:
 	void Line_driver(int bef, int befY, int tgX, int tgY, bool through, bool Jump );
 	void MoveLine(void);
+	void Line_init(int init_pos_X, int init_pos_Y);
+
 	static E_Line_status judge;
 
 	static bool Enable_line;
