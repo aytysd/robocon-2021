@@ -32,7 +32,7 @@ Core/Src/Rope.o: ../Core/Src/Rope.cpp ../Core/Inc/main.h \
  ../Core/Inc/Rope.hpp ../Core/Inc/Debug.hpp ../Core/Inc/main.h \
  ../Core/Inc/Function.hpp ../Core/Inc/PWM.hpp \
  ../Core/Inc/General_command.hpp ../Core/Inc/i2c.h ../Core/Inc/tim.h \
- ../Core/Inc/usart.h ../Core/Inc/gpio.h
+ ../Core/Inc/usart.h ../Core/Inc/gpio.h ../Core/Inc/Control.hpp
 
 ../Core/Inc/main.h:
 
@@ -115,3 +115,5 @@ Core/Src/Rope.o: ../Core/Src/Rope.cpp ../Core/Inc/main.h \
 ../Core/Inc/usart.h:
 
 ../Core/Inc/gpio.h:
+
+../Core/Inc/Control.hpp:

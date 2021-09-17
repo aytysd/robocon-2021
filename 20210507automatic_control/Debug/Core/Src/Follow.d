@@ -36,7 +36,7 @@ Core/Src/Follow.o: ../Core/Src/Follow.cpp ../Core/Inc/main.h \
  ../Core/Inc/General_command.hpp ../Core/Inc/ToF.hpp \
  ../Core/Inc/Self_Pos.hpp ../Core/Inc/Line.hpp \
  ../Core/Inc/General_command.hpp ../Core/Inc/Path.hpp \
- ../Core/Inc/Debug.hpp
+ ../Core/Inc/Path.hpp ../Core/Inc/Debug.hpp
 
 ../Core/Inc/main.h:
 
@@ -131,6 +131,8 @@ Core/Src/Follow.o: ../Core/Src/Follow.cpp ../Core/Inc/main.h \
 ../Core/Inc/Line.hpp:
 
 ../Core/Inc/General_command.hpp:
+
+../Core/Inc/Path.hpp:
 
 ../Core/Inc/Path.hpp:
 

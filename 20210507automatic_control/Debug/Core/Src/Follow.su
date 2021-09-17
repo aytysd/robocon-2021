@@ -1,3 +1,3 @@
 gthr-default.h:229:1:int __gthread_key_delete(__gthread_key_t)	16	static
-Follow.cpp:40:6:void Follow::follow()	40	static
-Follow.cpp:53:6:void Follow::target_calc()	176	static
+Follow.cpp:40:6:void Follow::follow()	104	static
+Follow.cpp:58:6:void Follow::target_calc()	64	static

@@ -40,7 +40,10 @@ Core/Src/main.o: ../Core/Src/main.cpp ../Core/Inc/main.h \
  ../Core/Inc/Control.hpp ../Core/Inc/Rope.hpp ../Core/Inc/Gyro.hpp \
  ../Core/Inc/Debug.hpp ../Core/Inc/Time.hpp ../Core/Inc/Follow.hpp \
  ../Core/Inc/i2c.h ../Core/Inc/tim.h ../Core/Inc/usart.h \
- ../Core/Inc/gpio.h ../Core/Inc/MPU6050.hpp ../Core/Inc/Path.hpp
+ ../Core/Inc/gpio.h ../Core/Inc/MPU6050.hpp ../Core/Inc/Path.hpp \
+ ../Core/Inc/Stay_Jump.hpp ../Core/Inc/Line.hpp ../Core/Inc/Path.hpp \
+ ../Core/Inc/Jump.hpp ../Core/Inc/Control_C.hpp ../Core/Inc/Control_A.hpp \
+ ../Core/Inc/Control_B.hpp
 
 ../Core/Inc/main.h:
 
@@ -167,3 +170,17 @@ Core/Src/main.o: ../Core/Src/main.cpp ../Core/Inc/main.h \
 ../Core/Inc/MPU6050.hpp:
 
 ../Core/Inc/Path.hpp:
+
+../Core/Inc/Stay_Jump.hpp:
+
+../Core/Inc/Line.hpp:
+
+../Core/Inc/Path.hpp:
+
+../Core/Inc/Jump.hpp:
+
+../Core/Inc/Control_C.hpp:
+
+../Core/Inc/Control_A.hpp:
+
+../Core/Inc/Control_B.hpp:

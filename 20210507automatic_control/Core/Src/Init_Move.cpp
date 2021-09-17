@@ -85,7 +85,7 @@ void Init_Move::Initialize( E_robot_name robot )
 */
 
 	  if( robot != E_robot_name::C )
-		  while( mpu6050 -> MPU6050_Init( &hi2c1 ) == true );
+		  while( mpu6050 -> MPU6050_Init() == true );
 	  mpu6050 -> set_initial_direction( robot );
 
 	  HAL_UART_Receive_IT( &huart1, ( uint8_t* )&A_Rxdata_buff, sizeof( A_Rxdata_buff ) );
@@ -93,7 +93,7 @@ void Init_Move::Initialize( E_robot_name robot )
 	  HAL_UART_Receive_IT( &huart3, ( uint8_t* )&C_Rxdata_buff, sizeof( C_Rxdata_buff ) );
 	  HAL_UART_Receive_IT( &huart4, ( uint8_t* )Controller::controller_Rxdata, sizeof( Controller::controller_Rxdata ) );
 
-	  HAL_TIM_Base_Start_IT( &htim6 );
+//	  HAL_TIM_Base_Start_IT( &htim6 );
 	  HAL_TIM_Base_Start_IT( &htim3 );
 
 	  HAL_TIM_Encoder_Start( &htim5, TIM_CHANNEL_ALL );

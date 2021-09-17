@@ -33,11 +33,12 @@ Core/Src/stm32f4xx_it.o: ../Core/Src/stm32f4xx_it.cpp ../Core/Inc/main.h \
  ../Core/Inc/General_command.hpp ../Core/Inc/main.h ../Core/Inc/ToF.hpp \
  ../Core/Inc/Self_Pos.hpp ../Core/Inc/Controller.hpp \
  ../Core/Inc/General_command.hpp ../Core/Inc/PWM.hpp \
- ../Core/Inc/Init_Move.hpp ../Core/Inc/hGPIO.hpp ../Core/Inc/PWM.hpp \
- ../Core/Inc/Jump.hpp ../Core/Inc/Gyro.hpp ../Core/Inc/Line.hpp \
- ../Core/Inc/i2c.h ../Core/Inc/MPU6050.hpp ../Core/Inc/i2c.h \
- ../Core/Inc/tim.h ../Core/Inc/usart.h ../Core/Inc/gpio.h \
- ../Core/Inc/Time.hpp ../Core/Inc/Control.hpp ../Core/Inc/Path.hpp
+ ../Core/Inc/Init_Move.hpp ../Core/Inc/hGPIO.hpp ../Core/Inc/Debug.hpp \
+ ../Core/Inc/PWM.hpp ../Core/Inc/Jump.hpp ../Core/Inc/Gyro.hpp \
+ ../Core/Inc/Line.hpp ../Core/Inc/i2c.h ../Core/Inc/Path.hpp \
+ ../Core/Inc/MPU6050.hpp ../Core/Inc/i2c.h ../Core/Inc/tim.h \
+ ../Core/Inc/usart.h ../Core/Inc/gpio.h ../Core/Inc/Time.hpp \
+ ../Core/Inc/Control.hpp ../Core/Inc/Rope.hpp ../Core/Inc/Path.hpp
 
 ../Core/Inc/main.h:
 
@@ -123,6 +124,8 @@ Core/Src/stm32f4xx_it.o: ../Core/Src/stm32f4xx_it.cpp ../Core/Inc/main.h \
 
 ../Core/Inc/hGPIO.hpp:
 
+../Core/Inc/Debug.hpp:
+
 ../Core/Inc/PWM.hpp:
 
 ../Core/Inc/Jump.hpp:
@@ -132,6 +135,8 @@ Core/Src/stm32f4xx_it.o: ../Core/Src/stm32f4xx_it.cpp ../Core/Inc/main.h \
 ../Core/Inc/Line.hpp:
 
 ../Core/Inc/i2c.h:
+
+../Core/Inc/Path.hpp:
 
 ../Core/Inc/MPU6050.hpp:
 
@@ -146,5 +151,7 @@ Core/Src/stm32f4xx_it.o: ../Core/Src/stm32f4xx_it.cpp ../Core/Inc/main.h \
 ../Core/Inc/Time.hpp:
 
 ../Core/Inc/Control.hpp:
+
+../Core/Inc/Rope.hpp:
 
 ../Core/Inc/Path.hpp:

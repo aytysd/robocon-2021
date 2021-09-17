@@ -128,7 +128,7 @@ void Path::movepath( void )
 			if( Path::through == true )
 			{
 				Path::speed = 500;
-				pwm -> V_output( Path::speed, Path::direction, 0, gyro -> get_direction( &hi2c1 ), E_move_status::MOVE );
+				pwm -> V_output( Path::speed, Path::direction, 0, gyro -> get_direction(), E_move_status::MOVE );
 				Path::judge = E_path_status::REACHING;
 				delete pwm;
 				delete gyro;
@@ -187,7 +187,7 @@ void Path::movepath( void )
 
 
 			Path::speed = 300;
-			pwm -> V_output( ( uint16_t )Path::speed, ( uint16_t )Path::direction, 0, ( uint16_t )gyro -> get_direction( &hi2c1 ), E_move_status::MOVE );
+			pwm -> V_output( ( uint16_t )Path::speed, ( uint16_t )Path::direction, 0, ( uint16_t )gyro -> get_direction(), E_move_status::MOVE );
 
 			Path::judge = E_path_status::MOVING;
 

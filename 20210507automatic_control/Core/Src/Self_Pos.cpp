@@ -117,8 +117,8 @@ void Self_Pos::update_self_pos(void)
 
 	}
 
-	this -> Self_Pos_X += d1 * cos( gyro -> get_direction( &hi2c1 ) * M_PI / ( double ) 180 ) - d2 * sin( gyro -> get_direction( &hi2c1 ) * M_PI / ( double ) 180 ); //X_coordinate
-	this -> Self_Pos_Y += d1 * sin( gyro -> get_direction( &hi2c1 ) * M_PI / ( double ) 180 ) + d2 * cos( gyro -> get_direction( &hi2c1 ) * M_PI / ( double ) 180 ); //Y_coordinate
+	this -> Self_Pos_X += d1 * cos( gyro -> get_direction() * M_PI / ( double ) 180 ) - d2 * sin( gyro -> get_direction() * M_PI / ( double ) 180 ); //X_coordinate
+	this -> Self_Pos_Y += d1 * sin( gyro -> get_direction() * M_PI / ( double ) 180 ) + d2 * cos( gyro -> get_direction() * M_PI / ( double ) 180 ); //Y_coordinate
 
 	delete gyro;
 }

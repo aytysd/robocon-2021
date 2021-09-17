@@ -1,1 +1,6 @@
-Control_C.cpp:40:6:void Control::control_C()	96	static
+Control_C.cpp:41:6:void Control_C::control_C()	16	static
+Control_C.cpp:48:6:void Control_C::stay_jump()	48	static
+Control_C.cpp:84:6:void Control_C::cross_jump()	48	static
+Control_C.cpp:123:6:void Control_C::infinity_jump()	48	static
+Control_C.cpp:160:6:void Control_C::wait_for_ab()	16	static
+Control_C.cpp:191:6:void Control_C::send_both(uint8_t*)	24	static

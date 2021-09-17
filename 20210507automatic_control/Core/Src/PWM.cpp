@@ -187,10 +187,10 @@ bool PWM::rotate(uint16_t V, uint16_t target_angle)
 	MPU6050* gyro = new MPU6050();
 	Debug::TTO_val( 0, "rotate:");
 
-	if( !( abs(  target_angle - ( uint16_t )gyro -> get_direction( &hi2c1 ) ) < 3 ) )
+	if( !( abs(  target_angle - ( uint16_t )gyro -> get_direction() ) < 3 ) )
 	{
 
-		int16_t diff = target_angle - gyro -> get_direction( &hi2c1 );
+		int16_t diff = target_angle - gyro -> get_direction();
 		while( diff < 0 )
 			diff += 360;
 
@@ -200,9 +200,9 @@ bool PWM::rotate(uint16_t V, uint16_t target_angle)
 			this -> V_output(0, 0, -V, 0, E_move_status::MOVE);
 			Debug::TTO_val(0, "180 to 360:" );
 			Debug::time_calc();
-			while( !( abs(  target_angle - ( uint16_t )gyro -> get_direction( &hi2c1 ) ) < 3 ) )
+			while( !( abs(  target_angle - ( uint16_t )gyro -> get_direction() ) < 3 ) )
 			{
-				gyro -> MPU6050_update_Gyro( &hi2c1 );
+				gyro -> MPU6050_update_Gyro();
 				HAL_Delay( 100 );
 			}
 
@@ -218,9 +218,9 @@ bool PWM::rotate(uint16_t V, uint16_t target_angle)
 			this -> V_output(0, 0, +V, 0, E_move_status::MOVE);
 			Debug::TTO_val(0, "0 to 180:" );
 			Debug::time_calc();
-			while( !( abs(  target_angle - ( uint16_t )gyro -> get_direction( &hi2c1 ) ) < 3 ) )
+			while( !( abs(  target_angle - ( uint16_t )gyro -> get_direction() ) < 3 ) )
 			{
-				gyro -> MPU6050_update_Gyro( &hi2c1 );
+				gyro -> MPU6050_update_Gyro();
 				HAL_Delay( 100 );
 
 			}

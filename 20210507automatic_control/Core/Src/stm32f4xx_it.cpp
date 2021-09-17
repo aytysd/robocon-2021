@@ -327,7 +327,7 @@ void TIM6_DAC_IRQHandler(void)
   if( ROBOT != E_robot_name::C )
   {
 
-	  mpu6050 -> MPU6050_update_Gyro( &hi2c1 );
+	  mpu6050 -> MPU6050_update_Gyro();
 
 #ifdef AUTO
 	  self_pos -> update_self_pos();

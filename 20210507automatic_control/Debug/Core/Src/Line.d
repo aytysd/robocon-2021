@@ -29,10 +29,11 @@ Core/Src/Line.o: ../Core/Src/Line.cpp ../Core/Inc/Line.hpp \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h \
- ../Core/Inc/i2c.h ../Core/Inc/General_command.hpp ../Core/Inc/PWM.hpp \
- ../Core/Inc/Self_Pos.hpp ../Core/Inc/General_command.hpp \
- ../Core/Inc/ToF.hpp ../Core/Inc/Self_Pos.hpp ../Core/Inc/Gyro.hpp \
- ../Core/Inc/MPU6050.hpp
+ ../Core/Inc/i2c.h ../Core/Inc/General_command.hpp ../Core/Inc/Path.hpp \
+ ../Core/Inc/PWM.hpp ../Core/Inc/Self_Pos.hpp \
+ ../Core/Inc/General_command.hpp ../Core/Inc/ToF.hpp \
+ ../Core/Inc/Self_Pos.hpp ../Core/Inc/Gyro.hpp ../Core/Inc/MPU6050.hpp \
+ ../Core/Inc/Debug.hpp ../Core/Inc/usart.h
 
 ../Core/Inc/Line.hpp:
 
@@ -102,6 +103,8 @@ Core/Src/Line.o: ../Core/Src/Line.cpp ../Core/Inc/Line.hpp \
 
 ../Core/Inc/General_command.hpp:
 
+../Core/Inc/Path.hpp:
+
 ../Core/Inc/PWM.hpp:
 
 ../Core/Inc/Self_Pos.hpp:
@@ -115,3 +118,7 @@ Core/Src/Line.o: ../Core/Src/Line.cpp ../Core/Inc/Line.hpp \
 ../Core/Inc/Gyro.hpp:
 
 ../Core/Inc/MPU6050.hpp:
+
+../Core/Inc/Debug.hpp:
+
+../Core/Inc/usart.h:

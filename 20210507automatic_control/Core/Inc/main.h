@@ -100,8 +100,6 @@ void Error_Handler(void);
 #define B_RTS_GPIO_Port GPIOC
 #define B_CTS_Pin GPIO_PIN_9
 #define B_CTS_GPIO_Port GPIOC
-#define Self_Pos_Gyro_SCL_Pin GPIO_PIN_8
-#define Self_Pos_Gyro_SCL_GPIO_Port GPIOA
 #define A_TX_Pin GPIO_PIN_9
 #define A_TX_GPIO_Port GPIOA
 #define A_RX_Pin GPIO_PIN_10
@@ -122,8 +120,6 @@ void Error_Handler(void);
 #define B_RX_GPIO_Port GPIOD
 #define Y_ODB3_Pin GPIO_PIN_3
 #define Y_ODB3_GPIO_Port GPIOB
-#define Self_Pos_Gyro_SDA_Pin GPIO_PIN_4
-#define Self_Pos_Gyro_SDA_GPIO_Port GPIOB
 #define LIMIT_F_V2_Pin GPIO_PIN_5
 #define LIMIT_F_V2_GPIO_Port GPIOB
 #define Robot_Gyro_SCL_Pin GPIO_PIN_8

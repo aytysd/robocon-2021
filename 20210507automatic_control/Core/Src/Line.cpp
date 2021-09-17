@@ -170,7 +170,7 @@ void Line::MoveLine(void)
 //		TG_r = TG_r - dev_r;
 
 		MPU6050* gyro = new MPU6050();
-		this -> now_r = (double)gyro -> get_direction( &hi2c1 );
+		this -> now_r = (double)gyro -> get_direction();
 		delete gyro;
 
 //		direction = this -> now_r;
