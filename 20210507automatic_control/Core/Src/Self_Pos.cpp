@@ -51,8 +51,8 @@ int16_t Self_Pos::get_Self_Pos_Y() { return this -> Self_Pos_Y; }
 
 void Self_Pos::add_Self_Pos(int add_x, int add_y)
 {
-	this->Self_Pos_Y += add_x;
-	this->Self_Pos_X += add_y;
+	this->Self_Pos_X += add_x;
+	this->Self_Pos_Y += add_y;
 }
 
 void Self_Pos::set_initial_pos(E_robot_name robot)

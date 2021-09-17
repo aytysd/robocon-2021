@@ -42,7 +42,7 @@ void Controller::check_array(void)
 
 void Controller::identify()
 {
-	this -> check_array();
+//	this -> check_array();
 	if( this -> identify_NOP() == false )
 	{
 

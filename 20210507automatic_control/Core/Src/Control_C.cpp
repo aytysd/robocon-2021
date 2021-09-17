@@ -164,13 +164,13 @@ void Control_C::wait_for_ab( void )
 
 	while( !( Control_C::A_ready_flag == true ) ){};
 
-	Control::A_ready_flag = false;
+	Control_C::A_ready_flag = false;
 
 #elif defined ( WITHOUT_A )
 
 	while( !( Control_C::B_ready_flag == true ) ){};
 
-	Control::B_ready_flag = false;
+	Control_C::B_ready_flag = false;
 
 
 #elif defined ( WITHOUT_C )

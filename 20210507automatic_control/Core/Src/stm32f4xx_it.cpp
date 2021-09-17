@@ -326,11 +326,15 @@ void TIM6_DAC_IRQHandler(void)
 
   if( ROBOT != E_robot_name::C )
   {
+
 	  mpu6050 -> MPU6050_update_Gyro( &hi2c1 );
+
+#ifdef AUTO
 	  self_pos -> update_self_pos();
 
 	  if( Line::Enable_line == true )
 		  line -> MoveLine();
+#endif
 
   }
 

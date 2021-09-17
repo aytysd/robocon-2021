@@ -53,13 +53,6 @@ void Init_Move::init_move( E_robot_name robot )
 	HAL_Delay( 5000 );
 	this -> SBDBT_Init( robot );
 
-/*
-	while( HAL_GPIO_ReadPin( LIMIT_F_V2_GPIO_Port, LIMIT_F_V2_Pin ) == GPIO_PIN_SET ){}
-	while( HAL_GPIO_ReadPin( LIMIT_L_V3_GPIO_Port, LIMIT_L_V3_Pin ) == GPIO_PIN_SET ){}
-*/
-
-	while( HAL_GPIO_ReadPin( GPIOC, GPIO_PIN_13 ) == GPIO_PIN_SET );
-
 	if( robot == E_robot_name::C )
 		C -> wait_for_ab();
 	else
@@ -100,7 +93,7 @@ void Init_Move::Initialize( E_robot_name robot )
 	  HAL_UART_Receive_IT( &huart3, ( uint8_t* )&C_Rxdata_buff, sizeof( C_Rxdata_buff ) );
 	  HAL_UART_Receive_IT( &huart4, ( uint8_t* )Controller::controller_Rxdata, sizeof( Controller::controller_Rxdata ) );
 
-//	  HAL_TIM_Base_Start_IT( &htim6 );
+	  HAL_TIM_Base_Start_IT( &htim6 );
 	  HAL_TIM_Base_Start_IT( &htim3 );
 
 	  HAL_TIM_Encoder_Start( &htim5, TIM_CHANNEL_ALL );
@@ -125,7 +118,9 @@ void Init_Move::SBDBT_Init( E_robot_name robot )
 	{
 	case E_robot_name::A:
 	case E_robot_name::B:
+#ifndef WITHOUT_C
 		while( Init_Move::SBDBT_OK == false ){}
+#endif
 		break;
 	case E_robot_name::C:
 

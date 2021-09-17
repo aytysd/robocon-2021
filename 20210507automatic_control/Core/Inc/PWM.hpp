@@ -46,7 +46,7 @@ public:
 	bool rotate(uint16_t V, uint16_t target_angle);
 
 private:
-	uint8_t plus_minus(double number);
+	uint8_t plus_minus( int16_t number );
 
 	static int16_t pre_dis_diff;
 	static int16_t pre_ang_diff;

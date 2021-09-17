@@ -195,7 +195,7 @@ void Path::movepath( void )
 			Debug::TTO_val( ( int )target.X, "X:", &huart2 );
 			Debug::TTO_val( ( int )target.Y, "Y:", &huart2 );
 */
-			Debug::TTO_val( ( int )Path::direction, "direction:", &huart2 );
+			Debug::TTO_val( ( int )Path::direction, "direction:" );
 //			Debug::TTO_val( ( uint16_t )Path::speed, "speed:", &huart2 );
 //			Debug::TTO_val( ( int )target_speed, "target_speed", &huart2 );
 

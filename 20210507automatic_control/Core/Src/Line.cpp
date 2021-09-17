@@ -281,6 +281,8 @@ void Line::Line_driver(int befX, int befY, int tgX, int tgY, bool through, bool 
 	Line::Jump = Jump;
 	Line::Enable_line = true;
 
+	Line::Enable_line = true;
+
 	Line::integral_diff = 0;
 }
 

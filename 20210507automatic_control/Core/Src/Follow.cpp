@@ -44,8 +44,8 @@ void Follow::follow()
 
 	this -> target_calc();
 
-	Debug::TTO_val( Follow::target_X, "targetX:", &huart2 );
-	Debug::TTO_val( Follow::target_Y, "targetY:", &huart2 );
+	Debug::TTO_val( Follow::target_X, "targetX:" );
+	Debug::TTO_val( Follow::target_Y, "targetY:" );
 
 
 	line -> Line_driver( self_pos -> get_Self_Pos_X(), self_pos -> get_Self_Pos_Y(), Follow::target_X, Follow::target_Y, false, true );

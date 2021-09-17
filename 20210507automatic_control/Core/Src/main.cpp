@@ -47,6 +47,7 @@
 #include "Follow.hpp"
 #include "MPU6050.hpp"
 #include "Path.hpp"
+#include "Stay_Jump.hpp"
 #include "Line.hpp"
 #include "Jump.hpp"
 #include "Control_C.hpp"
@@ -166,8 +167,8 @@ void HAL_UART_RxCpltCallback( UART_HandleTypeDef* UartHandle )
 
 			control -> decode_self_pos( &x, &y, B_Rxdata );
 
-			Debug::TTO_val( x, "X:", &huart2 );
-			Debug::TTO_val( y, "Y:", &huart2 );
+			Debug::TTO_val( x, "X:" );
+			Debug::TTO_val( y, "Y:" );
 
 			delete control;
 		}
@@ -179,7 +180,7 @@ void HAL_UART_RxCpltCallback( UART_HandleTypeDef* UartHandle )
 
 
 		for( int i = 0; i < DATASIZE; i++ )
-			Debug::TTO_val( B_Rxdata[ i ], "B_data:", &huart2 );
+			Debug::TTO_val( B_Rxdata[ i ], "B_data:" );
 
 	}
 	else if( UartHandle == &huart1 )// data from A robot
@@ -231,8 +232,8 @@ void HAL_UART_RxCpltCallback( UART_HandleTypeDef* UartHandle )
 			Control* control = new Control();
 			control -> decode_self_pos( &Line::A_pos_x, &Line::A_pos_y, A_Rxdata );
 
-			Debug::TTO_val( Line::A_pos_x, "X:", &huart2 );
-			Debug::TTO_val( Line::A_pos_y, "Y:", &huart2 );
+			Debug::TTO_val( Line::A_pos_x, "X:" );
+			Debug::TTO_val( Line::A_pos_y, "Y:" );
 
 			delete control;
 		}
@@ -243,14 +244,14 @@ void HAL_UART_RxCpltCallback( UART_HandleTypeDef* UartHandle )
 
 
 		for( int i = 0; i < DATASIZE; i++ )
-			Debug::TTO_val( A_Rxdata[ i ], "A_data:", &huart2 );
+			Debug::TTO_val( A_Rxdata[ i ], "A_data:" );
 
 
 	}
 	else if( UartHandle == &huart3 )// data from C robot
 	{
 
-		HAL_UART_Receive_IT( &huart3, (uint8_t*)&C_Rxdata_buff, sizeof( C_Rxdata_buff ) );
+		HAL_UART_Receive_IT( &huart3, ( uint8_t* )&C_Rxdata_buff, sizeof( C_Rxdata_buff ) );
 
 		if( ( ( C_Rxdata_buff & 0b10000000 ) >> 7 ) == true && C_Is_receiving == false )
 		{
@@ -266,12 +267,11 @@ void HAL_UART_RxCpltCallback( UART_HandleTypeDef* UartHandle )
 			return;
 
 		}
-		else if( ( ( C_Rxdata_buff & 0b01000000 ) >> 6 ) == true && C_Is_receiving )
+		else if( ( ( C_Rxdata_buff & 0b01000000 ) >> 6 ) == true && C_Is_receiving == false )
 		{
 			C_Rxdata_buff -= 0b01000000;
 			C_Rxdata[ 7 ] = C_Rxdata_buff;
 
-			C_Is_receiving = false;
 			C_count = 0;
 
 
@@ -280,6 +280,10 @@ void HAL_UART_RxCpltCallback( UART_HandleTypeDef* UartHandle )
 		{
 			C_Rxdata[ C_count ] = C_Rxdata_buff;
 			C_count++;
+
+			if( C_count == 7 )
+				C_Is_receiving = false;
+
 
 			return;
 
@@ -305,11 +309,13 @@ void HAL_UART_RxCpltCallback( UART_HandleTypeDef* UartHandle )
 		{
 			Rope* rope = new Rope();
 			rope -> Encoder_val_RX( &Jump::rope, C_Rxdata );
+
+			Debug::TTO_val( Jump::rope, "rope:" );
 			delete rope;
 		}
 
 		for( int i = 0; i < DATASIZE; i++ )
-			Debug::TTO_val( C_Rxdata[ i ], "C_data:", &huart2 );
+			Debug::TTO_val( C_Rxdata[ i ], "C_data:" );
 
 
 	}
@@ -348,15 +354,17 @@ void HAL_TIM_PeriodElapsedCallback( TIM_HandleTypeDef* htim )
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-  Init_Move* init_move = new Init_Move();
+	Init_Move* init_move = new Init_Move();
   Control* control = new Control();
   Control_A* A = new Control_A();
   Control_B* B = new Control_B();
   Control_C* C = new Control_C();
   MPU6050* mpu6050 = new MPU6050();
   Self_Pos* self_pos = new Self_Pos();
-  Path* line = new Path();
+  Rope* rope = new Rope();
   Function* function = new Function();
+  Line* line = new Line();
+  PWM* pwm = new PWM();
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -391,13 +399,23 @@ int main(void)
   MX_UART4_Init();
   MX_TIM7_Init();
   /* USER CODE BEGIN 2 */
+
+#ifdef AUTO
   init_move -> init_move( ROBOT );
+#else
+  HAL_UART_Receive_IT( &huart4, ( uint8_t* )Controller::controller_Rxdata, sizeof( Controller::controller_Rxdata ) );
+  if( robot != E_robot_name::C )
+	  while( mpu6050 -> MPU6050_Init( &hi2c1 ) == true );
+#endif
+
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+#ifdef AUTO
 
 	  switch( ROBOT )
 	  {
@@ -415,6 +433,7 @@ int main(void)
 	  }
 
 	  control -> reset_data();
+#endif
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */

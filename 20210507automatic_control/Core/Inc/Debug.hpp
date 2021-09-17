@@ -28,15 +28,15 @@ class Debug
 {
 public:
 	template< typename addr >
-	static void TTO_addr( addr var_addr, string str, UART_HandleTypeDef* UART );
+	static void TTO_addr( addr var_addr, string str );
 	template< typename type >
-	static void TTO_val( type value, string str, UART_HandleTypeDef* UART );
+	static void TTO_val( type value, string str );
 
-	static void time_calc( UART_HandleTypeDef* UART );
+	static void time_calc( void );
 
 private:
 
-	void str_output( string str, UART_HandleTypeDef* UART );
+	void str_output( string str );
 
 };
 
