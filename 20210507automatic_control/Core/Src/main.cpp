@@ -354,7 +354,7 @@ void HAL_TIM_PeriodElapsedCallback( TIM_HandleTypeDef* htim )
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-	Init_Move* init_move = new Init_Move();
+  Init_Move* init_move = new Init_Move();
   Control* control = new Control();
   Control_A* A = new Control_A();
   Control_B* B = new Control_B();
@@ -398,10 +398,9 @@ int main(void)
   MX_UART4_Init();
   MX_TIM7_Init();
   /* USER CODE BEGIN 2 */
-
 #ifdef AUTO
   init_move -> init_move( ROBOT );
-#else
+#elif defined ( MANU )
   HAL_UART_Receive_IT( &huart4, ( uint8_t* )Controller::controller_Rxdata, sizeof( Controller::controller_Rxdata ) );
   if( robot != E_robot_name::C )
 	  while( mpu6050 -> MPU6050_Init( &hi2c1 ) == true );
@@ -414,6 +413,8 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+
+
 #ifdef AUTO
 
 	  switch( ROBOT )

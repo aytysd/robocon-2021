@@ -319,24 +319,22 @@ void UART5_IRQHandler(void)
 void TIM6_DAC_IRQHandler(void)
 {
   /* USER CODE BEGIN TIM6_DAC_IRQn 0 */
-
+	HAL_GPIO_TogglePin( GPIOA, GPIO_PIN_5 );
   /* USER CODE END TIM6_DAC_IRQn 0 */
   HAL_TIM_IRQHandler(&htim6);
   /* USER CODE BEGIN TIM6_DAC_IRQn 1 */
 
-  if( ROBOT != E_robot_name::C )
-  {
+	if( ROBOT != E_robot_name::C )
+	{
+		mpu6050 -> MPU6050_update_Gyro();
 
-	  mpu6050 -> MPU6050_update_Gyro();
+		self_pos -> update_self_pos();
 
-#ifdef AUTO
-	  self_pos -> update_self_pos();
+		if( Line::Enable_line == true )
+			line -> MoveLine();
 
-	  if( Line::Enable_line == true )
-		  line -> MoveLine();
-#endif
 
-  }
+	}
 
   /* USER CODE END TIM6_DAC_IRQn 1 */
 }
