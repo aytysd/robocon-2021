@@ -406,7 +406,6 @@ int main(void)
 	  while( mpu6050 -> MPU6050_Init( &hi2c1 ) == true );
 #endif
 
-
   /* USER CODE END 2 */
 
   /* Infinite loop */

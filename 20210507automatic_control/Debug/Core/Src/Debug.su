@@ -13,5 +13,5 @@ Debug.cpp:202:6:static void Debug::TTO_val(type, std::string) [with type = short
 Debug.cpp:216:6:static void Debug::TTO_val(type, std::string) [with type = long unsigned int]	56	static
 Debug.cpp:230:6:static void Debug::TTO_val(type, std::string) [with type = double]	64	static
 Debug.cpp:246:6:static void Debug::TTO_val(type, std::string) [with type = float]	56	static
-Debug.cpp:280:6:static void Debug::time_calc()	96	static
-Debug.cpp:314:6:void Debug::str_output(std::string)	48	dynamic
+Debug.cpp:280:6:static void Debug::time_calc()	40	static
+Debug.cpp:312:6:void Debug::str_output(std::string)	48	dynamic
