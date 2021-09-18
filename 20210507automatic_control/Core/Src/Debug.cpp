@@ -277,7 +277,7 @@ void Debug::TTO_val( type value, string str )
 
 
 
-void Debug::time_calc(  )
+void Debug::time_calc( void )
 {
 	static int i;
 	static uint32_t start_time;
@@ -291,16 +291,14 @@ void Debug::time_calc(  )
 	case 1:
 	{
 		start_time = HAL_GetTick();
-		Debug::TTO_addr( &start_time, "time calc starts:" );
 
 		break;
 	}
 	case 0:
 	{
 		end_time = HAL_GetTick();
-		uint32_t diff = end_time - start_time - 4;
+		uint32_t diff = end_time - start_time;
 
-		Debug::TTO_addr( &end_time, "time calc ends:" );
 		Debug::TTO_addr( &diff, "diff:" );
 
 		break;
