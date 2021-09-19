@@ -35,6 +35,7 @@
 #include "gpio.h"
 #include "MPU6050.hpp"
 #include "Rope.hpp"
+#include "Jump.hpp"
 
 
 int16_t Self_Pos::Self_Pos_X = 0; //(mm)
@@ -329,24 +330,22 @@ void Self_Pos::Self_Pos_correction( void )
 	Function* function = new Function();
 	Rope* rope = new Rope();
 	Gyro* gyro = new Gyro();
+	Jump* jump = new Jump();
+
 
 	function -> drive_motor( 6, CW, 700, false, false );
-	while( ( Self_Pos::Self_Pos_PE[0] == 0 ) && ( Self_Pos::Self_Pos_PE[1] == 0 ) ){}
+	while(( jump -> get_PE_status( PE_Self_Pos) == false )){}
 	function -> drive_motor( 6, BRAKE, 0, false, false );
 	double angle_1 = rope -> encoder_read_3( false ) + gyro -> get_direction( &hi2c1 );
 	while( angle_1 > 360 ){ angle_1 -= 360; }
 	while( angle_1 < 1 ){ angle_1 += 360; }
-	Self_Pos::Self_Pos_PE[0] = 0;
-	Self_Pos::Self_Pos_PE[1] = 0;
 
 	function -> drive_motor( 6, CCW, 700, true, false );
-	while( ( Self_Pos::Self_Pos_PE[0] == 0 ) && ( Self_Pos::Self_Pos_PE[1] == 0 ) ){}
+	while(( jump -> get_PE_status( PE_Self_Pos) == false )){}
 	function -> drive_motor( 6, BRAKE, 0, false, false );
 	double angle_2 = rope -> encoder_read_3( false ) + gyro -> get_direction( &hi2c1 );
 	while( angle_2 > 360 ){ angle_1 -= 360; }
 	while( angle_2 < 1 ){ angle_1 += 360; }
-	Self_Pos::Self_Pos_PE[0] = 0;
-	Self_Pos::Self_Pos_PE[1] = 0;
 
 	if( ( angle_1 > 270 ) && ( angle_1 < 360 ) )
 	{
@@ -408,6 +407,7 @@ void Self_Pos::Self_Pos_correction( void )
 	delete function;
 	delete rope;
 	delete gyro;
+	delete jump;
 }
 #endif
 
@@ -416,23 +416,3 @@ double Self_Pos::rad(double deg)
 	return ( ( deg ) / ( double )180 ) * ( double )M_PI;
 }
 
-E_Self_Pos_status Self_Pos::Judge_Self_Pos(void)
-{
-	if(( Self_Pos::Self_Pos_X >= 0 ) && ( Self_Pos::Self_Pos_Y <= 0 ))
-	{
-		return E_Self_Pos_status::First_Quadrant;
-	}
-	else if((Self_Pos::Self_Pos_X < 0 ) && ( Self_Pos::Self_Pos_Y < 0))
-	{
-		return E_Self_Pos_status::Second_Quadrant;
-	}
-	else if(( Self_Pos::Self_Pos_X <= 0 ) && ( Self_Pos::Self_Pos_Y >= 0 ))
-	{
-		return E_Self_Pos_status::Third_Quadrant;
-	}
-	else if(( Self_Pos::Self_Pos_X > 0 ) && ( Self_Pos:: Self_Pos_Y < 0 ))
-	{
-		return E_Self_Pos_status::Fourth_Quadrant;
-	}
-
-}

@@ -31,6 +31,8 @@ E_move_status Jump::status = E_move_status::LANDING;
 bool Jump::PE_1 = false;
 bool Jump::PE_2 = false;
 bool Jump::PE_3 = false;
+bool Jump::PE_4 = false;
+bool Jump::PE_5 = false;
 
 int Jump::rope = 0;
 
@@ -44,10 +46,7 @@ void Jump::Jumping_PE_Sensor(void)
 {
 	Function* function = new Function();
 
-	while(( PE_1 == false ) && ( PE_2 == false ) && ( PE_3 == false )){}
-	PE_1 = false;
-	PE_2 = false;
-	PE_3 = false;
+	while(( this -> get_PE_status( PE_Jump ) == false )){}
 
 	this -> jump();
 	delete function;
@@ -75,10 +74,6 @@ void Jump::jump( void )
 
 }
 
-void Jump::get_Rope_Pos( uint8_t Rxdata )
-{
-
-}
 
 bool Jump::Is_centre( void )
 {
@@ -92,4 +87,69 @@ bool Jump::Is_centre( void )
 	else
 		return false;
 
+}
+
+
+void Jump::PE_Sensor( int PE_num )
+{
+	switch( PE_num )
+	{
+	case 1:
+		this -> PE_1 = true;
+		break;
+	case 2:
+		this -> PE_2 = true;
+		break;
+	case 3:
+		this -> PE_3 = true;
+		break;
+	case 4:
+		this -> PE_4 = true;
+		break;
+	case 5:
+		this -> PE_5 = true;
+		break;
+	default:
+		break;
+	}
+}
+
+bool Jump::get_PE_status( int func )
+{
+	switch( func )
+	{
+	case PE_Jump:
+		if(( this -> PE_1 == true ) || ( this -> PE_2 == true ) || ( this -> PE_3 == true ))
+		{
+			this -> PE_init();
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+		break;
+	case PE_Self_Pos:
+		if(( this -> PE_4 == true ) || ( this -> PE_5 == true ))
+		{
+			this -> PE_init();
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+		break;
+	default:
+		break;
+	}
+}
+
+void Jump::PE_init()
+{
+	this -> PE_1 = false;
+	this -> PE_2 = false;
+	this -> PE_3 = false;
+	this -> PE_4 = false;
+	this -> PE_5 = false;
 }
