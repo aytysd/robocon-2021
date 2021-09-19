@@ -22,6 +22,8 @@
 #include "General_command.hpp"
 #include "main.h"
 
+#define PE_Jump 1
+#define PE_Self_Pos 2
 class Jump
 {
 public:
@@ -30,17 +32,20 @@ public:
 	E_move_status get_status(void);
 	void Jumping_PE_Sensor(void);
 	void Jumping_Rope(void);
-	static bool PE_1; //PC0
-	static bool PE_2; //PC13
-	static bool PE_3; //PA4
-	static void get_Rope_Pos( uint8_t Rxdata );
+	void PE_Sensor( int PE_num );
+	bool get_PE_status( int func );
 
 	bool Is_centre( void );
 
 	static int rope;
 
 private:
-
+	static bool PE_1; //PC0
+	static bool PE_2; //PC13
+	static bool PE_3; //PA4
+	static bool PE_4;
+	static bool PE_5;
+	void PE_init( void );
 	static E_move_status status;
 };
 

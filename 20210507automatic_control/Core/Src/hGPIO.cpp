@@ -109,7 +109,9 @@ void HGPIO::identify( uint16_t GPIO_Pin )
 //PE_Sensor_1
 void HGPIO::GPIO_PIN_0_func(void)
 {
-	Jump::PE_1 = true;
+	Jump* jump = new Jump();
+	jump -> PE_Sensor(1);
+	delete jump;
 }
 void HGPIO::GPIO_PIN_1_func(void)
 {
@@ -131,7 +133,9 @@ void HGPIO::GPIO_PIN_1_func(void)
 			delete gyro;
 		}
 #else
-	Self_Pos::Self_Pos_PE[0] = 1;
+	Jump* jump = new Jump();
+	jump -> PE_Sensor(4);
+	delete jump;
 #endif
 };
 void HGPIO::GPIO_PIN_2_func(void){};
@@ -139,7 +143,9 @@ void HGPIO::GPIO_PIN_3_func(void){};
 //PE_Sensor_3
 void HGPIO::GPIO_PIN_4_func(void)
 {
-	Jump::PE_3 = true;
+	Jump* jump = new Jump();
+	jump -> PE_Sensor(3);
+	delete jump;
 }
 void HGPIO::GPIO_PIN_5_func(void){};
 void HGPIO::GPIO_PIN_6_func(void){};
@@ -162,7 +168,9 @@ void HGPIO::GPIO_PIN_13_func(void)
 //PE_Sensor_2
 void HGPIO::GPIO_PIN_14_func(void)
 {
-	Jump::PE_2 = true;
+	Jump* jump = new Jump();
+	jump -> PE_Sensor(2);
+	delete jump;
 };
 void HGPIO::GPIO_PIN_15_func(void)
 {
@@ -183,6 +191,8 @@ void HGPIO::GPIO_PIN_15_func(void)
 			delete gyro;
 		}
 #else
-	Self_Pos::Self_Pos_PE[1] = 1;
+	Jump* jump = new Jump();
+	jump -> PE_Sensor(5);
+	delete jump;
 #endif
 };
