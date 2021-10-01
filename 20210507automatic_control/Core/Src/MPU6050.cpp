@@ -133,6 +133,7 @@ void MPU6050::MPU6050_update_Gyro( void )
 	this -> robot_direction += IT_PERIOD * ( ( Gyro_Z_RAW / 16.4 ) + ( -1.005 * med_1 ) + ( -1 * diff_per_IT_1 ) );
 
 
+
 }
 
 double MPU6050::get_direction( void )

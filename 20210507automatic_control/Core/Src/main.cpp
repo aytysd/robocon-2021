@@ -53,6 +53,7 @@
 #include "Control_C.hpp"
 #include "Control_A.hpp"
 #include "Control_B.hpp"
+#include "SparkFun_BNO080_Arduino_Library.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -76,6 +77,7 @@ uint8_t A_Rxdata_buff = 0;
 uint8_t B_Rxdata_buff = 0;
 uint8_t C_Rxdata_buff = 0;
 
+uint8_t received_data[ 16 ] = { 0 };
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -175,7 +177,10 @@ void HAL_UART_RxCpltCallback( UART_HandleTypeDef* UartHandle )
 
 		// C PSP
 		else if( B_Rxdata[ 0 ] == ( uint8_t )E_data_type::ready )
+		{
 			Control_C::B_ready_flag = true;
+			Control_A::B_ready_flag = true;
+		}
 
 
 
@@ -240,6 +245,22 @@ void HAL_UART_RxCpltCallback( UART_HandleTypeDef* UartHandle )
 		//C PSP
 		else if( A_Rxdata[ 0 ] == ( uint8_t )E_data_type::ready )
 			Control_C::A_ready_flag = true;
+		else if( A_Rxdata[ 0 ] == ( uint8_t )E_data_type::test )//A and B PSP
+		{
+			if( A_Rxdata[ 1 ] == 10 )
+				Init_Move::SBDBT_OK = true;
+		}
+		else if( A_Rxdata[ 0 ] == ( uint8_t )E_data_type::B_start )
+			Control_B::start_flag = true;
+		else if( A_Rxdata[ 0 ] == ( uint8_t )E_data_type::stop )
+			Control::stop_flag = true;
+		if( A_Rxdata[ 0 ] == ( uint8_t )E_data_type::command )
+				for( int i = 0; i < 2; i++ )
+					Control::command[ i ] = A_Rxdata[ i ];
+
+
+
+
 
 
 
@@ -325,6 +346,15 @@ void HAL_UART_RxCpltCallback( UART_HandleTypeDef* UartHandle )
 
 }
 
+void HAL_I2C_MasterRxCpltCallback( I2C_HandleTypeDef* hi2c )
+{
+	HAL_I2C_Master_Receive_IT( &hi2c1, 0x64, received_data, sizeof( received_data ) );
+
+	for( uint8_t i = 0; i < sizeof( received_data ); i++ )
+		Debug::TTO_val( received_data[ i ], "data:" );
+}
+
+
 void HAL_GPIO_EXTI_Callback( uint16_t GPIO_Pin )
 {
 	HGPIO* hgpio = new HGPIO();
@@ -365,6 +395,7 @@ int main(void)
   Function* function = new Function();
   Line* line = new Line();
   PWM* pwm = new PWM();
+  BNO080* gyro = new BNO080();
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -398,14 +429,13 @@ int main(void)
   MX_UART4_Init();
   MX_TIM7_Init();
   /* USER CODE BEGIN 2 */
+
 #ifdef AUTO
   init_move -> init_move( ROBOT );
 #elif defined ( MANU )
   HAL_UART_Receive_IT( &huart4, ( uint8_t* )Controller::controller_Rxdata, sizeof( Controller::controller_Rxdata ) );
-  if( robot != E_robot_name::C )
-	  while( mpu6050 -> MPU6050_Init( &hi2c1 ) == true );
-#endif
 
+#endif
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -414,8 +444,18 @@ int main(void)
   {
 
 
-#ifdef AUTO
+#ifdef MANU
 
+	  if( Controller::jump_enable == true )
+	  {
+
+		Jump* jump = new Jump();
+		jump -> jump();
+		delete jump;
+		Controller::jump_enable = false;
+	  }
+
+#elif defined ( AUTO )
 	  switch( ROBOT )
 	  {
 	  case E_robot_name::A:

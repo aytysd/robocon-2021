@@ -75,8 +75,6 @@ double Line::TGdistance(int x, int y, int tgX, int tgY)
 
 void Line::MoveLine(void)
 {
-	if( Line::judge != E_Line_status::STOP)
-	{
 		int befX = Line::BefX;
 		int befY = Line::BefY;
 		int tgX = Line::AftX;
@@ -267,7 +265,6 @@ void Line::MoveLine(void)
 
 			delete pwm;
 		}
-	}
 }
 
 void Line::Line_driver(int befX, int befY, int tgX, int tgY, bool through, bool Jump )
