@@ -129,7 +129,6 @@ void Rope::stop_rope(uint8_t motor_number)
 {
 	Function* function = new Function();
 
-	this ->
 	Rope::run_C = false;
 	force_stop = true;
 	function -> drive_motor_Rope(motor_number, BRAKE, 0, true);

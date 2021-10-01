@@ -25,6 +25,8 @@
 #include "math.h"
 #include "function.hpp"
 #include "Self_Pos.hpp"
+#include "Controller.hpp"
+#include "usart.h"
 
 E_move_status Jump::status = E_move_status::LANDING;
 
@@ -62,16 +64,20 @@ void Jump::jump( void )
 {
 	HAL_GPIO_WritePin( GPIOC, GPIO_PIN_2, GPIO_PIN_SET );
 
+	uint32_t start_time = HAL_GetTick();
+
 	while( HAL_GPIO_ReadPin( GPIOB, GPIO_PIN_12 ) == GPIO_PIN_RESET );
-	while( HAL_GPIO_ReadPin( GPIOB, GPIO_PIN_12 ) == GPIO_PIN_SET );
+	while( HAL_GPIO_ReadPin( GPIOB, GPIO_PIN_12 ) == GPIO_PIN_SET && ( ( HAL_GetTick() - start_time ) < 700 ) );
 	while( HAL_GPIO_ReadPin( GPIOB, GPIO_PIN_12 ) == GPIO_PIN_RESET );
 //	while( HAL_GPIO_ReadPin( GPIOB, GPIO_PIN_12 ) == GPIO_PIN_SET );
 //	while( HAL_GPIO_ReadPin( GPIOB, GPIO_PIN_12 ) == GPIO_PIN_RESET );
 //	while( HAL_GPIO_ReadPin( GPIOB, GPIO_PIN_12 ) == GPIO_PIN_SET );
 //	while( HAL_GPIO_ReadPin( GPIOB, GPIO_PIN_12 ) == GPIO_PIN_RESET );
+
 
 	HAL_GPIO_WritePin( GPIOC, GPIO_PIN_2, GPIO_PIN_RESET );
 
+//	  HAL_UART_Receive_IT( &huart4, ( uint8_t* )Controller::controller_Rxdata, sizeof( Controller::controller_Rxdata ) );
 
 }
 

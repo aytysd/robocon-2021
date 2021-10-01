@@ -289,15 +289,12 @@ void Debug::time_calc( void )
 	switch( i % 2 )
 	{
 	case 1:
-	{
 		start_time = HAL_GetTick();
-
 		break;
-	}
 	case 0:
 	{
 		end_time = HAL_GetTick();
-		uint32_t diff = end_time - start_time;
+		uint32_t diff = end_time - start_time - 1;
 
 		Debug::TTO_addr( &diff, "diff:" );
 

@@ -37,6 +37,7 @@
 #include "gpio.h"
 #include "Control.hpp"
 #include "Control_C.hpp"
+#include "Control_A.hpp"
 
 bool Init_Move::SBDBT_OK = false;
 
@@ -51,8 +52,21 @@ void Init_Move::init_move( E_robot_name robot )
 	this -> Initialize( robot );
 	led -> LED_output( E_LED_status::Init );
 	HAL_Delay( 5000 );
-	this -> SBDBT_Init( robot );
+//	this -> SBDBT_Init( robot );
 
+	if( robot == E_robot_name::A )
+	{
+		while( Control_A::B_ready_flag == false ){};
+		Control_A::B_ready_flag = false;
+	}
+	else
+	{
+		uint8_t data[ DATASIZE ] = { ( uint8_t )E_data_type::ready };
+		control -> send_command( E_robot_name::A, data );
+	}
+
+
+/*
 	if( robot == E_robot_name::C )
 		C -> wait_for_ab();
 	else
@@ -60,6 +74,7 @@ void Init_Move::init_move( E_robot_name robot )
 		uint8_t data[ DATASIZE ] = { ( uint8_t )E_data_type::ready };
 		control -> send_command( E_robot_name::C, data );
 	}
+*/
 
 
 	delete led;
@@ -116,6 +131,7 @@ void Init_Move::SBDBT_Init( E_robot_name robot )
 
 	switch( robot )
 	{
+/*
 	case E_robot_name::A:
 	case E_robot_name::B:
 #ifndef WITHOUT_C
@@ -133,6 +149,23 @@ void Init_Move::SBDBT_Init( E_robot_name robot )
 		}
 		break;
 	}
+*/
+	case E_robot_name::A:
+	{
+		uint32_t start_time = HAL_GetTick();
+		while( ( HAL_GetTick() - start_time ) < 10000 )
+		{
+			control -> send_command( E_robot_name::B, test_data );
+			HAL_Delay( 1000 );
+		}
+		break;
+
+	}
+	case E_robot_name::B:
+		while( Init_Move::SBDBT_OK == false ){}
+		break;
+	}
+
 
 }
 

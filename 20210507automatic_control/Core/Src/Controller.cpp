@@ -26,6 +26,7 @@
 #include "tim.h"
 #include "usart.h"
 #include "gpio.h"
+#include "Debug.hpp"
 
 
 uint8_t Controller::controller_Rxdata[8] = {128, 0, 0, 64, 64, 64, 64, 0};
@@ -43,16 +44,33 @@ void Controller::check_array(void)
 void Controller::identify()
 {
 //	this -> check_array();
+
+	Debug::time_calc();
+
+	Controller::move_ok = false;
+
 	if( this -> identify_NOP() == false )
 	{
+//		if( Controller::Is_entered == false )
+			this -> identify_ABXY_button();
+//		if( Controller::Is_entered == false )
+			this -> identify_SUB_button();
+//		if( Controller::Is_entered == false )
+		if( Controller::move_ok == true )
+		{
+			this -> identify_LS_SB();
+//		if( Controller::Is_entered == false )
+			this -> identify_CS();
+//		if( Controller::Is_entered == false )
+			this -> identify_RS();
 
-		this -> identify_ABXY_button();
-		this -> identify_SUB_button();
-		this -> identify_LS_SB();
-		this -> identify_CS();
-		this -> identify_RS();
+		}
 
 	}
+
+	Debug::time_calc();
+
+	Controller::Is_entered = false;
 
 }
 
@@ -67,7 +85,10 @@ bool Controller::identify_NOP()
 	{
 		this -> NOP();
 		char str[8] = "NOP\r\n";
-		HAL_UART_Transmit(&huart2, (uint8_t*)str, sizeof(str), 100);
+		HAL_UART_Transmit( &huart2, (uint8_t*)str, sizeof(str), 100 );
+
+		Controller::Is_entered = true;
+
 		return true;
 	}
 	else return false;
@@ -82,6 +103,7 @@ void Controller::identify_ABXY_button()
 		char str[8] = "X\r\n";
 		HAL_UART_Transmit(&huart2, (uint8_t*)str, sizeof(str), 100);
 
+		Controller::Is_entered = true;
 	}
 
 	if( (this -> controller_Rxdata[2] & 0b00010000) >> 4 == true )
@@ -90,6 +112,8 @@ void Controller::identify_ABXY_button()
 		char str[8] = "Y\r\n";
 		HAL_UART_Transmit(&huart2, (uint8_t*)str, sizeof(str), 100);
 
+		Controller::Is_entered = true;
+
 	}
 
 	if( (this -> controller_Rxdata[2] & 0b00100000) >> 5 == true )
@@ -97,7 +121,7 @@ void Controller::identify_ABXY_button()
 		this -> A();
 		char str[8] = "A\r\n";
 		HAL_UART_Transmit(&huart2, (uint8_t*)str, sizeof(str), 100);
-
+		Controller::Is_entered = true;
 	}
 
 	if( (this -> controller_Rxdata[2] & 0b01000000) >> 6 == true )
@@ -105,7 +129,7 @@ void Controller::identify_ABXY_button()
 		this -> B();
 		char str[8] = "B\r\n";
 		HAL_UART_Transmit(&huart2, (uint8_t*)str, sizeof(str), 100);
-
+		Controller::Is_entered = true;
 	}
 
 
@@ -120,7 +144,7 @@ void Controller::identify_SUB_button()
 		this -> RT();
 		char str[8] = "RT\r\n";
 		HAL_UART_Transmit(&huart2, (uint8_t*)str, sizeof(str), 100);
-
+		Controller::Is_entered = true;
 	}
 
 	if( (this -> controller_Rxdata[1] & 0b00000010) >> 1 == true)
@@ -128,7 +152,7 @@ void Controller::identify_SUB_button()
 		this -> LB();
 		char str[8] = "LB\r\n";
 		HAL_UART_Transmit(&huart2, (uint8_t*)str, sizeof(str), 100);
-
+		Controller::Is_entered = true;
 	}
 
 	if( (this -> controller_Rxdata[1] & 0b00001000) >> 3 == true)
@@ -136,7 +160,7 @@ void Controller::identify_SUB_button()
 		this -> RB();
 		char str[8] = "RB\r\n";
 		HAL_UART_Transmit(&huart2, (uint8_t*)str, sizeof(str), 100);
-
+		Controller::Is_entered = true;
 	}
 
 	if( (this -> controller_Rxdata[1] & 0b00000100) >> 2 == true)
@@ -144,7 +168,7 @@ void Controller::identify_SUB_button()
 		this -> LT();
 		char str[8] = "LT\r\n";
 		HAL_UART_Transmit(&huart2, (uint8_t*)str, sizeof(str), 100);
-
+		Controller::Is_entered = true;
 	}
 
 	if( (this -> controller_Rxdata[1] & 0b00100000) >> 5 == true)
@@ -152,7 +176,7 @@ void Controller::identify_SUB_button()
 		this -> START();
 		char str[8] = "START\r\n";
 		HAL_UART_Transmit(&huart2, (uint8_t*)str, sizeof(str), 100);
-
+		Controller::Is_entered = true;
 	}
 
 	if( (this -> controller_Rxdata[1] & 0b01000000) >> 6 == true)
@@ -160,7 +184,7 @@ void Controller::identify_SUB_button()
 		this -> BACK();
 		char str[8] = "BACK\r\n";
 		HAL_UART_Transmit(&huart2, (uint8_t*)str, sizeof(str), 100);
-
+		Controller::Is_entered = true;
 	}
 
 
@@ -175,6 +199,7 @@ void Controller::identify_LS_SB()
 		this -> BACK();
 		char str[8] = "BACK\r\n";
 		HAL_UART_Transmit(&huart2, (uint8_t*)str, sizeof(str), 100);
+		Controller::Is_entered = true;
 		return;
 	}
 
@@ -183,6 +208,7 @@ void Controller::identify_LS_SB()
 		this -> START();
 		char str[8] = "START\r\n";
 		HAL_UART_Transmit(&huart2, (uint8_t*)str, sizeof(str), 100);
+		Controller::Is_entered = true;
 		return;
 	}
 
@@ -201,7 +227,7 @@ void Controller::identify_LS_SB()
 		this -> LSUL();
 		char str[8] = "LSUL\r\n";
 		HAL_UART_Transmit(&huart2, (uint8_t*)str, sizeof(str), 100);
-
+		Controller::Is_entered = true;
 		break;
 
 	}
@@ -210,7 +236,7 @@ void Controller::identify_LS_SB()
 		this -> LSUR();
 		char str[8] = "LSUR\r\n";
 		HAL_UART_Transmit(&huart2, (uint8_t*)str, sizeof(str), 100);
-
+		Controller::Is_entered = true;
 		break;
 	}
 	case 0b00001000:
@@ -218,7 +244,7 @@ void Controller::identify_LS_SB()
 		this -> LSU();
 		char str[8] = "LSU\r\n";
 		HAL_UART_Transmit(&huart2, (uint8_t*)str, sizeof(str), 100);
-
+		Controller::Is_entered = true;
 		break;
 
 	}
@@ -227,7 +253,7 @@ void Controller::identify_LS_SB()
 		this -> LSDL();
 		char str[8] = "LSDL\r\n";
 		HAL_UART_Transmit(&huart2, (uint8_t*)str, sizeof(str), 100);
-
+		Controller::Is_entered = true;
 		break;
 
 	}
@@ -236,7 +262,7 @@ void Controller::identify_LS_SB()
 		this -> LSDR();
 		char str[8] = "LSDR\r\n";
 		HAL_UART_Transmit(&huart2, (uint8_t*)str, sizeof(str), 100);
-
+		Controller::Is_entered = true;
 		break;
 
 	}
@@ -245,7 +271,7 @@ void Controller::identify_LS_SB()
 		this -> LSD();
 		char str[8] = "LSD\r\n";
 		HAL_UART_Transmit(&huart2, (uint8_t*)str, sizeof(str), 100);
-
+		Controller::Is_entered = true;
 		break;
 
 	}
@@ -254,7 +280,7 @@ void Controller::identify_LS_SB()
 		this -> LSL();
 		char str[8] = "LSL\r\n";
 		HAL_UART_Transmit(&huart2, (uint8_t*)str, sizeof(str), 100);
-
+		Controller::Is_entered = true;
 		break;
 	}
 	case 0b00000010:
@@ -262,7 +288,7 @@ void Controller::identify_LS_SB()
 		this -> LSR();
 		char str[8] = "LSR\r\n";
 		HAL_UART_Transmit(&huart2, (uint8_t*)str, sizeof(str), 100);
-
+		Controller::Is_entered = true;
 		break;
 	}
 
@@ -288,7 +314,7 @@ void Controller::identify_RS()
 		this -> RSUL();
 		char str[8] = "RSUL\r\n";
 		HAL_UART_Transmit(&huart2, (uint8_t*)str, sizeof(str), 100);
-
+		Controller::Is_entered = true;
 		break;
 
 	}
@@ -297,7 +323,7 @@ void Controller::identify_RS()
 		this -> RSUR();
 		char str[8] = "RSUR\r\n";
 		HAL_UART_Transmit(&huart2, (uint8_t*)str, sizeof(str), 100);
-
+		Controller::Is_entered = true;
 		break;
 	}
 	case 0b00001000:
@@ -305,7 +331,7 @@ void Controller::identify_RS()
 		this -> RSU();
 		char str[8] = "RSU\r\n";
 		HAL_UART_Transmit(&huart2, (uint8_t*)str, sizeof(str), 100);
-
+		Controller::Is_entered = true;
 		break;
 
 	}
@@ -314,7 +340,7 @@ void Controller::identify_RS()
 		this -> RSDL();
 		char str[8] = "RSDL\r\n";
 		HAL_UART_Transmit(&huart2, (uint8_t*)str, sizeof(str), 100);
-
+		Controller::Is_entered = true;
 		break;
 
 	}
@@ -323,7 +349,7 @@ void Controller::identify_RS()
 		this -> RSDR();
 		char str[8] = "RSDR\r\n";
 		HAL_UART_Transmit(&huart2, (uint8_t*)str, sizeof(str), 100);
-
+		Controller::Is_entered = true;
 		break;
 
 	}
@@ -332,7 +358,7 @@ void Controller::identify_RS()
 		this -> RSD();
 		char str[8] = "RSD\r\n";
 		HAL_UART_Transmit(&huart2, (uint8_t*)str, sizeof(str), 100);
-
+		Controller::Is_entered = true;
 		break;
 
 	}
@@ -341,7 +367,7 @@ void Controller::identify_RS()
 		this -> RSL();
 		char str[8] = "RSL\r\n";
 		HAL_UART_Transmit(&huart2, (uint8_t*)str, sizeof(str), 100);
-
+		Controller::Is_entered = true;
 		break;
 	}
 	case 0b00000010:
@@ -349,7 +375,7 @@ void Controller::identify_RS()
 		this -> RSR();
 		char str[8] = "RSR\r\n";
 		HAL_UART_Transmit(&huart2, (uint8_t*)str, sizeof(str), 100);
-
+		Controller::Is_entered = true;
 		break;
 
 	}
@@ -376,7 +402,7 @@ void Controller::identify_CS()
 		this -> CSUL();
 		char str[8] = "CSUL\r\n";
 		HAL_UART_Transmit(&huart2, (uint8_t*)str, sizeof(str), 100);
-
+		Controller::Is_entered = true;
 		break;
 
 	}
@@ -385,7 +411,7 @@ void Controller::identify_CS()
 		this -> CSUR();
 		char str[8] = "CSUR\r\n";
 		HAL_UART_Transmit(&huart2, (uint8_t*)str, sizeof(str), 100);
-
+		Controller::Is_entered = true;
 		break;
 
 	}
@@ -394,7 +420,7 @@ void Controller::identify_CS()
 		this -> CSU();
 		char str[8] = "CSU\r\n";
 		HAL_UART_Transmit(&huart2, (uint8_t*)str, sizeof(str), 100);
-
+		Controller::Is_entered = true;
 		break;
 
 	}
@@ -403,7 +429,7 @@ void Controller::identify_CS()
 		this -> CSDL();
 		char str[8] = "CSDL\r\n";
 		HAL_UART_Transmit(&huart2, (uint8_t*)str, sizeof(str), 100);
-
+		Controller::Is_entered = true;
 		break;
 
 	}
@@ -412,7 +438,7 @@ void Controller::identify_CS()
 		this -> CSDR();
 		char str[8] = "CSDR\r\n";
 		HAL_UART_Transmit(&huart2, (uint8_t*)str, sizeof(str), 100);
-
+		Controller::Is_entered = true;
 		break;
 
 	}
@@ -421,7 +447,7 @@ void Controller::identify_CS()
 		this -> CSD();
 		char str[8] = "CSD\r\n";
 		HAL_UART_Transmit(&huart2, (uint8_t*)str, sizeof(str), 100);
-
+		Controller::Is_entered = true;
 		break;
 
 	}
@@ -430,7 +456,7 @@ void Controller::identify_CS()
 		this -> CSR();
 		char str[8] = "CSR\r\n";
 		HAL_UART_Transmit(&huart2, (uint8_t*)str, sizeof(str), 100);
-
+		Controller::Is_entered = true;
 		break;
 
 	}
@@ -439,7 +465,7 @@ void Controller::identify_CS()
 		this -> CSL();
 		char str[8] = "CSL\r\n";
 		HAL_UART_Transmit(&huart2, (uint8_t*)str, sizeof(str), 100);
-
+		Controller::Is_entered = true;
 		break;
 
 	}

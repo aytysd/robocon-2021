@@ -37,6 +37,7 @@
 
 
 bool Control_A::start_flag = false;
+bool Control_A::B_ready_flag = false;
 
 void Control_A::control_A (void)
 {
@@ -94,14 +95,25 @@ void Control_A::stay_jump( void )
 	Jump* jump = new Jump();
 	Self_Pos* self_pos = new Self_Pos();
 
+	uint8_t data[ DATASIZE ] = { ( uint8_t )E_data_type::command, ( uint8_t )E_Flow::MODE_STAY_JUMP };
+
+#ifdef WITHOUT_C
+
+	control -> send_command( E_robot_name::B, data );
+
+#endif
 	line -> Line_driver( self_pos -> get_Self_Pos_X(), self_pos -> get_Self_Pos_Y(), ( int )SJ::A_pos::JUMP_POS_X, ( int )SJ::A_pos::JUMP_POS_Y, false, false );
 	while( Line::judge == E_Line_status::MOVING ){}
 
-	uint8_t data[ DATASIZE ] = { ( uint8_t )E_data_type::ready };
+
+
+	data[ 0 ] = { ( uint8_t )E_data_type::ready };
 	control -> send_command( E_robot_name::C, data );
 
-#ifndef WITHOUT_C
+#if defined ( WITHOUT_C ) && not defined ( WITHOUT_B )
 	while( Control_A::start_flag == false ){};
+#else defined ( WITHOUT_C ) && defined ( WITHOUT_B )
+
 #endif
 
 	Control::stop_flag = false;
@@ -131,7 +143,7 @@ void Control_A::cross_jump( void )
 
 
 
-#ifndef WITHOUT_C
+#if not defined ( WITHOUT_C )
 
 	while( Control_A::start_flag == false ){};
 
@@ -140,7 +152,21 @@ void Control_A::cross_jump( void )
 	while( Control::stop_flag == false )
 	{
 
+#elif defined ( WITHOUT_C ) && not defined ( WITHOUT_B )
+
+	data[ 0 ] = { ( uint8_t )E_data_type::command };
+	data[ 1 ] = { ( uint8_t )E_Flow::MODE_CROSS_JUMP };
+	control -> send_command( E_robot_name::B, data );
+
+	while( B_ready_flag == false ){};
+	Control_A::B_ready_flag = false;
+
+
+	for( int i = 0; i < 4; i++ )
+	{
+
 #else
+
 	for( int i = 0; i < 4; i++ )
 	{
 
@@ -232,12 +258,25 @@ void Control_A::infinity_jump( void )
 
 
 
-#ifndef WITHOUT_C
+#if not defined ( WITHOUT_C ) && defined ( WITHOUT_B )
 
 	while( Control_A::start_flag == false ){};
 
 	while( Control::stop_flag == false )
 	{
+#elif defined ( WITHOUT_C ) && not defined ( WITHOUT_B )
+
+	data[ 0 ] = { ( uint8_t )E_data_type::command };
+	data[ 1 ] = { ( uint8_t )E_Flow::MODE_INFINITY_JUMP };
+	control -> send_command( E_robot_name::B, data );
+
+	while( B_ready_flag == false ){};
+	Control_A::B_ready_flag = false;
+
+	for( int i = 0; i < 4; i++ )
+	{
+
+
 #else
 	for( int i = 0; i < 4; i++ )
 	{

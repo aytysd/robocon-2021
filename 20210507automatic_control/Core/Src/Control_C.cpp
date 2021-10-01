@@ -56,6 +56,7 @@ void Control_C::stay_jump( void )
 	this -> send_both( data );
 
 	while( !( Control_C::A_ready_flag == true ) ){};
+	Control_C::A_ready_flag = false;
 
 	data[ 0 ] = { ( uint8_t )E_data_type::A_start };
 	this -> send_both( data );

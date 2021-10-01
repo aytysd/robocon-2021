@@ -50,10 +50,15 @@
 class Controller{
 public:
 	static uint8_t controller_Rxdata[8];
+
+	static bool jump_enable;
+	static bool move_ok;
+
 	void identify(void);
 
-
 private:
+
+	static bool Is_entered;
 
 	static uint16_t speed;
 	static uint16_t speed_jump;

@@ -16,6 +16,8 @@ public:
 
 	static bool start_flag;
 
+	static bool B_ready_flag;
+
 private:
 
 	void stay_jump( void );
