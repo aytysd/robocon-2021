@@ -70,7 +70,6 @@
 /* USER CODE BEGIN 0 */
 Gyro* gyro = new Gyro();
 Self_Pos* self_pos = new Self_Pos();
-PWM* pwm = new PWM();
 Jump* jump = new Jump();
 Line* line = new Line();
 MPU6050* mpu6050 = new MPU6050();

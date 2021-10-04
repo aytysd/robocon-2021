@@ -27,7 +27,7 @@
 #include "Control.hpp"
 
 bool Controller::Is_entered = false;
-uint16_t Controller::speed = 400;
+uint16_t Controller::speed = 600;
 uint16_t Controller::speed_jump = 1000;
 
 bool Controller::jump_enable = false;
@@ -50,19 +50,26 @@ void Controller::B(void)
 {
 	Controller::move_ok = false;
 	pwm -> V_output( 0, 0, 0, 0, E_move_status::STOP );
+	HAL_GPIO_WritePin( GPIOC, GPIO_PIN_2, GPIO_PIN_RESET );
 }
 
-void Controller::LB(void){}
+void Controller::LB(void)
+{
+
+}
 void Controller::RB(void)
 {
 	Controller::jump_enable = true;
 }
-void Controller::LT(void){}
-void Controller::RT(void){}
-void Controller::START(void)
+void Controller::LT(void)
 {
-	Controller::speed = Controller::speed_jump;
+		Controller::speed = Controller::speed_jump;
 }
+void Controller::RT(void)
+{
+	Controller::speed = 600;
+}
+void Controller::START(void){}
 void Controller::BACK(void){}
 
 void Controller::LSU(void)
