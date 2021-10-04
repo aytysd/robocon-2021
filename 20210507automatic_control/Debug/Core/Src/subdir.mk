@@ -36,6 +36,7 @@ CPP_SRCS += \
 ../Core/Src/Path.cpp \
 ../Core/Src/Rope.cpp \
 ../Core/Src/Self_Pos.cpp \
+../Core/Src/SparkFun_BNO080_Arduino_Library.cpp \
 ../Core/Src/Time.cpp \
 ../Core/Src/ToF.cpp \
 ../Core/Src/hGPIO.cpp \
@@ -74,6 +75,7 @@ OBJS += \
 ./Core/Src/Path.o \
 ./Core/Src/Rope.o \
 ./Core/Src/Self_Pos.o \
+./Core/Src/SparkFun_BNO080_Arduino_Library.o \
 ./Core/Src/Time.o \
 ./Core/Src/ToF.o \
 ./Core/Src/gpio.o \
@@ -110,6 +112,7 @@ CPP_DEPS += \
 ./Core/Src/Path.d \
 ./Core/Src/Rope.d \
 ./Core/Src/Self_Pos.d \
+./Core/Src/SparkFun_BNO080_Arduino_Library.d \
 ./Core/Src/Time.d \
 ./Core/Src/ToF.d \
 ./Core/Src/hGPIO.d \
@@ -160,6 +163,8 @@ Core/Src/Rope.o: ../Core/Src/Rope.cpp Core/Src/subdir.mk
 	arm-none-eabi-g++ "$<" -mcpu=cortex-m4 -std=gnu++14 -g3 -DUSE_HAL_DRIVER -DSTM32F446xx -DDEBUG -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -MMD -MP -MF"Core/Src/Rope.d" -MT"$@" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "$@"
 Core/Src/Self_Pos.o: ../Core/Src/Self_Pos.cpp Core/Src/subdir.mk
 	arm-none-eabi-g++ "$<" -mcpu=cortex-m4 -std=gnu++14 -g3 -DUSE_HAL_DRIVER -DSTM32F446xx -DDEBUG -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -MMD -MP -MF"Core/Src/Self_Pos.d" -MT"$@" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "$@"
+Core/Src/SparkFun_BNO080_Arduino_Library.o: ../Core/Src/SparkFun_BNO080_Arduino_Library.cpp Core/Src/subdir.mk
+	arm-none-eabi-g++ "$<" -mcpu=cortex-m4 -std=gnu++14 -g3 -DUSE_HAL_DRIVER -DSTM32F446xx -DDEBUG -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -MMD -MP -MF"Core/Src/SparkFun_BNO080_Arduino_Library.d" -MT"$@" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "$@"
 Core/Src/Time.o: ../Core/Src/Time.cpp Core/Src/subdir.mk
 	arm-none-eabi-g++ "$<" -mcpu=cortex-m4 -std=gnu++14 -g3 -DUSE_HAL_DRIVER -DSTM32F446xx -DDEBUG -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -MMD -MP -MF"Core/Src/Time.d" -MT"$@" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "$@"
 Core/Src/ToF.o: ../Core/Src/ToF.cpp Core/Src/subdir.mk

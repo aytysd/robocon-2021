@@ -19,6 +19,7 @@
 "Core/Src/Path.o"
 "Core/Src/Rope.o"
 "Core/Src/Self_Pos.o"
+"Core/Src/SparkFun_BNO080_Arduino_Library.o"
 "Core/Src/Time.o"
 "Core/Src/ToF.o"
 "Core/Src/gpio.o"

@@ -36,7 +36,7 @@ Core/Src/Self_Pos.o: ../Core/Src/Self_Pos.cpp \
  ../Core/Inc/General_command.hpp ../Core/Inc/Gyro.hpp \
  ../Core/Inc/Function.hpp ../Core/Inc/i2c.h ../Core/Inc/tim.h \
  ../Core/Inc/usart.h ../Core/Inc/gpio.h ../Core/Inc/MPU6050.hpp \
- ../Core/Inc/Rope.hpp
+ ../Core/Inc/Rope.hpp ../Core/Inc/Jump.hpp
 
 ../Core/Inc/General_command.hpp:
 
@@ -137,3 +137,5 @@ Core/Src/Self_Pos.o: ../Core/Src/Self_Pos.cpp \
 ../Core/Inc/MPU6050.hpp:
 
 ../Core/Inc/Rope.hpp:
+
+../Core/Inc/Jump.hpp:

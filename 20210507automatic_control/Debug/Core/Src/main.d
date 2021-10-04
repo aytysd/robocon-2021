@@ -43,7 +43,7 @@ Core/Src/main.o: ../Core/Src/main.cpp ../Core/Inc/main.h \
  ../Core/Inc/gpio.h ../Core/Inc/MPU6050.hpp ../Core/Inc/Path.hpp \
  ../Core/Inc/Stay_Jump.hpp ../Core/Inc/Line.hpp ../Core/Inc/Path.hpp \
  ../Core/Inc/Jump.hpp ../Core/Inc/Control_C.hpp ../Core/Inc/Control_A.hpp \
- ../Core/Inc/Control_B.hpp
+ ../Core/Inc/Control_B.hpp ../Core/Inc/SparkFun_BNO080_Arduino_Library.h
 
 ../Core/Inc/main.h:
 
@@ -184,3 +184,5 @@ Core/Src/main.o: ../Core/Src/main.cpp ../Core/Inc/main.h \
 ../Core/Inc/Control_A.hpp:
 
 ../Core/Inc/Control_B.hpp:
+
+../Core/Inc/SparkFun_BNO080_Arduino_Library.h:
