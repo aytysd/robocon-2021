@@ -32,7 +32,8 @@ Core/Src/Controller_E.o: ../Core/Src/Controller_E.cpp \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h \
  ../Core/Inc/General_command.hpp ../Core/Inc/PWM.hpp \
  ../Core/Inc/Init_Move.hpp ../Core/Inc/PWM.hpp ../Core/Inc/Function.hpp \
- ../Core/Inc/MPU6050.hpp ../Core/Inc/usart.h ../Core/Inc/Jump.hpp
+ ../Core/Inc/MPU6050.hpp ../Core/Inc/usart.h ../Core/Inc/Jump.hpp \
+ ../Core/Inc/Control_B.hpp ../Core/Inc/Control.hpp
 
 ../Core/Inc/Controller.hpp:
 
@@ -113,3 +114,7 @@ Core/Src/Controller_E.o: ../Core/Src/Controller_E.cpp \
 ../Core/Inc/usart.h:
 
 ../Core/Inc/Jump.hpp:
+
+../Core/Inc/Control_B.hpp:
+
+../Core/Inc/Control.hpp:

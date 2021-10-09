@@ -15,11 +15,13 @@ public:
 	void control_B( void );
 
 	static bool start_flag;
-private:
 
 	void stay_jump( void );
 	void cross_jump( void );
 	void infinity_jump( void );
+
+private:
+
 
 
 };

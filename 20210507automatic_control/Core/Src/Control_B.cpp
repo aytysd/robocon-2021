@@ -100,7 +100,7 @@ void Control_B::cross_jump( void )
 	while( Line::judge == E_Line_status::MOVING ){}
 
 	uint8_t data[ DATASIZE ] = { ( uint8_t )E_data_type::ready };
-	control -> send_command( E_robot_name::C, data );
+	control -> send_command( E_robot_name::A, data );
 
 #ifndef WITHOUT_C
 

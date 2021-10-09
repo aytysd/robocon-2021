@@ -37,7 +37,8 @@ Core/Src/Init_Move.o: ../Core/Src/Init_Move.cpp \
  ../Core/Inc/main.h ../Core/Inc/Controller.hpp ../Core/Inc/PWM.hpp \
  ../Core/Inc/Init_Move.hpp ../Core/Inc/Gyro.hpp ../Core/Inc/MPU6050.hpp \
  ../Core/Inc/i2c.h ../Core/Inc/tim.h ../Core/Inc/usart.h \
- ../Core/Inc/gpio.h ../Core/Inc/Control.hpp ../Core/Inc/Control_C.hpp
+ ../Core/Inc/gpio.h ../Core/Inc/Control.hpp ../Core/Inc/Control_C.hpp \
+ ../Core/Inc/Control_A.hpp
 
 ../Core/Inc/Error_Handling.hpp:
 
@@ -146,3 +147,5 @@ Core/Src/Init_Move.o: ../Core/Src/Init_Move.cpp \
 ../Core/Inc/Control.hpp:
 
 ../Core/Inc/Control_C.hpp:
+
+../Core/Inc/Control_A.hpp:

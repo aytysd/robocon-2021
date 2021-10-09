@@ -1,7 +1,7 @@
 gthr-default.h:229:1:int __gthread_key_delete(__gthread_key_t)	16	static
 MPU6050.cpp:34:6:bool MPU6050::MPU6050_Init()	48	static
 MPU6050.cpp:83:6:void MPU6050::MPU6050_update_Gyro()	48	static
-MPU6050.cpp:138:8:double MPU6050::get_direction()	16	static
-MPU6050.cpp:148:6:void MPU6050::set_initial_direction(E_robot_name)	16	static
-MPU6050.cpp:167:6:void MPU6050::sort_data(double*, int)	48	static
-MPU6050.cpp:185:8:double MPU6050::calc_mode(int*, int)	48	static
+MPU6050.cpp:139:8:double MPU6050::get_direction()	16	static
+MPU6050.cpp:149:6:void MPU6050::set_initial_direction(E_robot_name)	16	static
+MPU6050.cpp:168:6:void MPU6050::sort_data(double*, int)	48	static
+MPU6050.cpp:186:8:double MPU6050::calc_mode(int*, int)	48	static

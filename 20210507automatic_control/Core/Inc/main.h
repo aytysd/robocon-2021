@@ -134,6 +134,7 @@ extern uint8_t A_Rxdata_buff;
 extern uint8_t B_Rxdata_buff;
 extern uint8_t C_Rxdata_buff;
 
+extern uint8_t count;
 
 /* USER CODE END Private defines */
 

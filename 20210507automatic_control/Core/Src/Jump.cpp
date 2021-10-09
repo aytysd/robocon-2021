@@ -26,6 +26,8 @@
 #include "function.hpp"
 #include "Self_Pos.hpp"
 #include "Line.hpp"
+#include "Controller.hpp"
+#include "usart.h"
 
 E_Jump_status Jump::Jump_status = E_Jump_status::Jump_disable;
 
@@ -126,16 +128,23 @@ void Jump::jump( void )
 	this -> Jump_status = E_Jump_status ::Jump_enable;
 	HAL_GPIO_WritePin( GPIOC, GPIO_PIN_2, GPIO_PIN_SET );
 
+	uint32_t start_time = HAL_GetTick();
+
 	while( HAL_GPIO_ReadPin( GPIOB, GPIO_PIN_12 ) == GPIO_PIN_RESET );
-	while( HAL_GPIO_ReadPin( GPIOB, GPIO_PIN_12 ) == GPIO_PIN_SET );
+	while( HAL_GPIO_ReadPin( GPIOB, GPIO_PIN_12 ) == GPIO_PIN_SET );// || ( ( HAL_GetTick() - start_time ) < 3000 ) );
 	while( HAL_GPIO_ReadPin( GPIOB, GPIO_PIN_12 ) == GPIO_PIN_RESET );
 //	while( HAL_GPIO_ReadPin( GPIOB, GPIO_PIN_12 ) == GPIO_PIN_SET );
 //	while( HAL_GPIO_ReadPin( GPIOB, GPIO_PIN_12 ) == GPIO_PIN_RESET );
 //	while( HAL_GPIO_ReadPin( GPIOB, GPIO_PIN_12 ) == GPIO_PIN_SET );
 //	while( HAL_GPIO_ReadPin( GPIOB, GPIO_PIN_12 ) == GPIO_PIN_RESET );
 
+
 	HAL_GPIO_WritePin( GPIOC, GPIO_PIN_2, GPIO_PIN_RESET );
+  
 	this -> Jump_status = E_Jump_status::Jump_disable;
+  
+
+//	  HAL_UART_Receive_IT( &huart4, ( uint8_t* )Controller::controller_Rxdata, sizeof( Controller::controller_Rxdata ) );
 
 }
 

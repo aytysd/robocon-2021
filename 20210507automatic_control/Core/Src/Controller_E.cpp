@@ -23,211 +23,121 @@
 #include "MPU6050.hpp"
 #include "usart.h"
 #include "Jump.hpp"
+#include "Control_B.hpp"
+#include "Control.hpp"
 
+bool Controller::Is_entered = false;
+uint16_t Controller::speed = 600;
+uint16_t Controller::speed_jump = 1000;
+
+bool Controller::jump_enable = false;
+bool Controller::move_ok = false;
+
+PWM* pwm = new PWM();
 
 void Controller::NOP(void)
 {
-	  PWM* pwm = new PWM();
-
 	  pwm -> V_output( 0, 0, 0, 0, E_move_status::STOP );
-
-	  delete pwm;
-
-
-
-
-
 }
 
-void Controller::X(void)
-{
-
-	Function* function = new Function();
-
-	function -> drive_motor( 1, CCW, 400, true, false );
-	function -> drive_motor( 2, CW, 400, true, false );
-	function -> drive_motor( 3, CW, 400, true, false );
-	function -> drive_motor( 4, CCW, 400, true, false );
-
-	delete function;
-}
+void Controller::X(void){}
 void Controller::Y(void)
 {
-	Function* function = new Function();
-
-	for( int i = 0; i < 2; i++ )
-	{
-		function -> drive_motor( 1, CW, 400, true, false );
-		function -> drive_motor( 2, CW, 400, true, false );
-		function -> drive_motor( 3, CCW, 400, true, false );
-		function -> drive_motor( 4, CCW, 400, true, false );
-
-	}
-
-
-	delete function;
-
+	Controller::move_ok = true;
 }
-void Controller::A(void)
-{
-
-	Function* function = new Function();
-
-	for( int i = 0; i < 2; i++ )
-	{
-		function -> drive_motor( 1, CCW, 400, true, false );
-		function -> drive_motor( 2, CCW, 400, true, false );
-		function -> drive_motor( 3, CW, 400, true, false );
-		function -> drive_motor( 4, CW, 400, true, false );
-
-	}
-
-
-	delete function;
-}
+void Controller::A(void){}
 void Controller::B(void)
 {
-
-	Function* function = new Function();
-
-	function -> drive_motor( 1, CW, 400, true, false );
-	function -> drive_motor( 2, CCW, 400, true, false );
-	function -> drive_motor( 3, CCW, 400, true, false );
-	function -> drive_motor( 4, CW, 400, true, false );
-
-	delete function;
+	Controller::move_ok = false;
+	pwm -> V_output( 0, 0, 0, 0, E_move_status::STOP );
+	HAL_GPIO_WritePin( GPIOC, GPIO_PIN_2, GPIO_PIN_RESET );
 }
 
 void Controller::LB(void)
 {
-	Function* function = new Function();
-
-	function -> drive_motor( 1, BRAKE, 0, false, false );
-	function -> drive_motor( 2, CW, 400, true, false );
-	function -> drive_motor( 3, BRAKE, 0, true, false );
-	function -> drive_motor( 4, CCW, 400, true, false );
-
-	delete function;
 
 }
 void Controller::RB(void)
 {
-	Function* function = new Function();
-
-	function -> drive_motor( 1, CW, 500, true, false );
-	function -> drive_motor( 2, BRAKE, 0, true, false );
-	function -> drive_motor( 3, CCW, 500, true, false );
-	function -> drive_motor( 4, BRAKE, 0, true, false );
-
-	delete function;
-
+	Controller::jump_enable = true;
 }
 void Controller::LT(void)
 {
-
-	Function* function = new Function();
-
-	function -> drive_motor( 1, CCW, 400, true, false );
-	function -> drive_motor( 2, BRAKE, 0, true, false );
-	function -> drive_motor( 3, CW, 400, true, false );
-	function -> drive_motor( 4, BRAKE, 0, true, false );
-
-	delete function;
+		Controller::speed = Controller::speed_jump;
 }
 void Controller::RT(void)
 {
-
-	Function* function = new Function();
-
-	function -> drive_motor( 1, BRAKE, 0, true, false );
-	function -> drive_motor( 2, CCW, 400, true, false );
-	function -> drive_motor( 3, BRAKE, 0, true, false );
-	function -> drive_motor( 4, CW, 400, true, false );
-
-	delete function;
+	Controller::speed = 600;
 }
 void Controller::START(void){}
-void Controller::BACK(void)
+void Controller::BACK(void){}
+
+void Controller::LSU(void)
 {
-	Jump* jump = new Jump();
-	jump -> jump();
-	delete jump;
+	pwm -> V_output( Controller::speed, 90, 0, 0, E_move_status::MOVE );
 
 }
-
-void Controller::LSU(void){}
-void Controller::LSL(void){}
-void Controller::LSR(void){}
-void Controller::LSD(void){}
-void Controller::LSUL(void){}
-void Controller::LSUR(void){}
-void Controller::LSDR(void){}
-void Controller::LSDL(void){}
-
-
-void Controller::CSU(void)
+void Controller::LSL(void)
 {
-	  PWM* pwm = new PWM();
-	  pwm -> rotate( 300, 0 );
-	  delete pwm;
+	pwm -> V_output( Controller::speed, 180, 0, 0, E_move_status::MOVE );
+}
+void Controller::LSR(void)
+{
+	pwm -> V_output( Controller::speed, 0, 0, 0, E_move_status::MOVE );
 
 }
-void Controller::CSR(void)
+void Controller::LSD(void)
 {
-	  PWM* pwm = new PWM();
-	  pwm -> rotate( 300, 270 );
-	  delete pwm;
-
+	pwm -> V_output( Controller::speed, 270, 0, 0, E_move_status::MOVE );
 
 }
-void Controller::CSL(void)
+void Controller::LSUL(void)
 {
-	  PWM* pwm = new PWM();
-	  pwm -> rotate( 300, 90 );
-	  delete pwm;
-
+	pwm -> V_output( Controller::speed, 135, 0, 0, E_move_status::MOVE );
 
 }
-void Controller::CSD(void)
+void Controller::LSUR(void)
 {
-	  PWM* pwm = new PWM();
-	  pwm -> rotate( 300, 180 );
-	  delete pwm;
+	pwm -> V_output( Controller::speed, 45, 0, 0, E_move_status::MOVE );
 
 }
-void Controller::CSUL(void)
+void Controller::LSDR(void)
 {
-	  PWM* pwm = new PWM();
-	  pwm -> rotate( 300, 45 );
-	  delete pwm;
+	pwm -> V_output( Controller::speed, 315, 0, 0, E_move_status::MOVE );
 
 }
-void Controller::CSUR(void)
+void Controller::LSDL(void)
 {
-	  PWM* pwm = new PWM();
-	  pwm -> rotate( 300, 315 );
-	  delete pwm;
-
-}
-void Controller::CSDL(void)
-{
-	  PWM* pwm = new PWM();
-	  pwm -> rotate( 300, 135 );
-	  delete pwm;
-}
-void Controller::CSDR(void)
-{
-	  PWM* pwm = new PWM();
-	  pwm -> rotate( 300, 235 );
-	  delete pwm;
-
+	pwm -> V_output( Controller::speed, 225, 0, 0, E_move_status::MOVE );
 }
 
 
-void Controller::RSU(void){}
-void Controller::RSR(void){}
-void Controller::RSL(void){}
-void Controller::RSD(void){}
+void Controller::CSU(void){}
+void Controller::CSR(void){}
+void Controller::CSL(void){}
+void Controller::CSD(void){}
+void Controller::CSUL(void){}
+void Controller::CSUR(void){}
+void Controller::CSDL(void){}
+void Controller::CSDR(void){}
+
+
+void Controller::RSU(void)
+{
+	Controller::speed += 100;
+}
+void Controller::RSR(void)
+{
+	pwm -> V_output( 0, 0, 300, 0, E_move_status::MOVE );
+}
+void Controller::RSL(void)
+{
+	pwm -> V_output( 0, 0, -300, 0, E_move_status::MOVE );
+}
+void Controller::RSD(void)
+{
+	Controller::speed -= 100;
+}
 void Controller::RSUL(void){}
 void Controller::RSUR(void){}
 void Controller::RSDR(void){}

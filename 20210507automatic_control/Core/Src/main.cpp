@@ -53,6 +53,7 @@
 #include "Control_C.hpp"
 #include "Control_A.hpp"
 #include "Control_B.hpp"
+#include "SparkFun_BNO080_Arduino_Library.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -115,6 +116,16 @@ void HAL_UART_RxCpltCallback( UART_HandleTypeDef* UartHandle )
 	else if( UartHandle == &huart5 )//data from B
 	{
 
+		HAL_GPIO_WritePin( GPIOB, GPIO_PIN_15, GPIO_PIN_SET );
+
+		HAL_UART_Receive_IT(&huart5, (uint8_t*)Controller::controller_Rxdata, sizeof(Controller::controller_Rxdata));
+
+		Controller* controller = new Controller();
+		controller -> identify();
+		delete controller;
+
+/*
+
 		HAL_UART_Receive_IT( &huart5, ( uint8_t* )&B_Rxdata_buff, sizeof( B_Rxdata_buff ) );
 
 
@@ -175,12 +186,16 @@ void HAL_UART_RxCpltCallback( UART_HandleTypeDef* UartHandle )
 
 		// C PSP
 		else if( B_Rxdata[ 0 ] == ( uint8_t )E_data_type::ready )
+		{
 			Control_C::B_ready_flag = true;
+			Control_A::B_ready_flag = true;
+		}
 
 
 
 		for( int i = 0; i < DATASIZE; i++ )
 			Debug::TTO_val( B_Rxdata[ i ], "B_data:" );
+*/
 
 	}
 	else if( UartHandle == &huart1 )// data from A robot
@@ -240,6 +255,22 @@ void HAL_UART_RxCpltCallback( UART_HandleTypeDef* UartHandle )
 		//C PSP
 		else if( A_Rxdata[ 0 ] == ( uint8_t )E_data_type::ready )
 			Control_C::A_ready_flag = true;
+		else if( A_Rxdata[ 0 ] == ( uint8_t )E_data_type::test )//A and B PSP
+		{
+			if( A_Rxdata[ 1 ] == 10 )
+				Init_Move::SBDBT_OK = true;
+		}
+		else if( A_Rxdata[ 0 ] == ( uint8_t )E_data_type::B_start )
+			Control_B::start_flag = true;
+		else if( A_Rxdata[ 0 ] == ( uint8_t )E_data_type::stop )
+			Control::stop_flag = true;
+		if( A_Rxdata[ 0 ] == ( uint8_t )E_data_type::command )
+				for( int i = 0; i < 2; i++ )
+					Control::command[ i ] = A_Rxdata[ i ];
+
+
+
+
 
 
 
@@ -325,6 +356,7 @@ void HAL_UART_RxCpltCallback( UART_HandleTypeDef* UartHandle )
 
 }
 
+
 void HAL_GPIO_EXTI_Callback( uint16_t GPIO_Pin )
 {
 	HGPIO* hgpio = new HGPIO();
@@ -344,6 +376,8 @@ void HAL_TIM_PeriodElapsedCallback( TIM_HandleTypeDef* htim )
 
 
 }
+
+uint32_t c = 0;
 
 /* USER CODE END 0 */
 
@@ -365,6 +399,7 @@ int main(void)
   Function* function = new Function();
   Line* line = new Line();
   PWM* pwm = new PWM();
+  BNO080* gyro = new BNO080();
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -398,14 +433,15 @@ int main(void)
   MX_UART4_Init();
   MX_TIM7_Init();
   /* USER CODE BEGIN 2 */
+
+  HAL_GPIO_WritePin( GPIOB, GPIO_PIN_15, GPIO_PIN_RESET );
+
 #ifdef AUTO
   init_move -> init_move( ROBOT );
 #elif defined ( MANU )
-  HAL_UART_Receive_IT( &huart4, ( uint8_t* )Controller::controller_Rxdata, sizeof( Controller::controller_Rxdata ) );
-  if( robot != E_robot_name::C )
-	  while( mpu6050 -> MPU6050_Init( &hi2c1 ) == true );
-#endif
+  HAL_UART_Receive_IT( &huart5, ( uint8_t* )Controller::controller_Rxdata, sizeof( Controller::controller_Rxdata ) );
 
+#endif
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -413,9 +449,21 @@ int main(void)
   while (1)
   {
 
+#ifdef MANU
 
-#ifdef AUTO
 
+	  if( Controller::jump_enable == true )
+	  {
+
+
+
+		Jump* jump = new Jump();
+		jump -> jump();
+		delete jump;
+		Controller::jump_enable = false;
+	  }
+
+#elif defined ( AUTO )
 	  switch( ROBOT )
 	  {
 	  case E_robot_name::A:
