@@ -53,6 +53,7 @@ public:
 
 	static bool jump_enable;
 	static bool move_ok;
+	static bool rotating;
 
 	void identify(void);
 
