@@ -78,14 +78,21 @@ enum class E_data_type
 	C_pos,
 };
 
-enum class E_Self_Pos_status
-{
-	First_Quadrant = 1,
-	Second_Quadrant,
-	Third_Quadrant,
-	Fourth_Quadrant,
-};
+//enum class E_Self_Pos_status
+//{
+//	First_Quadrant = 1,
+//	Second_Quadrant,
+//	Third_Quadrant,
+//	Fourth_Quadrant,
+//};
 
+enum class E_Jump_status
+{
+	Jump_enable,
+	Jump_disable,
+	Jump_Jumping,
+
+};
 #define NC 0xFE
 
 

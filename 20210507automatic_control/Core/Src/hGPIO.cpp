@@ -109,8 +109,12 @@ void HGPIO::identify( uint16_t GPIO_Pin )
 //PE_Sensor_1
 void HGPIO::GPIO_PIN_0_func(void)
 {
+	HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
+//	Debug::TTO_val(100, "");
 	Jump* jump = new Jump();
-	jump -> PE_Sensor(1);
+
+	jump -> Jump_driver( E_Jump_status::Jump_enable );
+
 	delete jump;
 }
 void HGPIO::GPIO_PIN_1_func(void)
@@ -134,7 +138,6 @@ void HGPIO::GPIO_PIN_1_func(void)
 		}
 #else
 	Jump* jump = new Jump();
-	jump -> PE_Sensor(4);
 	delete jump;
 #endif
 };
@@ -144,8 +147,11 @@ void HGPIO::GPIO_PIN_3_func(void){};
 void HGPIO::GPIO_PIN_4_func(void)
 {
 	Jump* jump = new Jump();
-	jump -> PE_Sensor(3);
+
+//	jump -> Jump_driver( E_Jump_status::Jump_enable );
+
 	delete jump;
+
 }
 void HGPIO::GPIO_PIN_5_func(void){};
 void HGPIO::GPIO_PIN_6_func(void){};
@@ -159,17 +165,25 @@ void HGPIO::GPIO_PIN_12_func(void)
 {
 	Function* function = new Function();
 
-	function -> drive_motor( 5, BRAKE, 0, false, true );
+//	function -> drive_motor( 5, BRAKE, 0, false, true );
 
 	delete function;
 };
 void HGPIO::GPIO_PIN_13_func(void)
-{}
+{
+	Jump* jump = new Jump();
+
+	jump -> Jump_driver( E_Jump_status::Jump_enable );
+
+	delete jump;
+}
 //PE_Sensor_2
 void HGPIO::GPIO_PIN_14_func(void)
 {
 	Jump* jump = new Jump();
-	jump -> PE_Sensor(2);
+
+//	jump -> Jump_driver( E_Jump_status::Jump_enable );
+
 	delete jump;
 };
 void HGPIO::GPIO_PIN_15_func(void)
@@ -192,7 +206,6 @@ void HGPIO::GPIO_PIN_15_func(void)
 		}
 #else
 	Jump* jump = new Jump();
-	jump -> PE_Sensor(5);
 	delete jump;
 #endif
 };
