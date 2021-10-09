@@ -38,7 +38,7 @@ public:
 	bool Is_centre( void );
 
 	void RS_calc( void );
-
+	static E_Jump_status Jump_status;
 	static int rope;
 
 private:
@@ -53,7 +53,7 @@ private:
 	int prev_mode;
 	int count;
 
-	static E_Jump_status Jump_status;
+
 };
 
 
