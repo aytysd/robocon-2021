@@ -106,19 +106,19 @@ void Rope::rotate_rope(uint8_t motor_number, uint8_t direction, uint16_t down_sp
 		Rope::run_C = true;
 
 	function -> drive_motor_Rope( motor_number, direction, 1000, false);
-	while( this -> encoder_read_3( true ) < 1024){}
+	while( this -> encoder_read_3( false ) < 180){}
 
 	while( Rope::run_C == true )
 	{
-		if(( this -> encoder_read_3( true ) > 1536 ) || (this -> encoder_read_3( true ) < 512 ))
+		if(( this -> encoder_read_3( false ) > 270 ) || (this -> encoder_read_3( false ) < 90 ))
 		{
 			function -> drive_motor_Rope( motor_number, direction, down_speed, false);
 		}
-		else if(( this -> encoder_read_3( true ) > 512 ) && (this -> encoder_read_3( true ) < 1536))
+		else if(( this -> encoder_read_3( false ) > 90 ) && (this -> encoder_read_3( false ) < 270))
 		{
 			function -> drive_motor_Rope(motor_number, direction, up_speed, false);
 		}
-		Debug::TTO_val( encoder_read_3( true ), "encoder:" );
+		Debug::TTO_val( encoder_read_3( false ), "encoder:" );
 	}
 
 	delete function;
@@ -142,8 +142,8 @@ void Rope::Encoder_val_TX( void )
 {
 	Control* control = new Control();
 
-	uint8_t en_1 = ( 0b1111111100000000 & this -> encoder_read_3( true ) ) >> 8;
-	uint8_t en_2 = ( 0b0000000011111111 & this -> encoder_read_3( true ) );
+	uint8_t en_1 = ( 0b1111111100000000 & this -> encoder_read_3( false ) ) >> 8;
+	uint8_t en_2 = ( 0b0000000011111111 & this -> encoder_read_3( false ) );
 
 	uint8_t TXdata_rope[8] = { ( uint8_t )E_data_type::rope, en_1, en_2 };
 

@@ -31,6 +31,8 @@
 
 #define DT 0.1
 #define POLE_DISTANCE 2000 //( 3000 , 1000) & ( 3000 , -1000 ) / ( -3000, 1000 ) & ( -3000 , -1000 )
+#define R_SPC 1
+#define L_SPC 2
 
 #include <General_command.hpp>
 #include "main.h"
@@ -50,13 +52,14 @@ public:
 	int Self_Pos_config_Limit(void);
 	void update_self_pos_ToF();
 
-#ifdef M_Self_Pos
-	void Self_Pos_correction( int pos_x);
-#else
-	void Self_Pos_correction( void );
-#endif
+//#ifdef M_Self_Pos
+//	void Self_Pos_correction( int pos_x);
+//#else
+//	void Self_Pos_correction( void );
+//#endif
 
-	static int Self_Pos_PE[2];
+//	void set_angle( int R_or_L );
+//	static int Self_Pos_PE[2];
 	static int out_angle;
 private:
 	int encoder_read_5(void);
@@ -65,10 +68,12 @@ private:
 	void Spin(int goal_angle , bool scan );
 	int calc_diff( int prev_x, int prev_y, int current_x, int current_y );
 
-	double rad(double deg);
+//	double rad(double deg);
 
 	static int16_t Self_Pos_X;
 	static int16_t Self_Pos_Y;
+
+//	double get_E_direction( void );
 
 };
 
