@@ -439,7 +439,10 @@ int main(void)
 #ifdef AUTO
   init_move -> init_move( ROBOT );
 #elif defined ( MANU )
-  HAL_UART_Receive_IT( &huart5, ( uint8_t* )Controller::controller_Rxdata, sizeof( Controller::controller_Rxdata ) );
+  if( ROBOT == E_robot_name::C )
+	  HAL_UART_Receive_IT( &huart5, ( uint8_t* )Controller::controller_Rxdata, sizeof( Controller::controller_Rxdata ) );
+  else
+	  HAL_UART_Receive_IT( &huart4, ( uint8_t* )Controller::controller_Rxdata, sizeof( Controller::controller_Rxdata ) );
 
 #endif
   /* USER CODE END 2 */

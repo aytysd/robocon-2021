@@ -25,6 +25,7 @@
 #include "Jump.hpp"
 #include "Control_B.hpp"
 #include "Control.hpp"
+#include "Function.hpp"
 
 bool Controller::Is_entered = false;
 uint16_t Controller::speed = 600;
@@ -32,6 +33,7 @@ uint16_t Controller::speed_jump = 1000;
 
 bool Controller::jump_enable = false;
 bool Controller::move_ok = false;
+bool Controller::rotating = false;
 
 PWM* pwm = new PWM();
 
@@ -43,7 +45,7 @@ void Controller::NOP(void)
 void Controller::X(void){}
 void Controller::Y(void)
 {
-	Controller::move_ok = true;
+//	Controller::move_ok = true;
 }
 void Controller::A(void){}
 void Controller::B(void)
@@ -69,8 +71,24 @@ void Controller::RT(void)
 {
 	Controller::speed = 600;
 }
-void Controller::START(void){}
-void Controller::BACK(void){}
+void Controller::START(void)
+{
+//	if( ROBOT == E_robot_name::C )
+//	{
+		Function* function = new Function();
+		function -> drive_motor( 1, CW, 270, false, false );
+		delete function;
+
+//	}
+
+}
+void Controller::BACK(void)
+{
+		Function* function = new Function();
+		function -> drive_motor( 1, BRAKE, 270, false, false );
+		delete function;
+
+}
 
 void Controller::LSU(void)
 {
@@ -112,10 +130,22 @@ void Controller::LSDL(void)
 }
 
 
-void Controller::CSU(void){}
+void Controller::CSU(void)
+{
+		Function* function = new Function();
+		function -> drive_motor( 2, CW, 500, false, false );
+		delete function;
+
+}
 void Controller::CSR(void){}
 void Controller::CSL(void){}
-void Controller::CSD(void){}
+void Controller::CSD(void)
+{
+		Function* function = new Function();
+		function -> drive_motor( 2, CCW, 500, false, false );
+		delete function;
+
+}
 void Controller::CSUL(void){}
 void Controller::CSUR(void){}
 void Controller::CSDL(void){}
@@ -129,10 +159,12 @@ void Controller::RSU(void)
 void Controller::RSR(void)
 {
 	pwm -> V_output( 0, 0, 300, 0, E_move_status::MOVE );
+	Controller::rotating = true;
 }
 void Controller::RSL(void)
 {
 	pwm -> V_output( 0, 0, -300, 0, E_move_status::MOVE );
+	Controller::rotating = true;
 }
 void Controller::RSD(void)
 {

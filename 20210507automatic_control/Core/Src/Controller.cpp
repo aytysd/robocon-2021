@@ -45,30 +45,30 @@ void Controller::identify()
 {
 //	this -> check_array();
 
-	Debug::time_calc();
 
-	Controller::move_ok = false;
+	Controller::move_ok = true;
+	Controller::rotating = false;
 
 	if( this -> identify_NOP() == false )
 	{
-//		if( Controller::Is_entered == false )
-			this -> identify_ABXY_button();
-//		if( Controller::Is_entered == false )
-			this -> identify_SUB_button();
-//		if( Controller::Is_entered == false )
+		this -> identify_ABXY_button();
+		this -> identify_SUB_button();
+
+
 		if( Controller::move_ok == true )
 		{
-			this -> identify_LS_SB();
-//		if( Controller::Is_entered == false )
-			this -> identify_CS();
-//		if( Controller::Is_entered == false )
 			this -> identify_RS();
+
+			if( Controller::rotating != true )
+				this -> identify_LS_SB();
+
+			this -> identify_CS();
+
 
 		}
 
-	}
 
-	Debug::time_calc();
+	}
 
 	Controller::Is_entered = false;
 
