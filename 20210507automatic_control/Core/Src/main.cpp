@@ -426,7 +426,6 @@ int main(void)
   MX_I2C1_Init();
   MX_USART3_UART_Init();
   MX_UART5_Init();
-  MX_USART1_UART_Init();
   MX_TIM2_Init();
   MX_TIM3_Init();
   MX_USART2_UART_Init();

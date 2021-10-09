@@ -86,10 +86,8 @@ void Error_Handler(void);
 #define C_TX_GPIO_Port GPIOB
 #define Photo_Interrupt_Pin GPIO_PIN_12
 #define Photo_Interrupt_GPIO_Port GPIOB
-#define C_CTS_Pin GPIO_PIN_13
-#define C_CTS_GPIO_Port GPIOB
-#define C_RTS_Pin GPIO_PIN_14
-#define C_RTS_GPIO_Port GPIOB
+#define PE_3_Pin GPIO_PIN_13
+#define PE_3_GPIO_Port GPIOB
 #define LED_Pin GPIO_PIN_15
 #define LED_GPIO_Port GPIOB
 #define MOTOR_TX_Pin GPIO_PIN_6
@@ -100,14 +98,6 @@ void Error_Handler(void);
 #define B_RTS_GPIO_Port GPIOC
 #define B_CTS_Pin GPIO_PIN_9
 #define B_CTS_GPIO_Port GPIOC
-#define A_TX_Pin GPIO_PIN_9
-#define A_TX_GPIO_Port GPIOA
-#define A_RX_Pin GPIO_PIN_10
-#define A_RX_GPIO_Port GPIOA
-#define A_CTS_Pin GPIO_PIN_11
-#define A_CTS_GPIO_Port GPIOA
-#define A_RTS_Pin GPIO_PIN_12
-#define A_RTS_GPIO_Port GPIOA
 #define Y_OD_Pin GPIO_PIN_15
 #define Y_OD_GPIO_Port GPIOA
 #define LED_TX_Pin GPIO_PIN_10
