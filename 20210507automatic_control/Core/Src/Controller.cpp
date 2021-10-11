@@ -46,7 +46,7 @@ void Controller::identify()
 //	this -> check_array();
 
 
-	Controller::move_ok = true;
+	Controller::move_ok = false;
 	Controller::rotating = false;
 
 	if( this -> identify_NOP() == false )
@@ -58,11 +58,10 @@ void Controller::identify()
 		if( Controller::move_ok == true )
 		{
 			this -> identify_RS();
-
-			if( Controller::rotating != true )
-				this -> identify_LS_SB();
-
+			this -> identify_LS_SB();
 			this -> identify_CS();
+
+//			if( Controller::rotating != true )
 
 
 		}

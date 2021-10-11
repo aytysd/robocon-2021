@@ -21,6 +21,7 @@
 #include "PWM.hpp"
 #include "Function.hpp"
 #include "MPU6050.hpp"
+#include "Rope.hpp"
 #include "usart.h"
 #include "Jump.hpp"
 #include "Control_B.hpp"
@@ -45,7 +46,7 @@ void Controller::NOP(void)
 void Controller::X(void){}
 void Controller::Y(void)
 {
-//	Controller::move_ok = true;
+	Controller::move_ok = true;
 }
 void Controller::A(void){}
 void Controller::B(void)
@@ -73,13 +74,10 @@ void Controller::RT(void)
 }
 void Controller::START(void)
 {
-//	if( ROBOT == E_robot_name::C )
-//	{
+
 		Function* function = new Function();
 		function -> drive_motor( 1, CW, 270, false, false );
 		delete function;
-
-//	}
 
 }
 void Controller::BACK(void)
