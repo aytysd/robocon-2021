@@ -33,6 +33,8 @@ public:
 	void Encoder_val_TX( void );
 	void Encoder_val_RX( int* rope, uint8_t* received_data );
 
+	static bool rope_enable;
+
 private:
 
 	static bool run_C;
