@@ -1,0 +1,14 @@
+ToF.cpp:188:5:int ToF::_I2CWrite(uint16_t, uint8_t*, uint32_t)	40	static
+ToF.cpp:201:5:int ToF::_I2CRead(uint16_t, uint8_t*, uint32_t)	40	static
+ToF.cpp:214:8:int8_t ToF::VL53L1_WrByte(uint16_t, uint16_t, uint8_t)	32	static
+ToF.cpp:231:8:int8_t ToF::VL53L1_WrWord(uint16_t, uint16_t, uint16_t)	32	static
+ToF.cpp:250:8:int8_t ToF::VL53L1_RdWord(uint16_t, uint16_t, uint16_t*)	32	static
+ToF.cpp:276:6:void ToF::VL53L1X_StartRanging(uint16_t)	16	static
+ToF.cpp:282:6:void ToF::VL53L1X_StopRanging(uint16_t)	16	static
+ToF.cpp:287:9:uint8_t ToF::VL53L1X_SetI2CAddress(uint16_t, uint8_t)	24	static
+ToF.cpp:295:6:void ToF::VL53L1X_SensorInit(uint16_t)	24	static
+ToF.cpp:308:8:int8_t ToF::VL53L1X_GetTimingBudgetInMs(uint16_t, uint16_t*)	32	static
+ToF.cpp:350:8:int8_t ToF::VL53L1X_SetDistanceMode(uint16_t, uint16_t)	24	static
+ToF.cpp:382:8:int8_t ToF::VL53L1X_GetDistance(uint16_t, uint16_t*)	32	static
+ToF.cpp:394:10:uint16_t ToF::get_distance(uint16_t)	24	static
+ToF.cpp:409:6:void ToF::init_ToF()	24	static
