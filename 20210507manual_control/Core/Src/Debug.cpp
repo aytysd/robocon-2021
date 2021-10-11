@@ -22,7 +22,6 @@
 #include "string.h"
 #include <string>
 #include <cstring>
-#include "i2c.h"
 #include "tim.h"
 #include "usart.h"
 #include "gpio.h"

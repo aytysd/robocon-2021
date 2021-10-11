@@ -1,4 +1,0 @@
-Control_B.cpp:40:6:void Control_B::control_B()	24	static
-Control_B.cpp:88:6:void Control_B::stay_jump()	16	static
-Control_B.cpp:90:6:void Control_B::cross_jump()	72	static
-Control_B.cpp:181:6:void Control_B::infinity_jump()	64	static

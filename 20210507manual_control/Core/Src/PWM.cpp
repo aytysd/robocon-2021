@@ -21,20 +21,12 @@
 #include "stdio.h"
 #include <iostream>
 #include "General_command.hpp"
-#include "Self_Pos.hpp"
-#include "Gyro.hpp"
-#include "Time.hpp"
 #include "Debug.hpp"
-#include "i2c.h"
 #include "tim.h"
 #include "usart.h"
 #include "gpio.h"
-#include "MPU6050.hpp"
-#include "Line.hpp"
 #include "Debug.hpp"
 
-int16_t PWM::pre_dis_diff = 0;
-int16_t PWM::pre_ang_diff = 0;
 
 void PWM::V_output(uint16_t V, uint16_t fai, int16_t rotation_speed, uint16_t attitude_angle, E_move_status status)
 {
@@ -82,161 +74,6 @@ void PWM::V_output(uint16_t V, uint16_t fai, int16_t rotation_speed, uint16_t at
 
 	}
 }
-
-void PWM::Front_Move( uint16_t V, uint16_t fai, uint16_t attitude_angle, double Line_dis_diff, E_move_status status)
-{
-	if( status == E_move_status::MOVE)
-	{
-		int16_t dis_angle = fai - attitude_angle;
-		if( dis_angle > 180 )
-		{
-			dis_angle = dis_angle - 360;
-		}
-		else if( dis_angle < -180 )
-		{
-			dis_angle = 360 + dis_angle;
-		}
-
-		int16_t dev_dis =  ( int16_t )Line_dis_diff - pre_dis_diff;
-		pre_dis_diff = ( int16_t )Line_dis_diff;
-
-		int16_t ang_dis = ( int16_t )dis_angle - pre_dis_diff;
-		pre_dis_diff = ( int16_t )dis_angle;
-
-		int16_t delta_V =  ( int16_t )Line_dis_diff * dis_diff_Kp/* + dev_dis * dis_diff_Kd + dis_angle * ang_diff_Kp + ang_dis * ang_diff_Kd*/;
-
-
-/*
- *        3         Front        2
- *          --------------------
- *          |                  |
- *          |                  |
- *          |                  |
- *          |                  |
- *          |				   |
- *          |				   |
- *          | 				   |
- *          |                  |
- *          --------------------
- *        4                      1
- */
-
-
-		int16_t V_2_1 = ( int16_t )V + delta_V;
-		int16_t V_3_4 = ( int16_t )V - delta_V;
-
-
-
-		if( V_2_1 < 0)
-		{
-			Function* function = new Function();
-
-			function -> drive_motor( 1, CCW, abs( V_2_1 ), true, false );
-			function -> drive_motor( 2, CCW, abs( V_2_1 ), true, false );
-			function -> drive_motor( 3, CCW, V_3_4, true, false );
-			function -> drive_motor( 4, CCW, V_3_4, true, false );
-
-			delete function;
-		}
-		else if( V_3_4 < 0 )
-		{
-			Function* function = new Function();
-
-			function -> drive_motor( 1,  CW, V_2_1, true, false );
-			function -> drive_motor( 2,  CW, V_2_1, true, false );
-			function -> drive_motor( 3,  CW, abs( V_3_4 ), true, false );
-			function -> drive_motor( 4,  CW, abs( V_3_4 ), true, false );
-
-			delete function;
-		}
-		else
-		{
-			Function* function = new Function();
-
-
-			function -> drive_motor( 1,  CW, V_2_1, true, false );
-			function -> drive_motor( 2,  CW, V_2_1, true, false );
-			function -> drive_motor( 3, CCW, V_3_4, true, false );
-			function -> drive_motor( 4, CCW, V_3_4, true, false );
-
-//			function -> drive_motor( 1,  CW, 500, true, false );
-//			function -> drive_motor( 2,  CW, 500, true, false );
-//			function -> drive_motor( 3, CCW, 500, true, false );
-//			function -> drive_motor( 4, CCW, 500, true, false );
-
-
-			delete function;
-		}
-	}
-	else if( status == E_move_status::STOP)
-	{
-		Function* function = new Function();
-
-		function -> drive_motor( 1, BRAKE, 0, false, false );
-		function -> drive_motor( 2, BRAKE, 0, false, false );
-		function -> drive_motor( 3, BRAKE, 0, false, false );
-		function -> drive_motor( 4, BRAKE, 0, false, false );
-
-		delete function;
-	}
- }
-
-bool PWM::rotate(uint16_t V, uint16_t target_angle)
-{
-
-	MPU6050* gyro = new MPU6050();
-	Debug::TTO_val( 0, "rotate:");
-
-	if( !( abs(  target_angle - ( uint16_t )gyro -> get_direction() ) < 3 ) )
-	{
-
-		int16_t diff = target_angle - gyro -> get_direction();
-		while( diff < 0 )
-			diff += 360;
-
-		if( diff >= 180 )
-		{
-			Line::Enable_line = false;
-			this -> V_output(0, 0, -V, 0, E_move_status::MOVE);
-			Debug::TTO_val(0, "180 to 360:" );
-			Debug::time_calc();
-			while( !( abs(  target_angle - ( uint16_t )gyro -> get_direction() ) < 3 ) )
-			{
-				gyro -> MPU6050_update_Gyro();
-				HAL_Delay( 100 );
-			}
-
-
-			Debug::time_calc();
-			this -> V_output(0, 0, 0, 0, E_move_status::STOP);
-			Line::Enable_line = true;
-
-		}
-		else
-		{
-			Line::Enable_line = false;
-			this -> V_output(0, 0, +V, 0, E_move_status::MOVE);
-			Debug::TTO_val(0, "0 to 180:" );
-			Debug::time_calc();
-			while( !( abs(  target_angle - ( uint16_t )gyro -> get_direction() ) < 3 ) )
-			{
-				gyro -> MPU6050_update_Gyro();
-				HAL_Delay( 100 );
-
-			}
-			Debug::time_calc();
-			this -> V_output(0, 0, 0, 0, E_move_status::STOP);
-			Line::Enable_line = true;
-
-		}
-
-	}
-
-
-	delete gyro;
-	return true;
-}
-
 
 
 

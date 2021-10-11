@@ -22,7 +22,6 @@
 #include "Function.hpp"
 #include "PWM.hpp"
 #include "stdio.h"
-#include "i2c.h"
 #include "tim.h"
 #include "usart.h"
 #include "gpio.h"
@@ -58,11 +57,9 @@ void Controller::identify()
 		if( Controller::move_ok == true )
 		{
 			this -> identify_RS();
-			this -> identify_LS_SB();
-			this -> identify_CS();
 
-//			if( Controller::rotating != true )
-
+			if( Controller::rotating != true )
+				this -> identify_LS_SB();
 
 		}
 

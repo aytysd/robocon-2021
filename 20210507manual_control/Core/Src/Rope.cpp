@@ -22,11 +22,9 @@
 #include "Debug.hpp"
 #include "Function.hpp"
 #include "PWM.hpp"
-#include "i2c.h"
 #include "tim.h"
 #include "usart.h"
 #include "gpio.h"
-#include "Control.hpp"
 
 
 int Rope::over_flow_cnt_3 = -1;
@@ -137,27 +135,3 @@ void Rope::stop_rope(uint8_t motor_number)
 	delete function;
 }
 
-void Rope::Encoder_val_TX( void )
-{
-	Control* control = new Control();
-
-	uint8_t en_1 = ( 0b1111111100000000 & this -> encoder_read_3( false ) ) >> 8;
-	uint8_t en_2 = ( 0b0000000011111111 & this -> encoder_read_3( false ) );
-
-	uint8_t TXdata_rope[8] = { ( uint8_t )E_data_type::rope, en_1, en_2 };
-
-	control -> send_command( E_robot_name::A, TXdata_rope );
-	control -> send_command( E_robot_name::B, TXdata_rope );
-
-	delete control;
-
-}
-
-void Rope::Encoder_val_RX( int* rope, uint8_t* received_data )
-{
-	*rope = 0;
-
-	*rope = received_data[ 1 ] << 8;
-	*rope |= received_data[ 2 ];
-
-}

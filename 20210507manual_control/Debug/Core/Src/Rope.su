@@ -1,6 +1,4 @@
 gthr-default.h:229:1:int __gthread_key_delete(__gthread_key_t)	16	static
-Rope.cpp:38:5:int Rope::encoder_read_3(bool)	48	static
-Rope.cpp:98:6:void Rope::rotate_rope(uint8_t, uint8_t, uint16_t, uint16_t)	64	static
-Rope.cpp:128:6:void Rope::stop_rope(uint8_t)	32	static
-Rope.cpp:140:6:void Rope::Encoder_val_TX()	32	static
-Rope.cpp:156:6:void Rope::Encoder_val_RX(int*, uint8_t*)	24	static
+Rope.cpp:36:5:int Rope::encoder_read_3(bool)	48	static
+Rope.cpp:96:6:void Rope::rotate_rope(uint8_t, uint8_t, uint16_t, uint16_t)	64	static
+Rope.cpp:126:6:void Rope::stop_rope(uint8_t)	32	static

@@ -20,17 +20,14 @@
 #include "Controller.hpp"
 #include "PWM.hpp"
 #include "Function.hpp"
-#include "MPU6050.hpp"
 #include "Rope.hpp"
 #include "usart.h"
 #include "Jump.hpp"
-#include "Control_B.hpp"
-#include "Control.hpp"
 #include "Function.hpp"
 
 bool Controller::Is_entered = false;
 uint16_t Controller::speed = 600;
-uint16_t Controller::speed_jump = 1000;
+#define SPEED_JUMP 1000
 
 bool Controller::jump_enable = false;
 bool Controller::move_ok = false;
@@ -40,7 +37,11 @@ PWM* pwm = new PWM();
 
 void Controller::NOP(void)
 {
-	  pwm -> V_output( 0, 0, 0, 0, E_move_status::STOP );
+	if( ROBOT != E_robot_name::C )
+	{
+		  pwm -> V_output( 0, 0, 0, 0, E_move_status::STOP );
+
+	}
 }
 
 void Controller::X(void){}
@@ -56,17 +57,14 @@ void Controller::B(void)
 	HAL_GPIO_WritePin( GPIOC, GPIO_PIN_2, GPIO_PIN_RESET );
 }
 
-void Controller::LB(void)
-{
-
-}
+void Controller::LB(void){}
 void Controller::RB(void)
 {
 	Controller::jump_enable = true;
 }
 void Controller::LT(void)
 {
-		Controller::speed = Controller::speed_jump;
+	Controller::speed = SPEED_JUMP;
 }
 void Controller::RT(void)
 {
@@ -128,22 +126,10 @@ void Controller::LSDL(void)
 }
 
 
-void Controller::CSU(void)
-{
-		Function* function = new Function();
-		function -> drive_motor( 2, CW, 500, false, false );
-		delete function;
-
-}
+void Controller::CSU(void){}
 void Controller::CSR(void){}
 void Controller::CSL(void){}
-void Controller::CSD(void)
-{
-		Function* function = new Function();
-		function -> drive_motor( 2, CCW, 500, false, false );
-		delete function;
-
-}
+void Controller::CSD(void){}
 void Controller::CSUL(void){}
 void Controller::CSUR(void){}
 void Controller::CSDL(void){}

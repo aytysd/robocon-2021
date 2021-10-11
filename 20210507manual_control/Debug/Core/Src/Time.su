@@ -1,2 +1,0 @@
-Time.cpp:27:6:void Time::reset_timer()	16	static
-Time.cpp:29:10:uint32_t Time::calc_time_diff()	24	static

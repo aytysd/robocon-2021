@@ -26,11 +26,6 @@
 //#define ROBOT E_robot_name::C
 
 
-//#define WITHOUT_A
-//#define WITHOUT_B
-//#define WITHOUT_C
-
-//#define AUTO
 #define MANU
 
 
@@ -43,8 +38,6 @@ enum class E_robot_name
 	A,
 	B,
 	C,
-	NONE,
-	MASTER,
 };
 
 
@@ -57,34 +50,7 @@ enum class E_move_status
 };
 
 
-enum class E_Line_status
-{
-	MOVING,
-	STOP,
-	THROUGHING,
-};
 
-enum class E_data_type
-{
-	command = 0x10,
-	ready,
-	rope,
-	A_start,
-	B_start,
-	stop,
-	test,
-	A_pos,
-	B_pos,
-	C_pos,
-};
-
-//enum class E_Self_Pos_status
-//{
-//	First_Quadrant = 1,
-//	Second_Quadrant,
-//	Third_Quadrant,
-//	Fourth_Quadrant,
-//};
 
 enum class E_Jump_status
 {
@@ -93,7 +59,6 @@ enum class E_Jump_status
 	Jump_Jumping,
 
 };
-#define NC 0xFE
 
 
 

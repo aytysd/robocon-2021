@@ -17,15 +17,12 @@
  *
  */
 #include <HGPIO.hpp>
-#include "Self_Pos.hpp"
-#include "Gyro.hpp"
 #include "main.h"
 #include "Debug.hpp"
 #include "Function.hpp"
 #include "PWM.hpp"
 #include "gpio.h"
 #include "usart.h"
-#include "i2c.h"
 #include "Jump.hpp"
 
 
@@ -35,7 +32,7 @@ int HGPIO::angle[2] = {0,0};
 int HGPIO::plus = 1;
 
 void HGPIO::identify( uint16_t GPIO_Pin )
-	{
+{
 	switch( GPIO_Pin )
 	{
 	case GPIO_PIN_0:
@@ -119,28 +116,9 @@ void HGPIO::GPIO_PIN_0_func(void)
 }
 void HGPIO::GPIO_PIN_1_func(void)
 {
-
-#ifdef M_Self_Pos
-	if (this->count <= 1 && this->allow) {
-			Gyro *gyro = new Gyro();
-
-			int ang = gyro->get_direction(&hi2c3);
-			int low_angle = 280 - 180 * (-0.5 * this->plus + 0.5);
-			int high_angle = 440 - 180 * (-0.5 * this->plus + 0.5);
-			if ((low_angle <= ang && ang <= high_angle
-					&& ang != Self_Pos::out_angle)
-					|| (low_angle <= ang + 360 && ang + 360 <= high_angle
-							&& ang != Self_Pos::out_angle)) {
-				this->angle[this->count] = ang;
-				this->count++;
-			}
-			delete gyro;
-		}
-#else
 	Jump* jump = new Jump();
 	delete jump;
-#endif
-};
+}
 void HGPIO::GPIO_PIN_2_func(void){};
 void HGPIO::GPIO_PIN_3_func(void){};
 //PE_Sensor_3
@@ -153,14 +131,13 @@ void HGPIO::GPIO_PIN_4_func(void)
 	delete jump;
 
 }
-void HGPIO::GPIO_PIN_5_func(void){};
-void HGPIO::GPIO_PIN_6_func(void){};
-void HGPIO::GPIO_PIN_7_func(void){};
-void HGPIO::GPIO_PIN_8_func(void){};
-void HGPIO::GPIO_PIN_9_func(void){};
-void HGPIO::GPIO_PIN_10_func(void){};
-void HGPIO::GPIO_PIN_11_func(void)
-{};
+void HGPIO::GPIO_PIN_5_func(void){}
+void HGPIO::GPIO_PIN_6_func(void){}
+void HGPIO::GPIO_PIN_7_func(void){}
+void HGPIO::GPIO_PIN_8_func(void){}
+void HGPIO::GPIO_PIN_9_func(void){}
+void HGPIO::GPIO_PIN_10_func(void){}
+void HGPIO::GPIO_PIN_11_func(void){}
 void HGPIO::GPIO_PIN_12_func(void)
 {
 	Function* function = new Function();
@@ -168,7 +145,7 @@ void HGPIO::GPIO_PIN_12_func(void)
 //	function -> drive_motor( 5, BRAKE, 0, false, true );
 
 	delete function;
-};
+}
 void HGPIO::GPIO_PIN_13_func(void)
 {
 	Jump* jump = new Jump();
@@ -185,27 +162,5 @@ void HGPIO::GPIO_PIN_14_func(void)
 //	jump -> Jump_driver( E_Jump_status::Jump_enable );
 
 	delete jump;
-};
-void HGPIO::GPIO_PIN_15_func(void)
-{
-#ifdef M_Self_Pos
-	if (this->count <= 1 && this->allow) {
-			Gyro *gyro = new Gyro();
-
-			int ang = gyro->get_direction(&hi2c3);
-			int low_angle = 280 - 180 * (-0.5 * this->plus + 0.5);
-			int high_angle = 440 - 180 * (-0.5 * this->plus + 0.5);
-			if ((low_angle <= ang && ang <= high_angle
-					&& ang != Self_Pos::out_angle)
-					|| (low_angle <= ang + 360 && ang + 360 <= high_angle
-							&& ang != Self_Pos::out_angle)) {
-				this->angle[this->count] = ang;
-				this->count++;
-			}
-			delete gyro;
-		}
-#else
-	Jump* jump = new Jump();
-	delete jump;
-#endif
-};
+}
+void HGPIO::GPIO_PIN_15_func(void){}

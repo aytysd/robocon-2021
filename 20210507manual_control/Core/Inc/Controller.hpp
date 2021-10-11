@@ -43,11 +43,10 @@
 
 #include "main.h"
 #include "General_command.hpp"
-#include "PWM.hpp"
-#include "Init_Move.hpp"
 
 
-class Controller{
+class Controller
+{
 public:
 	static uint8_t controller_Rxdata[8];
 
@@ -62,10 +61,6 @@ private:
 	static bool Is_entered;
 
 	static uint16_t speed;
-	static uint16_t speed_jump;
-
-	static uint8_t direction;
-	static uint16_t target_speed;
 
 	void check_array(void);
 

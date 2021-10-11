@@ -22,7 +22,6 @@
 #include "main.h"
 #include "stdio.h"
 #include "math.h"
-#include "i2c.h"
 #include "tim.h"
 #include "usart.h"
 #include "gpio.h"
@@ -40,12 +39,6 @@ void Function::drive_motor(uint8_t motor_number, uint8_t direction, uint16_t spe
 	if( Jump_Enabled == true ) motor[0] |= ( 0b01 << 7 );
 
 	HAL_UART_Transmit( &huart6, ( uint8_t* )motor, sizeof( motor ), 100 );
-}
-void Function::drive_solenoid_valve( uint8_t port_number, uint8_t ON_OFF )
-{
-
-	uint8_t solenoid_valve = ( port_number << 1 ) | ON_OFF;
-	HAL_UART_Transmit( &huart3, ( uint8_t* )&solenoid_valve, sizeof( solenoid_valve ), 100 );
 }
 
 void Function::drive_LED( uint8_t g, uint8_t r, uint8_t b, uint8_t w )
